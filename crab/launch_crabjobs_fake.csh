@@ -10,11 +10,11 @@ reset
 ##python submit_crab_fake.py -d DataMu_$year -s -t Lep
 ##python submit_crab_fake.py -d DataTau_$year -s -t Tau
 #python submit_crab_fake.py -d DataHTB_$year -s -t HT
-#python submit_crab_fake.py -d DataHT_$year --status -t HT
+python submit_crab_fake.py -d DataHT_$year --status -t HT
 #python submit_crab_fake.py -d ZZtoLep_$year -s -t HT
 #python submit_crab_fake.py -d TT_$year --status -t HT
 
-set year = '2017'
+#set year = '2017'
 #python submit_crab_fake.py -d ZZtoLep_$year --status -t HT
-python submit_crab_fake.py -d OtherWS_$year --status -t HT
-#python submit_crab_fake.py -d DataHT_$year --status -t HT
+#python submit_crab_fake.py -d OtherWS_$year --status -t HT
+#python submit_crab_fake.py -d DataHT_$year --status HT
