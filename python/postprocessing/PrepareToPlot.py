@@ -132,8 +132,6 @@ for k, v in merge_dict.items():
         continue
 
     if hasattr(v, 'components'):
-        print("in components", v.label)
-        #print(k, k.startswith(opt.dat))
         for c in v.components:
             if opt.dat != 'all':
                 if not str(c.label).startswith(opt.dat):
