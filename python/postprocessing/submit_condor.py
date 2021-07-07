@@ -26,6 +26,15 @@ elif username == 'apiccine':
 elif username == 'ttedesch':
     uid = 103343
 
+condorsub = "condor"
+
+fsplitted = opt.folder.split("/")
+
+if len(fsplitted)==2 and (fsplitted[1]=='emu' or fsplitted[1]=='ltau'):
+    condorsub += "_" + fsplitted[1]
+condorsub += ".sub"
+
+
 wopstring = ''
 #if opt.wop:
 #    wopstring = 'prompt'
@@ -35,7 +44,7 @@ wopstring = ''
 print(opt.dat)
 
 def sub_writer(sample, n, files, folder):
-    f = open("condor.sub", "w")
+    f = open(condorsub, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
     f.write("universe                = vanilla\n")
@@ -105,8 +114,8 @@ for sample in samples:
             if os.path.exists(opath + sample.label + "_part" + str(idx) + ".root"):
                 continue
             sub_writer(sample, idx, files, folder)
-            os.popen('condor_submit condor.sub')
-            print('condor_submit condor.sub')
+            os.popen('condor_submit ' + condorsub)
+            print('condor_submit ' + condorsub)
             #os.popen("python tree_skimmer_ssWW.py " " + sample.label + " " + str(i) + " " + str(files))
             print("python tree_skimmer_ssWW_wFakes.py " + sample.label + " " + str(idx) + " " + str(files) + " remote")
     else:
@@ -115,7 +124,7 @@ for sample in samples:
                 continue
             extmax = int(min([split*(i+1), len(files_list)]))
             sub_writer(sample, i,  ",".join( e for e in files_list[split*i:extmax]), folder)
-            print('condor_submit condor.sub')
-            os.popen('condor_submit condor.sub')
+            print('condor_submit ' + condorsub)
+            os.popen('condor_submit ' + condorsub)
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]))
             print("python tree_skimmer_ssWW_wFakes.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote")
