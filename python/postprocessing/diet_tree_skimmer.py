@@ -807,21 +807,23 @@ for i in range(tree.GetEntries()):
     if MuTrig and dataEle:
         continue
 
-    #now you have:
-    #MuTrig   == True if the highest pT lepton which fired the trigger is a muon
-    #EleTrige == True if the highest pT lepton which fired the trigger is an electron
-
-    MET_pt[0]   = met.pt  
-    MET_phi[0]  = met.phi
-
     indexGoodEle, indexGoodMu, electron_TightRegion[0], muon_TightRegion[0], youOkay = diet_SelectLepton(electrons, muons, EleTrig, MuTrig)
-    #print(indexGoodEle, ' ',indexGoodMu,' ', youOkay) 
+
+    if not youOkay:
+        print('indexGoodEle:', indexGoodEle, 'indexGoodMu:' ,indexGoodMu,'youOkay:', youOkay) 
     tightele = electrons[indexGoodEle]
     tightmu  = muons[indexGoodMu]
      
     if not youOkay: continue
     #print('Tight electron index is: ', indexGoodEle)
     #print('Tight muon index is:     ', indexGoodMu,  '  pT is: ', tightmu.pt)
+
+    #now you have:
+    #MuTrig   == True if the highest pT lepton which fired the trigger is a muon
+    #EleTrige == True if the highest pT lepton which fired the trigger is an electron
+
+    MET_pt[0]   = met.pt  
+    MET_phi[0]  = met.phi
 
 
     if electron_TightRegion[0]==1:          electron_LnTRegion[0] = 0
@@ -1084,3 +1086,4 @@ print("Number of events in output tree " + str(trees[0].GetEntries()))
 
 endTime = datetime.datetime.now()
 print("Ending running at " + str(endTime) + "\n So long, and thanks for all the fish")
+

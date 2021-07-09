@@ -2177,6 +2177,10 @@ DataEle_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataEle_2017")
 DataEle_2017.year = 2017
 DataEle_2017.components = [DataEleB_2017, DataEleC_2017, DataEleD_2017, DataEleE_2017, DataEleF_2017]
 
+DataEleMu_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataEleMu_2017")
+DataEleMu_2017.year = 2017
+DataEleMu_2017.components = [DataEleB_2017, DataEleC_2017, DataEleD_2017, DataEleE_2017, DataEleF_2017, DataMuB_2017, DataMuC_2017, DataMuD_2017, DataMuE_2017, DataMuF_2017]
+
 DataEleFake_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataEleFake_2017")
 DataEleFake_2017.year = 2017
 DataEleFake_2017.components = [DataEleC_2017, DataEleD_2017, DataEleE_2017, DataEleF_2017]
@@ -2261,6 +2265,10 @@ FakeMuFakeTau_2017.components = [DataMu_2017, DataHT_2017, WJets_2017, DYJetsToL
 FakeMu_2017 = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeMu_2017")
 FakeMu_2017.year = 2017
 FakeMu_2017.components = [DataMu_2017, DataHT_2017, WJets_2017, DYJetsToLL_2017]
+
+FakeEleMu_2017 = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeEleMu_2017")
+FakeEleMu_2017.year = 2017
+FakeEleMu_2017.components = [DataEleMu_2017]
 
 DataMETB_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMETB_2017")
 DataMETB_2017.runP = 'B'
@@ -2511,6 +2519,8 @@ sample_dict={
     'FakeMuPromptTau_2017':FakeMuPromptTau_2017, 'PromptMuFakeTau_2017':PromptMuFakeTau_2017, 'FakeMuFakeTau_2017':FakeMuFakeTau_2017,
     'DataEle_2017':DataEle_2017, 'DataEleB_2017':DataEleB_2017, 'DataEleC_2017':DataEleC_2017, 'DataEleD_2017':DataEleD_2017, 'DataEleE_2017':DataEleE_2017, 'DataEleF_2017':DataEleF_2017, 'DataEleFake_2017': DataEleFake_2017, 'MCFake_2017': MCFake_2017,
     'FakeElePromptTau_2017':FakeElePromptTau_2017, 'PromptEleFakeTau_2017':PromptEleFakeTau_2017, 'FakeEleFakeTau_2017':FakeEleFakeTau_2017,
+    'DataEleMu_2017':DataEleMu_2017,
+    'FakeEleMu_2017':FakeEleMu_2017,
     'DataTau_2017':DataTau_2017, 'DataTauB_2017':DataTauB_2017, 'DataTauC_2017':DataTauC_2017, 'DataTauD_2017':DataTauD_2017, 'DataTauE_2017':DataTauE_2017, 'DataTauF_2017':DataTauF_2017, 'DataTauFake_2017': DataTauFake_2017,
     'DataHT_2017':DataHT_2017, 'DataHTnoB_2017':DataHTnoB_2017, 'DataHTB_2017':DataHTB_2017, 'DataHTC_2017':DataHTC_2017, 'DataHTD_2017':DataHTD_2017, 'DataHTE_2017':DataHTE_2017, 'DataHTF_2017':DataHTF_2017,
     'DataMET_2017':DataMET_2017, 'DataMETB_2017':DataMETB_2017, 'DataMETC_2017':DataMETC_2017, 'DataMETD_2017':DataMETD_2017, 'DataMETE_2017':DataMETE_2017, 'DataMETF_2017':DataMETF_2017,
@@ -2792,6 +2802,7 @@ merge_dict={
     'DataMu_2017':DataMu_2017,
     'DataEle_2017':DataEle_2017,
     'DataHT_2017':DataHT_2017,
+    'DataEleMu_2017':DataEleMu_2017,
 }
 
 
