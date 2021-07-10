@@ -116,7 +116,7 @@ if opt.bveto:
 elif opt.sr:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>40.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>40.)*(" + cut + ")", 
-                'inclOA':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>40.)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>40.)*(" + cut + ")", 
             }
     cut_tag = 'SR'
     if opt.cut != "1.":
@@ -133,7 +133,7 @@ elif opt.ttbar:
 elif opt.wjets:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_b_veto==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_b_veto==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_tau_veto==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_tau_veto==1&&MET_pt<=50.&&(mT_electron_MET>50.||mT_muon_MET>50.))*(" + cut + ")",
             }
     cut_tag = 'wjets_CR'
     if opt.cut != "1.":
@@ -141,7 +141,7 @@ elif opt.wjets:
 elif opt.qcd:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET<50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET<50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.&&mT_lep_MET<50.)*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.&&(mT_electron_MET<50.&&mT_muon_MET<50.))*(" + cut + ")",
             }
     cut_tag = 'QCD_CR'
     if opt.cut != "1.":
@@ -1046,6 +1046,10 @@ else:
           #print(v)
           if opt.signal and not ('WpWpJJ_EWK' in v.label or 'VBS_SSWW' in v.label):
                continue
+          if opt.channel == 'ltau' and 'EleMu_' in v.label:
+               continue
+          elif opt.channel == 'emu' and 'Fake' in v.label and not 'EleMu_' in v.label:
+               continue
           if 'DataMET' in v.label:
                continue
           elif ('DataHT' in v.label and not opt.folder.startswith('CTHT')):
@@ -1072,12 +1076,12 @@ else:
 
 for year in years:
     for sample in dataset_dict[year]:
-          if(opt.merpart):
-               mergepart(sample)
-          if(opt.lumi):
-               lumi_writer(sample, lumi[year])
-          if(opt.mertree):
-               mergetree(sample)
+        if(opt.merpart):
+            mergepart(sample)
+        if(opt.lumi):
+            lumi_writer(sample, lumi[year])
+        if(opt.mertree):
+            mergetree(sample)
 
 print("\nStarting")
 for year in years:
