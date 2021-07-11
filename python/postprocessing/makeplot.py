@@ -728,11 +728,13 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
 
     #print(samples_)
     for s in samples_:
+        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_'+str(s.year) in s.label or 'SSWW_cW_'+str(s.year) in s.label or 'SSWW_FS0_'+str(s.year) in s.label or 'SSWW_FM1_'+str(s.year) in s.label or 'SSWW_FT2_'+str(s.year) in s.label):
+            continue
         if opt.wfake != 'nofake':
             if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('DY') or s.label.startswith('TT_'):
                 continue
             elif 'Fake' in s.label:
-                if opt.wfake.startswith('incl') and not (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_')):
+                if opt.wfake.startswith('incl') and not (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_') or s.label.startswith('FakeEleMu_')):
                     continue
                 elif opt.wfake.startswith('sep') and (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_')):
                     continue
@@ -752,11 +754,13 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
     i = 0
 
     for s in samples_:
+        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_'+str(s.year) in s.label or 'SSWW_cW_'+str(s.year) in s.label or 'SSWW_FS0_'+str(s.year) in s.label or 'SSWW_FM1_'+str(s.year) in s.label or 'SSWW_FT2_'+str(s.year) in s.label):
+            continue
         if opt.wfake != 'nofake':
             if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('DY') or s.label.startswith('TT_'):
                 continue
             elif 'Fake' in s.label:
-                if opt.wfake.startswith('incl') and not (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_')):
+                if opt.wfake.startswith('incl') and not (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_') or s.label.startswith('FakeEleMu_')):
                     continue
                 elif opt.wfake.startswith('sep') and (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_')):
                     continue
@@ -849,12 +853,13 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
     else:
         maximum = stack.GetMaximum()
     logscale = True # False #
-    if(logscale):
+    if(logscale) and stack.GetStack().Last().Integral()>0.:
+        stack.SetMinimum(0.01)
         pad1.SetLogy()
         stack.SetMaximum(maximum*10000)
     else:
         stack.SetMaximum(maximum*1.6)
-    stack.SetMinimum(0.01)
+
     if opt.tostack:
         stack.Draw("HIST")
     else:
@@ -1043,30 +1048,34 @@ if(opt.dat != 'all'):
      [dataset_dict[str(sample.year)].append(sample) for sample in samples]
 else:
      for v in class_list:
-          #print(v)
+
           if opt.signal and not ('WpWpJJ_EWK' in v.label or 'VBS_SSWW' in v.label):
                continue
           if opt.channel == 'ltau' and 'EleMu_' in v.label:
                continue
-          elif opt.channel == 'emu' and 'Fake' in v.label and not 'EleMu_' in v.label:
-               continue
+
+          #elif opt.channel == 'emu' and 'Fake' in v.label and not 'EleMu_' in v.label:
+               #continue
           if 'DataMET' in v.label:
                continue
           elif ('DataHT' in v.label and not opt.folder.startswith('CTHT')):
                continue
           elif (opt.folder.startswith('CTHT') and ('DataEle' in v.label or 'DataMu' in v.label or 'QCD' in v.label)):
                continue
-          elif 'electron' in leptons:
-               if 'DataMu' in v.label or 'FakeMu' in v.label or 'PromptMu' in v.label:
+
+          if 'electron' in leptons:
+               if 'DataMu' in v.label or 'FakeMu' in v.label or 'PromptMu' in v.label or 'DataEleMu' in v.label or 'FakeEleMu' in v.label:
                     continue
           elif 'muon' in leptons:
-               if 'DataEle' in v.label or 'FakeEle' in v.label or 'PromptEle' in v.label:
+               if 'DataEle' in v.label or 'FakeEle' in v.label or 'PromptEle' in v.label or 'DataEleMu' in v.label or 'FakeEleMu' in v.label:
                     continue
+          elif 'incl' in leptons:
+               if 'DataEle_' in v.label or 'FakeEleP' in v.label or 'FakeEleF' in v.label or 'FakeEle_' in v.label or 'PromptEle' in v.label or 'DataMu' in v.label or 'FakeMu' in v.label or 'PromptMu' in v.label:
+                   continue
+                
+
           dataset_dict[str(v.year)].append(v)
 
-for v in dataset_dict.values():
-     print([o.label for o in v])
-#print(dataset_dict.keys())
 
 years = []
 if(opt.year!='all'):
@@ -1089,7 +1098,7 @@ for year in years:
     for lep in leptons:
         print(lep)
         dataset_new = dataset_dict[year]
-        print([h.label for h in dataset_new])
+
         #dataset_new.remove(sample_dict['DataMET_'+str(year)])
         if lep == 'muon' and sample_dict['DataEle_'+str(year)] in dataset_new:
             dataset_new.remove(sample_dict['DataEle_'+str(year)])
@@ -1194,8 +1203,8 @@ for year in years:
 
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 10, -2.5, 2.5))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-        '''
 
+        '''
         bin_ak8leadjet_pt = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
         variables.append(variabile('AK8leadjet_pt',  'AK8 Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_ak8leadjet_pt, bin_ak8leadjet_pt))#30, 1500))
@@ -1223,8 +1232,8 @@ for year in years:
         variables.append(variabile('AK8subleadjet_tau21', 'AK8 Sublead jet #tau_{21}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('AK8subleadjet_tau32', 'AK8 Sublead jet #tau_{32}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('AK8subleadjet_tau43', 'AK8 Sublead jet #tau_{43}',  wzero+'*('+cutbase+')',  10, 0., 1.))
-
         '''
+
         bin_subleadjet_pt = array("f", [0., 100., 250., 500.])
         nbin_subleadjet_pt = len(bin_subleadjet_pt) - 1
         variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_subleadjet_pt, bin_subleadjet_pt))#40, 30, 1000))
@@ -1302,16 +1311,17 @@ for year in years:
         
         bin_deltaeta_jj = array("f", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
         nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
+        
         '''
-
         variables.append(variabile('deltaTheta_jj', 'cos(#Delta#theta_{jj})',  wzero+'*('+cutbase+')',  nbin_deltaeta_jj, bin_deltaeta_jj))
         variables.append(variabile('deltaTheta_' + lep12[0], 'cos(#Delta#theta_{' + lep12[1] + '})',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('deltaTheta' + lep2[0] + 'j1', 'cos(#Delta#theta_{' + lep2[1] + ' j_{1}})',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('deltaTheta' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('deltaTheta' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', 10, 0., 1.))
         variables.append(variabile('deltaTheta' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', 10, 0., 1.))
-
+        
         '''
+        
         bin_ptRel = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 250., 300., 400., 500.])
         nbin_ptRel = len(bin_ptRel) - 1
         
@@ -1322,7 +1332,7 @@ for year in years:
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
         
-        variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
+        #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
 
         for sample in dataset_new:
             print(sample)
@@ -1349,6 +1359,7 @@ for year in years:
             for var in variables:
                 print(var._xmax)
                 #os.system('set LD_PRELOAD=libtcmalloc.so')
+                print("channel", opt.channel)
                 makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)])
                 #os.system('set LD_PRELOAD=libtcmalloc.so')
 
@@ -1356,3 +1367,4 @@ for year in years:
             dataset_new.append(sample_dict['DataEle_'+str(year)])
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
+
