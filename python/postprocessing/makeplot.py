@@ -28,6 +28,7 @@ parser.add_option('--mertree', dest='mertree', default = False, action='store_tr
 parser.add_option('--lumi', dest='lumi', default = False, action='store_true', help='Default do not write the normalization weights')
 parser.add_option('--sel', dest='sel', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--bveto', dest='bveto', default = False, action='store_true', help='Default do not apply any selection')
+parser.add_option('--bbv', dest='bbv', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--sr', dest='sr', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--bdt', dest='bdt', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--ebdt', dest='ebdt', default = False, action='store_true', help='Default do not apply any selection')
@@ -110,6 +111,15 @@ if opt.bveto:
                  'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_upToBVeto==1)*(" + cut + ")", 
     }
     cut_tag = 'selection_upto_bveto'
+    if opt.cut != "1.":
+        cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
+
+if opt.bbv:
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_tau_selection==1&&pass_charge_selection==1&&pass_jet_selection==1)*(" + cut + ")", 
+                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_tau_selection==1&&pass_charge_selection==1&&pass_jet_selection==1)*(" + cut + ")", 
+                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_tau_veto==1)*(" + cut + ")", 
+    }
+    cut_tag = 'selection_before_bveto'
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
 
