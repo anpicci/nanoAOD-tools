@@ -1953,12 +1953,12 @@ def Lepton_IDIso_SF(lepton):
         print("I dunno what to do with this particle :/")
         return -1.
 
-def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2'):
+def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ', frvsjet4 = 'FR_vsjet4_vsmuT_ZZ'):
     #inFile = ROOT.TFile.Open("FR_vsjet2.root")
     if wp == 'vsjet2':
-        inFile = ROOT.TFile.Open("FR_vsjet2_vsmuT.root")
+        inFile = ROOT.TFile.Open(frvsjet2 + ".root")
     elif wp == 'vsjet4':
-        inFile = ROOT.TFile.Open("FR_vsjet4_vsmuT.root")
+        inFile = ROOT.TFile.Open(frvsjet4 + ".root")
     #if prompt:
     histo=ROOT.TH2F(inFile.Get("hFRDataeledif"))
     #else:
@@ -1980,44 +1980,15 @@ def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2'):
 
     FR = copy.deepcopy(histo.GetBinContent(binx, biny))
 
-    '''
-    if(pT<=20):
-        if(abs(eta)<1):         FR=histo.GetBinContent(1,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(1,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(1,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(1,4)
-    elif(pT<=30):
-        if(abs(eta)<1):         FR=histo.GetBinContent(2,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(2,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(2,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(2,4)
-    elif(pT<=40):
-        if(abs(eta)<1):         FR=histo.GetBinContent(3,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(3,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(3,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(3,4)
-    elif(pT<=50):
-        if(abs(eta)<1):         FR=histo.GetBinContent(4,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(4,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(4,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(4,4)
-    elif(pT>50):
-        if(abs(eta)<1):         FR=histo.GetBinContent(5,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(5,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(5,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(5,4)
-    else: FR=0
-    '''
-
     return FR/(1-FR)
 
-def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2'):
+def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ', frvsjet4 = 'FR_vsjet4_vsmuT_ZZ'):
     histo = ROOT.TH2F()
     #inFile = ROOT.TFile.Open("FR_vsjet2.root")
     if wp == 'vsjet2':
-        inFile = ROOT.TFile.Open("FR_vsjet2_vsmuT.root")
+        inFile = ROOT.TFile.Open(frvsjet2 + ".root")
     elif wp == 'vsjet4':
-        inFile = ROOT.TFile.Open("FR_vsjet4_vsmuT.root")
+        inFile = ROOT.TFile.Open(frvsjet4 + ".root")
     #if prompt:
     histo=(ROOT.TH2F)(inFile.Get("hFRDatataudif"))
     #else:
@@ -2040,44 +2011,15 @@ def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2'):
 
     FR = copy.deepcopy(histo.GetBinContent(binx, biny))
 
-    '''
-    if(pT<=20):
-        if(abs(eta)<1):         FR=histo.GetBinContent(1,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(1,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(1,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(1,4)
-    elif(pT<=30):
-        if(abs(eta)<1):         FR=histo.GetBinContent(2,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(2,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(2,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(2,4)
-    elif(pT<=40):
-        if(abs(eta)<1):         FR=histo.GetBinContent(3,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(3,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(3,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(3,4)
-    elif(pT<=50):
-        if(abs(eta)<1):         FR=histo.GetBinContent(4,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(4,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(4,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(4,4)
-    elif(pT>50):
-        if(abs(eta)<1):         FR=histo.GetBinContent(5,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(5,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(5,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(5,4)
-    else: FR=0    
-    '''
-
     return FR/(1-FR)
 
-def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2'):
+def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ', frvsjet4 = 'FR_vsjet4_vsmuT_ZZ'):
     histo = ROOT.TH2F()
     #inFile = ROOT.TFile.Open("FR_vsjet2.root")
     if wp == 'vsjet2':
-        inFile = ROOT.TFile.Open("FR_vsjet2_vsmuT.root")
+        inFile = ROOT.TFile.Open(frvsjet2 + ".root")
     elif wp == 'vsjet4':
-        inFile = ROOT.TFile.Open("FR_vsjet4_vsmuT.root")
+        inFile = ROOT.TFile.Open(frvsjet4 + ".root")
     #if prompt:
     histo=(ROOT.TH2F)(inFile.Get("hFRDatamudif"))
     #else:
@@ -2098,35 +2040,6 @@ def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2'):
         biny = 1
 
     FR = copy.deepcopy(histo.GetBinContent(binx, biny))
-
-    '''
-    if(pT<=20):
-        if(abs(eta)<1):         FR=histo.GetBinContent(1,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(1,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(1,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(1,4)
-    elif(pT<=30):
-        if(abs(eta)<1):         FR=histo.GetBinContent(2,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(2,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(2,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(2,4)
-    elif(pT<=40):
-        if(abs(eta)<1):         FR=histo.GetBinContent(3,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(3,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(3,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(3,4)
-    elif(pT<=50):
-        if(abs(eta)<1):         FR=histo.GetBinContent(4,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(4,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(4,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(4,4)
-    elif(pT>50):
-        if(abs(eta)<1):         FR=histo.GetBinContent(5,1)
-        elif(abs(eta)<1.5):     FR=histo.GetBinContent(5,2)
-        elif(abs(eta)<2):       FR=histo.GetBinContent(5,3)
-        elif(abs(eta)<2.4):     FR=histo.GetBinContent(5,4)
-    else: FR=0    
-    '''
 
     return FR/(1-FR)
 

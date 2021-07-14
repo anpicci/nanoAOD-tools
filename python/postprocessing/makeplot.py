@@ -1160,7 +1160,7 @@ for year in years:
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
         
         
-        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 200., 300., 500.])
+        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 200., 300.])#, 500.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
         

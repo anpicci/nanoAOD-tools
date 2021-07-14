@@ -748,11 +748,15 @@ for i in range(tree.GetEntries()):
     
     if Debug:
         print("\nevento n. " + str(i))
-        #if i > 30000:
-            #break
+        if i > 10000:
+            break
     
-    if i%500 == 0 and not Debug:#
-        print("Event #", i+1, " out of ", tree.GetEntries())
+    else:
+        if (i+1)%1000 == 0 and i!=0:
+            print("Event #", i+1, " out of ", tree.GetEntries())
+
+    if i%(tree.GetEntries()) == 0:
+        print("Last event being processed (#" + str(i+1))
 
     event       = Event(tree,i)
     electrons   = Collection(event, "Electron")
@@ -958,7 +962,8 @@ for i in range(tree.GetEntries()):
     GoodLep = leptons[indexGoodLep]
 
     #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodEle:", indexGoodEle, "indexGoodMu:", indexGoodMu, "GoodLep_pdgid:", GoodLep.pdgId)
-    print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodLep:", indexGoodLep, "tightlep_pdgid:", GoodLep.pdgId, "pass_lepton_veto:", pass_lepton_veto[0])
+    if Debug:
+        print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodLep:", indexGoodLep, "tightlep_pdgid:", GoodLep.pdgId, "pass_lepton_veto:", pass_lepton_veto[0])
 
     MET_pt[0]   =   met.pt  
     MET_phi[0]  =   met.phi
@@ -1403,15 +1408,18 @@ for i in range(tree.GetEntries()):
                         kpow = 0
                         #print(sample.label, "_BSM_" in sample.label, "_0_" in sample.label, "_INT_" in sample.label)
                         if "_BSM_" in sample.label:#
-                            print("BSM")
+                            if Debug:
+                                print("BSM")
                             wsign = +1.
                             kpow = 2.*(epoint**2.)
                         elif "_0_" in sample.label:
-                            print("0")
+                            if Debug:
+                                print("0")
                             wsign = +1.
                             kpow = +2.
                         elif "_INT_" in sample.label:
-                            print("INT")
+                            if Debug:
+                                print("INT")
                             wsign = -1.
                             kpow = 2.*epoint
                             
