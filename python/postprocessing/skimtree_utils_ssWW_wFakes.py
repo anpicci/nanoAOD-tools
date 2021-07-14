@@ -162,6 +162,9 @@ def get_ptrel(lepton, jet, taucorr=1.):
     ptrel = (lepjet_tv.Cross(lep_tv)).Mag()/(lepjet_tv.Mag())
     return ptrel
 
+def get_Jet(jets, pt): #returns a collection of jets that pass the selection performed by the filter function
+    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId>=7)), jets))
+
 def SelectLepton(lepCollection, isMu): #isMu==True -> muons else Ele 
     pT_cut=-999
     eta_cut=-999
