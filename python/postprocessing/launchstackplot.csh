@@ -1,6 +1,6 @@
 set LD_PRELOAD=libtcmalloc.so
 set year = 2017
-set folder = v85
+set folder = v86
 
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder/stack_vsjet2/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder/stack_vsjet4/ #countings
@@ -9,7 +9,7 @@ set folder = v85
 set LD_PRELOAD=libtcmalloc.so
 
 ###### electron #######
-#python makeplot.py -y 2017 --lep electron --bveto -f $folder -s --wfake incl_vsjet4 #--cut "abs(lepton_eta)<2.&&abs(tau_eta)<2.&&tau_mass<1.5" 
+python makeplot.py -y 2017 --lep electron --bveto -f $folder -s --wfake incl_vsjet4 #--cut "abs(lepton_eta)<2.&&abs(tau_eta)<2.&&tau_mass<1.5" 
 #python makeplot.py -y 2017 --lep electron --bveto -f $folder -s --wfake sep_vsjet4 
 
 #python makeplot.py -y 2017 --lep electron --bveto -f $folder -s --wfake sep_vsjet4 --bdt #--blinded
@@ -160,7 +160,7 @@ set channel = 'emu'
 
 set LD_PRELOAD=libtcmalloc.so
 
-python makeplot.py -y 2017 --lep incl --bbv -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
+#python makeplot.py -y 2017 --lep incl --bbv -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
 #python makeplot.py -y 2017 --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 #--blinded
 
 #python makeplot.py -y 2017 --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt #--blinded
