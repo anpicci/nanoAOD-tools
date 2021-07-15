@@ -18,7 +18,7 @@ import math
 import datetime
 import copy
 from array import array
-from skimtree_utils import *
+from skimtree_utils_ssWW_wFakes import *
 
 if sys.argv[4] == 'remote':
     from samples import *
@@ -54,16 +54,30 @@ print("Number of events in chain " + str(chain.GetEntries()))
 tree = InputTree(chain)
 print("Number of entries: " +str(tree.GetEntries()))
 #print("tree: ", tree)
+
 isMC = True
-if ('Data' in sample.label):
+if ('Data' in sample.name):
     isMC = False
+
+#MCReco = MCReco * isMC
+
+IsDim8 = False
+if 'aQGC' in sample.name:
+    IsDim8 = True
+
+dataEle = False
+dataMu = False
+if 'DataMu' in sample.name:
+    dataMu = True
+if 'DataEle' in sample.name:
+    dataEle = True
 
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])
 folder = 'vbtag'
-if not os.path.exists("/eos/user/" + inituser + "/" + username + "/Wprime/nosynch/" + folder + "/" + sample.label):
-    os.makedirs("/eos/user/" + inituser + "/" + username +"/Wprime/nosynch/" + folder + "/" + sample.label)
-outpath = "/eos/user/" + inituser + "/" + username +"/Wprime/nosynch/" + folder + "/" + sample.label + "/"
+if not os.path.exists("/eos/user/" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label):
+    os.makedirs("/eos/user/" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label)
+outpath = "/eos/user/" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label + "/"
 #++++++++++++++++++++++++++++++++++
 #++   branching the new trees    ++
 #++++++++++++++++++++++++++++++++++
@@ -82,16 +96,16 @@ ptMax = 1000.
 etaNBins = 60
 etaMin = -3.
 etaMax = 3.
-ptbins = array.array('f', [100, 140, 200, 300, 600, 1000])
-etabins = array.array('f', [0.0, 0.8, 1.6, 2.5])
+ptbins = array.array('f', [30, 40, 50, 60, 80, 100, 140, 200, 300, 600, 1000])
+etabins = array.array('f', [0.0, 0.8, 1.6, 2.4, 3.2, 4.0, 5.0])
 nptbins = len(ptbins)-1
 netabins = len(etabins)-1
-h2_BTaggingEff_Denom_b    = ROOT.TH2D("h2_BTaggingEff_Denom_b", ";p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
-h2_BTaggingEff_Denom_c    = ROOT.TH2D("h2_BTaggingEff_Denom_c", ";p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
-h2_BTaggingEff_Denom_udsg = ROOT.TH2D("h2_BTaggingEff_Denom_udsg", ";p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
-h2_BTaggingEff_Num_b    = ROOT.TH2D("h2_BTaggingEff_Num_b", ";p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
-h2_BTaggingEff_Num_c    = ROOT.TH2D("h2_BTaggingEff_Num_c", ";p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
-h2_BTaggingEff_Num_udsg = ROOT.TH2D("h2_BTaggingEff_Num_udsg", ";p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_BTaggingEff_Denom_b    = ROOT.TH2D("h2_BTaggingEff_Denom_b", "MC bjet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_BTaggingEff_Denom_c    = ROOT.TH2D("h2_BTaggingEff_Denom_c", "MC cjet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_BTaggingEff_Denom_udsg = ROOT.TH2D("h2_BTaggingEff_Denom_udsg", "MC ljet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_BTaggingEff_Num_b    = ROOT.TH2D("h2_BTaggingEff_Num_b", "Tagged bjet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_BTaggingEff_Num_c    = ROOT.TH2D("h2_BTaggingEff_Num_c", "Tagged cjet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_BTaggingEff_Num_udsg = ROOT.TH2D("h2_BTaggingEff_Num_udsg", "Tagged ljet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
 #++++++++++++++++++++++++++++++++++
 #++   looping over the events    ++
 #++++++++++++++++++++++++++++++++++
@@ -111,8 +125,10 @@ for i in range(tree.GetEntries()):
     njets = len(jets)
     fatjets = Collection(event, "FatJet")
     HLT = Object(event, "HLT")
+    PV = Object(event, "PV")
+    Flag = Object(event, 'Flag')
 
- #++++++++++++++++++++++++++++++++++
+    #++++++++++++++++++++++++++++++++++
     #++      defining variables      ++
     #++++++++++++++++++++++++++++++++++
     tightlep = None
@@ -207,7 +223,7 @@ for i in range(tree.GetEntries()):
         else:
             continue
 
-if ElMu:
+    if ElMu:
         if indexGoodMu<0 and indexGoodEle>=0 and ele_lepton_veto:
             indexGoodLep = copy.deepcopy(indexGoodEle)
             lepton_TightRegion = copy.deepcopy(ele_TightRegion)
@@ -254,11 +270,11 @@ if ElMu:
     
     if SingleEle==True:
         if isMC: 
-            HLT_effLumi[0] = lumiFinder("Ele", vTrigEle)
+            HLT_effLumi = lumiFinder("Ele", vTrigEle)
         leptons = electrons
     elif SingleMu==True:
         if isMC:
-            HLT_effLumi[0] = lumiFinder("Mu", vTrigMu)
+            HLT_effLumi = lumiFinder("Mu", vTrigMu)
         leptons = muons
 
     elif not (SingleMu or SingleEle):
@@ -269,7 +285,7 @@ if ElMu:
     if SingleMu and dataEle:
         continue
    
-    if indexGoodLep<0 or indexGoodLep>=len(leptons) or (lepton_TightRegion < 1
+    if indexGoodLep<0 or indexGoodLep>=len(leptons) or (lepton_TightRegion < 1):
         if Debug:
             print("exiting at lepton selection (without saving)")
         continue
@@ -277,7 +293,7 @@ if ElMu:
     ######################################
     ## Selecting only jets with pt>30  ##
     ######################################
-    goodJets = get_Jet(jets, 100)
+    goodJets = get_Jet(jets, 30)
     bjets, nobjets = bjet_filter(goodJets, 'DeepFlv', 'M')
 
     if (len(goodJets) < 2 or len(fatjets) < 2):
@@ -305,8 +321,11 @@ h2_BTaggingEff_Num_b.Write()
 h2_BTaggingEff_Num_c.Write()
 h2_BTaggingEff_Num_udsg.Write()
 h2_Eff_b = ROOT.TEfficiency(h2_BTaggingEff_Num_b, h2_BTaggingEff_Denom_b)
+h2_Eff_b.SetTitle("btag efficiency;p_{T} [GeV]:|#eta|")
 h2_Eff_c = ROOT.TEfficiency(h2_BTaggingEff_Num_c, h2_BTaggingEff_Denom_c)
+h2_Eff_b.SetTitle("ctag efficiency;p_{T} [GeV]:|#eta|")
 h2_Eff_udsg = ROOT.TEfficiency(h2_BTaggingEff_Num_udsg, h2_BTaggingEff_Denom_udsg)
+h2_Eff_b.SetTitle("ltag efficiency;p_{T} [GeV]:|#eta|")
 h2_Eff_b.Write()
 h2_Eff_c.Write()
 h2_Eff_udsg.Write()

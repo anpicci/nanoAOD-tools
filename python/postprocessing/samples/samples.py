@@ -274,9 +274,18 @@ TT_Had_2017.sigma =  377.96 #pb
 TT_Had_2017.year = 2017
 TT_Had_2017.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/"+tag2_2017+"-v2/NANOAODSIM"
 
+TTTo2L2Nu_2017 = sample(ROOT.kAzure-9, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_2017")
+TTTo2L2Nu_2017.sigma =  88.287 #pb
+TTTo2L2Nu_2017.year = 2017
+TTTo2L2Nu_2017.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/"+tag2_2017+"-v1/NANOAODSIM"
+
 TT_2017 = sample(ROOT.kRed+3, 1, 1001, "t#bar{t} FH+SL", "TT_2017")
 TT_2017.year = 2017
 TT_2017.components = [TT_SemiLep_2017, TT_Had_2017]#TT_DiLep_2017,
+
+TT_beff_2017 = sample(ROOT.kRed+3, 1, 1001, "t#bar{t} FH+SL", "TT_2017")
+TT_beff_2017.year = 2017
+TT_beff_2017.components = [TT_SemiLep_2017, TT_Had_2017, TTTo2L2Nu_2017]
 
 ###############################  NEW  ################################
 ###############################  TVX  ################################
@@ -385,11 +394,6 @@ GluGluToWWToTNuTNu2017 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToTNuENu", "G
 GluGluToWWToTNuTNu2017.sigma = 45.62
 GluGluToWWToTNuTNu2017.year = 2017
 GluGluToWWToTNuTNu2017.dataset = "/GluGluToWWToTNTN_13TeV_MCFM701_pythia8/"+tag_2017+"-v1/NANOAODSIM"
-
-TTTo2L2Nu_2017 = sample(ROOT.kAzure-9, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_2017")
-TTTo2L2Nu_2017.sigma =  88.287 #pb
-TTTo2L2Nu_2017.year = 2017
-TTTo2L2Nu_2017.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/"+tag2_2017+"-v1/NANOAODSIM"
 
 STtW_top_2017 = sample(ROOT.kAzure-9, 1, 1001, "single t", "STtW_top_2017")
 STtW_top_2017.sigma =  34.91#pb
@@ -2499,7 +2503,9 @@ sample_dict={
     'QCD_2017':QCD_2017, 'QCDHT_100to200_2017':QCDHT_100to200_2017, 'QCDHT_200to300_2017':QCDHT_200to300_2017, 'QCDHT_300to500_2017':QCDHT_300to500_2017, 'QCDHT_500to700_2017':QCDHT_500to700_2017, 'QCDHT_700to1000_2017':QCDHT_700to1000_2017, 'QCDHT_1000to1500_2017':QCDHT_1000to1500_2017, 'QCDHT_1500to2000_2017':QCDHT_1500to2000_2017, 'QCDHT_2000toInf_2017':QCDHT_2000toInf_2017,
     'ZZtoLep_2017':ZZtoLep_2017, 'ZZTo2L2Nu_2017':ZZTo2L2Nu_2017, 'ZZJJTo4L_EWK_2017':ZZJJTo4L_EWK_2017, 'ZZJJTo4L_QCD_2017':ZZJJTo4L_QCD_2017, 'GluGluToContinToZZTo2e2nu_2017':GluGluToContinToZZTo2e2nu_2017, 'GluGluToContinToZZTo2e2mu_2017':GluGluToContinToZZTo2e2mu_2017, 'GluGluToContinToZZTo2e2tau_2017':GluGluToContinToZZTo2e2tau_2017, 'GluGluToContinToZZTo2mu2nu_2017':GluGluToContinToZZTo2mu2nu_2017, 'GluGluToContinToZZTo2mu2tau_2017':GluGluToContinToZZTo2mu2tau_2017, 'GluGluToContinToZZTo4e_2017':GluGluToContinToZZTo4e_2017, 'GluGluToContinToZZTo4mu_2017':GluGluToContinToZZTo4mu_2017, 'GluGluToContinToZZTo4tau_2017':GluGluToContinToZZTo4tau_2017,
     'GluGluToContinToZZTo4L_2017':GluGluToContinToZZTo4L_2017,
-    'TT_2017':TT_2017, 'TT_SemiLep2017':TT_SemiLep_2017, 'TT_Had_2017':TT_Had_2017,#'TT_DiLep_2017':TT_DiLep_2017, 
+    'TT_2017':TT_2017, 'TT_SemiLep2017':TT_SemiLep_2017, 'TT_Had_2017':TT_Had_2017,
+    'TTTo2L2Nu_2017':TTTo2L2Nu_2017,
+    'TT_beff_2017':TT_beff_2017,
     'WJets_2017':WJets_2017, 'WJetsHT70to100_2017':WJetsHT70to100_2017, 'WJetsHT100to200_2017':WJetsHT100to200_2017, 'WJetsHT200to400_2017':WJetsHT200to400_2017, 'WJetsHT400to600_2017':WJetsHT400to600_2017, 'WJetsHT600to800_2017':WJetsHT600to800_2017, 'WJetsHT800to1200_2017':WJetsHT800to1200_2017, 'WJetsHT1200to2500_2017':WJetsHT1200to2500_2017, 'WJetsHT2500toInf_2017':WJetsHT2500toInf_2017,
     'WJets_Fake_2017':WJets_Fake_2017, 'WJetsHT70to100_Fake_2017':WJetsHT70to100_Fake_2017, 'WJetsHT100to200_Fake_2017':WJetsHT100to200_Fake_2017, 'WJetsHT200to400_Fake_2017':WJetsHT200to400_Fake_2017, 'WJetsHT400to600_Fake_2017':WJetsHT400to600_Fake_2017, 'WJetsHT600to800_Fake_2017':WJetsHT600to800_Fake_2017, 'WJetsHT800to1200_Fake_2017':WJetsHT800to1200_Fake_2017, 'WJetsHT1200to2500_Fake_2017':WJetsHT1200to2500_Fake_2017, 'WJetsHT2500toInf_Fake_2017':WJetsHT2500toInf_Fake_2017,
     'DYJetsToLL_2017':DYJetsToLL_2017, 'DY1JetsToLL_2017':DY1JetsToLL_2017, 'DY2JetsToLL_2017':DY2JetsToLL_2017, 'DY3JetsToLL_2017':DY3JetsToLL_2017, 'DY4JetsToLL_2017':DY4JetsToLL_2017, 'DYJetsToLLM5to50_2017':DYJetsToLLM5to50_2017,
@@ -2511,7 +2517,6 @@ sample_dict={
     'WrongSign_2017': WrongSign_2017, 'WWto2L2Nu_2017':WWto2L2Nu_2017, 'GluGluToWWToENuENu_2017':GluGluToWWToENuENu_2017, 'GluGluToWWToENuMNu2017':GluGluToWWToENuMNu2017, 'GluGluToWWToENuTNu2017':GluGluToWWToENuTNu2017, 'GluGluToWWToMNuENu_2017':GluGluToWWToMNuENu_2017, 'GluGluToWWToMNuMNu2017':GluGluToWWToMNuMNu2017, 'GluGluToWWToMNuTNu2017':GluGluToWWToMNuTNu2017, 'GluGluToWWToTNuENu_2017':GluGluToWWToTNuENu_2017, 'GluGluToWWToTNuMNu2017':GluGluToWWToTNuMNu2017, 'GluGluToWWToTNuTNu2017':GluGluToWWToTNuTNu2017, 'STtW_top_2017':STtW_top_2017, 'GluGluHToWWTo2L2Nu_2017':GluGluHToWWTo2L2Nu_2017, 'GluGluHToZZTo2L2Q_2017':GluGluHToZZTo2L2Q_2017, 'GluGluHToZZTo4L_2017':GluGluHToZZTo4L_2017, 'GluGluHToTauTau_2017':GluGluHToTauTau_2017, 'VBFHToWWTo2L2Nu_2017':VBFHToWWTo2L2Nu_2017, 'VBFHToTauTau_2017':VBFHToTauTau_2017, 'ttHToNonbb_2017':ttHToNonbb_2017, 'VHToNonbb_2017':VHToNonbb_2017,
     'OtherWS_2017':OtherWS_2017,
     'Other_2017':Other_2017, 'WWTo2L2Nu_DoubleScattering_2017':WWTo2L2Nu_DoubleScattering_2017, 'WWW_4F_2017':WWW_4F_2017, 'WWZTo3L1Nu2Q_2017':WWZTo3L1Nu2Q_2017, 'WZZ_2017':WZZ_2017, 'ZZZ_2017':ZZZ_2017, 'WWG_2017':WWG_2017,
-    'TTTo2L2Nu_2017':TTTo2L2Nu_2017,
     'WZ_2017':WZ_2017,
     'FakeMu_2017':FakeMu_2017,
     'DataMu_2017':DataMu_2017, 'DataMuB_2017':DataMuB_2017, 'DataMuC_2017':DataMuC_2017, 'DataMuD_2017':DataMuD_2017, 'DataMuE_2017':DataMuE_2017, 'DataMuF_2017':DataMuF_2017, 'DataMuFake_2017': DataMuFake_2017,
@@ -2700,6 +2705,7 @@ condor_dict={
     'TVX_2017':TVX_2017,
     'OtherWS_2017':OtherWS_2017,
     'TTTo2L2Nu_2017':TTTo2L2Nu_2017,
+    'TT_beff_2017':TT_beff_2017,
     'WZ_2017':WZ_2017,
     'DataMu_2017':DataMu_2017,
     'DataEle_2017':DataEle_2017,
@@ -2798,6 +2804,7 @@ merge_dict={
     'Other_2017':Other_2017,
     'WrongSign_2017':WrongSign_2017,
     'TTTo2L2Nu_2017':TTTo2L2Nu_2017,
+    'TT_beff_2017':TT_beff_2017,
     'WZ_2017':WZ_2017,
     'DataMu_2017':DataMu_2017,
     'DataEle_2017':DataEle_2017,

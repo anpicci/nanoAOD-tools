@@ -28,31 +28,37 @@ def DoesSampleExist(samplename):
         return True
                 
 def AreAllCondored(crabname, condorname):
-    storelist = [line for line in open("../../crab/macros/files/"+crabname+".txt")]
-
     condoredlist = CondoredList(condorname)
+    if not opt.beff:
+        storelist = [line for line in open("../../crab/macros/files/"+crabname+".txt")]
 
-    if condorname+"_merged.root" in condoredlist:
-        condoredlist.remove(condorname+"_merged.root")
-    if condorname+".root" in condoredlist:
-        condoredlist.remove(condorname+".root")
+        if condorname+"_merged.root" in condoredlist:
+            condoredlist.remove(condorname+"_merged.root")
+        if condorname+".root" in condoredlist:
+            condoredlist.remove(condorname+".root")
 
-    lenstore = len(storelist)
+        lenstore = len(storelist)
 
-    if 'Data' in crabname:
-        remainder = int(lenstore%split)
-        lenstore = int(lenstore/split)
-        if remainder > 0:
-            lenstore += 1
+        if 'Data' in crabname:
+            remainder = int(lenstore%split)
+            lenstore = int(lenstore/split)
+            if remainder > 0:
+                lenstore += 1
 
-    if len(condoredlist) < lenstore:
-        print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
-        return False
-    elif lenstore==0 and len(condoredlist)==0:
-        print("Warning for", samplename, "False flag for crabbed files! need to recrab them")
-        return True
+        if len(condoredlist) < lenstore:
+            print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
+            return False
+        elif lenstore==0 and len(condoredlist)==0:
+            print("Warning for", samplename, "False flag for crabbed files! need to recrab them")
+            return True
+        else:
+            return True
+
     else:
-        return True
+        if len(condoredlist)==0:
+            return False
+        else:
+            return True
         
 usage = 'python SetAndLaunchCondorRun.py -y year -j wp_jet -m wp_mu -e wp_ele -f folder --max max_jobs -c -d dataset'
 parser = optparse.OptionParser(usage)
@@ -68,7 +74,7 @@ parser.add_option('--rw', dest='rw', default = False, action='store_true', help=
 parser.add_option('--try', dest='tryy', default = False, action='store_true', help='Rewrite the files if not are all condored for a specific sample')
 parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
-
+parser.add_option('--beff', dest='beff', default = False, action='store_true', help='Launching btag efficiencies study, default does not')
 
 (opt, args) = parser.parse_args()
 
@@ -107,16 +113,22 @@ print(opt.dat)
 if opt.fold == '':
     folder = "Eff_Jet" + opt.jetwp + "_Mu" + opt.muwp + "_Ele" + opt.elewp
 else:
-    folder = opt.fold + "/" + opt.channel
+    folder = opt.fold
+    if not opt.beff:
+        folder += "/" + opt.channel
+    else:
+        opt.channel = 'bjet'
 
 print(opt.fold, opt.channel, folder)
 path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/"
-print(path)
+print("output path:", path, "\n")
 
 subpy = ""
-optstring = " -f " + folder # + " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)# + " --wop"
+optstring = " -f " + folder
 
-if opt.tryy:
+if opt.beff:
+    subpy = "submit_condor_btag.py"
+elif opt.tryy:
     subpy = "submit_condor_try.py"
     if opt.channel == "ltau":
         optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
@@ -129,7 +141,7 @@ elif opt.channel == "emu":
 if not os.path.exists(path):
     os.makedirs(path)
 
-if opt.maxj > 0:
+if opt.maxj > 0 and not opt.beff:
     optstring = optstring + " --max " + str(opt.maxj)
 optstring = optstring + "\n"
 
