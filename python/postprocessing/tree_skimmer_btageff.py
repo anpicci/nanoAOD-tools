@@ -25,13 +25,36 @@ if sys.argv[4] == 'remote':
     Debug = False
 else:
     from samples.samples import *
-    Debug = False
+    Debug = True
 sample = sample_dict[sys.argv[1]]
 part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))
 #print("file_list: ", file_list, "\nloop #1 over it")
 #for infile in file_list:
     #print(infile)
+
+def AddOverflow(h):
+    nxbins = h.GetXaxis().GetNbins()
+    nybins = h.GetYaxis().GetNbins()
+
+    idxx = 0.
+    idxy = nybins + 1 
+    for ix in range(nxbins):
+        idxx = ix + 1 
+        ovf_bincont = h.GetBinContent(idxx, idxy)
+        last_bincont = h.GetBinContent(idxx, nybins)
+        new_last_bincont = ovf_bincont + last_bincont
+        h.SetBinContent(idxx, nybins, new_last_bincont)
+
+    idxx = nxbins + 1 
+    idxy = 0. 
+    for iy in range(nybins):
+        idxy = iy + 1 
+        ovf_bincont = h.GetBinContent(idxx, idxy)
+        last_bincont = h.GetBinContent(nxbins, idxy)
+        new_last_bincont = ovf_bincont + last_bincont
+        h.SetBinContent(nxbins, idxy, new_last_bincont)
+
 
 startTime = datetime.datetime.now()
 print("Starting running at " + str(startTime))
@@ -96,8 +119,8 @@ ptMax = 1000.
 etaNBins = 60
 etaMin = -3.
 etaMax = 3.
-ptbins = array.array('f', [30, 40, 50, 60, 80, 100, 140, 200, 300, 600, 1000])
-etabins = array.array('f', [0.0, 0.8, 1.6, 2.4, 3.2, 4.0, 5.0])
+ptbins = array.array('d', [30, 50, 80, 140, 200, 300, 600, 1000])
+etabins = array.array('d', [0.0, 0.8, 1.6, 2.4])
 nptbins = len(ptbins)-1
 netabins = len(etabins)-1
 h2_BTaggingEff_Denom_b    = ROOT.TH2D("h2_BTaggingEff_Denom_b", "MC bjet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
@@ -106,6 +129,14 @@ h2_BTaggingEff_Denom_udsg = ROOT.TH2D("h2_BTaggingEff_Denom_udsg", "MC ljet;p_{T
 h2_BTaggingEff_Num_b    = ROOT.TH2D("h2_BTaggingEff_Num_b", "Tagged bjet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
 h2_BTaggingEff_Num_c    = ROOT.TH2D("h2_BTaggingEff_Num_c", "Tagged cjet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
 h2_BTaggingEff_Num_udsg = ROOT.TH2D("h2_BTaggingEff_Num_udsg", "Tagged ljet;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+
+h2_BTaggingEff_Denom_b.Sumw2()
+h2_BTaggingEff_Denom_c.Sumw2()
+h2_BTaggingEff_Denom_udsg.Sumw2()
+h2_BTaggingEff_Num_b.Sumw2()
+h2_BTaggingEff_Num_c.Sumw2()
+h2_BTaggingEff_Num_udsg.Sumw2()
+
 #++++++++++++++++++++++++++++++++++
 #++   looping over the events    ++
 #++++++++++++++++++++++++++++++++++
@@ -114,7 +145,7 @@ for i in range(tree.GetEntries()):
     #++        taking objects        ++
     #++++++++++++++++++++++++++++++++++
     if Debug:
-        if i > 2000:
+        if i > 100:
             break
     if not Debug and i%5000 == 0:
         print("Event #", i+1, " out of ", tree.GetEntries())
@@ -320,12 +351,19 @@ h2_BTaggingEff_Denom_udsg.Write()
 h2_BTaggingEff_Num_b.Write()
 h2_BTaggingEff_Num_c.Write()
 h2_BTaggingEff_Num_udsg.Write()
-h2_Eff_b = ROOT.TEfficiency(h2_BTaggingEff_Num_b, h2_BTaggingEff_Denom_b)
-h2_Eff_b.SetTitle("btag efficiency;p_{T} [GeV]:|#eta|")
-h2_Eff_c = ROOT.TEfficiency(h2_BTaggingEff_Num_c, h2_BTaggingEff_Denom_c)
-h2_Eff_b.SetTitle("ctag efficiency;p_{T} [GeV]:|#eta|")
-h2_Eff_udsg = ROOT.TEfficiency(h2_BTaggingEff_Num_udsg, h2_BTaggingEff_Denom_udsg)
-h2_Eff_b.SetTitle("ltag efficiency;p_{T} [GeV]:|#eta|")
+
+h2_Eff_b = ROOT.TEfficiency("h2_BTaggingEff_b", "bjet efficiency;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_Eff_b.SetTotalHistogram(h2_BTaggingEff_Denom_b, "")
+h2_Eff_b.SetPassedHistogram(h2_BTaggingEff_Num_b, "")
+
+h2_Eff_c = ROOT.TEfficiency("h2_BTaggingEff_c", "cjet efficiency;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_Eff_c.SetTotalHistogram(h2_BTaggingEff_Denom_c, "")
+h2_Eff_c.SetPassedHistogram(h2_BTaggingEff_Num_c, "")
+
+h2_Eff_udsg = ROOT.TEfficiency("h2_BTaggingEff_udsg", "light jet efficiency;p_{T} [GeV];#eta", nptbins, ptbins, netabins, etabins)
+h2_Eff_udsg.SetTotalHistogram(h2_BTaggingEff_Denom_udsg, "")
+h2_Eff_udsg.SetPassedHistogram(h2_BTaggingEff_Num_udsg, "")
+
 h2_Eff_b.Write()
 h2_Eff_c.Write()
 h2_Eff_udsg.Write()

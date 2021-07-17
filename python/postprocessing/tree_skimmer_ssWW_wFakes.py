@@ -198,6 +198,12 @@ systTree.setWeightName("TESDown",1.)
 systTree.setWeightName("FESSF",1.)
 systTree.setWeightName("FESUp",1.)
 systTree.setWeightName("FESDown",1.)
+systTree.setWeightName("btagSF",1.)
+systTree.setWeightName("btagUp",1.)
+systTree.setWeightName("btagDown",1.)
+systTree.setWeightName("mistagUp",1.)
+systTree.setWeightName("mistagDown",1.)
+
 
 #++++++++++++++++++++++++++++++++++
 #++     variables to branch      ++
@@ -748,7 +754,7 @@ for i in range(tree.GetEntries()):
     
     if Debug:
         print("\nevento n. " + str(i))
-        if i > 10000:
+        if i > 1000:
             break
     
     else:
@@ -947,8 +953,8 @@ for i in range(tree.GetEntries()):
         lepton_LnTRegion[0] = -999
     
     if indexGoodLep<0 or indexGoodLep>=len(leptons) or (lepton_TightRegion[0]<0 and lepton_LnTRegion[0]<0): 
-        if Debug:
-            print("exiting at lepton selection (without saving)")
+        #if Debug:
+            #print("exiting at lepton selection (without saving)")
         continue
 
 
@@ -962,8 +968,8 @@ for i in range(tree.GetEntries()):
     GoodLep = leptons[indexGoodLep]
 
     #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodEle:", indexGoodEle, "indexGoodMu:", indexGoodMu, "GoodLep_pdgid:", GoodLep.pdgId)
-    if Debug:
-        print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodLep:", indexGoodLep, "tightlep_pdgid:", GoodLep.pdgId, "pass_lepton_veto:", pass_lepton_veto[0])
+    #if Debug:
+        #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodLep:", indexGoodLep, "tightlep_pdgid:", GoodLep.pdgId, "pass_lepton_veto:", pass_lepton_veto[0])
 
     MET_pt[0]   =   met.pt  
     MET_phi[0]  =   met.phi
@@ -1017,6 +1023,13 @@ for i in range(tree.GetEntries()):
         systTree.setWeightName("puUp", copy.deepcopy(PU_SFUp))
         systTree.setWeightName("puDown", copy.deepcopy(PU_SFDown))
     
+        btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets)
+        systTree.setWeightName("btagSF", copy.deepcopy(btagSF))
+        systTree.setWeightName("btagUp", copy.deepcopy(btagUp))
+        systTree.setWeightName("btagDown", copy.deepcopy(btagDown))
+        systTree.setWeightName("mistagUp", copy.deepcopy(mistagUp))
+        systTree.setWeightName("mistagDown", copy.deepcopy(mistagDown))
+
     ThereIsOneTau, ltau_list = SelectAndVetoTaus(list(taus), GoodLep)
 
     if ThereIsOneTau:
@@ -1217,8 +1230,8 @@ for i in range(tree.GetEntries()):
     if outputJetSel==-999:
         #systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         #systTree.fillTreesSysts(trees, "all")
-        if Debug:
-            print("exiting at jet selection (without saving)")
+        #if Debug:
+            #print("exiting at jet selection (without saving)")
         continue  
 
     jet1, jet2 = outputJetSel
@@ -1436,8 +1449,8 @@ for i in range(tree.GetEntries()):
     
     systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
     systTree.fillTreesSysts(trees, "all")
-    if Debug:
-        print("exiting at the end of the event (saving)")
+    #if Debug:
+        #print("exiting at the end of the event (saving)")
 #trees[0].Print()
 outTreeFile.cd()
 if(isMC):

@@ -142,6 +142,65 @@ def doesOverlap(eta1, phi1, eta2, phi2):
     if deltaR(eta1, phi1, eta2, phi2)<0.4: return False
     return True
 
+def getweightfromhisto(histogram, eta, pt):
+    binx = max(1, min(histogram.GetNbinsX(), histogram.GetXaxis().FindBin(pt)))
+    biny = max(1, min(histogram.GetNbinsY(), histogram.GetYaxis().FindBin(abs(eta))))
+    return histogram.GetBinContent(binx,biny)
+
+def efficiency(flv, eta, pt):
+    infile = ROOT.TFile.Open("Btag_eff.root")
+    h = ROOT.TH2F()
+    if(flv == 5):
+        h = infile.Get("h2_BTaggingEff_b").CreateHistogram()
+    elif(flv == 4):
+        h = infile.Get("h2_BTaggingEff_c").CreateHistogram()
+    else:
+        h = infile.Get("h2_BTaggingEff_udsg").CreateHistogram()
+    return getweightfromhisto(h, eta, pt)
+ 
+def btagcalc(JetsC):
+    goodJets = get_Jet(JetsC, PT_CUT_JET)
+    bjets, nobjets = bjet_filter(goodJets, 'DeepFlv', 'M')
+    p_MC = 1.
+    p_data = 1.
+    p_data_btagUp = 1.
+    p_data_btagDown = 1.
+    p_data_mistagUp = 1.
+    p_data_mistagDown = 1.
+    
+    for jet in bjets:
+        #print('prima MC' , p_MC)
+        #print(abs(jet.partonFlavour), jet.eta, jet.pt)
+        #print(efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        p_MC *= efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        #print('dopo MC' , p_MC)
+        p_data *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        if abs(jet.partonFlavour) == 4 or abs(jet.partonFlavour) == 5:
+            p_data_btagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_btagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        else:
+            p_data_btagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_btagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+    for jet in nobjets:
+        p_MC *= (1 - efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        p_data *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        if abs(jet.partonFlavour) == 4 or abs(jet.partonFlavour) == 5:
+            p_data_btagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_btagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        else:
+            p_data_btagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_btagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+
+    return p_data/p_MC, p_data_btagUp/p_MC, p_data_btagDown/p_MC, p_data_mistagUp/p_MC, p_data_mistagDown/p_MC
+
 def FindSecondJet(jet, jetCollection, GoodTau, GoodMu):
     for k in range(len(jetCollection)):
         if abs(jetCollection[k].eta)>ETA_CUT_JET: continue
@@ -162,8 +221,8 @@ def get_ptrel(lepton, jet, taucorr=1.):
     ptrel = (lepjet_tv.Cross(lep_tv)).Mag()/(lepjet_tv.Mag())
     return ptrel
 
-def get_Jet(jets, pt): #returns a collection of jets that pass the selection performed by the filter function
-    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId>=7)), jets))
+def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
+    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
 
 def SelectLepton(lepCollection, isMu): #isMu==True -> muons else Ele 
     pT_cut=-999
@@ -282,14 +341,15 @@ def SelectAndVetoTaus(taus, lepton):
 
 def BVeto(jetCollection):
     veto = False
-    for k in range(len(jetCollection)):
-        if (jetCollection[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP])*(jetCollection[k].pt>BTAG_PT_CUT)*abs(jetCollection[k].eta<BTAG_ETA_CUT):
+    jets = get_Jet(jetCollection, PT_CUT_JET)
+    for k in range(len(jets)):
+        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP])*(jets[k].pt>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
             veto = True
             break
         else: continue
     return veto
-        #if jetCollection[k].btagCSVV2<0.5803: continue #b-tag WP from https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-        #if jetCollection[k].pt>30.: return True
+        #if jets[k].btagCSVV2<0.5803: continue #b-tag WP from https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
+        #if jets[k].pt>30.: return True
     #return False
 
 def CountBJets(jetCollection):
@@ -484,7 +544,7 @@ def bjet_filter(jets, tagger, WP): #returns collections of b jets and no b jets 
     WPbtagger = {'DeepFlv_T': 0.7264, 'DeepFlv_M': 0.2770, 'DeepFlv_L': 0.0494, 'DeepCSV_T': 0.7527, 'DeepCSV_M': 0.4184, 'DeepCSV_L': 0.1241}
     if(tagger == 'DeepFlv'):
         threshold = WPbtagger[str(tagger) + '_' + str(WP)]
-        return list(filter(lambda x : x.btagDeepFlavB >= threshold, jets)), list(filter(lambda x : x.btagDeepFlavB < threshold, jets))
+        return list(filter(lambda x : x.btagDeepFlavB >= threshold and x.pt > BTAG_PT_CUT and abs(x.eta)<BTAG_ETA_CUT, jets)), list(filter(lambda x : x.btagDeepFlavB < threshold and x.pt > BTAG_PT_CUT and abs(x.eta)<BTAG_ETA_CUT, jets))
     elif(tagger == 'DeepCSV'):
         threshold = WPbtagger[str(tagger) + '_' + str(WP)]
         return list(filter(lambda x : x.btagDeepB >= threshold, jets)), list(filter(lambda x : x.btagDeepB < threshold, jets))
@@ -1422,6 +1482,11 @@ class systWeights(object):
             self.weightedNames[25] = "FESSF"
             self.weightedNames[26] = "FESUp"
             self.weightedNames[27] = "FESDown"
+            self.weightedNames[28] = "btagSF"
+            self.weightedNames[29] = "btagUp"
+            self.weightedNames[30] = "btagDown"
+            self.weightedNames[31] = "mistagUp"
+            self.weightedNames[32] = "mistagDown"
             '''
             self.weightedNames[10] = "btagSF"
             self.weightedNames[11] = "btagUp"
@@ -1453,8 +1518,8 @@ class systWeights(object):
             #self.weightedNames[10] = "isoDown"
             #self.weightedNames[11] = "trigUp"
             #self.weightedNames[12] = "trigDown"
-            self.setMax(28)
-            self.setMaxNonPDF(27)
+            self.setMax(32)
+            self.setMaxNonPDF(31)
             self.weightedNames[self.maxSysts] = ""
 
         if addQ2: 
