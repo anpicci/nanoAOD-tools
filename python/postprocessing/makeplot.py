@@ -1135,9 +1135,9 @@ for year in years:
               
         
         if opt.channel == 'ltau':
-            wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF'
+            wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
         elif opt.channel == 'emu':
-            wzero = 'w_nominal*PFSF*puSF*lepSF'
+            wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
 
         cutbase = cut_dict[lep]
 
@@ -1160,7 +1160,7 @@ for year in years:
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
         
         
-        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 200., 300.])#, 500.])
+        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 200.])#, 300.])#, 500.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
         
@@ -1171,7 +1171,7 @@ for year in years:
         variables.append(variabile(lep1[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{l}',  wzero+'*('+cutbase+')', 12, -1.5, 1.5))
         
 
-        bin_taupt = array("f", [0., 50., 100., 200., 300., 500.])
+        bin_taupt = array("f", [0., 50., 100., 200.])#, 300., 500.])
         nbin_taupt = len(bin_taupt) - 1
         variables.append(variabile(lep2[0] + '_pt',  lep2[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_taupt, bin_taupt))
 
