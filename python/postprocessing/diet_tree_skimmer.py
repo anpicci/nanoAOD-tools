@@ -157,6 +157,11 @@ systTree.setWeightName("TESDown",1.)
 systTree.setWeightName("FESSF",1.)
 systTree.setWeightName("FESUp",1.)
 systTree.setWeightName("FESDown",1.)
+systTree.setWeightName("btagSF",1.)
+systTree.setWeightName("btagUp",1.)
+systTree.setWeightName("btagDown",1.)
+systTree.setWeightName("mistagUp",1.)
+systTree.setWeightName("mistagDown",1.)
 
 #++++++++++++++++++++++++++++++++++
 #++     variables to branch      ++
@@ -889,6 +894,36 @@ for i in range(tree.GetEntries()):
 
     if tightele.charge == tightmu.charge:
         pass_charge_selection[0] = 1
+
+    if isMC:
+        lepsSF = tightele.effSF*tightmu*effSF
+        #GoodLep_SF = Lepton_IDIso_SF(GoodLep)
+        #GoodLep_SFUp = GoodLep.effSF_errUp
+        #GoodLep_SFDown = GoodLep.effSF_errDown
+        systTree.setWeightName("lepSF", copy.deepcopy(lepsSF))
+        #systTree.setWeightName("lepUp", copy.deepcopy(GoodLep_SFUp))
+        #systTree.setWeightName("lepDown", copy.deepcopy(GoodLep_SFDown))
+
+        PF_SF = chain.PrefireWeight
+        PF_SFUp = chain.PrefireWeight_Up
+        PF_SFDown = chain.PrefireWeight_Down
+        systTree.setWeightName("PFSF", copy.deepcopy(PF_SF))
+        systTree.setWeightName("PFUp", copy.deepcopy(PF_SFUp))
+        systTree.setWeightName("PFDown", copy.deepcopy(PF_SFDown))
+
+        PU_SF = chain.puWeight
+        PU_SFUp = chain.puWeightUp
+        PU_SFDown = chain.puWeightDown
+        systTree.setWeightName("puSF", copy.deepcopy(PU_SF))
+        systTree.setWeightName("puUp", copy.deepcopy(PU_SFUp))
+        systTree.setWeightName("puDown", copy.deepcopy(PU_SFDown))
+    
+        btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets)
+        systTree.setWeightName("btagSF", copy.deepcopy(btagSF))
+        systTree.setWeightName("btagUp", copy.deepcopy(btagUp))
+        systTree.setWeightName("btagDown", copy.deepcopy(btagDown))
+        systTree.setWeightName("mistagUp", copy.deepcopy(mistagUp))
+        systTree.setWeightName("mistagDown", copy.deepcopy(mistagDown))
 
     uOkay, jet1, jet2 = diet_SelectJet(list(jets), tightele, tightmu)
 
