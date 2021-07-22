@@ -1135,10 +1135,14 @@ for year in years:
               
         
         if opt.channel == 'ltau':
-            wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
+            wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF'#*btagSF'
         elif opt.channel == 'emu':
-            wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
-
+            wzero = 'w_nominal*PFSF*puSF*lepSF'#*btagSF'
+        
+        vfold = int(opt.folder.split("v")[-1])
+        if vfold > 86:
+            wzero += "*btagSF"
+        
         cutbase = cut_dict[lep]
 
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
