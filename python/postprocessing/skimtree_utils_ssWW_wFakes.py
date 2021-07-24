@@ -208,41 +208,47 @@ def SelectVBSQGenJet(genjets):
     light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10), genjets)
     return light_genjets
 
-###new
-'''
+#new
+
 def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = None, lep2 = None):
     jet1 = None
     jet2 = None
 
-    #default value are very large, so if leps are None possible cut regarding jet-leps isolation does not really cuts
-    isocut1 = 50.
-    isocut2 = 50.
+    #default value are 0, so if leps are None possible cut regarding jet-leps isolation does not really cuts
+    isocone1 = 0.
+    isocone2 = 0.
 
     #default leps eta and phi are set to 0., in order to get jet-lep isocut uneffective if leps are None
     lep1eta = 0.
     lep2eta = 0.
-    lep1eta = 0.
-    lep2eta = 0.
+    lep1phi = 0.
+    lep2phi = 0.
     
     #saving jet-lep isocut depending on lepton flavours
     if lep1 != None and lep2 != None:
-        if abs(lep1.pdgId) == 15:
-            isocut1 = DR_OVERLAP_CONE_TAU
-        else:
-            isocut1 = DR_OVERLAP_CONE_OTHER
-
-        if abs(lep2.pdgId) == 15:
-            isocut2 = DR_OVERLAP_CONE_TAU
-        else:
-            isocut2 = DR_OVERLAP_CONE_OTHER
-        
+        isocone1 = DR_OVERLAP_CONE_OTHER
+        isocone2 = DR_OVERLAP_CONE_OTHER
+       
         lep1eta = lep1.eta
         lep2eta = lep2.eta
-        lep1eta = lep1.phi
-        lep2eta = lep2.phi
+        lep1phi = lep1.phi
+        lep2phi = lep2.phi
     
-    #filtering jets with jet-related requests and then refiltering with jet-leps isocut
-    goodjets = list(filter(lambda x : abs(deltaR(x.eta, x.phi, lep1eta, lep1phi)) > isocut1 and abs(deltaR(x.eta, x.phi, lep2eta, lep2phi)) > isocut2, get_Jet(jets)))
+    #print("isocones:", isocone1, isocone2, "lep1:", lep1eta, lep1phi, "lep2:", lep2eta, lep2phi) 
+
+    #filtering jets with jet-related requests and then refiltering with jet-leps isocone
+    goodjets = get_Jet(jets)#
+    
+    '''
+    print("before filtering")
+    for jj in goodjets:
+        print("jet:\tdR_tau:", deltaR(jj.eta, jj.phi, lep1eta, lep1phi), "jet1:\tdR_lep:", deltaR(jj.eta, jj.phi, lep2eta, lep2phi))
+
+    goodjets = list(filter(lambda x : abs(deltaR(x.eta, x.phi, lep1eta, lep1phi)) > isocone1 and abs(deltaR(x.eta, x.phi, lep2eta, lep2phi)) > isocone2, goodjets))
+    print("after isocone filtering")
+    for jj in goodjets:
+        print("jet:\tdR_tau:", deltaR(jj.eta, jj.phi, lep1eta, lep1phi), "jet1:\tdR_lep:", deltaR(jj.eta, jj.phi, lep2eta, lep2phi))
+    '''
 
     #if there are 0 or 1 goodjets, return default values
     if len(goodjets) < 2:
@@ -251,11 +257,18 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
     maxInvMass = -999.
     #else, search for two isolated jets compatible with VBS
     for idxj, jet in enumerate(goodjets):
+        jet1 = None
+        jet2 = None
 
-        compatible_jets = list(filter(lambda x : x.pt != jet.pt, goodjets))
+        skgoodjets = list(goodjets)
+        for idxs, sjet in enumerate(skgoodjets):
+            if idxs <= idxj:
+                skgoodjets.remove(sjet)
+
+        compatible_jets = list(filter(lambda x : IsNotTheSameObject(x, jet), skgoodjets))
         if applyDeltaEtaCut:
             #refiltering compatible jets with deltaEtajj cut
-            compatible_jets = list(filter(lambda x : abs(x.eta - jet.eta) >= DELTAETA_JJ_CUT, compatiblejets))
+            compatible_jets = list(filter(lambda x : abs(x.eta - jet.eta) >= DELTAETA_JJ_CUT, compatible_jets))
 
         #if there are no compatible jet, returns default value
         if len(compatible_jets) < 1:
@@ -263,58 +276,19 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         
         if not useMassCrit:
             #if criteria upon jj inv mass is not used, returns the compatible couple with highest pt
-            jet1 = copy.deepcopy(jet)
-            jet2 = copy.deepcopy(compatible_jets[0])
-            return jet1, jet2
+            jet1 = jet
+            jet2 = compatible_jets[0]
+            break
         
+        #else apply maximum mass criterion
         else:
             for idxc, cjet in enumerate(compatible_jets):
+                
                 if (cjet.p4() + jet.p4()).M() > maxInvMass:
-                    jet1 = copy.deepcopy(jet)
-                    jet2 = copy.deepcopy(cjet)
-            
+                    jet1 = jet
+                    jet2 = cjet
+                    
     return jet1, jet2
-'''
-
-def FindSecondJet(jet, jetCollection, GoodTau, GoodMu):
-    for k in range(len(jetCollection)):
-        if abs(jetCollection[k].eta)>ETA_CUT_JET: continue
-        if jetCollection[k].pt<PT_CUT_JET or jetCollection[k].jetId<2:
-            return -1
-        if ( (jetCollection[k].pt>=PT_CUT_JET and jetCollection[k].pt<50) and jetCollection[k].puId<7) :
-            return -1
-        if abs(jet.eta-jetCollection[k].eta)>DELTAETA_JJ_CUT:
-            if deltaR(jet.eta, jet.phi, GoodTau.eta, GoodTau.phi)>DR_OVERLAP_CONE_TAU or deltaR(jet.eta, jet.phi, GoodMu.eta, GoodMu.phi)>DR_OVERLAP_CONE_OTHER:
-                return k
-    return -1
-
-def SelectJet(jetCollection, GoodTau, GoodMu):
-    if jetCollection==None:
-        return -999
-    if len(jetCollection)<2:
-        return -999
-    if jetCollection[0].pt<PT_CUT_JET or jetCollection[0].jetId<2:
-        return -999
-    if ( (jetCollection[0].pt>=PT_CUT_JET and jetCollection[0].pt<50.) and jetCollection[0].puId<7 ):
-        return -999
-    #select higher pT jet
-    GoodJet=jetCollection[0]
-    #if the jet matches in dR one of the previously selected particles (e, tau), than it searches in the other jets
-    if deltaR(GoodJet.eta, GoodJet.phi, GoodTau.eta, GoodTau.phi)<DR_OVERLAP_CONE_TAU or deltaR(GoodJet.eta, GoodJet.phi, GoodMu.eta, GoodMu.phi)<DR_OVERLAP_CONE_OTHER: 
-        jetCollection.remove(GoodJet)
-        if len(jetCollection)==1:
-             return -999
-        return SelectJet(jetCollection, GoodTau, GoodMu)
-    
-    #searches for the best second jet
-    secondJetIndex=FindSecondJet(GoodJet, jetCollection, GoodTau, GoodMu)
-    if secondJetIndex>0: return GoodJet, jetCollection[secondJetIndex]
-    else:
-        jetCollection.remove(GoodJet)
-        if len(jetCollection)==1:
-            return -999
-        else: return SelectJet(jetCollection, GoodTau, GoodMu)
-
 
 def get_ptrel(lepton, jet, taucorr=1.):
     jet_p4 = ROOT.TLorentzVector()
@@ -325,14 +299,14 @@ def get_ptrel(lepton, jet, taucorr=1.):
     return ptrel
 
 #new
-'''
+
 def SelectLepton(leptons, jet1 = None, jet2 = None):
     #default values are setted with the same rationale used for SelectVBSJets
     jet1eta = 0.
     jet2eta = 0.
     jet1phi = 0.
     jet2phi = 0.
-    isocone = 50.
+    isocone = 0.
 
     #setting jet-related quantities if isolation from them is needed
     if not (jet1 == None or jet2 == None):
@@ -364,20 +338,21 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
             IsTightIso = bool(lep.pfRelIso04_all<ISO_CUT_MU and lep.pfRelIso04_all>=0.)
             IsLooseIso = bool(lep.pfRelIso04_all<1. and lep.pfRelIso04_all>=0.)
             IsInEtaRegion = abs(lep.eta) < ETA_CUT_MU
-            IsInPtRegion = lep.pt > PT_CUT_ELE            
+            IsInPtRegion = lep.pt > PT_CUT_MU
 
         #find tight and loose-not-tight leptons
         if IsInEtaRegion and IsInPtRegion:
-            if isLooseId and IsLooseIso:
-                if isTightId and IsTightIso:
-                    Tleptons.append(copy.deepcopy(lep))
+            if IsLooseID and IsLooseIso:
+                if IsTightID and IsTightIso:
+                    #llep = copy.deepcopy(lep)
+                    Tleptons.append(lep)
                 else:
-                    LnTleptons.append(copy.deepcopy(lep))
+                    LnTleptons.append(lep)
 
     #filtering Tleps and LnTleps with jet-lep isolation criteria
 
-    Tleptons = list(filter(lambda x : deltaR(x.eta, x.phi, jet1.eta, jet1.phi) < isocone and deltaR(x.eta, x.phi, jet2.eta, jet2.phi) < isocone, Tleptons))
-    LnTleptons = list(filter(lambda x : deltaR(x.eta, x.phi, jet1.eta, jet1.phi) < isocone and deltaR(x.eta, x.phi, jet2.eta, jet2.phi) < isocone, LnTleptons))
+    Tleptons = list(filter(lambda x : deltaR(x.eta, x.phi, jet1eta, jet1phi) > isocone and deltaR(x.eta, x.phi, jet2eta, jet2phi) > isocone, Tleptons))
+    LnTleptons = list(filter(lambda x : deltaR(x.eta, x.phi, jet1eta, jet1phi) > isocone and deltaR(x.eta, x.phi, jet2eta, jet2phi) > isocone, LnTleptons))
 
     #default are returned if no suitable lepton is eventually found
     nTleps = len(Tleptons)
@@ -395,168 +370,55 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
             sellepstatus = 0
 
     return sellep, sellepstatus
-'''
-
-def SelectLepton(lepCollection, isMu): #isMu==True -> muons else Ele 
-    pT_cut=-999
-    eta_cut=-999
-    if isMu:
-        pT_cut=PT_CUT_MU
-        eta_cut=ETA_CUT_MU
-    else:
-        pT_cut=PT_CUT_ELE
-        eta_cut=ETA_CUT_ELE
-    for i in range(len(lepCollection)):
-        if isMu:
-            if not (lepCollection[i].tightId and (lepCollection[i].pfRelIso04_all<ISO_CUT_MU and lepCollection[i].pfRelIso04_all>=0.)):
-                continue
-        else:
-            if not (lepCollection[i].mvaFall17V2Iso_WP90 and (lepCollection[i].jetRelIso<ISO_CUT_ELE and lepCollection[i].jetRelIso>=0.)):
-                continue    
-        if lepCollection[i].pt<pT_cut:
-            continue
-        if abs(lepCollection[i].eta)>eta_cut:
-            continue 
-        if not isMu and(abs(lepCollection[i].eta)>1.4442 and abs(lepCollection[i].eta)<1.566):
-            continue
-        return i, 1
-    
-    for i in range(len(lepCollection)):
-        if abs(lepCollection[i].pdgId) == 13:
-            if not (lepCollection[i].pfRelIso04_all>=ISO_CUT_MU and lepCollection[i].pfRelIso04_all<=1. and (not lepCollection[i].tightId and lepCollection[i].looseId)):
-                continue
-            if lepCollection[i].pt<PT_CUT_MU: continue
-            if abs(lepCollection[i].eta)>ETA_CUT_MU: continue 
-            return i, 0
-        elif abs(lepCollection[i].pdgId) == 11:
-            if not (lepCollection[i].mvaFall17V2Iso_WPL and not(lepCollection[i].mvaFall17V2Iso_WP90) and lepCollection[i].jetRelIso>=ISO_CUT_ELE and lepCollection[i].jetRelIso<=1.):
-                continue
-            if (abs(lepCollection[i].eta)>1.4442 and abs(lepCollection[i].eta)<1.566): continue
-            if lepCollection[i].pt<PT_CUT_MU: continue
-            if abs(lepCollection[i].eta)>ETA_CUT_ELE: continue 
-            return i, 0
-    return -1, -1
-
-
-def SelectLooseLepton(lepCollection, isMu): #isMu==True -> muons else Ele 
-    pT_cut=-999
-    eta_cut=-999
-    if isMu:
-        pT_cut=PT_CUT_MU
-        eta_cut=ETA_CUT_MU
-    else:
-        pT_cut=PT_CUT_ELE
-        eta_cut=ETA_CUT_ELE
-    for i in range(len(lepCollection)):
-        if isMu:
-          if not (lepCollection[i].looseId and not(lepCollection[i].tightId) and lepCollection[i].pfRelIso04_all<1 and lepCollection[i].pfRelIso04_all>=ISO_CUT_MU): continue
-        else:
-          if not (lepCollection[i].mvaFall17V2Iso_WPL and lepCollection[i].jetRelIso>=ISO_CUT_ELE and lepCollection[i].jetRelIso<1): continue    
-        if lepCollection[i].pt<pT_cut: continue
-        if abs(lepCollection[i].eta)>eta_cut: continue 
-        if not isMu and(abs(lepCollection[i].eta)>1.4442 and abs(lepCollection[i].eta)<1.566): continue
-        return i
-    return -1
 
 #new
-'''
+
 def LepVeto(sellep, electrons, muons):
-    VetoEles = list(filter(lambda x : x.mvaFall17V2Iso_WPL and x.pt > PT_CUT_LEP_VETO_ELE and abs(x.eta) < ETA_CUT_LEP_VETO_ELE and not (abs(lep.eta)>1.4442 and abs(lep.eta)<1.566) x.jetRelIso < REL_ISO_CUT_LEP_VETO_ELE, electrons))
-    VetoMus = list(filter(lambda x : x.looseId and x.pt > PT_CUT_LEP_VETO_MU and abs(x.eta) < ETA_CUT_LEP_VETO_MU and x.pfRelIso04_all < REL_ISO_CUT_LEP_VETO_MU, electrons))
+    VetoEles = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.mvaFall17V2Iso_WPL and x.pt > PT_CUT_LEP_VETO_ELE and abs(x.eta) < ETA_CUT_LEP_VETO_ELE and not (abs(x.eta)>1.4442 and abs(x.eta)<1.566) and x.jetRelIso < REL_ISO_CUT_LEP_VETO_ELE, electrons))
+    VetoMus = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.looseId and x.pt > PT_CUT_LEP_VETO_MU and abs(x.eta) < ETA_CUT_LEP_VETO_MU and x.pfRelIso04_all < REL_ISO_CUT_LEP_VETO_MU, muons))
 
     IsEleVetoPassed = (len(VetoEles) == 0)
     IsMuVetoPassed = (len(VetoMus) == 0)
 
     return bool(IsEleVetoPassed and IsMuVetoPassed)
-'''
 
-def LepVetoOneCollection(GoodLepton, collection, relIsoCut, ptCut, etaCut, isMu):
-    i=0
-    #print("relisocut:", relIsoCut)
-    for i in range(len(collection)):
-        lep=collection[i]
-        veto = False
+#new
 
-        if IsNotTheSameObject(GoodLepton, lep): 
-            if isMu:
-                #print(i, "pdgId:", abs(lep.pdgId), "pt:", lep.pt, "iso", lep.pfRelIso04_all, "eta", lep.eta)
-                if not (lep.pfRelIso04_all<relIsoCut and lep.pt>ptCut and abs(lep.eta)<etaCut and lep.looseId):
-                    continue
-            else:
-                #print(i, "pdgId:", abs(lep.pdgId), "pt:", lep.pt, "iso", lep.jetRelIso, "eta", lep.eta)
-                if not (lep.jetRelIso<relIsoCut and lep.pt>ptCut and abs(lep.eta)<etaCut and lep.mvaFall17V2Iso_WPL):
-                    continue
+def SelectAndVetoTaus(taus, sellep, jet1 = None, jet2 = None):
+    #default values are setted with the same rationale used for SelectVBSJets
+    jet1eta = 0.
+    jet2eta = 0.
+    jet1phi = 0.
+    jet2phi = 0.
+    isocone = 0.
 
-            veto = False
-            return veto
+    #setting jet-related quantities if isolation from them is needed
+    if not (jet1 == None or jet2 == None):
+        jet1eta = jet1.eta
+        jet2eta = jet2.eta
+        jet1phi = jet1.phi
+        jet2phi = jet2.phi
+        isocone = DR_OVERLAP_CONE_OTHER
 
-    veto = True
-    return veto
- 
-def LepVeto(GoodLepton, ElectronCollection, MuonCollection):
-    eleveto = LepVetoOneCollection(GoodLepton, ElectronCollection, REL_ISO_CUT_LEP_VETO_ELE, PT_CUT_LEP_VETO_ELE, ETA_CUT_LEP_VETO_ELE, False)
-    muveto = LepVetoOneCollection(GoodLepton, MuonCollection, REL_ISO_CUT_LEP_VETO_MU, PT_CUT_LEP_VETO_MU, ETA_CUT_LEP_VETO_MU, True)
-    return bool(eleveto and muveto)
-
-
-def SelectTau(tauCollection, GoodMuon, vsEleWP, vsMuWP, vsJetWP):
-    #print('len taucollection : ', len(tauCollection))
-    if abs(GoodMuon.pdgId) == 13:
-        IsMu = True
-    else:
-        IsMu = False
-
-    if len(tauCollection)<1:
-        return -1, -999
-    for i in range(len(tauCollection)):
-        #print(i, "deltaR(tightlep):", deltaR(tauCollection[i].eta, tauCollection[i].phi, GoodMuon.eta, GoodMuon.phi), "DTvse:", tauCollection[i].idDeepTau2017v2p1VSe, "DTvsmu:", tauCollection[i].idDeepTau2017v2p1VSmu, "DTvsjet:", tauCollection[i].idDeepTau2017v2p1VSjet, "tau pt:", tauCollection[i].pt, "tau eta:", tauCollection[i].eta)
-        if deltaR(tauCollection[i].eta, tauCollection[i].phi, GoodMuon.eta, GoodMuon.phi)<DR_OVERLAP_CONE_TAU:
-            continue
-        if not (tauCollection[i].idDeepTau2017v2p1VSe>=vsEleWP and tauCollection[i].idDeepTau2017v2p1VSmu>=vsMuWP and tauCollection[i].idDeepTau2017v2p1VSjet>=vsJetWP and tauCollection[i].idDecayModeNewDMs):   
-            continue
-        if tauCollection[i].pt<PT_CUT_TAU:
-            continue
-        if abs(tauCollection[i].eta)>ETA_CUT_TAU:
-            continue
-        return i, 1
-
-    for i in range(len(tauCollection)):
-        if deltaR(tauCollection[i].eta, tauCollection[i].phi, GoodMuon.eta, GoodMuon.phi)<DR_OVERLAP_CONE_TAU:
-            continue
-        if isMu:
-            if not (tauCollection[i].idDeepTau2017v2p1VSe>=vsEleWP and tauCollection[i].idDeepTau2017v2p1VSmu>=vsMuWP and tauCollection[i].idDeepTau2017v2p1VSjet>=4 and tauCollection[i].idDeepTau2017v2p1VSjet<vsJetWP and tauCollection[i].idDecayModeNewDMs):
-                continue
-        else:
-            if not (tauCollection[i].idDeepTau2017v2p1VSe>=vsEleWP and tauCollection[i].idDeepTau2017v2p1VSmu>=vsMuWP and tauCollection[i].idDeepTau2017v2p1VSjet>=8 and tauCollection[i].idDeepTau2017v2p1VSjet<vsJetWP and tauCollection[i].idDecayModeNewDMs):
-                continue
-        if tauCollection[i].pt<PT_CUT_TAU:
-            continue
-        if abs(tauCollection[i].eta)>ETA_CUT_TAU:
-            continue
-        return i, 0
-     
-    return -1, -999
-
-def SelectAndVetoTaus(taus, lepton):
     nTau=0
     idxl = []
     if len(taus)==0:
         return 0, idxl
     for i, tau in enumerate(taus):
-        #print(i, "deltaR(tightlep):", deltaR(tau.eta, tau.phi, lepton.eta, lepton.phi), "DTvse:", tau.idDeepTau2017v2p1VSe, "DTvsmu:", tau.idDeepTau2017v2p1VSmu, "DTvsjet:", tau.idDeepTau2017v2p1VSjet, "tau pt:", tau.pt, "tau eta:", tau.eta)
-        #print(deltaR(tau.eta, tau.phi, lepton.eta, lepton.phi)>DR_OVERLAP_CONE_TAU, tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE, tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU, tau.idDeepTau2017v2p1VSjet>=ID_TAU_RECO_DEEPTAU_VSJET_LOOSE, tau.pt>=PT_CUT_TAU, abs(tau.eta)<=ETA_CUT_TAU, tau.idDecayModeNewDMs)
-        if abs(lepton.pdgId)==11:
+
+        if abs(sellep.pdgId)==11:
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE
-        elif abs(lepton.pdgId)==13:
+        elif abs(sellep.pdgId)==13:
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU
 
-        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU and tau.idDecayModeNewDMs) and deltaR(tau.eta, tau.phi, lepton.eta, lepton.phi)>DR_OVERLAP_CONE_TAU and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
+        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU and tau.idDecayModeNewDMs) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
             nTau+=1
 
             if tau.idDeepTau2017v2p1VSjet>=ID_TAU_RECO_DEEPTAU_VSJET:
                 idxl.append([i, "T"])
             else:
                 idxl.append([i, "L"])
+
     if nTau!=1:
         return 0, idxl                                                                                                       
     else:

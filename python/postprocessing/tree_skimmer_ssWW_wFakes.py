@@ -753,15 +753,16 @@ for i in range(tree.GetEntries()):
     #++++++++++++++++++++++++++++++++++
     
     if Debug:
-        print("\nevento n. " + str(i))
-        if i > 1000:
+        if True:#(i+1)%1000 == 0 and i!=0:
+            print("\nevento n. " + str(i))
+        if i > 2000:#tree.GetEntries():#1000:
             break
     
     else:
         if (i+1)%1000 == 0 and i!=0:
             print("Event #", i+1, " out of ", tree.GetEntries())
 
-    if i%(tree.GetEntries()) == 0:
+    if i%(tree.GetEntries()) == 0 and i!=0:
         print("Last event being processed (#" + str(i+1))
 
     event       = Event(tree,i)
@@ -828,33 +829,34 @@ for i in range(tree.GetEntries()):
 
     if noTrigger: continue
 
-    indexGoodEle, ele_TightRegion = SelectLepton(electrons, False) 
-    indexGoodMu, mu_TightRegion = SelectLepton(muons, True) 
- 
-    if indexGoodEle < 0 and indexGoodMu < 0:
+    GoodEle, ele_TightRegion = SelectLepton(electrons)#, jet1, jet2) 
+    GoodMu, mu_TightRegion = SelectLepton(muons)#, jet1, jet2) 
+    
+    if GoodEle == None and GoodMu == None:
         continue
 
-    ele_lepton_veto = -1
-    mu_lepton_veto = -1
+    ele_lepton_veto = False
+    mu_lepton_veto = False
 
-    if indexGoodEle >= 0:
-        ele_lepton_veto = LepVeto(electrons[indexGoodEle], electrons, muons)
-    if indexGoodMu >= 0:
-        mu_lepton_veto = LepVeto(muons[indexGoodMu], electrons, muons)
+    if GoodEle != None:
+        ele_lepton_veto = LepVeto(GoodEle, electrons, muons)
+    if GoodMu != None:
+        mu_lepton_veto = LepVeto(GoodMu, electrons, muons)
 
+    #print("ele_lepton_veto:", ele_lepton_veto, "mu_lepton_veto:", mu_lepton_veto)
     SingleEle=False
     SingleMu=False
     ElMu=False
 
     LeadLepFamily="not selected"
     
-    indexGoodLep = -1
+    GoodLep = None
     leptons = None
 
     if 'DataHT' not in sample.label:
         if passEle and not passMu:
-            if indexGoodEle>=0 and ele_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodEle)
+            if GoodEle != None and ele_lepton_veto:
+                GoodLep = GoodEle
                 lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
@@ -862,8 +864,8 @@ for i in range(tree.GetEntries()):
                 continue
 
         elif passMu and not passEle:
-            if indexGoodMu>=0 and mu_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodMu)
+            if GoodMu != None and mu_lepton_veto:
+                GoodLep = GoodMu
                 lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
                 SingleEle = False
                 SingleMu = True
@@ -884,38 +886,38 @@ for i in range(tree.GetEntries()):
             continue
 
     if ElMu:
-        if indexGoodMu<0 and indexGoodEle>=0 and ele_lepton_veto:
-            indexGoodLep = copy.deepcopy(indexGoodEle)
+        if GoodMu == None and GoodEle != None and ele_lepton_veto:
+            GoodLep = GoodEle
             lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
             SingleEle = True
             SingleMu = False
 
-        elif indexGoodMu>=0 and mu_lepton_veto and indexGoodEle<0:
-            indexGoodLep = copy.deepcopy(indexGoodMu)
+        elif GoodMu != None and mu_lepton_veto and GoodEle == None:
+            GoodLep = GoodMu
             lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
             SingleMu = True
             SingleEle = False
                 
-        elif indexGoodMu>=0 and indexGoodEle>=0:
+        elif GoodMu != None and GoodEle != None:
             if ele_lepton_veto and not mu_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodEle)
+                GoodLep = GoodEle
                 lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
             elif not ele_lepton_veto and mu_lepton_veto:            
-                indexGoodLep = copy.deepcopy(indexGoodMu)
+                GoodLep = GoodMu
                 lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
                 SingleMu = True
                 SingleEle = False
 
             elif ele_lepton_veto and mu_lepton_veto:
-                if electrons[indexGoodEle].pt > muons[indexGoodMu].pt:
-                    indexGoodLep = copy.deepcopy(indexGoodEle)
+                if electrons[GoodEle].pt > GoodMu.pt:
+                    GoodLep = GoodEle
                     lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
                     SingleEle = True
                     SingleMu = False
                 else:
-                    indexGoodLep = copy.deepcopy(indexGoodMu)
+                    GoodLep = GoodMu
                     lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
                     SingleMu = True
                     SingleEle = False
@@ -952,11 +954,12 @@ for i in range(tree.GetEntries()):
     else:
         lepton_LnTRegion[0] = -999
     
-    if indexGoodLep<0 or indexGoodLep>=len(leptons) or (lepton_TightRegion[0]<0 and lepton_LnTRegion[0]<0): 
+    if GoodLep == None or (lepton_TightRegion[0]<0 and lepton_LnTRegion[0]<0): 
         #if Debug:
             #print("exiting at lepton selection (without saving)")
         continue
 
+    #print("GoodLep:", GoodLep, "leptonTR", lepton_TightRegion[0], "leptonLnT", lepton_LnTRegion[0])
 
     if lepton_TightRegion[0]==1 or lepton_LnTRegion[0]==1:
         pass_lepton_selection[0] = 1
@@ -964,8 +967,6 @@ for i in range(tree.GetEntries()):
         pass_lepton_selection[0] = 0
 
     pass_lepton_veto[0] = 1
-
-    GoodLep = leptons[indexGoodLep]
 
     #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodEle:", indexGoodEle, "indexGoodMu:", indexGoodMu, "GoodLep_pdgid:", GoodLep.pdgId)
     #if Debug:
@@ -1030,7 +1031,8 @@ for i in range(tree.GetEntries()):
         systTree.setWeightName("mistagUp", copy.deepcopy(mistagUp))
         systTree.setWeightName("mistagDown", copy.deepcopy(mistagDown))
 
-    ThereIsOneTau, ltau_list = SelectAndVetoTaus(list(taus), GoodLep)
+
+    ThereIsOneTau, ltau_list = SelectAndVetoTaus(list(taus), GoodLep)#, jet1, jet2)
 
     if ThereIsOneTau:
         taucont = taucont + 1
@@ -1051,6 +1053,7 @@ for i in range(tree.GetEntries()):
     else:
         pass_tau_selection[0] = 0
     
+    #print("GoodTau:", GoodTau, "tauTR", tau_TightRegion[0], "tauLnT", tau_LnTRegion[0])
 
     tau_pt[0]               =   GoodTau.pt
     tau_relleadtkpt[0]      =   GoodTau.leadTkPtOverTauPt
@@ -1225,17 +1228,15 @@ for i in range(tree.GetEntries()):
     nJets[0] = len(jets)
     nBJets[0] = CountBJets(jets)#
 
-    outputJetSel=SelectJet(list(jets), GoodTau, GoodLep)
-    
-    if outputJetSel==-999:
-        #systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
-        #systTree.fillTreesSysts(trees, "all")
-        #if Debug:
-            #print("exiting at jet selection (without saving)")
+    jet1, jet2 = SelectVBSJets(jets = list(jets), lep1 = GoodTau, lep2 = GoodLep)
+
+    if jet1 == None or jet2 == None:
         continue  
 
-    jet1, jet2 = outputJetSel
+    pass_jet_selection[0]=1
     
+    #print("jet1", jet1, "jet2", jet2)
+
     leadjet_pt[0]               =   jet1.pt
     leadjet_eta[0]              =   jet1.eta
     leadjet_phi[0]              =   jet1.phi
@@ -1250,8 +1251,6 @@ for i in range(tree.GetEntries()):
     subleadjet_DeepFlv_b[0]     =   jet2.btagDeepFlavB
     subleadjet_DeepCSVv2_b[0]   =   jet2.btagDeepB
     subleadjet_CSVv2_b[0]       =   jet2.btagCSVV2
-    
-    pass_jet_selection[0]=1
 
     #calculating deltaPhi                                                                                                      
     deltaPhi_jj[0]      =   deltaPhi(jet1, jet2)#
@@ -1368,25 +1367,6 @@ for i in range(tree.GetEntries()):
             continue
         elif(isMC):
             w_nominal_all[0] *= 0.354
-
-    '''
-    if len(goodMu) == 1:
-        h_eff_mu.Fill('Good Mu', 1)
-        if len(goodEle) == 0:
-            h_eff_mu.Fill('Good Ele', 1)
-        if len(VetoMu) == 0:
-            h_eff_mu.Fill('Veto Mu', 1)
-        if len(VetoEle) == 0:
-            h_eff_mu.Fill('Veto Ele', 1)
-    if len(goodEle) == 1:
-        h_eff_ele.Fill('Good Ele', 1)
-        if len(goodMu) == 0:
-            h_eff_ele.Fill('Good Mu', 1)
-        if len(VetoMu) == 0:
-            h_eff_ele.Fill('Veto Mu', 1)
-        if len(VetoEle) == 0:
-            h_eff_ele.Fill('Veto Ele', 1)
-    '''
     
     if IsDim8:
         opname = ""
@@ -1451,6 +1431,7 @@ for i in range(tree.GetEntries()):
     systTree.fillTreesSysts(trees, "all")
     #if Debug:
         #print("exiting at the end of the event (saving)")
+
 #trees[0].Print()
 outTreeFile.cd()
 if(isMC):
@@ -1460,30 +1441,6 @@ if(isMC):
         h_PDFweight.Write()
     #h_eff_mu.Write()
     #h_eff_ele.Write()
-'''
-if Debug:
-    for i in range(1,10):
-        if i==1:
-            Cut_dict[i][2]=Cut_dict[i][1]*1.0/nEntriesTotal
-            Cut_dict[i][3]=Cut_dict[i][1]*1.0/nEntriesTotal
-            Cut_dict[i][4]=math.sqrt(Cut_dict[i][2]*(1-Cut_dict[i][2])/nEntriesTotal)
-            Cut_dict[i][5]=math.sqrt(Cut_dict[i][3]*(1-Cut_dict[i][2])/nEntriesTotal)
-        else:
-            if Cut_dict[i-1][1]<=0 or Cut_dict[i][1]==0:
-                Cut_dict[i][2]=-999
-                Cut_dict[i][3]=Cut_dict[i][1]*1.0/nEntriesTotal
-                Cut_dict[i][4]=-999
-                Cut_dict[i][5]=-999
-            else:
-                Cut_dict[i][2]=Cut_dict[i][1]*1.0/Cut_dict[i-1][1]
-                Cut_dict[i][3]=Cut_dict[i][1]*1.0/nEntriesTotal
-                Cut_dict[i][4]=math.sqrt(Cut_dict[i][2]*(1-Cut_dict[i][2])/Cut_dict[i][1]*1.0)
-                Cut_dict[i][5]=math.sqrt(Cut_dict[i][3]*(1-Cut_dict[i][2])/nEntriesTotal)
-
-if Debug:
-    for cutname, counts in Cut_dict.items():
-        print(counts[0], round(counts[1], 4))
-'''
 
 systTree.writeTreesSysts(trees, outTreeFile)
 print("Number of events in output tree " + str(trees[0].GetEntries()))
@@ -1492,3 +1449,4 @@ endTime = datetime.datetime.now()
 print("Ending running at " + str(endTime) + "\n Goodbye")
 
 print("events with one only at-least-loose tau:", taucont)
+
