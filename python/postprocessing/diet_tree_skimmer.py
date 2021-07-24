@@ -750,6 +750,9 @@ for i in range(tree.GetEntries()):
     #print "------ ", i
     passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod)
 
+    if noTrigger:
+        continue
+
     EleTrig = False
     MuTrig  = False
     ElMu    = False
@@ -799,6 +802,7 @@ for i in range(tree.GetEntries()):
 
     vTrigEle, vTrigMu, vTrigHT = trig_finder(HLT, sample.year, sample.label)
     #print(EleTrig, ' ', MuTrig, ' ') 
+
     if EleTrig==True:
         if isMC:
             HLT_effLumi[0] = lumiFinder("Ele", vTrigEle)

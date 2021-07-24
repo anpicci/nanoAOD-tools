@@ -911,7 +911,7 @@ for i in range(tree.GetEntries()):
                 SingleEle = False
 
             elif ele_lepton_veto and mu_lepton_veto:
-                if electrons[GoodEle].pt > GoodMu.pt:
+                if GoodEle.pt > GoodMu.pt:
                     GoodLep = GoodEle
                     lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
                     SingleEle = True
