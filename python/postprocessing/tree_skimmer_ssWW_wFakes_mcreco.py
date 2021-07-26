@@ -592,7 +592,7 @@ for i in range(tree.GetEntries()):
     
     if Debug:
         print("\nevento n. " + str(i))
-        if i > 5000:#1000:
+        if i > 500:#1000:
             break
     
     else:
@@ -894,15 +894,15 @@ for i in range(tree.GetEntries()):
 
     jet1, jet2 = SelectVBSJets(jets = list(jets), lep1 = GoodTau, lep2 = GoodLep)
     mjet1, mjet2 = SelectVBSJets(jets = list(jets), useMassCrit = True, lep1 = GoodTau, lep2 = GoodLep)
+
     if (jet1 == None or jet2 == None) and (mjet1 == None or mjet2 == None):
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         systTree.fillTreesSysts(trees, "all")
         continue  
 
     pass_jet_selection[0]=1
-    
+
     if not (jet1 == None or jet2 == None):
-        print(jet1, jet2)
         leadjet_pt[0]               =   jet1.pt
         leadjet_eta[0]              =   jet1.eta
         leadjet_phi[0]              =   jet1.phi
@@ -940,7 +940,6 @@ for i in range(tree.GetEntries()):
         m_jj[0]          =   (jet1.p4() + jet2.p4()).M()
 
     if not (mjet1 == None or mjet2 == None):
-        print(mjet1, mjet2)
         mleadjet_pt[0]               =   mjet1.pt
         mleadjet_eta[0]              =   mjet1.eta
         mleadjet_phi[0]              =   mjet1.phi

@@ -240,21 +240,21 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
     goodjets = get_Jet(jets)    
     goodjets = list(filter(lambda x : abs(deltaR(x.eta, x.phi, lep1eta, lep1phi)) > isocone1 and abs(deltaR(x.eta, x.phi, lep2eta, lep2phi)) > isocone2, goodjets))
 
-
     #if there are 0 or 1 goodjets, return default values
     if len(goodjets) < 2:
         return jet1, jet2
 
     maxInvMass = -999.
     #else, search for two isolated jets compatible with VBS
+
+    idxjet1 = -1
+    idxjet2 = -1
+
     for idxj, jet in enumerate(goodjets):
         jet1 = None
         jet2 = None
 
         skgoodjets = list(goodjets)
-        for idxs, sjet in enumerate(skgoodjets):
-            if idxs <= idxj:
-                skgoodjets.remove(sjet)
 
         compatible_jets = list(filter(lambda x : IsNotTheSameObject(x, jet), skgoodjets))
         if applyDeltaEtaCut:
@@ -267,18 +267,24 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         
         if not useMassCrit:
             #if criteria upon jj inv mass is not used, returns the compatible couple with highest pt
-            jet1 = jet
-            jet2 = compatible_jets[0]
+            idxjet1 = jets.index(jet)
+            idxjet2 = jets.index(compatible_jets[0])
             break
         
         #else apply maximum mass criterion
         else:
             for idxc, cjet in enumerate(compatible_jets):
-                
-                if (cjet.p4() + jet.p4()).M() > maxInvMass:
-                    jet1 = jet
-                    jet2 = cjet
-                    
+                if jets.index(cjet) <= jets.index(jet):
+                    continue
+                invmass = (cjet.p4() + jet.p4()).M()
+                if invmass > maxInvMass:
+                    idxjet1 = jets.index(jet)
+                    idxjet2 = jets.index(cjet)
+                    maxInvMass = invmass
+
+    jet1 = jets[idxjet1]
+    jet2 = jets[idxjet2]
+
     return jet1, jet2
 
 def get_ptrel(lepton, jet, taucorr=1.):
