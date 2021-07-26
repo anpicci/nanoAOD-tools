@@ -201,20 +201,12 @@ def btagcalc(JetsC):
 
     return p_data/p_MC, p_data_btagUp/p_MC, p_data_btagDown/p_MC, p_data_mistagUp/p_MC, p_data_mistagDown/p_MC
 
-def FindSecondJet(jet, jetCollection, GoodTau, GoodMu):
-    for k in range(len(jetCollection)):
-        if abs(jetCollection[k].eta)>ETA_CUT_JET: continue
-        if jetCollection[k].pt<PT_CUT_JET or jetCollection[k].jetId<2:
-            return -1
-        if abs(jet.eta-jetCollection[k].eta)>DELTAETA_JJ_CUT:
-            if deltaR(jet.eta, jet.phi, GoodTau.eta, GoodTau.phi)>DR_OVERLAP_CONE_TAU or deltaR(jet.eta, jet.phi, GoodMu.eta, GoodMu.phi)>DR_OVERLAP_CONE_OTHER:
-                return k
-    return -1
-
 def diet_FindSecondJet(jet, jetCollection, GoodEle, GoodMu):
     for k in range(len(jetCollection)):
         if abs(jetCollection[k].eta)>ETA_CUT_JET: continue
         if jetCollection[k].pt<PT_CUT_JET or jetCollection[k].jetId<2:
+            return -1
+        if jetCollection[0].pt>=PT_CUT_JET and (jetCollection[0].pt<50. and jetCollection[0].puId < 7):
             return -1
         if abs(jet.eta-jetCollection[k].eta)>DELTAETA_JJ_CUT:
             if deltaR(jet.eta, jet.phi, GoodEle.eta, GoodEle.phi)>DR_OVERLAP_CONE_OTHER or deltaR(jet.eta, jet.phi, GoodMu.eta, GoodMu.phi)>DR_OVERLAP_CONE_OTHER:
@@ -341,98 +333,117 @@ def diet_SelectLepton(ele, mu, eletrig, mutrig):
             return indexGoodEle, indexGoodMu, isEleTight, isMuTight, False
         return indexGoodEle, indexGoodMu, isEleTight, isMuTight, True
 
-        ######Still to implement the loose regions
-
-
-def SelectLepton(lepCollection, isMu): #isMu==True -> muons else Ele 
-    pT_cut=-999
-    eta_cut=-999
-    if isMu:
-        pT_cut=PT_CUT_MU
-        eta_cut=ETA_CUT_MU
-    else:
-        pT_cut=PT_CUT_ELE
-        eta_cut=ETA_CUT_ELE
-    for i in range(len(lepCollection)):
-        if isMu:
-            if not (lepCollection[i].tightId and (lepCollection[i].pfRelIso04_all<ISO_CUT_MU and lepCollection[i].pfRelIso04_all>=0.)):
-                continue
-        else:
-            if not (lepCollection[i].mvaFall17V2Iso_WP90 and (lepCollection[i].jetRelIso<ISO_CUT_ELE and lepCollection[i].jetRelIso>=0.)):
-                continue    
-        if lepCollection[i].pt<pT_cut:
-            continue
-        if abs(lepCollection[i].eta)>eta_cut:
-            continue 
-        if not isMu and(abs(lepCollection[i].eta)>1.4442 and abs(lepCollection[i].eta)<1.566):
-            continue
-        return i, 1
+def diet_SelectLepton(ele, mu, eletrig, mutrig):
     
-    for i in range(len(lepCollection)):
-        if abs(lepCollection[i].pdgId) == 13:
-            if not (lepCollection[i].pfRelIso04_all>=ISO_CUT_MU and lepCollection[i].pfRelIso04_all<=1. and (not lepCollection[i].tightId and lepCollection[i].looseId)):
-                continue
-            if lepCollection[i].pt<PT_CUT_MU: continue
-            if abs(lepCollection[i].eta)>ETA_CUT_MU: continue 
-            return i, 0
-        elif abs(lepCollection[i].pdgId) == 11:
-            if not (lepCollection[i].mvaFall17V2Iso_WPL and not(lepCollection[i].mvaFall17V2Iso_WP90) and lepCollection[i].jetRelIso>=ISO_CUT_ELE and lepCollection[i].jetRelIso<=1.):
-                continue
-            if (abs(lepCollection[i].eta)>1.4442 and abs(lepCollection[i].eta)<1.566): continue
-            if lepCollection[i].pt<PT_CUT_MU: continue
-            if abs(lepCollection[i].eta)>ETA_CUT_ELE: continue 
-            return i, 0
-    return -1, -1
+    if (len(ele) < 1 or len(mu) < 1) or (eletrig == False and mutrig == False):
+        return -999, -999, -999, -999, False
+
+    ###### ELECTRON IS THE HIGHEST PT PARTICLE WHICH FIRES THE TRIGGER
+    if eletrig:
+
+        HighestPtEle = -999
+        HighestPtMu  = -999
+        isEleTight   = False
+        isMuTight    = False   
+        indexGoodEle = -999
+        indexGoodMu  = -999
 
 
-def SelectLooseLepton(lepCollection, isMu): #isMu==True -> muons else Ele 
-    pT_cut=-999
-    eta_cut=-999
-    if isMu:
-        pT_cut=PT_CUT_MU
-        eta_cut=ETA_CUT_MU
-    else:
-        pT_cut=PT_CUT_ELE
-        eta_cut=ETA_CUT_ELE
-    for i in range(len(lepCollection)):
-        if isMu:
-          if not (lepCollection[i].looseId and not(lepCollection[i].tightId) and lepCollection[i].pfRelIso04_all<1 and lepCollection[i].pfRelIso04_all>=ISO_CUT_MU): continue
-        else:
-          if not (lepCollection[i].mvaFall17V2Iso_WPL and lepCollection[i].jetRelIso>=ISO_CUT_ELE and lepCollection[i].jetRelIso<1): continue    
-        if lepCollection[i].pt<pT_cut: continue
-        if abs(lepCollection[i].eta)>eta_cut: continue 
-        if not isMu and(abs(lepCollection[i].eta)>1.4442 and abs(lepCollection[i].eta)<1.566): continue
-        return i
-    return -1
+        #first search for tight electron
+        for i in range(len(ele)):
+            if not(ele[i].mvaFall17V2Iso_WP90 and ele[i].jetRelIso<ISO_CUT_ELE and ele[i].jetRelIso>=0.): continue
+            if ele[i].pt        < PT_CUT_ELE:   continue
+            if abs(ele[i].eta)  > ETA_CUT_ELE:  continue
+            if ele[i].pt        > HighestPtEle:    
+                indexGoodEle = i
+                isEleTight = True
+    
+        #if no tight electron is found -> loose NOT TIGHT electron
+        HighestPt_looseEle = -999
+        if isEleTight == False:
+            for i in range(len(ele)):
+                if not(ele[i].mvaFall17V2Iso_WPL and not ele[i].mvaFall17V2Iso_WP90 and ele[i].jetRelIso>=ISO_CUT_ELE and ele[i].jetRelIso<=1.): continue
+                if ele[i].pt        < PT_CUT_ELE:   continue
+                if abs(ele[i].eta)  > ETA_CUT_ELE:  continue
+                if ele[i].pt        > HighestPt_looseEle:    
+                    indexGoodEle = i
+                    isEleTight = False
 
-def SelectTau(tauCollection, GoodMuon, vsEleWP, vsMuWP, vsJetWP):
-    #print('len taucollection : ', len(tauCollection))
-    if len(tauCollection)<1:
-        return -1, -999
-    for i in range(len(tauCollection)):
-        #print(i, "deltaR(tightlep):", deltaR(tauCollection[i].eta, tauCollection[i].phi, GoodMuon.eta, GoodMuon.phi), "DTvse:", tauCollection[i].idDeepTau2017v2p1VSe, "DTvsmu:", tauCollection[i].idDeepTau2017v2p1VSmu, "DTvsjet:", tauCollection[i].idDeepTau2017v2p1VSjet, "tau pt:", tauCollection[i].pt, "tau eta:", tauCollection[i].eta)
-        if deltaR(tauCollection[i].eta, tauCollection[i].phi, GoodMuon.eta, GoodMuon.phi)<DR_OVERLAP_CONE_TAU:
-            continue
-        if not (tauCollection[i].idDeepTau2017v2p1VSe>=vsEleWP and tauCollection[i].idDeepTau2017v2p1VSmu>=vsMuWP and tauCollection[i].idDeepTau2017v2p1VSjet>=vsJetWP and tauCollection[i].idDecayModeNewDMs):   
-            continue
-        if tauCollection[i].pt<PT_CUT_TAU:
-            continue
-        if abs(tauCollection[i].eta)>ETA_CUT_TAU:
-            continue
-        return i, 1
+            #than search for tight mu
+            for i in range(len(mu)):
+                if not(mu[i].tightId and mu[i].jetRelIso<ISO_CUT_MU and mu[i].pfRelIso04_all>=0.): continue
+                if mu[i].pt         < PT_CUT_MU:    continue
+                if abs(mu[i].eta)   > ETA_CUT_MU:   continue
+                if mu[i].pt         > HighestPtMu:      
+                    indexGoodMu = i
+                    isMuTight = True
+            
+            for i in range(len(mu)):
+                if not(mu[i].looseId and mu[i].tightId and mu[i].jetRelIso>=ISO_CUT_MU and mu[i].pfRelIso04_all<=1.): continue
+                if mu[i].pt < PT_CUT_MU:            continue
+                if abs(mu[i].eta) > ETA_CUT_MU:     continue
+                if mu[i].pt > HighestPtMu:      
+                    indexGoodMu = i
+                    isMuTight = True
 
-    for i in range(len(tauCollection)):
-        if deltaR(tauCollection[i].eta, tauCollection[i].phi, GoodMuon.eta, GoodMuon.phi)<DR_OVERLAP_CONE_TAU:
-            continue
-        if not (tauCollection[i].idDeepTau2017v2p1VSe>=vsEleWP and tauCollection[i].idDeepTau2017v2p1VSmu>=vsMuWP and tauCollection[i].idDeepTau2017v2p1VSjet>=4 and tauCollection[i].idDeepTau2017v2p1VSjet<vsJetWP and tauCollection[i].idDecayModeNewDMs):
-            continue
-        if tauCollection[i].pt<PT_CUT_TAU:
-            continue
-        if abs(tauCollection[i].eta)>ETA_CUT_TAU:
-            continue
-        return i, 0
-     
-    return -1, -999
+        if indexGoodEle or indexGoodMu:
+            return indexGoodEle, indexGoodMu, isEleTight, isMuTight, False
+        return indexGoodEle, indexGoodMu, isEleTight, isMuTight, True
+    
+    ###### MUON IS THE HIGHEST PT PARTICLE WHICH FIRES THE TRIGGER
+    
+    if mutrig:
+
+        HighestPtEle = -999
+        HighestPtMu  = -999
+        isEleTight   = False
+        isMuTight    = False   
+        indexGoodEle = -999
+        indexGoodMu  = -999
+
+        #first search for tight mu
+        for i in range(len(mu)):
+            if not(mu[i].tightId and (mu[i].jetRelIso<ISO_CUT_MU and mu[i].pfRelIso04_all>=0.)): continue
+            if mu[i].pt         < PT_CUT_MU:     continue
+            if abs(mu[i].eta)   > ETA_CUT_MU:    continue
+            if mu[i].pt         > HighestPtMu:      
+                indexGoodMu = i
+                isMuTight = True
+        
+        #than for LnT mu
+        if isMuTight == False:
+            for i in range(len(mu)):
+                if not(mu[i].looseId and (mu[i].tightId) and (mu[i].jetRelIso>=ISO_CUT_MU and mu[i].pfRelIso04_all<=1.)): continue
+                if mu[i].pt         < PT_CUT_MU:    continue
+                if abs(mu[i].eta)   > ETA_CUT_MU:   continue
+                if mu[i].pt         > HighestPtMu:      
+                    indexGoodMu = i
+                    isMuTight = True
+        
+        #than search for tight electron
+        for i in range(len(ele)):
+            if not(ele[i].mvaFall17V2Iso_WP90 and (ele[i].jetRelIso<ISO_CUT_ELE and ele[i].jetRelIso>=0.)): continue
+            if ele[i].pt        < PT_CUT_ELE:       continue
+            if abs(ele[i].eta)  > ETA_CUT_ELE:      continue
+            if ele[i].pt        > HighestPtEle:    
+                indexGoodEle = i
+                isEleTight = True
+    
+        #if no tight electron is found -> loose NOT TIGHT electron
+        HighestPt_looseEle = -999
+        if isEleTight == False:
+            for i in range(len(ele)):
+                if not(ele[i].mvaFall17V2Iso_WPL and not(ele[i].mvaFall17V2Iso_WP90) and (ele[i].jetRelIso>=ISO_CUT_ELE and ele[i].jetRelIso<=1.)): continue
+                if ele[i].pt        < PT_CUT_ELE:   continue
+                if abs(ele[i].eta)  < ETA_CUT_ELE:  continue
+                if ele[i].pt        > HighestPt_looseEle:    
+                    indexGoodEle = i
+                    isEleTight = False
+        if indexGoodEle<0 or indexGoodMu<0:
+            return indexGoodEle, indexGoodMu, isEleTight, isMuTight, False
+        return indexGoodEle, indexGoodMu, isEleTight, isMuTight, True
+
+        ######Still to implement the loose regions
 
 def SelectAndVetoTaus(taus, lepton):
     nTau=0
@@ -532,12 +543,16 @@ def DietLepVeto(GoodElectron, GoodMuon, ElectronCollection, MuonCollection):
 def SelectJet(jetCollection, GoodTau, GoodMu):
     if len(jetCollection)<2:
         return -999
-    if jetCollection[0].pt<PT_CUT_JET or jetCollection[0].jetId<2: return -999
-    if jetCollection==None: return -999
+    if jetCollection[0].pt<PT_CUT_JET or jetCollection[0].jetId<2:
+        return -999
+    if jetCollection[0].pt>=PT_CUT_JET and (jetCollection[0].pt<50. and jetCollection[0].puId < 7):
+        return -999
+    if jetCollection==None: 
+        return -999
     #select higher pT jet
     GoodJet=jetCollection[0]
     #if the jet matches in dR one of the previously selected particles (e, tau), than it searches in the other jets
-    if deltaR(GoodJet.eta, GoodJet.phi, GoodTau.eta, GoodTau.phi)<DR_OVERLAP_CONE_TAU or deltaR(GoodJet.eta, GoodJet.phi, GoodMu.eta, GoodMu.phi)<DR_OVERLAP_CONE_OTHER: 
+    if deltaR(GoodJet.eta, GoodJet.phi, GoodTau.eta, GoodTau.phi)<DR_OVERLAP_CONE_OTHER or deltaR(GoodJet.eta, GoodJet.phi, GoodMu.eta, GoodMu.phi)<DR_OVERLAP_CONE_OTHER: 
         jetCollection.remove(GoodJet)
         if len(jetCollection)==1:
              return -999
@@ -556,8 +571,12 @@ def SelectJet(jetCollection, GoodTau, GoodMu):
 def diet_SelectJet(jetCollection, GoodEle, GoodMu):
     if len(jetCollection)<2:
         return False, False, False
-    if jetCollection[0].pt<PT_CUT_JET or jetCollection[0].jetId<2: return False, False, False
-    if jetCollection==None: return False, False, False
+    if jetCollection[0].pt<PT_CUT_JET or jetCollection[0].jetId<2:
+        return False, False, False
+    if jetCollection[0].pt>=PT_CUT_JET and (jetCollection[0].pt<50. and jetCollection[0].puId < 7):
+        return False, False, False
+    if jetCollection==None:
+        return False, False, False
     #select higher pT jet
     GoodJet=jetCollection[0]
     #if the jet matches in dR one of the previously selected particles (e, tau), than it searches in the other jets

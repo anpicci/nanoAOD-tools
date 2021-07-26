@@ -245,8 +245,9 @@ def mergepart(dataset):
         startWFR = folder.startswith('FR')
         isltau = opt.channel=='ltau'
         hasFakeInside = 'Fake' in opt.folder
-        
-        if isltau and not(startWFR or hasFakeInside):
+        ismcreco = 'mcreco' in opt.folder
+
+        if isltau and not(startWFR or hasFakeInside or ismcreco):
               
             # insert BDT output value into merged file
             print("Processing events with Tommaso's BDT...")
@@ -1139,9 +1140,13 @@ for year in years:
         elif opt.channel == 'emu':
             wzero = 'w_nominal*PFSF*puSF*lepSF'#*btagSF'
         
-        vfold = int(opt.folder.split("v")[-1])
-        if vfold > 86:
+        try:
+            vfold = int(opt.folder.split("v")[-1])
+        except:
             wzero += "*btagSF"
+        else:
+            if vfold > 86:
+                wzero += "*btagSF"
         
         cutbase = cut_dict[lep]
 

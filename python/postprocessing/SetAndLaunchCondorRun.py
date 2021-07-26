@@ -75,6 +75,7 @@ parser.add_option('--try', dest='tryy', default = False, action='store_true', he
 parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 parser.add_option('--beff', dest='beff', default = False, action='store_true', help='Launching btag efficiencies study, default does not')
+parser.add_option('--mcreco', dest='mcreco', default = False, action='store_true', help='Launching mcreco analysis, default does not')
 
 (opt, args) = parser.parse_args()
 
@@ -132,6 +133,9 @@ elif opt.tryy:
     subpy = "submit_condor_try.py"
     if opt.channel == "ltau":
         optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
+elif opt.mcreco:
+    subpy = "submit_condor_mcreco.py"
+    optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
 elif opt.channel == "ltau":
     subpy = "submit_condor.py"
     optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
@@ -218,7 +222,7 @@ for prname, proc in condor_dict.items():
 f.close()
 
 if not opt.check:
-    t = open("CutsAndValues_bu.py", "w")
+    t = open("CutsAndValues.py", "w")
     t.write("# In this file values for cuts and constant will be stored and then recalled from the whole analysis function\n")
     t.write("#Using nanoAOD version 102X\n")
     t.write("ONLYELE=1\n")
@@ -252,8 +256,8 @@ if not opt.check:
     t.write("BTAG_ETA_CUT=   5\n")
     t.write("BTAG_ALGO   =   'DeepFlv'\n")
     t.write("BTAG_WP     =   'M'\n")
-    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 4" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     t.write("ID_TAU_RECO_DEEPTAU_VSJET=  " + vsJet_dict[opt.jetwp] + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     t.write("ID_TAU_RECO_DEEPTAU_VSELE=  " + vsEle_dict[opt.elewp] + "  #byDeepTau2017v2p1VSe ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     t.write("ID_TAU_RECO_DEEPTAU_VSMU=   " + vsMu_dict[opt.muwp] + "  #byDeepTau2017v2p1VSmu ID working points (deepTau2017v2p1): bitmask 1 = VLoose, 2 = Loose, 4 = Medium, 8 = Tight\n")

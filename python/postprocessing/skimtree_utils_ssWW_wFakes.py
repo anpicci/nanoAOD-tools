@@ -6,7 +6,7 @@ import copy as copy
 from os import path
 import array
 import types
-from CutsAndValues_bu import *
+from CutsAndValues import *
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
@@ -205,7 +205,7 @@ def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the 
     return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
 
 def SelectVBSQGenJet(genjets):
-    light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10), genjets)
+    light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10, genjets))
     return light_genjets
 
 #new

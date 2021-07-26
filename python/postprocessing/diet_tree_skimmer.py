@@ -750,9 +750,6 @@ for i in range(tree.GetEntries()):
     #print "------ ", i
     passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod)
 
-    if noTrigger:
-        continue
-
     EleTrig = False
     MuTrig  = False
     ElMu    = False
@@ -802,7 +799,6 @@ for i in range(tree.GetEntries()):
 
     vTrigEle, vTrigMu, vTrigHT = trig_finder(HLT, sample.year, sample.label)
     #print(EleTrig, ' ', MuTrig, ' ') 
-
     if EleTrig==True:
         if isMC:
             HLT_effLumi[0] = lumiFinder("Ele", vTrigEle)
@@ -900,7 +896,7 @@ for i in range(tree.GetEntries()):
         pass_charge_selection[0] = 1
 
     if isMC:
-        lepsSF = tightele.effSF*tightmu*effSF
+        lepsSF = tightele.effSF*tightmu.effSF
         #GoodLep_SF = Lepton_IDIso_SF(GoodLep)
         #GoodLep_SFUp = GoodLep.effSF_errUp
         #GoodLep_SFDown = GoodLep.effSF_errDown

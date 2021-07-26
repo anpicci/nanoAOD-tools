@@ -18,7 +18,7 @@ import math
 import datetime
 import copy
 from array import array
-from skimtree_utils_ssWW_wFakes_bu import *
+from skimtree_utils_ssWW_wFakes import *
 from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 from EFTOperator_dict import *
 
@@ -344,28 +344,52 @@ var_list.append(gmsubleadjet_partonFlavour)
 var_list.append(gmsubleadjet_DeepFlv_b)
 var_list.append(gmsubleadjet_IsGenMatched)
 
-#inv and transv masses
-m_jj                        =   array.array('f', [-999.])
-var_list.append(m_jj)
-
-#deltaPhi#                                                                      
-deltaPhi_jj                 =   array.array('f', [-999.])#
-var_list.append(deltaPhi_jj)#
-
-#deltaTheta
-deltaTheta_jj                 =   array.array('f', [-999.])#
-var_list.append(deltaTheta_jj)#
-
-#ptRel
-ptRel_jj                 =   array.array('f', [-999.])#
-var_list.append(ptRel_jj)#
-
 HLT_effLumi                 =   array.array('f', [-999.])
 var_list.append(HLT_effLumi)
 
-#deltaEta#                                                                      
+m_jj                        =   array.array('f', [-999.])
+var_list.append(m_jj)
+deltaPhi_jj                 =   array.array('f', [-999.])#
+var_list.append(deltaPhi_jj)#
+deltaTheta_jj                 =   array.array('f', [-999.])#
+var_list.append(deltaTheta_jj)#
+ptRel_jj                 =   array.array('f', [-999.])#
+var_list.append(ptRel_jj)#
 deltaEta_jj                 =   array.array('f', [-999.])#
 var_list.append(deltaEta_jj)#
+
+genm_jj                        =   array.array('f', [-999.])
+var_list.append(genm_jj)
+gendeltaPhi_jj                 =   array.array('f', [-999.])#
+var_list.append(gendeltaPhi_jj)#
+gendeltaTheta_jj                 =   array.array('f', [-999.])#
+var_list.append(gendeltaTheta_jj)#
+genptRel_jj                 =   array.array('f', [-999.])#
+var_list.append(genptRel_jj)#
+gendeltaEta_jj                 =   array.array('f', [-999.])#
+var_list.append(gendeltaEta_jj)#
+
+mm_jj                        =   array.array('f', [-999.])
+var_list.append(mm_jj)
+mdeltaPhi_jj                 =   array.array('f', [-999.])#
+var_list.append(mdeltaPhi_jj)#
+mdeltaTheta_jj                 =   array.array('f', [-999.])#
+var_list.append(mdeltaTheta_jj)#
+mptRel_jj                 =   array.array('f', [-999.])#
+var_list.append(mptRel_jj)#
+mdeltaEta_jj                 =   array.array('f', [-999.])#
+var_list.append(mdeltaEta_jj)#
+
+gmm_jj                        =   array.array('f', [-999.])
+var_list.append(gmm_jj)
+gmdeltaPhi_jj                 =   array.array('f', [-999.])#
+var_list.append(gmdeltaPhi_jj)#
+gmdeltaTheta_jj                 =   array.array('f', [-999.])#
+var_list.append(gmdeltaTheta_jj)#
+gmptRel_jj                 =   array.array('f', [-999.])#
+var_list.append(gmptRel_jj)#
+gmdeltaEta_jj                 =   array.array('f', [-999.])#
+var_list.append(gmdeltaEta_jj)#
 
 #cut variables
 pass_lepton_selection       =   array.array('i', [0])
@@ -415,11 +439,45 @@ systTree.branchTreesSysts(trees, "all", "leadjet_eta",          outTreeFile, lea
 systTree.branchTreesSysts(trees, "all", "leadjet_phi",          outTreeFile, leadjet_phi)
 systTree.branchTreesSysts(trees, "all", "leadjet_mass",         outTreeFile, leadjet_mass)
 systTree.branchTreesSysts(trees, "all", "leadjet_DeepFlv_b",    outTreeFile, leadjet_DeepFlv_b)
+systTree.branchTreesSysts(trees, "all", "leadjet_partonFlavour",    outTreeFile, leadjet_partonFlavour)
+systTree.branchTreesSysts(trees, "all", "leadjet_IsGenMatched",    outTreeFile, leadjet_IsGenMatched)
 systTree.branchTreesSysts(trees, "all", "subleadjet_pt",           outTreeFile, subleadjet_pt)
 systTree.branchTreesSysts(trees, "all", "subleadjet_eta",          outTreeFile, subleadjet_eta)
 systTree.branchTreesSysts(trees, "all", "subleadjet_phi",          outTreeFile, subleadjet_phi)
 systTree.branchTreesSysts(trees, "all", "subleadjet_mass",         outTreeFile, subleadjet_mass)
 systTree.branchTreesSysts(trees, "all", "subleadjet_DeepFlv_b",    outTreeFile, subleadjet_DeepFlv_b)
+systTree.branchTreesSysts(trees, "all", "subleadjet_partonFlavour",    outTreeFile, subleadjet_partonFlavour)
+systTree.branchTreesSysts(trees, "all", "subleadjet_IsGenMatched",    outTreeFile, subleadjet_IsGenMatched)
+
+systTree.branchTreesSysts(trees, "all", "mleadjet_pt",           outTreeFile, mleadjet_pt)
+systTree.branchTreesSysts(trees, "all", "mleadjet_eta",          outTreeFile, mleadjet_eta)
+systTree.branchTreesSysts(trees, "all", "mleadjet_phi",          outTreeFile, mleadjet_phi)
+systTree.branchTreesSysts(trees, "all", "mleadjet_mass",         outTreeFile, mleadjet_mass)
+systTree.branchTreesSysts(trees, "all", "mleadjet_DeepFlv_b",    outTreeFile, mleadjet_DeepFlv_b)
+systTree.branchTreesSysts(trees, "all", "mleadjet_partonFlavour",    outTreeFile, mleadjet_partonFlavour)
+systTree.branchTreesSysts(trees, "all", "mleadjet_IsGenMatched",    outTreeFile, mleadjet_IsGenMatched)
+systTree.branchTreesSysts(trees, "all", "msubleadjet_pt",           outTreeFile, msubleadjet_pt)
+systTree.branchTreesSysts(trees, "all", "msubleadjet_eta",          outTreeFile, msubleadjet_eta)
+systTree.branchTreesSysts(trees, "all", "msubleadjet_phi",          outTreeFile, msubleadjet_phi)
+systTree.branchTreesSysts(trees, "all", "msubleadjet_mass",         outTreeFile, msubleadjet_mass)
+systTree.branchTreesSysts(trees, "all", "msubleadjet_DeepFlv_b",    outTreeFile, msubleadjet_DeepFlv_b)
+systTree.branchTreesSysts(trees, "all", "msubleadjet_partonFlavour",    outTreeFile, msubleadjet_partonFlavour)
+systTree.branchTreesSysts(trees, "all", "msubleadjet_IsGenMatched",    outTreeFile, msubleadjet_IsGenMatched)
+
+systTree.branchTreesSysts(trees, "all", "gmleadjet_pt",           outTreeFile, gmleadjet_pt)
+systTree.branchTreesSysts(trees, "all", "gmleadjet_eta",          outTreeFile, gmleadjet_eta)
+systTree.branchTreesSysts(trees, "all", "gmleadjet_phi",          outTreeFile, gmleadjet_phi)
+systTree.branchTreesSysts(trees, "all", "gmleadjet_mass",         outTreeFile, gmleadjet_mass)
+systTree.branchTreesSysts(trees, "all", "gmleadjet_DeepFlv_b",    outTreeFile, gmleadjet_DeepFlv_b)
+systTree.branchTreesSysts(trees, "all", "gmleadjet_partonFlavour",    outTreeFile, gmleadjet_partonFlavour)
+systTree.branchTreesSysts(trees, "all", "gmleadjet_IsGenMatched",    outTreeFile, gmleadjet_IsGenMatched)
+systTree.branchTreesSysts(trees, "all", "gmsubleadjet_pt",           outTreeFile, gmsubleadjet_pt)
+systTree.branchTreesSysts(trees, "all", "gmsubleadjet_eta",          outTreeFile, gmsubleadjet_eta)
+systTree.branchTreesSysts(trees, "all", "gmsubleadjet_phi",          outTreeFile, gmsubleadjet_phi)
+systTree.branchTreesSysts(trees, "all", "gmsubleadjet_mass",         outTreeFile, gmsubleadjet_mass)
+systTree.branchTreesSysts(trees, "all", "gmsubleadjet_DeepFlv_b",    outTreeFile, gmsubleadjet_DeepFlv_b)
+systTree.branchTreesSysts(trees, "all", "gmsubleadjet_partonFlavour",    outTreeFile, gmsubleadjet_partonFlavour)
+systTree.branchTreesSysts(trees, "all", "gmsubleadjet_IsGenMatched",    outTreeFile, gmsubleadjet_IsGenMatched)
 
 systTree.branchTreesSysts(trees, "all", "genjet1_pt",           outTreeFile, genjet1_pt)
 systTree.branchTreesSysts(trees, "all", "genjet1_eta",          outTreeFile, genjet1_eta)
@@ -436,19 +494,32 @@ systTree.branchTreesSysts(trees, "all", "nJets",  outTreeFile, nJets)
 systTree.branchTreesSysts(trees, "all", "nGenJets",  outTreeFile, nGenJets)
 systTree.branchTreesSysts(trees, "all", "nBJets", outTreeFile, nBJets)#
 
-#masses
 systTree.branchTreesSysts(trees, "all", "m_jj",                  outTreeFile, m_jj)
-#deltaPhi#
 systTree.branchTreesSysts(trees, "all", "deltaPhi_jj",              outTreeFile, deltaPhi_jj)#
-#deltaEta#
 systTree.branchTreesSysts(trees, "all", "deltaEta_jj",              outTreeFile, deltaEta_jj)#
-#deltaTheta#
 systTree.branchTreesSysts(trees, "all", "deltaTheta_jj",              outTreeFile, deltaTheta_jj)#
-#ptRel#
 systTree.branchTreesSysts(trees, "all", "ptRel_jj",              outTreeFile, ptRel_jj)#
-#other                                                                                    
+
+systTree.branchTreesSysts(trees, "all", "mm_jj",                  outTreeFile, mm_jj)
+systTree.branchTreesSysts(trees, "all", "mdeltaPhi_jj",              outTreeFile, mdeltaPhi_jj)#
+systTree.branchTreesSysts(trees, "all", "mdeltaEta_jj",              outTreeFile, mdeltaEta_jj)#
+systTree.branchTreesSysts(trees, "all", "mdeltaTheta_jj",              outTreeFile, mdeltaTheta_jj)#
+systTree.branchTreesSysts(trees, "all", "mptRel_jj",              outTreeFile, mptRel_jj)#
+
+systTree.branchTreesSysts(trees, "all", "genm_jj",                  outTreeFile, genm_jj)
+systTree.branchTreesSysts(trees, "all", "gendeltaPhi_jj",              outTreeFile, gendeltaPhi_jj)#
+systTree.branchTreesSysts(trees, "all", "gendeltaEta_jj",              outTreeFile, gendeltaEta_jj)#
+systTree.branchTreesSysts(trees, "all", "gendeltaTheta_jj",              outTreeFile, gendeltaTheta_jj)#
+systTree.branchTreesSysts(trees, "all", "genptRel_jj",              outTreeFile, genptRel_jj)#
+
+systTree.branchTreesSysts(trees, "all", "gmm_jj",                  outTreeFile, gmm_jj)
+systTree.branchTreesSysts(trees, "all", "gmdeltaPhi_jj",              outTreeFile, gmdeltaPhi_jj)#
+systTree.branchTreesSysts(trees, "all", "gmdeltaEta_jj",              outTreeFile, gmdeltaEta_jj)#
+systTree.branchTreesSysts(trees, "all", "gmdeltaTheta_jj",              outTreeFile, gmdeltaTheta_jj)#
+systTree.branchTreesSysts(trees, "all", "gmptRel_jj",              outTreeFile, gmptRel_jj)#
+
 systTree.branchTreesSysts(trees, "all", "HLT_effLumi",              outTreeFile, HLT_effLumi)#
-#zeppenfeld
+
 
 #cut variables
 systTree.branchTreesSysts(trees, "all", "pass_lepton_selection",    outTreeFile, pass_lepton_selection)
@@ -513,7 +584,6 @@ for i in range(tree.GetEntries()):
             var_list[j][0] = -999
         else:
             var_list[j][0] = 0
-    SF_Fake[0]=1
 
     w_nominal_all[0] = 1.
     #++++++++++++++++++++++++++++++++++
@@ -522,15 +592,15 @@ for i in range(tree.GetEntries()):
     
     if Debug:
         print("\nevento n. " + str(i))
-        if i > tree.GetEntries():#1000:
+        if i > 5000:#1000:
             break
     
     else:
         if (i+1)%1000 == 0 and i!=0:
             print("Event #", i+1, " out of ", tree.GetEntries())
 
-    if i%(tree.GetEntries()) == 0:
-        print("Last event being processed (#" + str(i+1))
+    if i%(tree.GetEntries()) == 0 and i!=0:
+        print("Last event being processed (#" + str(i+1) + ")")
 
     event       = Event(tree,i)
     electrons   = Collection(event, "Electron")
@@ -581,56 +651,116 @@ for i in range(tree.GetEntries()):
 
     if noTrigger: continue
 
-    genjet1, genjet2 = SelectVBSQGenJet(genjets)
+    sgenjets = SelectVBSQGenJet(genjets)
 
-    genjet1_pt[0]               =   jet1.pt
-    genjet1_eta[0]              =   jet1.eta
-    genjet1_phi[0]              =   jet1.phi
-    genjet1_mass[0]             =   jet1.mass
-    genjet1_partonFlavour[0]    =   jet1.partonFlavour
-    genjet2_pt[0]            =   jet2.pt
-    genjet2_eta[0]           =   jet2.eta
-    genjet2_phi[0]           =   jet2.phi
-    genjet2_mass[0]          =   jet2.mass
-    genjet2_partonFlavour[0]     =   jet2.partonFlavour
-    
-    indexGoodEle, ele_TightRegion = SelectLepton(electrons, False) 
-    indexGoodMu, mu_TightRegion = SelectLepton(muons, True) 
- 
-    if indexGoodEle < 0 and indexGoodMu < 0:
+    if len(sgenjets) < 2:
         continue
 
-    ele_lepton_veto = -1
-    mu_lepton_veto = -1
+    genjet1 = sgenjets[0]
+    genjet2 = sgenjets[1]
 
-    if indexGoodEle >= 0:
-        ele_lepton_veto = LepVeto(electrons[indexGoodEle], electrons, muons)
-    if indexGoodMu >= 0:
-        mu_lepton_veto = LepVeto(muons[indexGoodMu], electrons, muons)
+    genjet1_pt[0]               =   genjet1.pt
+    genjet1_eta[0]              =   genjet1.eta
+    genjet1_phi[0]              =   genjet1.phi
+    genjet1_mass[0]             =   genjet1.mass
+    genjet1_partonFlavour[0]    =   genjet1.partonFlavour
+    genjet2_pt[0]                =   genjet2.pt
+    genjet2_eta[0]               =   genjet2.eta
+    genjet2_phi[0]               =   genjet2.phi
+    genjet2_mass[0]              =   genjet2.mass
+    genjet2_partonFlavour[0]     =   genjet2.partonFlavour
 
+    gmjet1 = None
+    gmjet2 = None
+
+    for jet in jets:
+        if not (jet.genJetIdx>-1 and jet.genJetIdx < len(genjets)):
+            continue
+        if genjets[jet.genJetIdx] == genjet1:
+            gmjet1 = jet
+        elif genjets[jet.genJetIdx] == genjet2:
+            gmjet2 = jet
+
+    if not (gmjet1 == None or gmjet2 == None):
+        gmleadjet_pt[0]              =   gmjet1.pt
+        gmleadjet_eta[0]              =   gmjet1.eta
+        gmleadjet_phi[0]              =   gmjet1.phi
+        gmleadjet_mass[0]             =   gmjet1.mass
+        gmleadjet_DeepFlv_b[0]        =   gmjet1.btagDeepFlavB
+        gmleadjet_partonFlavour[0]    =   gmjet1.btagDeepFlavB
+        if gmjet1.genJetIdx > -1:
+            if genjets[gmjet1.genJetIdx] == genjet1:
+                gmleadjet_IsGenMatched[0] = 1
+            else:
+                gmleadjet_IsGenMatched[0] = 0
+        else:
+            gmleadjet_IsGenMatched[0] = 0
+
+        gmsubleadjet_pt[0]            =   gmjet2.pt
+        gmsubleadjet_eta[0]           =   gmjet2.eta
+        gmsubleadjet_phi[0]           =   gmjet2.phi
+        gmsubleadjet_mass[0]          =   gmjet2.mass
+        gmsubleadjet_DeepFlv_b[0]     =   gmjet2.btagDeepFlavB
+        gmsubleadjet_partonFlavour[0] =   gmjet2.btagDeepFlavB
+        if gmjet2.genJetIdx > -1:
+            if genjets[gmjet2.genJetIdx] == genjet2:
+                gmsubleadjet_IsGenMatched[0] = 1
+            else:
+                gmsubleadjet_IsGenMatched[0] = 0
+        else:
+            gmsubleadjet_IsGenMatched[0] = 0
+
+        gmdeltaPhi_jj[0]   =   deltaPhi(gmjet1, gmjet2)
+        gmdeltaEta_jj[0]   =   gmjet1.eta - gmjet2.eta
+        gmdeltaTheta_jj[0] =   (gmjet1.p4() - gmjet2.p4()).CosTheta()
+        gmptRel_jj[0]      =   get_ptrel(gmjet1, gmjet2, 1.)
+        gmm_jj[0]          =   (gmjet1.p4() + gmjet2.p4()).M()
+
+    
+    gendeltaPhi_jj[0]   =   deltaPhi(genjet1, genjet2)
+    gendeltaEta_jj[0]   =   genjet1.eta - genjet2.eta
+    gendeltaTheta_jj[0] =   (genjet1.p4() - genjet2.p4()).CosTheta()
+    genptRel_jj[0]      =   get_ptrel(genjet1, genjet2, 1.)
+    genm_jj[0]          =   (genjet1.p4() + genjet2.p4()).M()
+
+
+    GoodEle, ele_TightRegion = SelectLepton(electrons)#, jet1, jet2) 
+    GoodMu, mu_TightRegion = SelectLepton(muons)#, jet1, jet2) 
+    
+    if GoodEle == None and GoodMu == None:
+        continue
+
+    ele_lepton_veto = False
+    mu_lepton_veto = False
+
+    if GoodEle != None:
+        ele_lepton_veto = LepVeto(GoodEle, electrons, muons)
+    if GoodMu != None:
+        mu_lepton_veto = LepVeto(GoodMu, electrons, muons)   
+ 
     SingleEle=False
     SingleMu=False
     ElMu=False
-
-    LeadLepFamily="not selected"
-    
-    indexGoodLep = -1
+   
+    GoodLep = None
     leptons = None
+    lepton_TightRegion = 0
+    lepton_LnTRegion = 0
 
     if 'DataHT' not in sample.label:
         if passEle and not passMu:
-            if indexGoodEle>=0 and ele_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodEle)
-                lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
+            if GoodEle != None and ele_lepton_veto:
+                GoodLep = GoodEle
+                lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
             else:
                 continue
 
         elif passMu and not passEle:
-            if indexGoodMu>=0 and mu_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodMu)
-                lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
+            if GoodMu != None and mu_lepton_veto:
+                GoodLep = GoodMu
+                lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                 SingleEle = False
                 SingleMu = True
             else:
@@ -650,39 +780,39 @@ for i in range(tree.GetEntries()):
             continue
 
     if ElMu:
-        if indexGoodMu<0 and indexGoodEle>=0 and ele_lepton_veto:
-            indexGoodLep = copy.deepcopy(indexGoodEle)
-            lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
+        if GoodMu == None and GoodEle != None and ele_lepton_veto:
+            GoodLep = GoodEle
+            lepton_TightRegion = copy.deepcopy(ele_TightRegion)
             SingleEle = True
             SingleMu = False
 
-        elif indexGoodMu>=0 and mu_lepton_veto and indexGoodEle<0:
-            indexGoodLep = copy.deepcopy(indexGoodMu)
-            lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
+        elif GoodMu != None and mu_lepton_veto and GoodEle == None:
+            GoodLep = GoodMu
+            lepton_TightRegion = copy.deepcopy(mu_TightRegion)
             SingleMu = True
             SingleEle = False
                 
-        elif indexGoodMu>=0 and indexGoodEle>=0:
+        elif GoodMu != None and GoodEle != None:
             if ele_lepton_veto and not mu_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodEle)
-                lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
+                GoodLep = GoodEle
+                lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
             elif not ele_lepton_veto and mu_lepton_veto:            
-                indexGoodLep = copy.deepcopy(indexGoodMu)
-                lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
+                GoodLep = GoodMu
+                lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                 SingleMu = True
                 SingleEle = False
 
             elif ele_lepton_veto and mu_lepton_veto:
-                if electrons[indexGoodEle].pt > muons[indexGoodMu].pt:
-                    indexGoodLep = copy.deepcopy(indexGoodEle)
-                    lepton_TightRegion[0] = copy.deepcopy(ele_TightRegion)
+                if GoodEle.pt > GoodMu.pt:
+                    GoodLep = GoodEle
+                    lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                     SingleEle = True
                     SingleMu = False
                 else:
-                    indexGoodLep = copy.deepcopy(indexGoodMu)
-                    lepton_TightRegion[0] = copy.deepcopy(mu_TightRegion)
+                    GoodLep = GoodMu
+                    lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                     SingleMu = True
                     SingleEle = False
          
@@ -697,13 +827,13 @@ for i in range(tree.GetEntries()):
     if SingleEle==True:
         if isMC: 
             HLT_effLumi[0] = lumiFinder("Ele", vTrigEle)
-        leptons = electrons
     elif SingleMu==True:
         if isMC:
             HLT_effLumi[0] = lumiFinder("Mu", vTrigMu)
-        leptons = muons
 
     elif not (SingleMu or SingleEle):
+        systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
+        systTree.fillTreesSysts(trees, "all")
         continue
 
     if SingleEle and dataMu:
@@ -711,43 +841,46 @@ for i in range(tree.GetEntries()):
     if SingleMu and dataEle:
         continue
 
-    if lepton_TightRegion[0]==1:
-        lepton_LnTRegion[0] = 0
-    elif lepton_TightRegion[0]==0:
-        lepton_LnTRegion[0] = 1
+    if lepton_TightRegion==1:
+        lepton_LnTRegion = 0
+    elif lepton_TightRegion==0:
+        lepton_LnTRegion = 1
     else:
-        lepton_LnTRegion[0] = -999
+        lepton_LnTRegion = -999
     
-    if indexGoodLep<0 or indexGoodLep>=len(leptons) or (lepton_TightRegion[0]<0 and lepton_LnTRegion[0]<0): 
-        #if Debug:
-            #print("exiting at lepton selection (without saving)")
+    if GoodLep == None or (lepton_TightRegion<0 and lepton_LnTRegion<0): 
+        systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
+        systTree.fillTreesSysts(trees, "all")
         continue
 
-    if lepton_TightRegion[0]==1 or lepton_LnTRegion[0]==1:
+    if lepton_TightRegion==1:# or lepton_LnTRegion==1:
         pass_lepton_selection[0] = 1
     else:
         pass_lepton_selection[0] = 0
 
     pass_lepton_veto[0] = 1
 
-    GoodLep = leptons[indexGoodLep]
-
     ThereIsOneTau, ltau_list = SelectAndVetoTaus(list(taus), GoodLep)
+
+    tau_TightRegion = 0
+    tau_LnTRegion = 0
 
     if ThereIsOneTau:
         indexGoodTau = ltau_list[0][0]
         if ltau_list[0][1] == 'T':
-            tau_TightRegion[0] = 1
-            tau_LnTRegion[0] = 0
+            tau_TightRegion = 1
+            tau_LnTRegion = 0
         elif ltau_list[0][1] == 'L':
-            tau_TightRegion[0] = 0
-            tau_LnTRegion[0] = 1            
+            tau_TightRegion = 0
+            tau_LnTRegion = 1            
     else:
+        systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
+        systTree.fillTreesSysts(trees, "all")
         continue
 
-    GoodTau=taus[indexGoodTau]
+    GoodTau = taus[indexGoodTau]
 
-    if tau_TightRegion[0]==1 or tau_LnTRegion[0]==1:
+    if tau_TightRegion==1 or tau_LnTRegion==1:
         pass_tau_selection[0] = 1
     else:
         pass_tau_selection[0] = 0
@@ -759,127 +892,101 @@ for i in range(tree.GetEntries()):
     nBJets[0] = CountBJets(jets)#
     nGenJets[0] = len(genjets)
 
-    outputJetSel=SelectJet(list(jets), GoodTau, GoodLep)
-    
-    if outputJetSel==-999:
-        #systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
-        #systTree.fillTreesSysts(trees, "all")
-        #if Debug:
-            #print("exiting at jet selection (without saving)")
+    jet1, jet2 = SelectVBSJets(jets = list(jets), lep1 = GoodTau, lep2 = GoodLep)
+    mjet1, mjet2 = SelectVBSJets(jets = list(jets), useMassCrit = True, lep1 = GoodTau, lep2 = GoodLep)
+    if (jet1 == None or jet2 == None) and (mjet1 == None or mjet2 == None):
+        systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
+        systTree.fillTreesSysts(trees, "all")
         continue  
 
-    jet1, jet2 = outputJetSel
-    
-    leadjet_pt[0]               =   jet1.pt
-    leadjet_eta[0]              =   jet1.eta
-    leadjet_phi[0]              =   jet1.phi
-    leadjet_mass[0]             =   jet1.mass
-    leadjet_DeepFlv_b[0]        =   jet1.btagDeepFlavB
-    leadjet_DeepCSVv2_b[0]      =   jet1.btagDeepB
-    leadjet_CSVv2_b[0]          =   jet1.btagCSVV2
-    subleadjet_pt[0]            =   jet2.pt
-    subleadjet_eta[0]           =   jet2.eta
-    subleadjet_phi[0]           =   jet2.phi
-    subleadjet_mass[0]          =   jet2.mass
-    subleadjet_DeepFlv_b[0]     =   jet2.btagDeepFlavB
-    subleadjet_DeepCSVv2_b[0]   =   jet2.btagDeepB
-    subleadjet_CSVv2_b[0]       =   jet2.btagCSVV2
-    
     pass_jet_selection[0]=1
-
-    #calculating deltaPhi                                                                                                      
-    deltaPhi_jj[0]      =   deltaPhi(jet1, jet2)#
-    deltaPhi_taulep[0]  =   deltaPhi(GoodTau, GoodLep)#
-    deltaPhi_tauj1[0]   =   deltaPhi(GoodTau, jet1)#
-    deltaPhi_tauj2[0]   =   deltaPhi(GoodTau, jet2)#
-    deltaPhi_lepj1[0]   =   deltaPhi(GoodLep, jet1)#
-    deltaPhi_lepj2[0]   =   deltaPhi(GoodLep, jet2)#
-
-    #calculating deltaEta                                                                                                      
-    deltaEta_jj[0]      =   jet1.eta - jet2.eta#
-    deltaEta_taulep[0]  =   GoodTau.eta - GoodLep.eta#
-    deltaEta_tauj1[0]   =   GoodTau.eta - jet1.eta#
-    deltaEta_tauj2[0]   =   GoodTau.eta - jet2.eta#
-    deltaEta_lepj1[0]   =   GoodLep.eta - jet1.eta#
-    deltaEta_lepj2[0]   =   GoodLep.eta - jet2.eta#
-
-    #calculating deltaTheta                                                                                                      
-    deltaTheta_jj[0]      =   (jet1.p4() - jet2.p4()).CosTheta()
-    deltaTheta_taulep[0]  =   (GoodTau_p4 - GoodLep.p4()).CosTheta()
-    deltaTheta_tauj1[0]   =   (GoodTau_p4 - jet1.p4()).CosTheta()
-    deltaTheta_tauj2[0]   =   (GoodTau_p4 - jet2.p4()).CosTheta()
-    deltaTheta_lepj1[0]   =   (GoodLep.p4() - jet1.p4()).CosTheta()
-    deltaTheta_lepj2[0]   =   (GoodLep.p4() - jet2.p4()).CosTheta()
-
-
-    #calculating ptRel                                                                                                      
-    ptRel_jj[0]      =   get_ptrel(jet1, jet2, 1.)
-    if isMC:
-        ptRel_taulep[0]  =   get_ptrel(GoodTau, GoodLep, (fes*tes))
-        ptRel_tauj1[0]   =   get_ptrel(GoodTau, jet1, (fes*tes))
-        ptRel_tauj2[0]   =   get_ptrel(GoodTau, jet2, (fes*tes))
-    else:
-        ptRel_taulep[0]  =   get_ptrel(GoodTau, GoodLep, 1.)
-        ptRel_tauj1[0]   =   get_ptrel(GoodTau, jet1, 1.)
-        ptRel_tauj2[0]   =   get_ptrel(GoodTau, jet2, 1.)
-    ptRel_lepj1[0]   =   get_ptrel(GoodLep, jet1, 1.)
-    ptRel_lepj2[0]   =   get_ptrel(GoodLep, jet2, 1.)
-
-    lepton_Zeppenfeld[0], tau_Zeppenfeld[0], event_Zeppenfeld[0] = Zeppenfeld(lepton_eta[0], tau_eta[0], leadjet_eta[0], subleadjet_eta[0])
-
-    AK8jet1, dR_jet1AK48 = closest(jet1, fatjets)
-    AK8jet2, dR_jet2AK48 = closest(jet1, fatjets)
     
-    if dR_jet1AK48 < 0.8:
-        AK8leadjet_pt[0]               =   AK8jet1.pt
-        AK8leadjet_eta[0]              =   AK8jet1.eta
-        AK8leadjet_phi[0]              =   AK8jet1.phi
-        AK8leadjet_mass[0]             =   AK8jet1.msoftdrop
+    if not (jet1 == None or jet2 == None):
+        print(jet1, jet2)
+        leadjet_pt[0]               =   jet1.pt
+        leadjet_eta[0]              =   jet1.eta
+        leadjet_phi[0]              =   jet1.phi
+        leadjet_mass[0]             =   jet1.mass
+        leadjet_DeepFlv_b[0]        =   jet1.btagDeepFlavB
+        leadjet_partonFlavour[0]    =   jet1.btagDeepFlavB
+
+        if jet1.genJetIdx > -1 and jet1.genJetIdx < len(genjets):
+            if genjets[jet1.genJetIdx] == genjet1:
+                leadjet_IsGenMatched[0] = 1
+            else:
+                leadjet_IsGenMatched[0] = 0
+        else:
+            leadjet_IsGenMatched[0] = 0
+
+        subleadjet_pt[0]            =   jet2.pt
+        subleadjet_eta[0]           =   jet2.eta
+        subleadjet_phi[0]           =   jet2.phi
+        subleadjet_mass[0]          =   jet2.mass
+        subleadjet_DeepFlv_b[0]     =   jet2.btagDeepFlavB
+        subleadjet_partonFlavour[0] =   jet2.btagDeepFlavB
+
+        if jet2.genJetIdx > -1 and jet2.genJetIdx < len(genjets):
+            if genjets[jet2.genJetIdx] == genjet2:
+                subleadjet_IsGenMatched[0] = 1
+            else:
+                subleadjet_IsGenMatched[0] = 0
+        else:
+            subleadjet_IsGenMatched[0] = 0
+
+        deltaPhi_jj[0]   =   deltaPhi(jet1, jet2)
+        deltaEta_jj[0]   =   jet1.eta - jet2.eta
+        deltaTheta_jj[0] =   (jet1.p4() - jet2.p4()).CosTheta()
+        ptRel_jj[0]      =   get_ptrel(jet1, jet2, 1.)
+        m_jj[0]          =   (jet1.p4() + jet2.p4()).M()
+
+    if not (mjet1 == None or mjet2 == None):
+        print(mjet1, mjet2)
+        mleadjet_pt[0]               =   mjet1.pt
+        mleadjet_eta[0]              =   mjet1.eta
+        mleadjet_phi[0]              =   mjet1.phi
+        mleadjet_mass[0]             =   mjet1.mass
+        mleadjet_DeepFlv_b[0]        =   mjet1.btagDeepFlavB
+        mleadjet_partonFlavour[0]    =   mjet1.btagDeepFlavB
+        if mjet1.genJetIdx > -1:
+            if genjets[mjet1.genJetIdx] == genjet1:
+                mleadjet_IsGenMatched[0] = 1
+            else:
+                mleadjet_IsGenMatched[0] = 0
+        else:
+            mleadjet_IsGenMatched[0] = 0
+
+        msubleadjet_pt[0]            =   mjet2.pt
+        msubleadjet_eta[0]           =   mjet2.eta
+        msubleadjet_phi[0]           =   mjet2.phi
+        msubleadjet_mass[0]          =   mjet2.mass
+        msubleadjet_DeepFlv_b[0]     =   mjet2.btagDeepFlavB
+        msubleadjet_partonFlavour[0] =   mjet2.btagDeepFlavB
+        if mjet2.genJetIdx > -1:
+            if genjets[mjet2.genJetIdx] == genjet2:
+                msubleadjet_IsGenMatched[0] = 1
+            else:
+                msubleadjet_IsGenMatched[0] = 0
+        else:
+            msubleadjet_IsGenMatched[0] = 0
     
-        AK8leadjet_tau21[0]             =   AK8jet1.tau2/((AK8jet1.tau1==0.)*1 + (AK8jet1.tau1!=0.)*AK8jet1.tau1)
-        AK8leadjet_tau32[0]             =   AK8jet1.tau3/((AK8jet1.tau2==0.)*1 + (AK8jet1.tau2!=0.)*AK8jet1.tau2)
-        AK8leadjet_tau43[0]             =   AK8jet1.tau4/((AK8jet1.tau3==0.)*1 + (AK8jet1.tau3!=0.)*AK8jet1.tau3)
-        leadjet_dRAK48[0] = copy.deepcopy(dR_jet1AK48)
 
-    if dR_jet2AK48 < 0.8:
-        AK8subleadjet_pt[0]               =   AK8jet2.pt
-        AK8subleadjet_eta[0]              =   AK8jet2.eta
-        AK8subleadjet_phi[0]              =   AK8jet2.phi
-        AK8subleadjet_mass[0]             =   AK8jet2.msoftdrop
-        
-        AK8subleadjet_tau21[0]             =   AK8jet2.tau2/((AK8jet2.tau1==0.)*1 + (AK8jet2.tau1!=0.)*AK8jet2.tau1)
-        AK8subleadjet_tau32[0]             =   AK8jet2.tau3/((AK8jet2.tau2==0.)*1 + (AK8jet2.tau2!=0.)*AK8jet2.tau2)
-        AK8subleadjet_tau43[0]             =   AK8jet2.tau4/((AK8jet2.tau3==0.)*1 + (AK8jet2.tau3!=0.)*AK8jet2.tau3)
-        subleadjet_dRAK48[0] = copy.deepcopy(dR_jet2AK48)
+        mdeltaPhi_jj[0]   =   deltaPhi(jet1, jet2)
+        mdeltaEta_jj[0]   =   mjet1.eta - jet2.eta
+        mdeltaTheta_jj[0] =   (mjet1.p4() - jet2.p4()).CosTheta()
+        mptRel_jj[0]      =   get_ptrel(jet1, jet2, 1.)
+        mm_jj[0]          =   (mjet1.p4() + mjet2.p4()).M()
+
+    if not BVeto(jets):
+        pass_b_veto[0]=1
+
+    if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1:
+        pass_upToBVeto[0]=1#
 
 
-    if not BVeto(jets): pass_b_veto[0]=1
-
-    if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1: pass_upToBVeto[0]=1#
-
-    leadJet=ROOT.TLorentzVector()
-    subleadJet=ROOT.TLorentzVector()
-    leadJet.SetPtEtaPhiM(jet1.pt, jet1.eta, jet1.phi, jet1.mass)
-    subleadJet.SetPtEtaPhiM(jet2.pt, jet2.eta, jet2.phi, jet2.mass) 
     
-    if not JetCut(leadJet, subleadJet): pass_mjj_cut[0]=1
-
-    m_jj[0]=(leadJet + subleadJet).M()
-    m_jjtau[0]=(leadJet + subleadJet + GoodTau_p4).M()
-    m_jjtaulep[0]=(leadJet + subleadJet + GoodTau_p4 + GoodLep.p4()).M()
-
-    lepton_Zeppenfeld_over_deltaEta_jj[0] = lepton_Zeppenfeld[0]/deltaEta_jj[0]
-    tau_Zeppenfeld_over_deltaEta_jj[0] = tau_Zeppenfeld[0]/deltaEta_jj[0]
-    lepton_Zeppenfeld_over_deltaEta_jj[0] = event_Zeppenfeld[0]/deltaEta_jj[0]
-
-    if isMC:
-        event_RT[0] = (GoodLep.pt * GoodTau.pt*(fes*tes)) / (jet1.pt * jet2.pt)
-    else:
-        event_RT[0] = (GoodLep.pt * GoodTau.pt) / (jet1.pt * jet2.pt)
-
     if not metCut(met): pass_MET_cut[0]=1
 
-    if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1 and pass_mjj_cut[0]==1 and pass_MET_cut[0]==1:
+    if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1 and pass_MET_cut[0]==1:
         pass_everyCut[0]=1
 
 
@@ -951,7 +1058,8 @@ for i in range(tree.GetEntries()):
                         break
                 break
         #print("w_dim8:", w_dim8[0])
-    
+    '''
+ 
     systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
     systTree.fillTreesSysts(trees, "all")
 
