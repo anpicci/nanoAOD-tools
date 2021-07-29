@@ -2664,7 +2664,7 @@ sample_dict={
 
 condor_dict={
     'WpWpJJ_QCD_2017':WpWpJJ_QCD_2017,
-    #'VBS_SSWW_SM_2017':VBS_SSWW_SM_2017,
+    'VBS_SSWW_SM_2017':VBS_SSWW_SM_2017,
     'VBS_SSWW_DIM6_SM_2017':VBS_SSWW_DIM6_SM_2017,
     'VBS_SSWW_FS0_25_SM_2017':VBS_SSWW_FS0_25_SM_2017,
     'VBS_SSWW_FS0_5_SM_2017':VBS_SSWW_FS0_5_SM_2017,
@@ -2908,9 +2908,9 @@ class_list=[
     ##QCD_2017,
     #W#Jets_2017,
     FakeMu_2017,
-    #FakeMuPromptTau_2017,
-    #PromptMuFakeTau_2017,
-    #FakeMuFakeTau_2017,
+    FakeMuPromptTau_2017,
+    PromptMuFakeTau_2017,
+    FakeMuFakeTau_2017,
     DataMu_2017,
     FakeEle_2017,
     FakeEleFakeTau_2017,

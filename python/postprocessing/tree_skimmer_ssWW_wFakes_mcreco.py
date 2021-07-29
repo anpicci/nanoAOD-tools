@@ -688,7 +688,7 @@ for i in range(tree.GetEntries()):
         gmleadjet_mass[0]             =   gmjet1.mass
         gmleadjet_DeepFlv_b[0]        =   gmjet1.btagDeepFlavB
         gmleadjet_partonFlavour[0]    =   gmjet1.btagDeepFlavB
-        if gmjet1.genJetIdx > -1:
+        if gmjet1.genJetIdx > -1 and gmjet1.genJetIdx < len(genjets):
             if genjets[gmjet1.genJetIdx] == genjet1:
                 gmleadjet_IsGenMatched[0] = 1
             else:
@@ -702,7 +702,7 @@ for i in range(tree.GetEntries()):
         gmsubleadjet_mass[0]          =   gmjet2.mass
         gmsubleadjet_DeepFlv_b[0]     =   gmjet2.btagDeepFlavB
         gmsubleadjet_partonFlavour[0] =   gmjet2.btagDeepFlavB
-        if gmjet2.genJetIdx > -1:
+        if gmjet2.genJetIdx > -1 and gmjet2.genJetIdx < len(genjets):
             if genjets[gmjet2.genJetIdx] == genjet2:
                 gmsubleadjet_IsGenMatched[0] = 1
             else:
@@ -946,7 +946,7 @@ for i in range(tree.GetEntries()):
         mleadjet_mass[0]             =   mjet1.mass
         mleadjet_DeepFlv_b[0]        =   mjet1.btagDeepFlavB
         mleadjet_partonFlavour[0]    =   mjet1.btagDeepFlavB
-        if mjet1.genJetIdx > -1:
+        if mjet1.genJetIdx > -1 and mjet1.genJetIdx < len(genjets):
             if genjets[mjet1.genJetIdx] == genjet1:
                 mleadjet_IsGenMatched[0] = 1
             else:
@@ -960,7 +960,7 @@ for i in range(tree.GetEntries()):
         msubleadjet_mass[0]          =   mjet2.mass
         msubleadjet_DeepFlv_b[0]     =   mjet2.btagDeepFlavB
         msubleadjet_partonFlavour[0] =   mjet2.btagDeepFlavB
-        if mjet2.genJetIdx > -1:
+        if mjet2.genJetIdx > -1 and mjet2.genJetIdx < len(genjets):
             if genjets[mjet2.genJetIdx] == genjet2:
                 msubleadjet_IsGenMatched[0] = 1
             else:

@@ -249,21 +249,26 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
 
     idxjet1 = -1
     idxjet2 = -1
+    jet1 = None
+    jet2 = None
+
+    print("\nuseMassCrit?", useMassCrit)
+    print("goodjets:", goodjets)
 
     for idxj, jet in enumerate(goodjets):
-        jet1 = None
-        jet2 = None
-
+        print("idxj:", idxj, "jet:", jet)
         skgoodjets = list(goodjets)
 
         compatible_jets = list(filter(lambda x : IsNotTheSameObject(x, jet), skgoodjets))
+        print("compatible_jets (first):", compatible_jets)
         if applyDeltaEtaCut:
             #refiltering compatible jets with deltaEtajj cut
             compatible_jets = list(filter(lambda x : abs(x.eta - jet.eta) >= DELTAETA_JJ_CUT, compatible_jets))
 
+        print("compatible_jets (dEta cut):", compatible_jets)
         #if there are no compatible jet, returns default value
         if len(compatible_jets) < 1:
-            return jet1, jet2
+            continue
         
         if not useMassCrit:
             #if criteria upon jj inv mass is not used, returns the compatible couple with highest pt
@@ -274,6 +279,7 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         #else apply maximum mass criterion
         else:
             for idxc, cjet in enumerate(compatible_jets):
+                print("idxc:", idxc, "cjet:", cjet)
                 if jets.index(cjet) <= jets.index(jet):
                     continue
                 invmass = (cjet.p4() + jet.p4()).M()
@@ -281,10 +287,15 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
                     idxjet1 = jets.index(jet)
                     idxjet2 = jets.index(cjet)
                     maxInvMass = invmass
+                print("\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
+                    
 
-    jet1 = jets[idxjet1]
-    jet2 = jets[idxjet2]
+    print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
+    if idxjet1 > -1 and idxjet2 > -1:
+        jet1 = jets[idxjet1]
+        jet2 = jets[idxjet2]
 
+    print("final\tjet1:", jet1, "jet2:", jet2)
     return jet1, jet2
 
 def get_ptrel(lepton, jet, taucorr=1.):

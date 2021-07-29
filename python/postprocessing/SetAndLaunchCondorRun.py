@@ -156,7 +156,6 @@ dirlist = [dirs for dirs in os.listdir(path) if os.path.isdir(path+dirs)]
 #print(condor_dict.items())
 
 for prname, proc in condor_dict.items():
-
     if opt.year not in prname:
         continue
     if "Fake" in prname or prname.startswith("DataMET") or prname.startswith('DataHT') or '_BSM_INT_' in prname:# or prname.startswith('DY'):
