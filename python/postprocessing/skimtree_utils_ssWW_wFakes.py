@@ -262,8 +262,14 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         compatible_jets = list(filter(lambda x : IsNotTheSameObject(x, jet), skgoodjets))
         print("compatible_jets (first):", compatible_jets)
         if applyDeltaEtaCut:
+            print("applying DeltaEtaCut")
             #refiltering compatible jets with deltaEtajj cut
             compatible_jets = list(filter(lambda x : abs(x.eta - jet.eta) >= DELTAETA_JJ_CUT, compatible_jets))
+            for jj in compatible_jets:
+                if abs(jj.eta - jet.eta) < DELTAETA_JJ_CUT:
+                    print("Warning! Something went wrong")
+        else:
+            print("not applying DeltaEtaCut")
 
         print("compatible_jets (dEta cut):", compatible_jets)
         #if there are no compatible jet, returns default value

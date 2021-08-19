@@ -892,8 +892,8 @@ for i in range(tree.GetEntries()):
     nBJets[0] = CountBJets(jets)#
     nGenJets[0] = len(genjets)
 
-    jet1, jet2 = SelectVBSJets(jets = list(jets), lep1 = GoodTau, lep2 = GoodLep)
-    mjet1, mjet2 = SelectVBSJets(jets = list(jets), useMassCrit = True, lep1 = GoodTau, lep2 = GoodLep)
+    jet1, jet2 = SelectVBSJets(jets = list(jets), applyDeltaEtaCut = True, lep1 = GoodTau, lep2 = GoodLep)
+    mjet1, mjet2 = SelectVBSJets(jets = list(jets), applyDeltaEtaCut = True, useMassCrit = True, lep1 = GoodTau, lep2 = GoodLep)
 
     if (jet1 == None or jet2 == None) and (mjet1 == None or mjet2 == None):
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
