@@ -22,6 +22,8 @@ from skimtree_utils_ssWW_wFakes import *
 from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 from EFTOperator_dict import *
 
+DeltaEtaCutBefore = False
+
 dim8_points = [
     "20",
     "10",
@@ -348,48 +350,167 @@ HLT_effLumi                 =   array.array('f', [-999.])
 var_list.append(HLT_effLumi)
 
 m_jj                        =   array.array('f', [-999.])
-var_list.append(m_jj)
 deltaPhi_jj                 =   array.array('f', [-999.])#
-var_list.append(deltaPhi_jj)#
 deltaTheta_jj                 =   array.array('f', [-999.])#
-var_list.append(deltaTheta_jj)#
 ptRel_jj                 =   array.array('f', [-999.])#
-var_list.append(ptRel_jj)#
 deltaEta_jj                 =   array.array('f', [-999.])#
+var_list.append(m_jj)
+var_list.append(deltaPhi_jj)#
+var_list.append(deltaTheta_jj)#
+var_list.append(ptRel_jj)#
 var_list.append(deltaEta_jj)#
 
 genm_jj                        =   array.array('f', [-999.])
-var_list.append(genm_jj)
 gendeltaPhi_jj                 =   array.array('f', [-999.])#
-var_list.append(gendeltaPhi_jj)#
 gendeltaTheta_jj                 =   array.array('f', [-999.])#
-var_list.append(gendeltaTheta_jj)#
 genptRel_jj                 =   array.array('f', [-999.])#
-var_list.append(genptRel_jj)#
 gendeltaEta_jj                 =   array.array('f', [-999.])#
+var_list.append(genm_jj)
+var_list.append(gendeltaPhi_jj)#
+var_list.append(gendeltaTheta_jj)#
+var_list.append(genptRel_jj)#
 var_list.append(gendeltaEta_jj)#
 
 mm_jj                        =   array.array('f', [-999.])
-var_list.append(mm_jj)
 mdeltaPhi_jj                 =   array.array('f', [-999.])#
-var_list.append(mdeltaPhi_jj)#
 mdeltaTheta_jj                 =   array.array('f', [-999.])#
-var_list.append(mdeltaTheta_jj)#
 mptRel_jj                 =   array.array('f', [-999.])#
-var_list.append(mptRel_jj)#
 mdeltaEta_jj                 =   array.array('f', [-999.])#
+var_list.append(mm_jj)
+var_list.append(mdeltaPhi_jj)#
+var_list.append(mdeltaTheta_jj)#
+var_list.append(mptRel_jj)#
 var_list.append(mdeltaEta_jj)#
 
 gmm_jj                        =   array.array('f', [-999.])
-var_list.append(gmm_jj)
 gmdeltaPhi_jj                 =   array.array('f', [-999.])#
-var_list.append(gmdeltaPhi_jj)#
 gmdeltaTheta_jj                 =   array.array('f', [-999.])#
-var_list.append(gmdeltaTheta_jj)#
 gmptRel_jj                 =   array.array('f', [-999.])#
-var_list.append(gmptRel_jj)#
 gmdeltaEta_jj                 =   array.array('f', [-999.])#
+var_list.append(gmdeltaPhi_jj)#
+var_list.append(gmm_jj)
+var_list.append(gmdeltaTheta_jj)#
+var_list.append(gmptRel_jj)#
 var_list.append(gmdeltaEta_jj)#
+
+#lepton#
+genlepton_pt               =   array.array('f', [-999.])
+genlepton_eta              =   array.array('f', [-999.])
+genlepton_phi              =   array.array('f', [-999.])
+genlepton_mass             =   array.array('f', [-999.])
+genlepton_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
+var_list.append(genlepton_pt)
+var_list.append(genlepton_eta)
+var_list.append(genlepton_phi)
+var_list.append(genlepton_mass)
+var_list.append(genlepton_Zeppenfeld_over_deltaEta_jj)
+
+lepton_pt               =   array.array('f', [-999.])
+lepton_eta              =   array.array('f', [-999.])
+lepton_phi              =   array.array('f', [-999.])
+lepton_mass             =   array.array('f', [-999.])
+lepton_charge             =   array.array('f', [-999.])
+lepton_pdgid            =   array.array('i', [-999])
+lepton_TightRegion      =   array.array('i', [-999])
+lepton_LnTRegion        =   array.array('i', [-999])
+lepton_genPartFlav      =   array.array('i', [-999])
+lepton_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
+var_list.append(lepton_pt)
+var_list.append(lepton_eta)
+var_list.append(lepton_phi)
+var_list.append(lepton_mass)
+var_list.append(lepton_charge)
+var_list.append(lepton_pdgid)
+var_list.append(lepton_TightRegion)
+var_list.append(lepton_LnTRegion)
+var_list.append(lepton_genPartFlav)
+var_list.append(lepton_Zeppenfeld_over_deltaEta_jj)
+
+mlepton_pt               =   array.array('f', [-999.])
+mlepton_eta              =   array.array('f', [-999.])
+mlepton_phi              =   array.array('f', [-999.])
+mlepton_mass             =   array.array('f', [-999.])
+mlepton_pdgid            =   array.array('i', [-999])
+mlepton_TightRegion      =   array.array('i', [-999])
+mlepton_LnTRegion        =   array.array('i', [-999])
+mlepton_genPartFlav      =   array.array('i', [-999])
+mlepton_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
+mvar_list.append(mlepton_pt)
+mvar_list.append(mlepton_eta)
+mvar_list.append(mlepton_phi)
+mvar_list.append(mlepton_mass)
+mvar_list.append(mlepton_pdgid)
+mvar_list.append(mlepton_TightRegion)
+mvar_list.append(mlepton_LnTRegion)
+mvar_list.append(mlepton_genPartFlav)
+mvar_list.append(mlepton_Zeppenfeld_over_deltaEta_jj)
+
+
+#tau#
+tau_pt                  =   array.array('f', [-999.])
+tau_eta                 =   array.array('f', [-999.])
+tau_phi                 =   array.array('f', [-999.])
+tau_charge              =   array.array('i', [-999])
+tau_mass                =   array.array('f', [-999.])
+tau_IsGenMatched        =   array.array('f', [-999.])
+tau_DecayMode           =   array.array('f', [-999.])
+tau_DeepTauVsEle_raw    =   array.array('f', [-999.])
+tau_DeepTauVsMu_raw     =   array.array('f', [-999.])
+tau_DeepTauVsJet_raw    =   array.array('f', [-999.])
+tau_TightRegion         =   array.array('i', [-999])
+tau_LnTRegion           =   array.array('i', [-999])
+tau_genPartFlav         =   array.array('i', [-999])
+tau_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
+var_list.append(tau_pt)
+var_list.append(tau_eta)
+var_list.append(tau_phi)
+var_list.append(tau_charge)
+var_list.append(tau_mass)
+var_list.append(tau_IsGenMatched)
+var_list.append(tau_DecayMode)
+var_list.append(tau_DeepTauVsEle_raw)#
+var_list.append(tau_DeepTauVsMu_raw)#
+var_list.append(tau_DeepTauVsJet_raw)#
+var_list.append(tau_TightRegion)#
+var_list.append(tau_LnTRegion)#
+var_list.append(tau_genPartFlav)#
+var_list.append(tau_Zeppenfeld_over_deltaEta_jj)
+
+mtau_pt                  =   array.array('f', [-999.])
+mtau_eta                 =   array.array('f', [-999.])
+mtau_phi                 =   array.array('f', [-999.])
+mtau_charge              =   array.array('i', [-999])
+mtau_mass                =   array.array('f', [-999.])
+mtau_IsGenMatched        =   array.array('f', [-999.])
+mtau_DecayMode           =   array.array('f', [-999.])
+mtau_DeepTauVsEle_raw    =   array.array('f', [-999.])
+mtau_DeepTauVsMu_raw     =   array.array('f', [-999.])
+mtau_DeepTauVsJet_raw    =   array.array('f', [-999.])
+mtau_TightRegion         =   array.array('i', [-999])
+mtau_LnTRegion           =   array.array('i', [-999])
+mtau_genPartFlav         =   array.array('i', [-999])
+mtau_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
+var_list.append(mtau_pt)
+var_list.append(mtau_eta)
+var_list.append(mtau_phi)
+var_list.append(mtau_charge)
+var_list.append(mtau_mass)
+var_list.append(mtau_IsGenMatched)
+var_list.append(mtau_DecayMode)
+var_list.append(mtau_DeepTauVsEle_raw)#
+var_list.append(mtau_DeepTauVsMu_raw)#
+var_list.append(mtau_DeepTauVsJet_raw)#
+var_list.append(mtau_TightRegion)#
+var_list.append(mtau_LnTRegion)#
+var_list.append(mtau_genPartFlav)#
+var_list.append(mtau_Zeppenfeld_over_deltaEta_jj)
+
+
+
+event_Zeppenfeld           =   array.array('f', [-999])
+event_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
+var_list.append(event_Zeppenfeld)
+var_list.append(event_Zeppenfeld_over_deltaEta_jj)
 
 #cut variables
 pass_lepton_selection       =   array.array('i', [0])
@@ -533,7 +654,6 @@ systTree.branchTreesSysts(trees, "all", "pass_b_veto",              outTreeFile,
 systTree.branchTreesSysts(trees, "all", "pass_mjj_cut",             outTreeFile, pass_mjj_cut)
 systTree.branchTreesSysts(trees, "all", "pass_MET_cut",             outTreeFile, pass_MET_cut)
 systTree.branchTreesSysts(trees, "all", "pass_upToBVeto",           outTreeFile, pass_upToBVeto)
-
 systTree.branchTreesSysts(trees, "all", "pass_everyCut",            outTreeFile, pass_everyCut)
 
 if(isMC and addPDF):
@@ -723,7 +843,15 @@ for i in range(tree.GetEntries()):
     genptRel_jj[0]      =   get_ptrel(genjet1, genjet2, 1.)
     genm_jj[0]          =   (genjet1.p4() + genjet2.p4()).M()
 
+    GoodLep = None
+    leptons = None
+    GoodTau = None
 
+    SingleEle=False
+    SingleMu=False
+    ElMu=False
+
+    '''
     GoodEle, ele_TightRegion = SelectLepton(electrons)#, jet1, jet2) 
     GoodMu, mu_TightRegion = SelectLepton(muons)#, jet1, jet2) 
     
@@ -737,15 +865,10 @@ for i in range(tree.GetEntries()):
         ele_lepton_veto = LepVeto(GoodEle, electrons, muons)
     if GoodMu != None:
         mu_lepton_veto = LepVeto(GoodMu, electrons, muons)   
- 
-    SingleEle=False
-    SingleMu=False
-    ElMu=False
    
-    GoodLep = None
-    leptons = None
     lepton_TightRegion = 0
     lepton_LnTRegion = 0
+
 
     if 'DataHT' not in sample.label:
         if passEle and not passMu:
@@ -888,12 +1011,13 @@ for i in range(tree.GetEntries()):
     if GoodTau.charge==GoodLep.charge:
         pass_charge_selection[0]=1
 
+    '''
     nJets[0] = len(jets)
     nBJets[0] = CountBJets(jets)#
     nGenJets[0] = len(genjets)
 
-    jet1, jet2 = SelectVBSJets(jets = list(jets), applyDeltaEtaCut = True, lep1 = GoodTau, lep2 = GoodLep)
-    mjet1, mjet2 = SelectVBSJets(jets = list(jets), applyDeltaEtaCut = True, useMassCrit = True, lep1 = GoodTau, lep2 = GoodLep)
+    jet1, jet2 = SelectVBSJets(jets = list(jets), applyDeltaEtaCut = DeltaEtaCutBefore, lep1 = GoodTau, lep2 = GoodLep)
+    mjet1, mjet2 = SelectVBSJets(jets = list(jets), applyDeltaEtaCut = DeltaEtaCutBefore, useMassCrit = True, lep1 = GoodTau, lep2 = GoodLep)
 
     if (jet1 == None or jet2 == None) and (mjet1 == None or mjet2 == None):
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
@@ -970,9 +1094,9 @@ for i in range(tree.GetEntries()):
     
 
         mdeltaPhi_jj[0]   =   deltaPhi(jet1, jet2)
-        mdeltaEta_jj[0]   =   mjet1.eta - jet2.eta
-        mdeltaTheta_jj[0] =   (mjet1.p4() - jet2.p4()).CosTheta()
-        mptRel_jj[0]      =   get_ptrel(jet1, jet2, 1.)
+        mdeltaEta_jj[0]   =   mjet1.eta - mjet2.eta
+        mdeltaTheta_jj[0] =   (mjet1.p4() - mjet2.p4()).CosTheta()
+        mptRel_jj[0]      =   get_ptrel(jet1, mjet2, 1.)
         mm_jj[0]          =   (mjet1.p4() + mjet2.p4()).M()
 
     if not BVeto(jets):

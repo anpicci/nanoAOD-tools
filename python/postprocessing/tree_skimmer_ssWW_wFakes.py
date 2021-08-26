@@ -963,10 +963,11 @@ for i in range(tree.GetEntries()):
 
     if lepton_TightRegion[0]==1 or lepton_LnTRegion[0]==1:
         pass_lepton_selection[0] = 1
+        pass_lepton_veto[0] = 1
     else:
         pass_lepton_selection[0] = 0
+        pass_lepton_veto[0] = 0
 
-    pass_lepton_veto[0] = 1
 
     #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodEle:", indexGoodEle, "indexGoodMu:", indexGoodMu, "GoodLep_pdgid:", GoodLep.pdgId)
     #if Debug:

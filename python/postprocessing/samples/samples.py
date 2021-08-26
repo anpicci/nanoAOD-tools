@@ -2812,7 +2812,7 @@ merge_dict={
     'DataEleMu_2017':DataEleMu_2017,
 }
 
-
+'''
 class_list=[
     #WpWpJJ_EWK_2017,
     VBS_SSWW_LL_SM_2017,
@@ -2920,4 +2920,26 @@ class_list=[
     ##DataHT_2017,
     DataEleMu_2017,
     FakeEleMu_2017,
-    ]
+'''
+
+class_list = [
+    WWto2L2Nu_2017,
+    GluGluToWWToENuENu_2017,
+    GluGluToWWToENuMNu2017,
+    GluGluToWWToENuTNu2017,
+    GluGluToWWToMNuENu_2017,
+    GluGluToWWToMNuMNu2017,
+    GluGluToWWToMNuTNu2017,
+    GluGluToWWToTNuENu_2017,
+    GluGluToWWToTNuMNu2017,
+    GluGluToWWToTNuTNu2017,
+    STtW_top_2017,
+    GluGluHToWWTo2L2Nu_2017,
+    GluGluHToZZTo2L2Q_2017,
+    GluGluHToZZTo4L_2017,
+    GluGluHToTauTau_2017,
+    VBFHToWWTo2L2Nu_2017,
+    VBFHToTauTau_2017,
+    ttHToNonbb_2017,
+    VHToNonbb_2017,
+]
