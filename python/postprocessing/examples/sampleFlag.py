@@ -9,7 +9,6 @@ sampleDict = {"VBS_SSWW_LL_SM_2017": 0}
 
 class sampleFlag(Module):
     def __init__(self, samplename):
-        self.writeHistFile=True
         self.samplename = samplename
         pass
 
