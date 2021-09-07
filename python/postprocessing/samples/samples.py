@@ -2920,6 +2920,7 @@ class_list=[
     ##DataHT_2017,
     DataEleMu_2017,
     FakeEleMu_2017,
+]
 
 class_list_bis = [
     WWto2L2Nu_2017,
