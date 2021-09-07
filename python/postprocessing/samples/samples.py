@@ -2921,8 +2921,7 @@ class_list=[
     DataEleMu_2017,
     FakeEleMu_2017,
 
-'''
-class_list = [
+class_list_bis = [
     WWto2L2Nu_2017,
     GluGluToWWToENuENu_2017,
     GluGluToWWToENuMNu2017,
@@ -2943,4 +2942,4 @@ class_list = [
     ttHToNonbb_2017,
     VHToNonbb_2017,
 ]
-'''
+
