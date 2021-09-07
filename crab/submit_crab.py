@@ -13,6 +13,7 @@ parser.add_option('-k', '--kill', dest = 'kill', default = False, action = 'stor
 parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'store_true', help = 'Default do not kill')
 parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'store_true', help = 'Default do not resubmit')
 parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
+parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action = 'store_true', help = 'Add sample flag')
 (opt, args) = parser.parse_args()
 
 print(opt.dat)
@@ -95,6 +96,7 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.hepmcDump import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlag import *\n")
 
 
     #f.write("infile = "+str(sample.files)+"\n")
@@ -206,17 +208,23 @@ for sample in samples:
         cfg_writer(sample, isMC, "VBS_PG")
 
         if isMC:
-            modules = "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            if opt.sampleFlag == True:
+                modules = "sampleFlag('" + sample.label + "'), " + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            else:
+                modules = "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab        
         else:
-            modules = "preselection(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
-            
+            if opt.sampleFlag == True:
+                modules = "sampleFlag('" + sample.label + "'), " + "preselection(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            else:
+                modules = "preselection(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+
         print("Producing crab script")
-        crab_script_writer(sample,'/eos/user/'+str(os.environ.get('USER')[0]) + '/'+str(os.environ.get('USER'))+'/Wprime/nosynch/', isMC, modules, presel)
+        crab_script_writer(sample,'.', isMC, modules, presel)
         os.system("chmod +x crab_script.sh")
         
         #Launching crab
-        print("Submitting crab jobs...")
-        os.system("crab submit -c crab_cfg.py")
+        #print("Submitting crab jobs...")
+        #os.system("crab submit -c crab_cfg.py")
 
     if kill:
         print("Killing crab jobs...")
