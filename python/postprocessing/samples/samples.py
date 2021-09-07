@@ -2812,7 +2812,7 @@ merge_dict={
     'DataEleMu_2017':DataEleMu_2017,
 }
 
-'''
+
 class_list=[
     #WpWpJJ_EWK_2017,
     VBS_SSWW_LL_SM_2017,
@@ -2920,8 +2920,8 @@ class_list=[
     ##DataHT_2017,
     DataEleMu_2017,
     FakeEleMu_2017,
-'''
 
+'''
 class_list = [
     WWto2L2Nu_2017,
     GluGluToWWToENuENu_2017,
@@ -2943,3 +2943,4 @@ class_list = [
     ttHToNonbb_2017,
     VHToNonbb_2017,
 ]
+'''
