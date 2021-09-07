@@ -1341,7 +1341,7 @@ for i in range(tree.GetEntries()):
 
     lepton_Zeppenfeld_over_deltaEta_jj[0] = lepton_Zeppenfeld[0]/deltaEta_jj[0]
     tau_Zeppenfeld_over_deltaEta_jj[0] = tau_Zeppenfeld[0]/deltaEta_jj[0]
-    lepton_Zeppenfeld_over_deltaEta_jj[0] = event_Zeppenfeld[0]/deltaEta_jj[0]
+    event_Zeppenfeld_over_deltaEta_jj[0] = event_Zeppenfeld[0]/deltaEta_jj[0]
 
     if isMC:
         event_RT[0] = (GoodLep.pt * GoodTau.pt*(fes*tes)) / (jet1.pt * jet2.pt)
