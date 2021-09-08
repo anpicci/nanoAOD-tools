@@ -1137,9 +1137,9 @@ for year in years:
               
         
         if opt.channel == 'ltau':
-            wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF'#*btagSF'
+            wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
         elif opt.channel == 'emu':
-            wzero = 'w_nominal*PFSF*puSF*lepSF'#*btagSF'
+            wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
         
         try:
             vfold = int(opt.folder.split("v")[-1])
