@@ -75,7 +75,7 @@ parser.add_option('--try', dest='tryy', default = False, action='store_true', he
 parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 parser.add_option('--beff', dest='beff', default = False, action='store_true', help='Launching btag efficiencies study, default does not')
-parser.add_option('--mcreco', dest='mcreco', default = False, action='store_true', help='Launching mcreco analysis, default does not')
+parser.add_option('--mcreco', dest='mcreco', type=str, default = "not", help='Launching specifiec mcreco analysis, default does not')
 
 (opt, args) = parser.parse_args()
 
@@ -133,9 +133,9 @@ elif opt.tryy:
     subpy = "submit_condor_try.py"
     if opt.channel == "ltau":
         optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
-elif opt.mcreco:
+elif opt.mcreco != "not":
     subpy = "submit_condor_mcreco.py"
-    optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
+    optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp) + " --mcreco " + opt.mcreco
 elif opt.channel == "ltau":
     subpy = "submit_condor.py"
     optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)

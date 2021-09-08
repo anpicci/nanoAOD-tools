@@ -252,24 +252,24 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
     jet1 = None
     jet2 = None
 
-    print("\nuseMassCrit?", useMassCrit)
+    #print("\nuseMassCrit?", useMassCrit)
     #print("goodjets:", goodjets)
 
     for idxj, jet in enumerate(goodjets):
-        print("idxj:", idxj, "jet:", jet)
+        #print("idxj:", idxj, "jet:", jet)
         skgoodjets = list(goodjets)
 
         compatible_jets = list(filter(lambda x : IsNotTheSameObject(x, jet), skgoodjets))
         #print("compatible_jets (first):", compatible_jets)
         if applyDeltaEtaCut:
-            print("applying DeltaEtaCut")
+            #print("applying DeltaEtaCut")
             #refiltering compatible jets with deltaEtajj cut
             compatible_jets = list(filter(lambda x : abs(x.eta - jet.eta) >= DELTAETA_JJ_CUT, compatible_jets))
             for jj in compatible_jets:
                 if abs(jj.eta - jet.eta) < DELTAETA_JJ_CUT:
                     print("Warning! Something went wrong")
-        else:
-            print("not applying DeltaEtaCut")
+        #else:
+            #print("not applying DeltaEtaCut")
 
         #print("compatible_jets (dEta cut):", compatible_jets)
         #if there are no compatible jet, returns default value
@@ -296,15 +296,77 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
                 #print("\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
                     
 
-    print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
+    #print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
     if idxjet1 > -1 and idxjet2 > -1:
         jet1 = jets[idxjet1]
         jet2 = jets[idxjet2]
 
-        print("final\tjet1:", jet1, "jet2:", jet2)
-        print("abs(deltaEta_jj):", abs(jet1.eta - jet2.eta), "passes deltaEtacut?", bool(abs(jet1.eta - jet2.eta)>DELTAETA_JJ_CUT))
+        #print("final\tjet1:", jet1, "jet2:", jet2)
+        #print("abs(deltaEta_jj):", abs(jet1.eta - jet2.eta), "passes deltaEtacut?", bool(abs(jet1.eta - jet2.eta)>DELTAETA_JJ_CUT))
 
     return jet1, jet2
+
+def SelectGenNus(genparts):
+    wlnus = [gp for gp in genparts if (abs(gp.pdgId)==12 or abs(gp.pdgId)==14) and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==24]
+    wtnus = [gp for gp in genparts if abs(gp.pdgId)==16 and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==24]
+    tauhdecay = [gp for gp in genparts if abs(gp.pdgId)>99 and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==15]
+
+    genlnu = None
+    gentnu = None
+
+    if len(wlnus) > 0:
+        genlnu = wlnus[0]
+    if len(wtnus) > 0 and len(tauhdecay) > 0:
+        gentnu = wtnus[0]
+
+    return genlnu, gentnu
+
+def SelectGenLeptons(genparts):
+    wleps = [gp for gp in genparts if (abs(gp.pdgId)==11 or abs(gp.pdgId)==13) and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==24]
+    wtaus = [gp for gp in genparts if abs(gp.pdgId)==15 and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==24]
+
+    tauhdecay = [gp for gp in genparts if abs(gp.pdgId)>99 and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==15]
+
+    genlepton = None
+    genhtau = None
+
+    if len(wleps) > 0:
+        genlepton = wleps[0]
+    if len(wtaus) > 0 and len(tauhdecay) > 0:
+        genhtau = wtaus[0]
+
+    return genlepton, genhtau
+
+def SelectGenVisTau(gentaus):
+    genvishtau = None
+    if len(gentaus) > 0:
+        genvishtau = gentaus[0]
+
+    return genvishtau
+
+def IsLepGenMatched(lepton, genlepton, genparticles):
+    IsGenMatched = False
+    gencand1 = None
+    gencand2 = None
+
+    if lepton.genPartIdx > -1:
+        gencand1 = genparticles[lepton.genPartIdx]
+        if gencand1.genPartIdxMother > -1:
+            gencand2 = genparticles[gencand1.genPartIdxMother]
+
+    IsGenMatched = bool(gencand1 == genlepton or gencand2 == genlepton)
+
+    return IsGenMatched
+
+def SelectGenMatchedLep(leptons, genlepton, genparticles):
+    gmlep = None
+
+    gmleps = [lep for lep in leptons if IsLepGenMatched(lep, genlepton, genparticles)]
+    if len(gmleps) > 0:
+        gmlep = gmleps[0]
+
+    print(gmlep)
+    return gmlep
 
 def get_ptrel(lepton, jet, taucorr=1.):
     jet_p4 = ROOT.TLorentzVector()
@@ -1335,6 +1397,7 @@ class Collection:
         return ret
     def __len__(self):
         return self._len
+        
 ###############################################
 ###        End of framework/datamodel       ###
 ###############################################
