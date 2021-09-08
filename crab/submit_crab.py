@@ -223,8 +223,8 @@ for sample in samples:
         os.system("chmod +x crab_script.sh")
         
         #Launching crab
-        #print("Submitting crab jobs...")
-        #os.system("crab submit -c crab_cfg.py")
+        print("Submitting crab jobs...")
+        os.system("crab submit -c crab_cfg.py")
 
     if kill:
         print("Killing crab jobs...")
