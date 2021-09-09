@@ -53,7 +53,7 @@ parser.add_option('--qcd', dest='qcd', default = False, action='store_true', hel
 parser.add_option('--blinded', dest='blinded', default = False, action='store_true', help='Activate blinding')
 parser.add_option('--signal', dest='signal', default = False, action='store_true', help='Activate only signal')
 #parser.add_option('--model', dest='model', default = '/eos/user/t/ttedesch/SWAN_projects/VBS_ML/gradBDT.p', type='string', help='Path to ML model')
-#parser.add_option('--model', dest='model', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT.p', type='string', help='Path to ML model for all events')
+#parser.add_option('--model', dest='model', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT.p', type='string', help='Path  to ML model for all events')
 #parser.add_option('--model_ele', dest='model_ele', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_ele.p', type='string', help='Path to ML model for electron events')
 #parser.add_option('--model_mu', dest='model_mu', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_mu.p', type='string', help='Path to ML model for muon events')
 parser.add_option('--model_SM', dest='model_SM', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_SM.p', type='string', help='Path to ML model for SM analysis')
@@ -1163,14 +1163,12 @@ for year in years:
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
-        '''
+
 
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 6, -3., 3.))
-
-
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
 
-        '''
+
         bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 200.])#, 300.])#, 500.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
@@ -1186,12 +1184,13 @@ for year in years:
         bin_taupt = array("f", [0., 50., 100., 200.])#, 300., 500.])
         nbin_taupt = len(bin_taupt) - 1
         variables.append(variabile(lep2[0] + '_pt',  lep2[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_taupt, bin_taupt))
+        '''
         bin_taum = array("f", [0., 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 2.0])
-        nbin_taum = len(bin_taupt) - 1
+        nbin_taum = len(bin_taum) - 1
         variables.append(variabile(lep2[0] + '_mass',  lep2[1] + ' mass [GeV]',  wzero+'*('+cutbase+')', nbin_taum, bin_taum))
+
+        '''
         variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', 6, -3., 3.))
-
-
         #variables.append(variabile(lep2[0] + '_Zeppenfeld', lep2[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', 20, -5, 5))
         variables.append(variabile(lep2[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{#tau}',  wzero+'*('+cutbase+')', 12, -1.5, 1.5))
         variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
