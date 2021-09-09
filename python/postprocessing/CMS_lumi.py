@@ -9,28 +9,27 @@ import ROOT as rt
 
 cmsText     = "CMS";
 #cmsText     = "an LHC";
-cmsTextFont   = 61
+cmsTextFont   = 61  
 
 writeExtraText = True
 #extraText   = "Experiment"
 extraText   = ""
-#extraText   = "Preliminary"
-extraText   = "Work\nin progress"
+extraText   = "Work in progress"
 extraTextFont = 52 
 
 #lumiTextSize     = 0.6
-lumiTextSize     = 0.5
+lumiTextSize     = 0.55
 lumiTextOffset   = 0.2
 
-cmsTextSize      = 0.5
-#cmsTextSize      = 0.85
-cmsTextOffset    = 0.1
+#cmsTextSize      = 0.75
+cmsTextSize      = 0.6
+cmsTextOffset    = 0.2
 
 relPosX    = 0.045
 relPosY    = 0.035
 relExtraDY = 1.2
 
-extraOverCmsTextSize  = 0.6
+extraOverCmsTextSize  = 0.7
 
 lumi_13TeV = "20.1 fb^{-1}"
 lumi_8TeV  = "19.7 fb^{-1}" 
@@ -97,7 +96,7 @@ def CMS_lumi(pad,  lumi_sqrtS,  iPosX , lepText):
     elif ( iPeriod==0 ):
         lumiText += lumi_sqrtS
     '''        
-    print(lumiText)
+    print lumiText
 
     latex = rt.TLatex()
     latex.SetNDC()
