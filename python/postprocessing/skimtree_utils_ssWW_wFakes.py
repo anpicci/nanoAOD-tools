@@ -204,7 +204,13 @@ def btagcalc(JetsC):
 def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
     return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
 
-def SelectVBSQGenJet(genpart1, genpart2, genjets):
+def SelectVBSQGenJet(genparts, genjets):
+    fs_genparts = list(filter(lambda x : x.genPartIdxMother==0 and abs(x.pdgId)>0 and abs(x.pdgId)<10, genparts))
+    if len(fs_genparts) > 2:
+        raise TypeError("Something wrong with gen quarks!")
+    genpart1 = fs_genparts[0]
+    genpart2 = fs_genparts[1]
+
     qflav1 = genpart1.pdgId
     qflav2 = genpart2.pdgId
     light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10 and (x.partonFlavour==qflav1 or x.partonFlavour==qflav2), genjets))
@@ -215,8 +221,8 @@ def SelectVBSQGenJet(genpart1, genpart2, genjets):
     idx_genjet1 = -1.
     idx_genjet2 = -1.
     for k, lgenjet in enumerate(light_genjets):
-        tmpdiscr1 = abs(lgenjet.eta - genpart1) + abs(lgenjet.pt - genpart1.pt)
-        tmpdiscr2 = abs(lgenjet.eta - genpart2) + abs(lgenjet.pt - genpart2.pt)
+        tmpdiscr1 = abs(lgenjet.eta - genpart1.eta) + abs(lgenjet.pt - genpart1.pt)
+        tmpdiscr2 = abs(lgenjet.eta - genpart2.eta) + abs(lgenjet.pt - genpart2.pt)
         if tmpdiscr1 < discrim1:
             discrim1 = tmpdiscr1
             idx_genjet1 = k
@@ -224,7 +230,7 @@ def SelectVBSQGenJet(genpart1, genpart2, genjets):
             discrim2 = tmpdiscr2
             idx_genjet2 = k
     
-    if genjets[idx_genjet1].pt > genjets[idx_genjet2]]:
+    if genjets[idx_genjet1].pt > genjets[idx_genjet2].pt:
         finalgenjets = [genjets[idx_genjet1], genjets[idx_genjet2]]
     else:
         finalgenjets = [genjets[idx_genjet2], genjets[idx_genjet1]]
