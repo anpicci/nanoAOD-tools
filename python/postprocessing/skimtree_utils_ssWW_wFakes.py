@@ -241,10 +241,10 @@ def SelectVBSQGenJet(genparts, genjets):
         return [None, None]
 
     print("idx_genjet1:", idx_genjet1, "idx_genjet2:", idx_genjet2)
-    if genjets[idx_genjet1].pt > genjets[idx_genjet2].pt:
-        finalgenjets = [genjets[idx_genjet1], genjets[idx_genjet2]]
+    if light_genjets[idx_genjet1].pt > light_genjets[idx_genjet2].pt:
+        finalgenjets = [light_genjets[idx_genjet1], light_genjets[idx_genjet2]]
     else:
-        finalgenjets = [genjets[idx_genjet2], genjets[idx_genjet1]]
+        finalgenjets = [light_genjets[idx_genjet2], light_genjets[idx_genjet1]]
               
     return finalgenjets
 
