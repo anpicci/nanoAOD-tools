@@ -1039,7 +1039,7 @@ for i in range(tree.GetEntries()):
 
     sgenjets = SelectVBSQGenJet(genparts, genjets)
 
-    if len(sgenjets) < 2:
+    if len(sgenjets) < 2 or None in sgenjets:
         continue
 
     genleadjet = sgenjets[0]

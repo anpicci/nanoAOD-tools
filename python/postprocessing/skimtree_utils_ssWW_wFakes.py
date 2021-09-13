@@ -206,30 +206,41 @@ def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the 
 
 def SelectVBSQGenJet(genparts, genjets):
     fs_genparts = list(filter(lambda x : x.genPartIdxMother==0 and abs(x.pdgId)>0 and abs(x.pdgId)<10, genparts))
-    if len(fs_genparts) > 2:
-        raise TypeError("Something wrong with gen quarks!")
+    if len(fs_genparts) < 1:
+        return [None, None]
+
     genpart1 = fs_genparts[0]
     genpart2 = fs_genparts[1]
+    if genpart1.pt == genpart2.pt and genpart1.eta == genpart2.eta:
+        return[None, None]
 
     qflav1 = genpart1.pdgId
     qflav2 = genpart2.pdgId
+    print(genpart1, qflav1, genpart2, qflav2)
     light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10 and (x.partonFlavour==qflav1 or x.partonFlavour==qflav2), genjets))
+    if len(light_genjets) < 2:
+        light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10, genjets))
 
+    print(light_genjets)
     #if len(light_genjets) > 2:
     discrim1 = 1000000.
     discrim2 = 1000000.
-    idx_genjet1 = -1.
-    idx_genjet2 = -1.
+    idx_genjet1 = -1
+    idx_genjet2 = -1
     for k, lgenjet in enumerate(light_genjets):
         tmpdiscr1 = abs(lgenjet.eta - genpart1.eta) + abs(lgenjet.pt - genpart1.pt)
         tmpdiscr2 = abs(lgenjet.eta - genpart2.eta) + abs(lgenjet.pt - genpart2.pt)
         if tmpdiscr1 < discrim1:
-            discrim1 = tmpdiscr1
-            idx_genjet1 = k
+            discrim1 = copy.deepcopy(tmpdiscr1)
+            idx_genjet1 = copy.deepcopy(k)
         if tmpdiscr2 < discrim2:
-            discrim2 = tmpdiscr2
-            idx_genjet2 = k
+            discrim2 = copy.deepcopy(tmpdiscr2)
+            idx_genjet2 = copy.deepcopy(k)
     
+    if(idx_genjet1 == -1 or idx_genjet2 == -1) or (idx_genjet1 == idx_genjet2):
+        return [None, None]
+
+    print("idx_genjet1:", idx_genjet1, "idx_genjet2:", idx_genjet2)
     if genjets[idx_genjet1].pt > genjets[idx_genjet2].pt:
         finalgenjets = [genjets[idx_genjet1], genjets[idx_genjet2]]
     else:
@@ -237,7 +248,6 @@ def SelectVBSQGenJet(genparts, genjets):
               
     return finalgenjets
 
-#new
 
 def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = None, lep2 = None):
     jet1 = None

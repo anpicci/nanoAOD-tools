@@ -956,9 +956,9 @@ for i in range(tree.GetEntries()):
     #++        taking objects        ++
     #++++++++++++++++++++++++++++++++++
     
-    if Debug:
+    if True:#Debug:
         print("\nevento n. " + str(i))
-        if i > 500:#1000:
+    if i > 500 and Debug:#1000:
             break
     
     else:
@@ -1017,7 +1017,7 @@ for i in range(tree.GetEntries()):
     subleadjet = None
     mleadjet = None
     msubleadjet = None
-
+    sgenjets = []
     #++++++++++++++++++++++++++++++++++
     #++    starting the analysis     ++
     #++++++++++++++++++++++++++++++++++
@@ -1039,12 +1039,13 @@ for i in range(tree.GetEntries()):
 
     sgenjets = SelectVBSQGenJet(genparts, genjets)
 
-    if len(sgenjets) < 2:
+    if len(sgenjets) < 2 or None in sgenjets:
         continue
 
     genleadjet = sgenjets[0]
     gensubleadjet = sgenjets[1]
 
+    print("in tree_skimmer:", genleadjet, genleadjet.eta, genleadjet.pt, gensubleadjet, gensubleadjet.eta, gensubleadjet.pt)
     genlepton, gentau = SelectGenLeptons(genparts)
 
     genlnu, gentnu = SelectGenNus(genparts)
