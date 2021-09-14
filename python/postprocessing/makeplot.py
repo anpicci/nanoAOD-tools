@@ -1153,7 +1153,6 @@ for year in years:
 
         #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
-        '''
         if opt.channel == 'ltau':
             variables.append(variabile('BDT_output_SM', 'SM BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
             variables.append(variabile('BDT_output_dim6', 'dim6 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
@@ -1184,12 +1183,11 @@ for year in years:
         bin_taupt = array("f", [0., 50., 100., 200.])#, 300., 500.])
         nbin_taupt = len(bin_taupt) - 1
         variables.append(variabile(lep2[0] + '_pt',  lep2[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_taupt, bin_taupt))
-        '''
+
         bin_taum = array("f", [0., 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 2.0])
         nbin_taum = len(bin_taum) - 1
         variables.append(variabile(lep2[0] + '_mass',  lep2[1] + ' mass [GeV]',  wzero+'*('+cutbase+')', nbin_taum, bin_taum))
 
-        '''
         variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', 6, -3., 3.))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld', lep2[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', 20, -5, 5))
         variables.append(variabile(lep2[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{#tau}',  wzero+'*('+cutbase+')', 12, -1.5, 1.5))
@@ -1225,7 +1223,7 @@ for year in years:
 
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 10, -2.5, 2.5))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-        '''
+
         '''
         bin_ak8leadjet_pt = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
@@ -1255,7 +1253,7 @@ for year in years:
         variables.append(variabile('AK8subleadjet_tau32', 'AK8 Sublead jet #tau_{32}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('AK8subleadjet_tau43', 'AK8 Sublead jet #tau_{43}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         '''
-        '''
+
         bin_subleadjet_pt = array("f", [0., 100., 250., 500.])
         nbin_subleadjet_pt = len(bin_subleadjet_pt) - 1
         variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_subleadjet_pt, bin_subleadjet_pt))#40, 30, 1000))
@@ -1352,7 +1350,7 @@ for year in years:
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
         
         #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
-        '''
+
 
         for sample in dataset_new:
             print(sample)

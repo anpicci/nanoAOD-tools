@@ -22,7 +22,7 @@ from skimtree_utils_ssWW_wFakes import *
 from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 from EFTOperator_dict import *
 
-DeltaEtaCutBefore = True # False #
+DeltaEtaCutBefore = False # True #
 
 dim8_points = [
     "20",
@@ -1512,9 +1512,9 @@ for i in range(tree.GetEntries()):
         mlepton_phi[0]               =   mGoodLep.phi
         mlepton_mass[0]              =   mGoodLep.mass
         mlepton_pdgid[0]             =   mGoodLep.pdgId
-        lepton_charge[0] = -int(mGoodLep.pdgId/abs(mGoodLep.pdgId))
-        lepton_genPartFlav[0] = mGoodLep.genPartFlav
-        lepton_IsGenMatched[0]  =   int(IsLepGenMatched(mGoodLep, genlepton, genparts))
+        mlepton_charge[0] = -int(mGoodLep.pdgId/abs(mGoodLep.pdgId))
+        mlepton_genPartFlav[0] = mGoodLep.genPartFlav
+        mlepton_IsGenMatched[0]  =   int(IsLepGenMatched(mGoodLep, genlepton, genparts))
 
 
     ThereIsOneTau = False
