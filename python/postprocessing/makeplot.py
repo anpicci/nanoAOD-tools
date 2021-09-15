@@ -1187,7 +1187,7 @@ for year in years:
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
 
 
-        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 100., 125., 150, 200., 250.])#, 300.])#, 500.])
+        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 125., 150, 200., 250.])#, 300.])#, 500.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
         
@@ -1290,9 +1290,9 @@ for year in years:
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', nbin_metpt, bin_metpt))
 
         if opt.sr:
-            bin_mjj = array("f", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2500.])
+            bin_mjj = array("f", [500., 600., 800., 1000., 1400., 1800., 2200., 3000.])
         else:
-            bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2500.])
+            bin_mjj = array("f", [0., 150., 300., 500., 700., 1000., 1400., 1800., 2200., 3000.])
             #bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
@@ -1330,7 +1330,7 @@ for year in years:
 
         #bin_deltaeta_jj = array("f", [0., 0.5, 1., 1.5, 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 6.5, 7., 8., 9., 10.])
         #nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
-        variables.append(variabile('deltaEta_jj', '#Delta #eta_{jj}',  wzero+'*('+cutbase+')', 24, -6., 6.))#nbin_deltaeta_jj, bin_deltaeta_jj))#
+        variables.append(variabile('deltaEta_jj', '#Delta #eta_{jj}',  wzero+'*('+cutbase+')', 24, -8., 8.))#nbin_deltaeta_jj, bin_deltaeta_jj))#
 
         variables.append(variabile('deltaPhi_jj', '#Delta #phi_{jj}',  wzero+'*('+cutbase+')',  14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_' + lep12[0], '#Delta #phi_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  14, -3.5, 3.5))
@@ -1340,11 +1340,11 @@ for year in years:
         variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j2', '#Delta #phi_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', 14, -3.5, 3.5))
         
 
-        variables.append(variabile('deltaEta_' + lep12[0], '#Delta #eta_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  24, -6., 6.))
-        variables.append(variabile('deltaEta_' + lep2[0] + 'j1', '#Delta #eta_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')',  24, -6., 6.))
-        variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')',  24, -6., 6.))
-        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', 24, -6., 6.))
-        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', 24, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep12[0], '#Delta #eta_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  18, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep2[0] + 'j1', '#Delta #eta_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')',  18, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')',  18, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', 18, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', 18, -6., 6.))
         
         bin_deltaeta_jj = array("f", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
         nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
