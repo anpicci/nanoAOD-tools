@@ -75,7 +75,10 @@ parser.add_option('--try', dest='tryy', default = False, action='store_true', he
 parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 parser.add_option('--beff', dest='beff', default = False, action='store_true', help='Launching btag efficiencies study, default does not')
-parser.add_option('--mcreco', dest='mcreco', type=str, default = "not", help='Launching specifiec mcreco analysis, default does not')
+parser.add_option('--mcreco', dest='mcreco', default = False, action='store_true', help='Launching mcreco study, default does not')
+parser.add_option('--masscrit', dest='masscr', default = False, action='store_true', help='Applying masscriterion, default does not')
+parser.add_option('--deltaeta', dest='deta', default = False, action='store_true', help='Launching deltaEtaCut before selection, default does not')
+parser.add_option('--reco', dest='reco', type=str, default = "not", help='Launching specified reco analysis, default does not')
 
 (opt, args) = parser.parse_args()
 
@@ -133,12 +136,20 @@ elif opt.tryy:
     subpy = "submit_condor_try.py"
     if opt.channel == "ltau":
         optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
-elif opt.mcreco != "not":
+elif opt.mcreco:# != "not":
     subpy = "submit_condor_mcreco.py"
-    optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp) + " --mcreco " + opt.mcreco
+    optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
+    if opt.reco != "not":
+        optstring += " --reco " + opt.reco
 elif opt.channel == "ltau":
     subpy = "submit_condor.py"
     optstring += " --wpjet " + str(opt.jetwp) + " --wpele " + str(opt.elewp) + " --wpmu " + str(opt.muwp)
+    if opt.reco != "not":
+        optstring += " --reco " + opt.reco
+    if opt.masscr:
+        optstring += " --masscrit"
+    if opt.deta:
+        optstring += " --deltaeta"
 elif opt.channel == "emu":
     subpy = "diet_submit_condor.py"
 

@@ -36,7 +36,9 @@ ofolder = ''
 ofolder += opt.folder# + "/"
 
 
-path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/" + opt.channel + "/"
+path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
+if int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80:
+    path += opt.channel + "/"
 
 print(path)
 #dirlist = [dirs for dirs in os.listdir(path) if os.path.isdir(path+dirs) and opt.folder in dirs]

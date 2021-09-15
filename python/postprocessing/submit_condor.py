@@ -12,6 +12,9 @@ parser.add_option('--wpjet', dest='wpjet', type=str, default = '', help='Please 
 parser.add_option('--wpele', dest='wpele', type=str, default = '', help='Please enter working point vsele!')
 parser.add_option('--wpmu', dest='wpmu', type=str, default = '', help='Please enter working point vsmu!')
 parser.add_option('--max', dest='maxj', type=int, default = 0, help='Please enter working point!')
+parser.add_option('--reco', dest='reco', type=str, default = '', help='Please enter reco algo!')
+parser.add_option('--masscrit', dest='masscr', default = False, action='store_true', help='Applying masscriterion, default does not')
+parser.add_option('--deltaeta', dest='deta', default = False, action='store_true', help='Launching deltaEtaCut before selection, default does not')
 #parser.add_option('--wop', dest='wop', default = False, action='store_true', help='Default executes with FR without prompt substraction')
 #parser.add_option('-u', '--user', dest='us', type='string', default = 'ade', help="")
 (opt, args) = parser.parse_args()
@@ -43,6 +46,14 @@ wopstring = ''
 
 print(opt.dat)
 
+executpy = "tree_skimmer_ssWW_wFakes"
+if opt.reco == "":
+    executpy += ".py"
+elif opt.reco == "lj":
+    executpy += "_lepjet.py"
+elif opt.reco == "jl":
+    executpy += "_jetlep.py"
+
 def sub_writer(sample, n, files, folder):
     f = open(condorsub, "w")
     f.write("Proxy_filename          = x509up\n")
@@ -55,8 +66,20 @@ def sub_writer(sample, n, files, folder):
     f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, skimtree_utils_ssWW_wFakes.py, CutsAndValues.py, FR_vsjet2_vsmuT_ZZ.root, FR_vsjet4_vsmuT_ZZ.root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff.root, __init__.py, ./data\n")
     f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"testmatch\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
-    f.write("executable              = tree_skimmer_ssWW_wFakes.py\n")
-    f.write("arguments               = " + sample.label + " " + str(n) + " " + str(files) + " remote " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu + "\n")# + str(wopstring) + "\n")
+    #args += "\n"
+    args = sample.label + " " + str(n) + " " + str(files) + " remote " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu
+    if opt.masscr:
+        args += " 1"
+    else:
+        args += " 0"
+    if opt.deta:
+        args += " 1"
+    else:
+        args += " 0"
+    #print(executpy, args)
+
+    f.write("executable              = " + executpy + "\n")
+    f.write("arguments               = " + args + "\n")#sample.label + " " + str(n) + " " + str(files) + " remote " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu + "\n")# + str(wopstring) + "\n")
     #f.write("input                   = input.txt\n")
     f.write("output                  = condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_" + opt.folder + "/error/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".err\n")
@@ -116,8 +139,8 @@ for sample in samples:
             sub_writer(sample, idx, files, folder)
             os.popen('condor_submit ' + condorsub)
             print('condor_submit ' + condorsub)
-            #os.popen("python tree_skimmer_ssWW.py " " + sample.label + " " + str(i) + " " + str(files))
-            print("python tree_skimmer_ssWW_wFakes.py " + sample.label + " " + str(idx) + " " + str(files) + " remote")
+            #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + str(files))
+            print("python " + executpy)# + " " + args)#sample.label + " " + str(idx) + " " + str(files) + " remote")
     else:
         for i in range(len(files_list)/split+1):
             if os.path.exists(opath + sample.label + "_part" + str(i) + ".root"):
@@ -127,4 +150,4 @@ for sample in samples:
             print('condor_submit ' + condorsub)
             os.popen('condor_submit ' + condorsub)
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]))
-            print("python tree_skimmer_ssWW_wFakes.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote")
+            print("python " + executpy)# + " " + args)#sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote")

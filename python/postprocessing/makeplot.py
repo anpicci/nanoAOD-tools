@@ -70,7 +70,9 @@ def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
 
-folder = opt.folder + "/" + opt.channel
+folder = opt.folder 
+if int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80:
+    folder += "/" + opt.channel
 pfolder = opt.folder
 
 filerepo = '/eos/home-'+opt.user[0]+'/'+opt.user+'/VBS/nosynch/' + folder + '/'
@@ -241,7 +243,7 @@ def mergepart(dataset):
         print("Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_all")).GetEntries()))
         
         print("-------- ", opt.folder, " --------")
-        print("so scem? ", not 'Fake' in opt.folder)
+        #print("so scem? ", not 'Fake' in opt.folder)
         
         startWFR = folder.startswith('FR')
         isltau = opt.channel=='ltau'
@@ -257,224 +259,240 @@ def mergepart(dataset):
             os.system("cp " + file_path + " " + file_path_cp)
             #print(file_path)
           
-            model_SM_path = opt.model_SM
-            model_dim6_path = opt.model_dim6
-            model_dim8_path = opt.model_dim8
-            #model_mu_path = opt.model_mu
-            #model_ele_path = opt.model_ele
-            #model_mu_path = opt.model_mu
-            #print(model_path)
-            #print(model_ele_path)
-            #print(model_mu_path)
+            #check if there is at least one event in the tree
 
-            # load model 
-            file = open(model_SM_path,'rb')
-            clf_SM = pickle.load(file)
-            file.close()
+            tmpfile = ROOT.TFile.Open(file_path)
+            tmptree = tmpfile.Get("events_all")
+            tmpentr = tmptree.GetEntries()
+            tmptree.Delete()
+            tmpfile.Close()
+            tmpfile.Delete()
+            print("entries:", tmpentr)
 
-            file = open(model_dim6_path,'rb')
-            clf_dim6 = pickle.load(file)
-            file.close()
+            if tmpentr > 0:
+                model_SM_path = opt.model_SM
+                model_dim6_path = opt.model_dim6
+                model_dim8_path = opt.model_dim8
+                #model_mu_path = opt.model_mu
+                #model_ele_path = opt.model_ele
+                #model_mu_path = opt.model_mu
+                #print(model_path)
+                #print(model_ele_path)
+                #print(model_mu_path)
+
+                # load model 
+                file = open(model_SM_path,'rb')
+                clf_SM = pickle.load(file)
+                file.close()
+
+                file = open(model_dim6_path,'rb')
+                clf_dim6 = pickle.load(file)
+                file.close()
                
-            file = open(model_dim8_path,'rb')
-            clf_dim8 = pickle.load(file)
-            file.close()
+                file = open(model_dim8_path,'rb')
+                clf_dim8 = pickle.load(file)
+                file.close()
                
-            # load model 
-            #file = open(model_path,'rb')
-            #clf = pickle.load(file)
-            #file.close()
+                # load model 
+                #file = open(model_path,'rb')
+                #clf = pickle.load(file)
+                #file.close()
             
-            #file = open(model_ele_path,'rb')
-            #clf_ele = pickle.load(file)
-            #file.close()
+                #file = open(model_ele_path,'rb')
+                #clf_ele = pickle.load(file)
+                #file.close()
                
-            #file = open(model_mu_path,'rb')
-            #clf_mu = pickle.load(file)
-            #file.close()
+                #file = open(model_mu_path,'rb')
+                #clf_mu = pickle.load(file)
+                #file.close()
+
+                # open root file
+                file = uproot.open(file_path)
+                tree = file["events_all"]
+                df = tree.arrays(library="pd")
+                df = df.fillna(0)
                
-            # open root file
-            file = uproot.open(file_path)
-            tree = file["events_all"]
-            df = tree.arrays(library="pd")
-            df = df.fillna(0)
-               
-            '''
-            to_drop = ['w_nominal','lepSF[0]', 'lepUp[0]', 'lepDown[0]', 'puSF[0]', 'puUp[0]',
-            'puDown[0]', 'PFSF[0]', 'PFUp[0]', 'PFDown[0]', 'q2Up[0]', 'q2Down[0]','w_PDF[0]',
-            'SF_Fake[0]', 'tau_vsjet_SF[0]', 'tau_vsele_SF[0]', 'tau_vsmu_SF[0]', 'tau_vsjet_Up[0]', 'tau_vsjet_Down[0]', 'tau_vsele_Up[0]', 'tau_vsele_Down[0]', 'tau_vsmu_Up[0]', 'tau_vsmu_Down[0]',
-            'tauSF[0]','tauUp[0]','tauDown[0]','TESSF[0]','TESUp[0]','TESDown[0]','FESSF[0]','FESUp[0]','FESDown[0]',
-            'event_SFFake_vsjet2[0]', 'event_SFFake_vsjet4[0]','lepton_SFFake_vsjet2[0]', 'lepton_SFFake_vsjet4[0]', 'tau_SFFake_vsjet2[0]', 'tau_SFFake_vsjet4[0]',
-            'tau_DeepTau_WP[0]','tau_DeepTauVsJet_WP[0]', 'tau_DeepTauVsMu_WP[0]','tau_DeepTauVsEle_WP[0]', 
-            'HLT_effLumi[0]', 'pass_lepton_selection[0]','pass_tau_selection[0]', 'pass_tau_vsJetWP[0]','pass_jet_selection[0]', 'pass_upToBVeto[0]', 'pass_lepton_iso[0]','pass_lepton_veto[0]', 
-            'pass_charge_selection[0]', 'pass_b_veto[0]', 'pass_mjj_cut[0]','pass_MET_cut[0]', 'pass_everyCut[0]', 'nBJets[0]',
-            'event_Zeppenfeld[0]','tau_Zeppenfeld[0]','lepton_Zeppenfeld[0]', 
-            'lepton_LnTRegion[0]', 'tau_LnTRegion[0]',  'tau_isolation[0]', 'lepton_TightRegion[0]','tau_TightRegion[0]','tau_isPrompt[0]','lepton_isPrompt[0]', 
-            'tau_GenMatch[0]',
-            'leadjet_CSVv2_b[0]', 'subleadjet_CSVv2_b[0]',] 
-            '''
+                '''
+                to_drop = ['w_nominal','lepSF[0]', 'lepUp[0]', 'lepDown[0]', 'puSF[0]', 'puUp[0]',
+                'puDown[0]', 'PFSF[0]', 'PFUp[0]', 'PFDown[0]', 'q2Up[0]', 'q2Down[0]','w_PDF[0]',
+                'SF_Fake[0]', 'tau_vsjet_SF[0]', 'tau_vsele_SF[0]', 'tau_vsmu_SF[0]', 'tau_vsjet_Up[0]', 'tau_vsjet_Down[0]', 'tau_vsele_Up[0]', 'tau_vsele_Down[0]', 'tau_vsmu_Up[0]', 'tau_vsmu_Down[0]',
+                'tauSF[0]','tauUp[0]','tauDown[0]','TESSF[0]','TESUp[0]','TESDown[0]','FESSF[0]','FESUp[0]','FESDown[0]',
+                'event_SFFake_vsjet2[0]', 'event_SFFake_vsjet4[0]','lepton_SFFake_vsjet2[0]', 'lepton_SFFake_vsjet4[0]', 'tau_SFFake_vsjet2[0]', 'tau_SFFake_vsjet4[0]',
+                'tau_DeepTau_WP[0]','tau_DeepTauVsJet_WP[0]', 'tau_DeepTauVsMu_WP[0]','tau_DeepTauVsEle_WP[0]', 
+                'HLT_effLumi[0]', 'pass_lepton_selection[0]','pass_tau_selection[0]', 'pass_tau_vsJetWP[0]','pass_jet_selection[0]', 'pass_upToBVeto[0]', 'pass_lepton_iso[0]','pass_lepton_veto[0]', 
+                'pass_charge_selection[0]', 'pass_b_veto[0]', 'pass_mjj_cut[0]','pass_MET_cut[0]', 'pass_everyCut[0]', 'nBJets[0]',
+                'event_Zeppenfeld[0]','tau_Zeppenfeld[0]','lepton_Zeppenfeld[0]', 
+                'lepton_LnTRegion[0]', 'tau_LnTRegion[0]',  'tau_isolation[0]', 'lepton_TightRegion[0]','tau_TightRegion[0]','tau_isPrompt[0]','lepton_isPrompt[0]', 
+                'tau_GenMatch[0]',
+                'leadjet_CSVv2_b[0]', 'subleadjet_CSVv2_b[0]',] 
+                '''
 
 
 
-            #X = df.drop(columns=to_drop)
+                #X = df.drop(columns=to_drop)
             
-            new_columns = []
-            for i in df.columns:
-                new_columns.append(i.split('[')[0])
-            df.columns = new_columns
+                new_columns = []
+                for i in df.columns:
+                    new_columns.append(i.split('[')[0])
+                df.columns = new_columns
             
-            to_keep = ['lepton_pt',
-                       'lepton_eta',
-                       'lepton_phi',
-                       'lepton_mass',
-                       'lepton_pdgid',
-                       'lepton_pfRelIso04',
-                       'tau_pt',
-                       'tau_eta',
-                       'tau_phi',
-                       'tau_mass',
-                       'tau_DecayMode',
-                       'tau_DeepTauVsEle_raw',
-                       'tau_DeepTauVsMu_raw',
-                       'tauleadTk_ptOverTau',
-                       'tauleadTk_deltaPhi',
-                       'tauleadTk_deltaEta',
-                       'tauleadTk_Gamma',
-                       'taujet_relpt',
-                       'taujet_deltaPhi',
-                       'taujet_deltaEta',
-                       'taujet_HadGamma',
-                       'taujet_EmGamma',
-                       'taujet_HEGamma',
-                       'leadjet_pt',
-                       'leadjet_eta',
-                       'leadjet_phi',
-                       'leadjet_mass',
-                       'leadjet_DeepFlv_b',
-                       'leadjet_DeepCSVv2_b',
-                       'AK8leadjet_pt',
-                       'AK8leadjet_eta',
-                       'AK8leadjet_phi',
-                       'AK8leadjet_mass',
-                       'AK8leadjet_tau21',
-                       'AK8leadjet_tau32',
-                       'AK8leadjet_tau43',
-                       'leadjet_dRAK48',
-                       'subleadjet_pt',
-                       'subleadjet_eta',
-                       'subleadjet_phi',
-                       'subleadjet_mass',
-                       'subleadjet_DeepFlv_b',
-                       'subleadjet_DeepCSVv2_b',
-                       'AK8subleadjet_pt',
-                       'AK8subleadjet_eta',
-                       'AK8subleadjet_phi',
-                       'AK8subleadjet_mass',
-                       'AK8subleadjet_tau21',
-                       'AK8subleadjet_tau32',
-                       'AK8subleadjet_tau43',
-                       'subleadjet_dRAK48',
-                       'nJets',
-                       'MET_pt',
-                       'MET_phi',
-                       'm_jj',
-                       'mT_lep_MET',
-                       'mT_tau_MET',
-                       'mT_leptau_MET',
-                       'm_taulep',
-                       'm_jjtau',
-                       'm_jjtaulep',
-                       'deltaPhi_jj',
-                       'deltaPhi_taulep',
-                       'deltaPhi_tauj1',
-                       'deltaPhi_tauj2',
-                       'deltaPhi_lepj1',
-                       'deltaPhi_lepj2',
-                       'deltaEta_jj',
-                       'deltaEta_taulep',
-                       'deltaEta_tauj1',
-                       'deltaEta_tauj2',
-                       'deltaEta_lepj1',
-                       'deltaEta_lepj2',
-                       'deltaTheta_jj',
-                       'deltaTheta_taulep',
-                       'deltaTheta_tauj1',
-                       'deltaTheta_tauj2',
-                       'deltaTheta_lepj1',
-                       'deltaTheta_lepj2',
-                       'ptRel_jj',
-                       'ptRel_taulep',
-                       'ptRel_tauj1',
-                       'ptRel_tauj2',
-                       'ptRel_lepj1',
-                       'ptRel_lepj2',
-                       'lepton_Zeppenfeld_over_deltaEta_jj',
-                       'tau_Zeppenfeld_over_deltaEta_jj',
-                       'event_Zeppenfeld_over_deltaEta_jj',
-                       'event_RT',
-            ]
+                to_keep = ['lepton_pt',
+                           'lepton_eta',
+                           'lepton_phi',
+                           'lepton_mass',
+                           'lepton_pdgid',
+                           'lepton_pfRelIso04',
+                           'tau_pt',
+                           'tau_eta',
+                           'tau_phi',
+                           'tau_mass',
+                           'tau_DecayMode',
+                           'tau_DeepTauVsEle_raw',
+                           'tau_DeepTauVsMu_raw',
+                           'tauleadTk_ptOverTau',
+                           'tauleadTk_deltaPhi',
+                           'tauleadTk_deltaEta',
+                           'tauleadTk_Gamma',
+                           'taujet_relpt',
+                           'taujet_deltaPhi',
+                           'taujet_deltaEta',
+                           'taujet_HadGamma',
+                           'taujet_EmGamma',
+                           'taujet_HEGamma',
+                           'leadjet_pt',
+                           'leadjet_eta',
+                           'leadjet_phi',
+                           'leadjet_mass',
+                           'leadjet_DeepFlv_b',
+                           'leadjet_DeepCSVv2_b',
+                           'AK8leadjet_pt',
+                           'AK8leadjet_eta',
+                           'AK8leadjet_phi',
+                           'AK8leadjet_mass',
+                           'AK8leadjet_tau21',
+                           'AK8leadjet_tau32',
+                           'AK8leadjet_tau43',
+                           'leadjet_dRAK48',
+                           'subleadjet_pt',
+                           'subleadjet_eta',
+                           'subleadjet_phi',
+                           'subleadjet_mass',
+                           'subleadjet_DeepFlv_b',
+                           'subleadjet_DeepCSVv2_b',
+                           'AK8subleadjet_pt',
+                           'AK8subleadjet_eta',
+                           'AK8subleadjet_phi',
+                           'AK8subleadjet_mass',
+                           'AK8subleadjet_tau21',
+                           'AK8subleadjet_tau32',
+                           'AK8subleadjet_tau43',
+                           'subleadjet_dRAK48',
+                           'nJets',
+                           'MET_pt',
+                           'MET_phi',
+                           'm_jj',
+                           'mT_lep_MET',
+                           'mT_tau_MET',
+                           'mT_leptau_MET',
+                           'm_taulep',
+                           'm_jjtau',
+                           'm_jjtaulep',
+                           'deltaPhi_jj',
+                           'deltaPhi_taulep',
+                           'deltaPhi_tauj1',
+                           'deltaPhi_tauj2',
+                           'deltaPhi_lepj1',
+                           'deltaPhi_lepj2',
+                           'deltaEta_jj',
+                           'deltaEta_taulep',
+                           'deltaEta_tauj1',
+                           'deltaEta_tauj2',
+                           'deltaEta_lepj1',
+                           'deltaEta_lepj2',
+                           'deltaTheta_jj',
+                           'deltaTheta_taulep',
+                           'deltaTheta_tauj1',
+                           'deltaTheta_tauj2',
+                           'deltaTheta_lepj1',
+                           'deltaTheta_lepj2',
+                           'ptRel_jj',
+                           'ptRel_taulep',
+                           'ptRel_tauj1',
+                           'ptRel_tauj2',
+                           'ptRel_lepj1',
+                           'ptRel_lepj2',
+                           'lepton_Zeppenfeld_over_deltaEta_jj',
+                           'tau_Zeppenfeld_over_deltaEta_jj',
+                           'event_Zeppenfeld_over_deltaEta_jj',
+                           'event_RT',
+                       ]
             
-            X = df[to_keep].to_numpy()
+                X = df[to_keep].to_numpy()
+                
+                '''
+                X = df[['lepton_pt', 'lepton_eta', 'lepton_phi', 'lepton_mass', 'lepton_pdgid',
+                'lepton_pfRelIso04', 'tau_pt', 'tau_eta', 'tau_phi', 'tau_mass',
+                'tau_DeepTauVsEle_raw', 'tau_DeepTauVsMu_raw', 'leadjet_pt',
+                'leadjet_eta', 'leadjet_phi', 'leadjet_mass', 'leadjet_CSVv2_b',
+                'leadjet_DeepFlv_b', 'leadjet_DeepCSVv2_b', 'AK8leadjet_pt',
+                'AK8leadjet_eta', 'AK8leadjet_phi', 'AK8leadjet_mass',
+                'AK8leadjet_tau21', 'AK8leadjet_tau32', 'AK8leadjet_tau43',
+                'leadjet_dRAK48', 'subleadjet_pt', 'subleadjet_eta', 'subleadjet_phi',
+                'subleadjet_mass', 'subleadjet_CSVv2_b', 'subleadjet_DeepFlv_b',
+                'subleadjet_DeepCSVv2_b', 'AK8subleadjet_pt', 'AK8subleadjet_eta',
+                'AK8subleadjet_phi', 'AK8subleadjet_mass', 'AK8subleadjet_tau21',
+                'AK8subleadjet_tau32', 'AK8subleadjet_tau43', 'subleadjet_dRAK48',
+                'nJets', 'MET_pt', 'MET_phi', 'm_jj', 'mT_lep_MET', 'mT_tau_MET',
+                'mT_leptau_MET', 'deltaPhi_jj', 'deltaPhi_taulep', 'deltaPhi_tauj1',
+                'deltaPhi_tauj2', 'deltaPhi_lepj1', 'deltaPhi_lepj2', 'deltaEta_jj',
+                'lepton_Zeppenfeld', 'tau_Zeppenfeld', 'event_Zeppenfeld',
+                'pass_mjj_cut', 'pass_MET_cut', 'pass_everyCut']].to_numpy() 
+                '''
 
-            '''
-            X = df[['lepton_pt', 'lepton_eta', 'lepton_phi', 'lepton_mass', 'lepton_pdgid',
-            'lepton_pfRelIso04', 'tau_pt', 'tau_eta', 'tau_phi', 'tau_mass',
-            'tau_DeepTauVsEle_raw', 'tau_DeepTauVsMu_raw', 'leadjet_pt',
-            'leadjet_eta', 'leadjet_phi', 'leadjet_mass', 'leadjet_CSVv2_b',
-            'leadjet_DeepFlv_b', 'leadjet_DeepCSVv2_b', 'AK8leadjet_pt',
-            'AK8leadjet_eta', 'AK8leadjet_phi', 'AK8leadjet_mass',
-            'AK8leadjet_tau21', 'AK8leadjet_tau32', 'AK8leadjet_tau43',
-            'leadjet_dRAK48', 'subleadjet_pt', 'subleadjet_eta', 'subleadjet_phi',
-            'subleadjet_mass', 'subleadjet_CSVv2_b', 'subleadjet_DeepFlv_b',
-            'subleadjet_DeepCSVv2_b', 'AK8subleadjet_pt', 'AK8subleadjet_eta',
-            'AK8subleadjet_phi', 'AK8subleadjet_mass', 'AK8subleadjet_tau21',
-            'AK8subleadjet_tau32', 'AK8subleadjet_tau43', 'subleadjet_dRAK48',
-            'nJets', 'MET_pt', 'MET_phi', 'm_jj', 'mT_lep_MET', 'mT_tau_MET',
-            'mT_leptau_MET', 'deltaPhi_jj', 'deltaPhi_taulep', 'deltaPhi_tauj1',
-            'deltaPhi_tauj2', 'deltaPhi_lepj1', 'deltaPhi_lepj2', 'deltaEta_jj',
-            'lepton_Zeppenfeld', 'tau_Zeppenfeld', 'event_Zeppenfeld',
-            'pass_mjj_cut', 'pass_MET_cut', 'pass_everyCut']].to_numpy() 
-            '''
+                # update root file with BDT branch
+                BDT_output_SM_array = clf_SM.predict_proba(X)[:,1]
+                BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
+                BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
 
-            # update root file with BDT branch
-            BDT_output_SM_array = clf_SM.predict_proba(X)[:,1]
-            BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
-            BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
+                #BDT_output_SM_array = clf_SM.decision_function(X)
+                #BDT_output_dim6_array = clf_dim6.decision_function(X)
+                #BDT_output_dim8_array = clf_dim8.decision_function(X)
 
-            #BDT_output_SM_array = clf_SM.decision_function(X)
-            #BDT_output_dim6_array = clf_dim6.decision_function(X)
-            #BDT_output_dim8_array = clf_dim8.decision_function(X)
+                myfile = ROOT.TFile(file_path, 'update')
+                mytree = myfile.Get("events_all")
+                listOfNewBranches = []
+                BDT_output_SM   = array('d', [0.5] )
+                BDT_output_dim6   = array('d', [0.5] )
+                BDT_output_dim8   = array('d', [0.5] )
+                #BDT_output   = array('d', [0.5] )
+                #BDT_output_ele   = array('d', [0.5] )
+                #BDT_output_mu   = array('d', [0.5] )
+                listOfNewBranches.append(mytree.Branch("BDT_output_SM", BDT_output_SM, "BDT_output_SM/D") )
+                listOfNewBranches.append(mytree.Branch("BDT_output_dim6", BDT_output_dim6, "BDT_output_dim6/D") )
+                listOfNewBranches.append(mytree.Branch("BDT_output_dim8", BDT_output_dim8, "BDT_output_dim8/D") )
+                #listOfNewBranches.append(mytree.Branch("BDT_output", BDT_output, "BDT_output/D") )
+                #listOfNewBranches.append(mytree.Branch("BDT_output_ele", BDT_output_ele, "BDT_output_ele/D") )
+                #listOfNewBranches.append(mytree.Branch("BDT_output_mu", BDT_output_mu, "BDT_output_mu/D") )
+                numOfEvents = mytree.GetEntries()
+                for n in range(numOfEvents):
+                    BDT_output_SM[0] = BDT_output_SM_array[n]
+                    BDT_output_dim6[0] = BDT_output_dim6_array[n]
+                    BDT_output_dim8[0] = BDT_output_dim8_array[n]
+                    #BDT_output[0] = BDT_output_array[n]
+                    #BDT_output_ele[0] = BDT_output_ele_array[n]
+                    #BDT_output_mu[0] = BDT_output_mu_array[n]
+                    #if n%1000 == 0:
+                        #print(BDT_output[0])
+                    mytree.GetEntry(n)
+                    for newBranch in sorted(listOfNewBranches):
+                        newBranch.Fill()
 
-            myfile = ROOT.TFile(file_path, 'update')
-            mytree = myfile.Get("events_all")
-            listOfNewBranches = []
-            BDT_output_SM   = array('d', [0.5] )
-            BDT_output_dim6   = array('d', [0.5] )
-            BDT_output_dim8   = array('d', [0.5] )
-            #BDT_output   = array('d', [0.5] )
-            #BDT_output_ele   = array('d', [0.5] )
-            #BDT_output_mu   = array('d', [0.5] )
-            listOfNewBranches.append(mytree.Branch("BDT_output_SM", BDT_output_SM, "BDT_output_SM/D") )
-            listOfNewBranches.append(mytree.Branch("BDT_output_dim6", BDT_output_dim6, "BDT_output_dim6/D") )
-            listOfNewBranches.append(mytree.Branch("BDT_output_dim8", BDT_output_dim8, "BDT_output_dim8/D") )
-            #listOfNewBranches.append(mytree.Branch("BDT_output", BDT_output, "BDT_output/D") )
-            #listOfNewBranches.append(mytree.Branch("BDT_output_ele", BDT_output_ele, "BDT_output_ele/D") )
-            #listOfNewBranches.append(mytree.Branch("BDT_output_mu", BDT_output_mu, "BDT_output_mu/D") )
-            numOfEvents = mytree.GetEntries()
-            for n in range(numOfEvents):
-                BDT_output_SM[0] = BDT_output_SM_array[n]
-                BDT_output_dim6[0] = BDT_output_dim6_array[n]
-                BDT_output_dim8[0] = BDT_output_dim8_array[n]
-                #BDT_output[0] = BDT_output_array[n]
-                #BDT_output_ele[0] = BDT_output_ele_array[n]
-                #BDT_output_mu[0] = BDT_output_mu_array[n]
-                #if n%1000 == 0:
-                    #print(BDT_output[0])
-                mytree.GetEntry(n)
-                for newBranch in sorted(listOfNewBranches):
-                    newBranch.Fill()
-            mytree.Write("", ROOT.TFile.kOverwrite)
-            myfile.Close()       
+                mytree.Write("", ROOT.TFile.kOverwrite)
+                myfile.Close()       
+            
+            else:
+                print("No events found in condored file, let's skip to another sample...")
+                pass
 
 def mergetree(sample):
     if not os.path.exists(filerepo + sample.label):
@@ -522,9 +540,10 @@ def lumi_writer(dataset, lumi):
                
             for event in range(0, tree.GetEntries()):
                 tree.GetEntry(event)
-                if event%10000==1:
+                perc = (event+1)/(tree.GetEntries())*100
+                if perc == float(int(perc)) or event==(tree.GetEntries()-1):
                     #print("Processing event %s     complete %s percent" %(event, 100*event/tree.GetEntries()))
-                    sys.stdout.write("\rProcessing event {}     complete {} percent".format(event, 100*event/tree.GetEntries()))
+                    sys.stdout.write("\rProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
                 w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
                 if isthere_pdf: #not ("WZ" in sample.label):
                     for i in range(1, nbins):
@@ -1164,11 +1183,11 @@ for year in years:
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
 
 
-        variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 6, -3., 3.))
+        variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 12, -3., 3.))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
 
 
-        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 200.])#, 300.])#, 500.])
+        bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 100., 125., 150, 200., 250.])#, 300.])#, 500.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
         
@@ -1180,7 +1199,7 @@ for year in years:
         variables.append(variabile(lep1[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{l}',  wzero+'*('+cutbase+')', 12, -1.5, 1.5))
         
 
-        bin_taupt = array("f", [0., 50., 100., 200.])#, 300., 500.])
+        bin_taupt = array("f", [0., 30., 45., 60., 80., 100., 125., 150, 200., 250.])#, 300., 500.])
         nbin_taupt = len(bin_taupt) - 1
         variables.append(variabile(lep2[0] + '_pt',  lep2[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_taupt, bin_taupt))
 
@@ -1188,7 +1207,7 @@ for year in years:
         nbin_taum = len(bin_taum) - 1
         variables.append(variabile(lep2[0] + '_mass',  lep2[1] + ' mass [GeV]',  wzero+'*('+cutbase+')', nbin_taum, bin_taum))
 
-        variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', 6, -3., 3.))
+        variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', 12, -3., 3.))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld', lep2[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', 20, -5, 5))
         variables.append(variabile(lep2[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{#tau}',  wzero+'*('+cutbase+')', 12, -1.5, 1.5))
         variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
@@ -1217,11 +1236,11 @@ for year in years:
             #variables.append(variabile('tau_DeepTauVsJet_WP', '#tau DeepTauVsJet WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
           
 
-        bin_leadjet_pt = array("f", [0., 100., 200., 400., 600.])
+        bin_leadjet_pt = array("f", [0., 50., 100., 150., 200., 250., 300., 400., 500., 600.])
         nbin_leadjet_pt = len(bin_leadjet_pt)-1
         variables.append(variabile('leadjet_pt',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_leadjet_pt, bin_leadjet_pt))#30, 1500))
 
-        variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 10, -2.5, 2.5))
+        variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 20, -5., 5.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
 
         '''
@@ -1254,10 +1273,10 @@ for year in years:
         variables.append(variabile('AK8subleadjet_tau43', 'AK8 Sublead jet #tau_{43}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         '''
 
-        bin_subleadjet_pt = array("f", [0., 100., 250., 500.])
+        bin_subleadjet_pt = array("f", [0., 50., 100., 150., 250., 500.])
         nbin_subleadjet_pt = len(bin_subleadjet_pt) - 1
         variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_subleadjet_pt, bin_subleadjet_pt))#40, 30, 1000))
-        variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', 10, -5., 5.))
+        variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', 20, -5., 5.))
         variables.append(variabile('subleadjet_phi', 'Sublead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
         
         variables.append(variabile('nJets', 'n jets',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
@@ -1271,17 +1290,17 @@ for year in years:
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', nbin_metpt, bin_metpt))
 
         if opt.sr:
-            bin_mjj = array("f", [500., 600., 800., 1000., 1200., 2000.])
+            bin_mjj = array("f", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2500.])
         else:
-            bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1000., 1200., 2000.])
+            bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2500.])
             #bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
 
         if not opt.sr:
-            bin_invm = array("f", [0., 150., 300., 450., 600., 750., 900., 1200., 1500., 2000.])
+            bin_invm = array("f", [0., 150., 300., 450., 600., 750., 900., 1200., 1400., 1600., 1800., 2000., 2500.])
         else:
-            bin_invm = array("f", [500., 700., 900., 1100., 1500., 2000.])
+            bin_invm = array("f", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2500.])
         nbin_invm = len(bin_invm) - 1 
         variables.append(variabile('m_jj' + lep2[0], 'invariant mass j_{1} j_{2} ' + lep2[1] + ' [GeV]',  wzero+'*('+cutbase+')', nbin_invm, bin_invm))# 20, 500, 2000))
         if opt.channel == 'ltau':
@@ -1311,21 +1330,21 @@ for year in years:
 
         #bin_deltaeta_jj = array("f", [0., 0.5, 1., 1.5, 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 6.5, 7., 8., 9., 10.])
         #nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
-        variables.append(variabile('deltaEta_jj', '#Delta #eta_{jj}',  wzero+'*('+cutbase+')', 12, -6., 6.))#nbin_deltaeta_jj, bin_deltaeta_jj))#
+        variables.append(variabile('deltaEta_jj', '#Delta #eta_{jj}',  wzero+'*('+cutbase+')', 24, -6., 6.))#nbin_deltaeta_jj, bin_deltaeta_jj))#
 
-        variables.append(variabile('deltaPhi_jj', '#Delta #phi_{jj}',  wzero+'*('+cutbase+')',  16, -4., 4.))
-        variables.append(variabile('deltaPhi_' + lep12[0], '#Delta #phi_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  16, -4., 4.))
-        variables.append(variabile('deltaPhi_' + lep2[0] + 'j1', '#Delta #phi_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')',  16, -4., 4.))
-        variables.append(variabile('deltaPhi_' + lep2[0] + 'j2', '#Delta #phi_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')',  16, -4., 4.))
-        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j1', '#Delta #phi_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', 16, -4., 4.))
-        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j2', '#Delta #phi_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', 16, -4., 4.))
+        variables.append(variabile('deltaPhi_jj', '#Delta #phi_{jj}',  wzero+'*('+cutbase+')',  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep12[0], '#Delta #phi_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep2[0] + 'j1', '#Delta #phi_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')',  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep2[0] + 'j2', '#Delta #phi_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')',  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j1', '#Delta #phi_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', 14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j2', '#Delta #phi_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', 14, -3.5, 3.5))
         
 
-        variables.append(variabile('deltaEta_' + lep12[0], '#Delta #eta_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  16, -8., 8.))
-        variables.append(variabile('deltaEta_' + lep2[0] + 'j1', '#Delta #eta_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')',  16, -8., 8.))
-        variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')',  16, -8., 8.))
-        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', 16, -8., 8.))
-        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', 16, -8., 8.))
+        variables.append(variabile('deltaEta_' + lep12[0], '#Delta #eta_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  24, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep2[0] + 'j1', '#Delta #eta_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')',  24, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')',  24, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', 24, -6., 6.))
+        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', 24, -6., 6.))
         
         bin_deltaeta_jj = array("f", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
         nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
@@ -1333,17 +1352,19 @@ for year in years:
         '''
         variables.append(variabile('deltaTheta_jj', 'cos(#Delta#theta_{jj})',  wzero+'*('+cutbase+')',  nbin_deltaeta_jj, bin_deltaeta_jj))
         variables.append(variabile('deltaTheta_' + lep12[0], 'cos(#Delta#theta_{' + lep12[1] + '})',  wzero+'*('+cutbase+')',  10, 0., 1.))
-        variables.append(variabile('deltaTheta' + lep2[0] + 'j1', 'cos(#Delta#theta_{' + lep2[1] + ' j_{1}})',  wzero+'*('+cutbase+')',  10, 0., 1.))
-        variables.append(variabile('deltaTheta' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')',  10, 0., 1.))
-        variables.append(variabile('deltaTheta' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', 10, 0., 1.))
-        variables.append(variabile('deltaTheta' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', 10, 0., 1.))
+        variables.append(variabile('deltaTheta_' + lep2[0] + 'j1', 'cos(#Delta#theta_{' + lep2[1] + ' j_{1}})',  wzero+'*('+cutbase+')',  10, 0., 1.))
+        variables.append(variabile('deltaTheta_' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')',  10, 0., 1.))
+        variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', 10, 0., 1.))
+        variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', 10, 0., 1.))
         '''
         '''
         bin_ptRel = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 250., 300., 400., 500.])
         nbin_ptRel = len(bin_ptRel) - 1
+        bin_ptRel_lep12 = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 250., 400.])
+        nbin_ptRel_lep12 = len(bin_ptRel_lep12) - 1
         
         variables.append(variabile('ptRel_jj', 'relative p_{T} j_{1} j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
-        variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
+        variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
         variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
         variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
