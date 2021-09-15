@@ -251,16 +251,10 @@ def mergepart(dataset):
         ismcreco = 'mcreco' in opt.folder
 
         if isltau and not(startWFR or hasFakeInside or ismcreco):
-              
-            # insert BDT output value into merged file
             print("Processing events with Tommaso's BDT...")
             file_path = filerepo + sample.label + "/"  + sample.label + "_merged.root"
-            file_path_cp = filerepo + sample.label + "/"  + sample.label + "_merged_bu.root"
-            os.system("cp " + file_path + " " + file_path_cp)
-            #print(file_path)
-          
-            #check if there is at least one event in the tree
 
+            #check if there is at least one event in the tree
             tmpfile = ROOT.TFile.Open(file_path)
             tmptree = tmpfile.Get("events_all")
             tmpentr = tmptree.GetEntries()
@@ -270,6 +264,11 @@ def mergepart(dataset):
             print("entries:", tmpentr)
 
             if tmpentr > 0:
+                # insert BDT output value into merged file
+                file_path_cp = filerepo + sample.label + "/"  + sample.label + "_merged_bu.root"
+                os.system("cp " + file_path + " " + file_path_cp)
+                #print(file_path)
+
                 model_SM_path = opt.model_SM
                 model_dim6_path = opt.model_dim6
                 model_dim8_path = opt.model_dim8
@@ -307,7 +306,7 @@ def mergepart(dataset):
                 #file.close()
 
                 # open root file
-                file = uproot.open(file_path)
+                file = uproot.open(file_path_cp)
                 tree = file["events_all"]
                 df = tree.arrays(library="pd")
                 df = df.fillna(0)
@@ -458,7 +457,7 @@ def mergepart(dataset):
                 #BDT_output_dim6_array = clf_dim6.decision_function(X)
                 #BDT_output_dim8_array = clf_dim8.decision_function(X)
 
-                myfile = ROOT.TFile(file_path, 'update')
+                myfile = ROOT.TFile(file_path_cp, 'update')
                 mytree = myfile.Get("events_all")
                 listOfNewBranches = []
                 BDT_output_SM   = array('d', [0.5] )
@@ -489,6 +488,7 @@ def mergepart(dataset):
 
                 mytree.Write("", ROOT.TFile.kOverwrite)
                 myfile.Close()       
+                os.system("mv " + file_path_cp + " " + file_path)
             
             else:
                 print("No events found in condored file, let's skip to another sample...")
