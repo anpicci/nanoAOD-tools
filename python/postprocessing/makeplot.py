@@ -175,6 +175,9 @@ else:
             }
     cut_tag = cutToTag(opt.cut)
 
+for k, v in cut_dict.items():
+    cut_dict[k] = v + "*(deltaEta_jj>=2.5)"
+
 if opt.bdt or opt.ebdt or opt.mubdt:
     bdt_cut = "*(BDT_output"
     if opt.ebdt:
