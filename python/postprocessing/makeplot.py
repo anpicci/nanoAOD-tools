@@ -176,7 +176,7 @@ else:
     cut_tag = cutToTag(opt.cut)
 
 for k, v in cut_dict.items():
-    cut_dict[k] = v + "*(deltaEta_jj>=2.5)"
+    cut_dict[k] = v + "*(abs(deltaEta_jj)>=2.5)"
 
 if opt.bdt or opt.ebdt or opt.mubdt:
     bdt_cut = "*(BDT_output"
@@ -1173,6 +1173,7 @@ for year in years:
         
         cutbase = cut_dict[lep]
 
+        '''
         #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
         if opt.channel == 'ltau':
@@ -1245,7 +1246,7 @@ for year in years:
 
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 20, -5., 5.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-
+        '''
         '''
         bin_ak8leadjet_pt = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
@@ -1275,7 +1276,7 @@ for year in years:
         variables.append(variabile('AK8subleadjet_tau32', 'AK8 Sublead jet #tau_{32}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('AK8subleadjet_tau43', 'AK8 Sublead jet #tau_{43}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         '''
-
+        '''
         bin_subleadjet_pt = array("f", [0., 50., 100., 150., 250., 500.])
         nbin_subleadjet_pt = len(bin_subleadjet_pt) - 1
         variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_subleadjet_pt, bin_subleadjet_pt))#40, 30, 1000))
@@ -1291,9 +1292,9 @@ for year in years:
             bin_metpt = array("f", [0., 20., 50., 100., 150., 200., 300., 500.])
         nbin_metpt = len(bin_metpt) - 1
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', nbin_metpt, bin_metpt))
-
+        '''
         if opt.sr:
-            bin_mjj = array("f", [500., 600., 800., 1000., 1400., 1800., 2200., 3000.])
+            bin_mjj = array("f", [500., 600., 800., 1000., 1200., 2000.])
         else:
             bin_mjj = array("f", [0., 150., 300., 500., 700., 1000., 1400., 1800., 2200., 3000.])
             #bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
@@ -1303,7 +1304,8 @@ for year in years:
         if not opt.sr:
             bin_invm = array("f", [0., 150., 300., 450., 600., 750., 900., 1200., 1400., 1600., 1800., 2000., 2500.])
         else:
-            bin_invm = array("f", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2500.])
+            bin_invm = array("f", [500., 600., 800., 1000., 1200., 2000.])
+            #bin_invm = array("f", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2500.])
         nbin_invm = len(bin_invm) - 1 
         variables.append(variabile('m_jj' + lep2[0], 'invariant mass j_{1} j_{2} ' + lep2[1] + ' [GeV]',  wzero+'*('+cutbase+')', nbin_invm, bin_invm))# 20, 500, 2000))
         if opt.channel == 'ltau':
@@ -1316,13 +1318,17 @@ for year in years:
           
         variables.append(variabile('m_' + lep12[0], 'invariant mass ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', nbin_invmtl, bin_invmtl))
 
-        bin_m1 = array("f", [0., 150., 300., 500., 1000.])
+        bin_m1 = array("f", [0., 150., 300., 500.])#, 1000.])
         nbin_m1 = len(bin_m1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
 
-        bin_mTs = array("f", [0., 25., 50., 75., 100., 125., 150., 200., 300., 500.])
-        nbin_mTs = len(bin_mTs) - 1
+        if not opt.sr:
+            bin_mTs = array("f", [0., 25., 50., 75., 100., 125., 150., 200., 300., 500.])
+            nbin_mTs = len(bin_mTs) - 1
+        else:
+            bin_mTs = array("f", [0., 50., 100., 150., 300.])
+            nbin_mTs = len(bin_mTs) - 1
 
         variables.append(variabile('mT_' + lep1[0].split("to")[0] + '_MET', 'M_{T}(' + lep1[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', nbin_mTs, bin_mTs))
         variables.append(variabile('mT_' + lep2[0] + '_MET', 'M_{T}( ' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', nbin_mTs, bin_mTs))
@@ -1331,6 +1337,7 @@ for year in years:
         elif opt.channel == "emu":
             variables.append(variabile('mT_' + lep12[0] + '_MET', 'M_{T}(' + lep12[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', nbin_mTs, bin_mTs))
 
+        '''
         #bin_deltaeta_jj = array("f", [0., 0.5, 1., 1.5, 2., 2.5, 3., 3.5, 4., 4.5, 5., 5.5, 6., 6.5, 7., 8., 9., 10.])
         #nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
         variables.append(variabile('deltaEta_jj', '#Delta #eta_{jj}',  wzero+'*('+cutbase+')', 24, -8., 8.))#nbin_deltaeta_jj, bin_deltaeta_jj))#
@@ -1374,7 +1381,7 @@ for year in years:
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
         
         #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
-
+        '''
 
         for sample in dataset_new:
             print(sample)
