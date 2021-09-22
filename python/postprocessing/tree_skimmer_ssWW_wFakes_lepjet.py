@@ -1234,7 +1234,7 @@ for i in range(tree.GetEntries()):
 
     leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
 
-    if leadjet == None or subleadjet == None:
+    if leadjet == None or subleadjet == None or abs(leadjet.eta-subleadjet.eta)==0.:
         continue  
 
     pass_jet_selection[0]=1
@@ -1342,9 +1342,10 @@ for i in range(tree.GetEntries()):
     m_jjtau[0]=(leadJet + subleadJet + GoodTau_p4).M()
     m_jjtaulep[0]=(leadJet + subleadJet + GoodTau_p4 + GoodLep.p4()).M()
 
-    lepton_Zeppenfeld_over_deltaEta_jj[0] = lepton_Zeppenfeld[0]/deltaEta_jj[0]
-    tau_Zeppenfeld_over_deltaEta_jj[0] = tau_Zeppenfeld[0]/deltaEta_jj[0]
-    event_Zeppenfeld_over_deltaEta_jj[0] = event_Zeppenfeld[0]/deltaEta_jj[0]
+    if deltaEta_jj[0] != 0.:
+        lepton_Zeppenfeld_over_deltaEta_jj[0] = lepton_Zeppenfeld[0]/deltaEta_jj[0]
+        tau_Zeppenfeld_over_deltaEta_jj[0] = tau_Zeppenfeld[0]/deltaEta_jj[0]
+        event_Zeppenfeld_over_deltaEta_jj[0] = event_Zeppenfeld[0]/deltaEta_jj[0]
 
     if isMC:
         event_RT[0] = (GoodLep.pt * GoodTau.pt*(fes*tes)) / (leadjet.pt * subleadjet.pt)
@@ -1390,11 +1391,13 @@ for i in range(tree.GetEntries()):
                         #print('index:', EFT_operator[opn]["idx"], 'eidx:', eidx)
                         idxpos = int((EFT_operator[opn]["idx"])*11 - (eidx + 1))
                         idxneg = int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
+                        idxzero = int((EFT_operator[opn]["idx"] - 1)*11 + 5)
                         if IsZero and idxneg != idxpos:
                             print("Something went wrong with dim8 weights assignment")
                             #break
                         wpos = LHEitem(LHEDim8[idxpos])
                         wneg = LHEitem(LHEDim8[idxneg])
+                        wzero = LHEitem(LHEDim8[idxzero])
                         #print('idxneg:', idxneg, 'wneg:', wneg)
                         #print('idxpos:', idxpos, 'wpos:', wpos)
 
@@ -1409,6 +1412,7 @@ for i in range(tree.GetEntries()):
                                 print("BSM")
                             wsign = +1.
                             kpow = 2.*(epoint**2.)
+                            wpos += -2.*wzero
                         elif "_0_" in sample.label:
                             if Debug:
                                 print("0")
