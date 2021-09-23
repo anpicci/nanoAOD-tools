@@ -758,7 +758,7 @@ for i in range(tree.GetEntries()):
     if Debug:
         if True:#(i+1)%1000 == 0 and i!=0:
             print("\nevento n. " + str(i))
-        if i > 2000:#tree.GetEntries():#1000:
+        if i > 50000:#tree.GetEntries():#1000:
             break
     
     else:
@@ -1424,7 +1424,7 @@ for i in range(tree.GetEntries()):
                             wsign = -1.
                             kpow = 2.*epoint
                             
-                        #print("wsign:", wsign, "kpow:", kpow)
+                        print("wsign:", wsign, "kpow:", kpow)
 
                         w_coeff = (wpos + wsign * wneg) / kpow
                         #print("w_coeff:", w_coeff)
