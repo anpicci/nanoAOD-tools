@@ -266,7 +266,7 @@ def FakeCalc(sample, isData, nev):
         #if i%1000==0: print('event ---- ', i, '\n', FakeLepton.pt, ' ', FakeLepton.eta)
         SF = 1
         if isMC:
-            SF = w.nominal*sign*event.PFSF*event.puSF
+            SF = sign*w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF
         
         if met.pt>opt.met_cut or mT.lepMET>opt.mt_lepMET_cut or mT.lepMET<0 or met.pt<0:
             continue
@@ -479,6 +479,7 @@ DataDict = {
 bkg_files = {
         'DYJetsToLL' : "DYJetsToLL_2017/DYJetsToLL_2017.root", 
         'WJets'      : "WJets_2017/WJets_2017.root",
+        'ZZToLep'    : "ZZtoLep_2017/ZZtoLep_2017.root",        
         }
 
 

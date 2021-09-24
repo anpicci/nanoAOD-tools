@@ -103,6 +103,46 @@ systTree.setWeightName("lepDown",1.)
 systTree.setWeightName("PFSF",1.)
 systTree.setWeightName("PFUp",1.)
 systTree.setWeightName("PFDown",1.)
+systTree.setWeightName("tau_vsjet_SF",1.)
+systTree.setWeightName("tau_vsjet_Up",1.)
+systTree.setWeightName("tau_vsjet_Down",1.)
+systTree.setWeightName("tau_vsele_SF",1.)
+systTree.setWeightName("tau_vsele_Up",1.)
+systTree.setWeightName("tau_vsele_Down",1.)
+systTree.setWeightName("tau_vsmu_SF",1.)
+systTree.setWeightName("tau_vsmu_Up",1.)
+systTree.setWeightName("tau_vsmu_Down",1.)
+systTree.setWeightName("tauSF",1.)
+systTree.setWeightName("tauUp",1.)
+systTree.setWeightName("tauDown",1.)
+systTree.setWeightName("TESSF",1.)
+systTree.setWeightName("TESUp",1.)
+systTree.setWeightName("TESDown",1.)
+systTree.setWeightName("FESSF",1.)
+systTree.setWeightName("FESUp",1.)
+systTree.setWeightName("FESDown",1.)
+systTree.setWeightName("btagSF",1.)
+systTree.setWeightName("btagUp",1.)
+systTree.setWeightName("btagDown",1.)
+systTree.setWeightName("mistagUp",1.)
+systTree.setWeightName("mistagDown",1.)
+
+
+if isMC:
+    PF_SF = chain.PrefireWeight
+    PF_SFUp = chain.PrefireWeight_Up
+    PF_SFDown = chain.PrefireWeight_Down
+    systTree.setWeightName("PFSF", copy.deepcopy(PF_SF))
+    systTree.setWeightName("PFUp", copy.deepcopy(PF_SFUp))
+    systTree.setWeightName("PFDown", copy.deepcopy(PF_SFDown))
+
+    PU_SF = chain.puWeight
+    PU_SFUp = chain.puWeightUp
+    PU_SFDown = chain.puWeightDown
+    systTree.setWeightName("puSF", copy.deepcopy(PU_SF))
+    systTree.setWeightName("puUp", copy.deepcopy(PU_SFUp))
+    systTree.setWeightName("puDown", copy.deepcopy(PU_SFDown))
+
 
 #++++++++++++++++++++++++++++++++++
 #++     variables to branch      ++
@@ -388,6 +428,8 @@ if(isMC):
         else:
             addPDF = False
     newfile.Close()
+
+
 '''
 #++++++++++++++++++++++++++++++++++
 #++      Efficiency studies      ++
@@ -448,6 +490,16 @@ for i in range(tree.GetEntries()):
         genpart = Collection(event, "GenPart")
         if not ("WZ" in sample.label or "WWTo2L2Nu_DoubleScattering"):
             LHE = Collection(event, "LHEPart")
+        
+        btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets)
+        
+        systTree.setWeightName("btagSF", copy.deepcopy(btagSF))
+        systTree.setWeightName("btagUp", copy.deepcopy(btagUp))
+        systTree.setWeightName("btagDown", copy.deepcopy(btagDown))
+        systTree.setWeightName("mistagUp", copy.deepcopy(mistagUp))
+        systTree.setWeightName("mistagDown", copy.deepcopy(mistagDown))
+
+    
     chain.GetEntry(i)
 
     year = sample.year
@@ -514,8 +566,63 @@ for i in range(tree.GetEntries()):
         FakeTau_mass[0]                 =   taus[idx_tau].mass
         FakeTau_charge[0]               =   taus[idx_tau].charge
         FakeTau_DeepTauWP[0]            =   taus[idx_tau].idDeepTau2017v2p1VSjet
+        
+        FakeTau = taus[idx_tau]
+        
         if isMC: 
             FakeTau_isPrompt[0]         =   taus[idx_tau].genPartFlav
+                    #real had tau
+            act_camp = ''
+            for cam in campaigns:
+                if str(sample.year) in cam:
+                    act_camp = copy.deepcopy(cam)
+                    break
+
+
+            vsjetWP = tauVsJet
+            vseleWP = 4
+            vsmuWP = 8
+
+            tauSFTool_vsjet = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSjet', vsjetWP)
+            tauSFTool_vsele = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSe', vseleWP)
+            tauSFTool_vsmu = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSmu', vsmuWP)
+
+            FakeTau_vsjet_Down, FakeTau_vsjet_SF, FakeTau_vsjet_Up = tauSFTool_vsjet.getSFvsPT(FakeTau.pt, FakeTau.genPartFlav, unc='All')
+            #print('vsJet SFs:', FakeTau_vsjet_Down, FakeTau_vsjet_SF, FakeTau_vsjet_Up)
+            systTree.setWeightName("tau_vsjet_SF", copy.deepcopy(FakeTau_vsjet_SF))
+            systTree.setWeightName("tau_vsjet_Up", copy.deepcopy(FakeTau_vsjet_Up))
+            systTree.setWeightName("tau_vsjet_Down", copy.deepcopy(FakeTau_vsjet_Down))
+
+            tes_Down, tes, tes_Up = tesTool.getTES(FakeTau.eta, FakeTau.decayMode, FakeTau.genPartFlav, unc='All')
+            systTree.setWeightName("TESSF", copy.deepcopy(tes))
+            systTree.setWeightName("TESUp", copy.deepcopy(tes_Up))
+            systTree.setWeightName("TESDown", copy.deepcopy(tes_Down))
+            #print('tes:', tes_Down, tes, tes_Up)
+            FakeTau_pt[0] *= tes
+            FakeTau_mass[0] *= tes
+
+            #ele faking tau
+            FakeTau_vsele_Down, FakeTau_vsele_SF, FakeTau_vsele_Up = tauSFTool_vsele.getSFvsEta(FakeTau.eta, FakeTau.genPartFlav, unc='All')
+            #print('vsEle SFs:', FakeTau_vsele_Down, FakeTau_vsele_SF, FakeTau_vsele_Up)
+            systTree.setWeightName("tau_vsele_SF", copy.deepcopy(FakeTau_vsele_SF))
+            systTree.setWeightName("tau_vsele_Up", copy.deepcopy(FakeTau_vsele_Up))
+            systTree.setWeightName("tau_vsele_Down", copy.deepcopy(FakeTau_vsele_Down))
+
+            fes_Down, fes, fes_Up = fesTool.getFES(FakeTau.eta, FakeTau.decayMode, FakeTau.genPartFlav, unc='All')
+            systTree.setWeightName("FESSF", copy.deepcopy(fes))
+            systTree.setWeightName("FESUp", copy.deepcopy(fes_Up))
+            systTree.setWeightName("FESDown", copy.deepcopy(fes_Down))
+            #print('fes:', fes_Down, fes, fes_Up)
+            FakeTau_pt[0] *= fes
+            FakeTau_mass[0] *= fes
+            
+            #mu faking tau
+            FakeTau_vsmu_Down, FakeTau_vsmu_SF, FakeTau_vsmu_Up = tauSFTool_vsmu.getSFvsEta(FakeTau.eta, FakeTau.genPartFlav, unc='All')
+            #print('vsEle SFs:', FakeTau_vsmu_Down, FakeTau_vsmu_SF, FakeTau_vsmu_Up)
+            systTree.setWeightName("tau_vsmu_SF", copy.deepcopy(FakeTau_vsmu_SF))
+            systTree.setWeightName("tau_vsmu_Up", copy.deepcopy(FakeTau_vsmu_Up))
+            systTree.setWeightName("tau_vsmu_Down", copy.deepcopy(FakeTau_vsmu_Down))
+        
 
     #light leptons
     #nLeps_LightLeptonsVL[0]      = Veto_Light_Leptons_VL(list(electrons), list(muons))
@@ -581,6 +688,11 @@ for i in range(tree.GetEntries()):
             FakeLepton_mass[0]  =   lepGood.mass
             FakeLepton_pdgid[0] =   lepGood.pdgId
             
+            if isMC:
+                FakeLepton_SF = lepGood.effSF
+                systTree.setWeightName("lepSF", copy.deepcopy(FakeLepton_SF))
+
+
             #Jet_tmp_pt = [-999.] * len(jets)
             Jet_number[0] = 0
             Jet_numberSeparate[0] = 0
@@ -652,4 +764,4 @@ systTree.writeTreesSysts(trees, outTreeFile)
 print("Number of events in output tree " + str(trees[0].GetEntries()))
 
 endTime = datetime.datetime.now()
-print("Ending running at " + str(endTime) + "\n Goodbye")
+print("Ending running at " + str(endTime) + "\n Goodbye and thank you for all the fish")
