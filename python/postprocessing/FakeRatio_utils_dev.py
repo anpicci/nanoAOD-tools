@@ -6,7 +6,8 @@ import copy as copy
 from os import path
 import array
 import types
-from CutsAndValues_bu import *
+from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
+from CutsAndValues import *
 
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
@@ -395,6 +396,85 @@ def Veto_Tau_Leptons(taus, ele, mu, vsJetWP):
                 return 1, idxl
     #print len(taus), idxl
     return 0, idxl
+
+def bjet_filter(jets, tagger, WP): #returns collections of b jets and no b jets (discriminated with btaggers)
+    # b-tag working points: mistagging efficiency tight = 0.1%, medium 1% and loose = 10% 
+    WPbtagger = {'DeepFlv_T': 0.7264, 'DeepFlv_M': 0.2770, 'DeepFlv_L': 0.0494, 'DeepCSV_T': 0.7527, 'DeepCSV_M': 0.4184, 'DeepCSV_L': 0.1241}
+    if(tagger == 'DeepFlv'):
+        threshold = WPbtagger[str(tagger) + '_' + str(WP)]
+        return list(filter(lambda x : x.btagDeepFlavB >= threshold and x.pt > BTAG_PT_CUT and abs(x.eta)<BTAG_ETA_CUT, jets)), list(filter(lambda x : x.btagDeepFlavB < threshold and x.pt > BTAG_PT_CUT and abs(x.eta)<BTAG_ETA_CUT, jets))
+    elif(tagger == 'DeepCSV'):
+        threshold = WPbtagger[str(tagger) + '_' + str(WP)]
+        return list(filter(lambda x : x.btagDeepB >= threshold, jets)), list(filter(lambda x : x.btagDeepB < threshold, jets))
+    else:
+        print('Only DeepFlv and DeepCSV accepted! Pleae implement other taggers if you want them.')
+
+def getweightfromhisto(histogram, eta, pt):
+    binx = max(1, min(histogram.GetNbinsX(), histogram.GetXaxis().FindBin(pt)))
+    biny = max(1, min(histogram.GetNbinsY(), histogram.GetYaxis().FindBin(abs(eta))))
+    return histogram.GetBinContent(binx,biny)
+
+
+def efficiency(flv, eta, pt):
+    infile = ROOT.TFile.Open("Btag_eff.root")
+    h = ROOT.TH2F()
+    if(flv == 5):
+        h = infile.Get("h2_BTaggingEff_b").CreateHistogram()
+    elif(flv == 4):
+        h = infile.Get("h2_BTaggingEff_c").CreateHistogram()
+    else:
+        h = infile.Get("h2_BTaggingEff_udsg").CreateHistogram()
+    return getweightfromhisto(h, eta, pt)
+ 
+
+def btagcalc(JetsC):
+    goodJets = get_Jet(JetsC, PT_CUT_JET)
+    bjets, nobjets = bjet_filter(goodJets, 'DeepFlv', 'M')
+    p_MC = 1.
+    p_data = 1.
+    p_data_btagUp = 1.
+    p_data_btagDown = 1.
+    p_data_mistagUp = 1.
+    p_data_mistagDown = 1.
+    
+    for jet in bjets:
+        #print('prima MC' , p_MC)
+        #print(abs(jet.partonFlavour), jet.eta, jet.pt)
+        #print(efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        p_MC *= efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        #print('dopo MC' , p_MC)
+        p_data *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        if abs(jet.partonFlavour) == 4 or abs(jet.partonFlavour) == 5:
+            p_data_btagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_btagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        else:
+            p_data_btagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_btagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_mistagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+    for jet in nobjets:
+        p_MC *= (1 - efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        p_data *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        if abs(jet.partonFlavour) == 4 or abs(jet.partonFlavour) == 5:
+            p_data_btagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_btagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        else:
+            p_data_btagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_btagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+
+    return p_data/p_MC, p_data_btagUp/p_MC, p_data_btagDown/p_MC, p_data_mistagUp/p_MC, p_data_mistagDown/p_MC
+
+def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
+    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
+
+
+
 
 def Veto_Light_Leptons_VL(ele, mu):
     isEle = 0

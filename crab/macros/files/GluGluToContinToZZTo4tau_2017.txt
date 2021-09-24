@@ -15,8 +15,3 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_15.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_16.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_17.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_18.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_19.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_20.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_21.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBS/GluGluToContinToZZTo4tau_13TeV_TuneCP5_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017/210428_105947/0000/tree_hadd_22.root

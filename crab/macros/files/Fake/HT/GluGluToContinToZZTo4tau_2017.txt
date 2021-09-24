@@ -13,7 +13,3 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017_FakeHT/210625_120126/0000/tree_hadd_13.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017_FakeHT/210625_120126/0000/tree_hadd_14.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017_FakeHT/210625_120126/0000/tree_hadd_15.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017_FakeHT/210625_120126/0000/tree_hadd_16.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017_FakeHT/210625_120126/0000/tree_hadd_17.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017_FakeHT/210625_120126/0000/tree_hadd_18.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake/GluGluToContinToZZTo4tau_13TeV_MCFM701_pythia8/GluGluToContinToZZTo4tau_2017_FakeHT/210625_120126/0000/tree_hadd_19.root
