@@ -19,12 +19,41 @@ import datetime
 import copy
 from array import array
 from FakeRatio_utils_dev import *
+from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 
 usage = "python FakeRatio_dev.py [nome_del_sample_in_samples.py] 0 [file_in_input] [local_or_remote] [chosen_trigger] [vsJetWP]"
 
 chosenTrigger = ""
 
+vsJet = {"1": 'VVVLoose',
+         "2": 'VVLoose',
+         "4": 'VLoose',
+         "8": 'Loose',
+         "16": 'Medium',
+         "32": 'Tight',
+         "64": 'VTight',
+         "128": 'VVTight',
+}
+
+vsMu = {"1": 'VLoose',
+        "2": 'Loose',
+        "4": 'Medium',
+        "8": 'Tight'
+}
+
+vsEle = {"1": 'VVVLoose',
+         "2": 'VVLoose',
+         "4": 'VLoose',
+         "8": 'Loose',
+         "16": 'Medium',
+         "32": 'Tight',
+         "64": 'VTight',
+         "128": 'VVTight',
+}
+
+
 tauVsJet = int(sys.argv[6])
+
 print("vs jet WP loose: ", tauVsJet)
 
 if sys.argv[5]=="Ele" or sys.argv[5]=="Mu" or sys.argv[5]=="HT":
@@ -65,6 +94,24 @@ if ('Data' in sample.label):
     isMC = False
 
 MCReco = MCReco * isMC
+
+if isMC:
+    act_camp = ''
+    for cam in campaigns:
+        if str(sample.year) in cam:
+            act_camp = copy.deepcopy(cam)
+            break
+
+    vsjetWP = vsJet[str(tauVsJet)]#sys.argv[5]]
+    vseleWP = vsEle["4"]#sys.argv[6]]
+    vsmuWP = vsMu["8"]#sys.argv[7]]
+    print(vsjetWP, vseleWP, vsmuWP)
+    tauSFTool_vsjet = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSjet', vsjetWP)
+    tauSFTool_vsele = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSe', vseleWP)
+    tauSFTool_vsmu = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSmu', vsmuWP)
+    tesTool = TauESTool(act_camp, 'DeepTau2017v2p1VSjet')
+    fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
+    
 
 #++++++++++++++++++++++++++++++++++
 #++   branching the new trees    ++
@@ -126,22 +173,6 @@ systTree.setWeightName("btagUp",1.)
 systTree.setWeightName("btagDown",1.)
 systTree.setWeightName("mistagUp",1.)
 systTree.setWeightName("mistagDown",1.)
-
-
-if isMC:
-    PF_SF = chain.PrefireWeight
-    PF_SFUp = chain.PrefireWeight_Up
-    PF_SFDown = chain.PrefireWeight_Down
-    systTree.setWeightName("PFSF", copy.deepcopy(PF_SF))
-    systTree.setWeightName("PFUp", copy.deepcopy(PF_SFUp))
-    systTree.setWeightName("PFDown", copy.deepcopy(PF_SFDown))
-
-    PU_SF = chain.puWeight
-    PU_SFUp = chain.puWeightUp
-    PU_SFDown = chain.puWeightDown
-    systTree.setWeightName("puSF", copy.deepcopy(PU_SF))
-    systTree.setWeightName("puUp", copy.deepcopy(PU_SFUp))
-    systTree.setWeightName("puDown", copy.deepcopy(PU_SFDown))
 
 
 #++++++++++++++++++++++++++++++++++
@@ -462,7 +493,7 @@ for i in range(tree.GetEntries()):
     
     if Debug:
         print("evento n. " + str(i))
-        if i > 2000:
+        if i > 50:
             break
     
     if not Debug and i%500 == 0:#
@@ -543,7 +574,22 @@ for i in range(tree.GetEntries()):
         if chosenTrigger == "Ele": HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigEle)
         if chosenTrigger == "Mu":  HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigMu)
         if chosenTrigger == "HT":  HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigHT)
-        
+
+        #here
+        PF_SF = chain.PrefireWeight
+        PF_SFUp = chain.PrefireWeight_Up
+        PF_SFDown = chain.PrefireWeight_Down
+        systTree.setWeightName("PFSF", copy.deepcopy(PF_SF))
+        systTree.setWeightName("PFUp", copy.deepcopy(PF_SFUp))
+        systTree.setWeightName("PFDown", copy.deepcopy(PF_SFDown))
+
+        PU_SF = chain.puWeight
+        PU_SFUp = chain.puWeightUp
+        PU_SFDown = chain.puWeightDown
+        systTree.setWeightName("puSF", copy.deepcopy(PU_SF))
+        systTree.setWeightName("puUp", copy.deepcopy(PU_SFUp))
+        systTree.setWeightName("puDown", copy.deepcopy(PU_SFDown))
+
     #actually runnin'
 
     MET_pt[0]=met.pt
@@ -572,20 +618,6 @@ for i in range(tree.GetEntries()):
         if isMC: 
             FakeTau_isPrompt[0]         =   taus[idx_tau].genPartFlav
                     #real had tau
-            act_camp = ''
-            for cam in campaigns:
-                if str(sample.year) in cam:
-                    act_camp = copy.deepcopy(cam)
-                    break
-
-
-            vsjetWP = tauVsJet
-            vseleWP = 4
-            vsmuWP = 8
-
-            tauSFTool_vsjet = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSjet', vsjetWP)
-            tauSFTool_vsele = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSe', vseleWP)
-            tauSFTool_vsmu = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSmu', vsmuWP)
 
             FakeTau_vsjet_Down, FakeTau_vsjet_SF, FakeTau_vsjet_Up = tauSFTool_vsjet.getSFvsPT(FakeTau.pt, FakeTau.genPartFlav, unc='All')
             #print('vsJet SFs:', FakeTau_vsjet_Down, FakeTau_vsjet_SF, FakeTau_vsjet_Up)
@@ -765,3 +797,4 @@ print("Number of events in output tree " + str(trees[0].GetEntries()))
 
 endTime = datetime.datetime.now()
 print("Ending running at " + str(endTime) + "\n Goodbye and thank you for all the fish")
+

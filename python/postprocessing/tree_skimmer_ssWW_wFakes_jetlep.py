@@ -758,7 +758,7 @@ for i in range(tree.GetEntries()):
     if Debug:
         if True:#(i+1)%1000 == 0 and i!=0:
             print("\nevento n. " + str(i))
-        if i > 50000:#tree.GetEntries():#1000:
+        if i > 1000:#tree.GetEntries():#1000:
             break
     
     else:

@@ -42,6 +42,8 @@ def extractTH1(file, histname, setdir=True):
         close = True
     if not file or file.IsZombie():
         raise IOError("Could not open file for histogram '%s'!" % (histname))
+        print(file.ls())
+        print(histname)
     hist = file.Get(histname)
     if not hist:
         raise IOError("Did not find histogram '%s' in file '%s'!" % (histname, file.GetName()))

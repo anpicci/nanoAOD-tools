@@ -1579,6 +1579,29 @@ class systWeights(object):
             self.weightedNames[7] = "PFSF"
             self.weightedNames[8] = "PFUp"
             self.weightedNames[9] = "PFDown"
+            self.weightedNames[10] = "tau_vsjet_SF"
+            self.weightedNames[11] = "tau_vsjet_Up"
+            self.weightedNames[12] = "tau_vsjet_Down"
+            self.weightedNames[13] = "tau_vsele_SF"
+            self.weightedNames[14] = "tau_vsele_Up"
+            self.weightedNames[15] = "tau_vsele_Down"
+            self.weightedNames[16] = "tau_vsmu_SF"
+            self.weightedNames[17] = "tau_vsmu_Up"
+            self.weightedNames[18] = "tau_vsmu_Down"
+            self.weightedNames[19] = "tauSF"
+            self.weightedNames[20] = "tauUp"
+            self.weightedNames[21] = "tauDown"
+            self.weightedNames[22] = "TESSF"
+            self.weightedNames[23] = "TESUp"
+            self.weightedNames[24] = "TESDown"
+            self.weightedNames[25] = "FESSF"
+            self.weightedNames[26] = "FESUp"
+            self.weightedNames[27] = "FESDown"
+            self.weightedNames[28] = "btagSF"
+            self.weightedNames[29] = "btagUp"
+            self.weightedNames[30] = "btagDown"
+            self.weightedNames[31] = "mistagUp"
+            self.weightedNames[32] = "mistagDown"
             '''
             self.weightedNames[10] = "btagSF"
             self.weightedNames[11] = "btagUp"
@@ -1610,8 +1633,8 @@ class systWeights(object):
             #self.weightedNames[10] = "isoDown"
             #self.weightedNames[11] = "trigUp"
             #self.weightedNames[12] = "trigDown"
-            self.setMax(10)
-            self.setMaxNonPDF(9)
+            self.setMax(32)
+            self.setMaxNonPDF(31)
             self.weightedNames[self.maxSysts] = ""
 
         if addQ2: 
