@@ -71,7 +71,7 @@ def cutToTag(cut):
     return newstring
 
 folder = opt.folder 
-if int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80:
+if "mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80:
     folder += "/" + opt.channel
 pfolder = opt.folder
 

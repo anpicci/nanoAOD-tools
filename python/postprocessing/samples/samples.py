@@ -2819,8 +2819,8 @@ merge_dict={
     #'QCD_2017':QCD_2017,
     'ZZtoLep_2017':ZZtoLep_2017,
     #'TT_2017':TT_2017,
-    #'WJets_2017':WJets_2017,
-    #'DYJetsToLL_2017':DYJetsToLL_2017,
+    'WJets_2017':WJets_2017,
+    'DYJetsToLL_2017':DYJetsToLL_2017,
     # to here
     'VG_2017':VG_2017,
     'TVX_2017':TVX_2017,
