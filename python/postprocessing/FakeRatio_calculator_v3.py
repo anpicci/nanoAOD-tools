@@ -23,8 +23,9 @@ parser.add_option('--inf', dest='infolder', type=str, default = '', help='Please
 parser.add_option('--user', dest='user', type=str, default = 'mmagheri', help='Enter user, default mmagheri')
 (opt, args) = parser.parse_args()
 
-
+input_folder = None
 input_folder = '/eos/user/'+ opt.user[0]+ '/'+opt.user+'/VBS/nosynch/' + opt.infolder + '/'
+print("why am I here?")
 print(input_folder)
 
 if not os.path.isdir(input_folder): raise NameError('ERROR, directory not found')
@@ -143,7 +144,13 @@ time  = datetime.datetime.now()
 
 print('Today is :' + str(today) + ' and the time is: '+ str(time))
 
-outdir = 'FakeRatio_calcs/' + opt.infolder + '/'
+
+x = opt.infolder.split('/')
+
+folder = x[-1]
+
+outdir = 'FakeRatio_calcs/27Set21/' + folder + '/'
+outdir = 'FakeRatio_calcs/'+opt.infolder
 
 if not os.path.isdir(outdir):
     try:
