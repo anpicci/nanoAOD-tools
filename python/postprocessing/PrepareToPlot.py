@@ -37,7 +37,7 @@ ofolder += opt.folder# + "/"
 
 
 path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
-if "mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80:
+if ("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder:
     path += opt.channel + "/"
 
 print(path)
@@ -107,14 +107,17 @@ for k, v in merge_dict.items():
     merging = []
 
     kpath = path+k+"/"
-
-    if opt.ct == '':
-        if k.startswith('DY') or k.startswith('DataHT'):
+    print(k)
+    if not opt.isfake:# or opt.ct == '':
+        if k.startswith('DY'):# or k.startswith('DataHT'):
             continue
+        print("hello babe")
 
-    else:
+    elif opt.isfake:
         if not (k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
             continue
+        print("letsgoooo")
+
 
     if k.startswith('Fake'):
         mergable = False

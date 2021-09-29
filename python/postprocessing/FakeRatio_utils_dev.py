@@ -112,11 +112,16 @@ def dict_save(dict, dict1, dict2, outname):
 
 def lumiFinder(particleTrig, vTrigger):
     lumi=0
-    for trigtype in effLumi_2017:
+    for trigtype in effLumi_2017.keys():
         if particleTrig==trigtype:
+            print("trigtype:", trigtype)
             for trig in vTrigger:
+                if len(vTrigger) == 0:
+                    print("vTrigger void")
                 effLumi=effLumi_2017[trigtype][trig]
+                print(trig, effLumi)
                 if effLumi>lumi: lumi=effLumi
+    print("final:", lumi)
     return lumi
 
 def trig_finder(HLT, year, samplename):

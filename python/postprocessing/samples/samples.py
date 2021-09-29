@@ -2718,9 +2718,9 @@ condor_dict={
     ### fake contributions from here...
     #'QCD_2017':QCD_2017,
     'ZZtoLep_2017':ZZtoLep_2017,
-    #'TT_2017':TT_2017,
-    #'WJets_2017':WJets_2017,
-    #'DYJetsToLL_2017':DYJetsToLL_2017,
+    'TT_2017':TT_2017,
+    'WJets_2017':WJets_2017,
+    'DYJetsToLL_2017':DYJetsToLL_2017,
     # to here
     'VG_2017':VG_2017,
     'TVX_2017':TVX_2017,
@@ -2730,7 +2730,7 @@ condor_dict={
     'WZ_2017':WZ_2017,
     'DataMu_2017':DataMu_2017,
     'DataEle_2017':DataEle_2017,
-    #'DataHT_2017':DataHT_2017,
+    'DataHT_2017':DataHT_2017,
 }
 
 merge_dict={
@@ -2818,7 +2818,7 @@ merge_dict={
     ### fake contributions from here...
     #'QCD_2017':QCD_2017,
     'ZZtoLep_2017':ZZtoLep_2017,
-    #'TT_2017':TT_2017,
+    'TT_2017':TT_2017,
     'WJets_2017':WJets_2017,
     'DYJetsToLL_2017':DYJetsToLL_2017,
     # to here
@@ -2832,7 +2832,7 @@ merge_dict={
     'WZ_2017':WZ_2017,
     'DataMu_2017':DataMu_2017,
     'DataEle_2017':DataEle_2017,
-    #'DataHT_2017':DataHT_2017,
+    'DataHT_2017':DataHT_2017,
     'DataEleMu_2017':DataEleMu_2017,
 }
 

@@ -66,7 +66,7 @@ if sys.argv[4] == 'remote':
     Debug = False
 else:
     from samples.samples import *
-    Debug = False
+    Debug = True
 sample = sample_dict[sys.argv[1]]
 part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))
@@ -492,7 +492,7 @@ for i in range(tree.GetEntries()):
     #++++++++++++++++++++++++++++++++++
     
     if Debug:
-        print("evento n. " + str(i))
+        print("\nevento n. " + str(i))
         if i > 50:
             break
     
