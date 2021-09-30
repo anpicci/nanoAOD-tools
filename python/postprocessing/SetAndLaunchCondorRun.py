@@ -4,7 +4,7 @@ import sys
 from samples.samples import *
 
 cshname = "condorrun_tauwp.csh"
-split = 50
+split = 10#50
 
 def CondoredList(samplename):
     try:
@@ -13,11 +13,15 @@ def CondoredList(samplename):
         condlist = []
 
     if len(condlist) > 0:
+        toRel = False
         for condfile in condlist:
             if os.stat(path+samplename+"/"+condfile).st_size < 1024.:
+                toRel = True
                 print("Something went wrong during condoring", samplename, "fix it and relaunch")
-                os.system("rm -r "+ path + samplename + "/*")            
-                return CondoredList(samplename)
+                os.system("rm -r "+ path + samplename + "/" + condfile)            
+
+        if toRel:
+            return CondoredList(samplename)
 
     return condlist
 
@@ -49,7 +53,7 @@ def AreAllCondored(crabname, condorname):
             print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
             return False
         elif lenstore==0 and len(condoredlist)==0:
-            print("Warning for", samplename, "False flag for crabbed files! need to recrab them")
+            print("Warning for", condorname, "False flag for crabbed files! need to recrab them")
             return True
         else:
             return True

@@ -951,11 +951,11 @@ for i in range(tree.GetEntries()):
     
     if SingleEle==True:
         if isMC: 
-            HLT_effLumi[0] = lumiFinder("Ele", vTrigEle)
+            HLT_effLumi[0] = lumiFinder("Ele", vTrigEle, str(sample.year))
         leptons = electrons
     elif SingleMu==True:
         if isMC:
-            HLT_effLumi[0] = lumiFinder("Mu", vTrigMu)
+            HLT_effLumi[0] = lumiFinder("Mu", vTrigMu, str(sample.year))
         leptons = muons
 
     elif not (SingleMu or SingleEle):

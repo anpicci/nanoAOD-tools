@@ -45,7 +45,7 @@ print(path)
 #datas = opt.dataset + "_" + opt.year
 
 Debug = opt.check # True # False #
-split = 50
+split = 10 #50
 
 def CondoredList(samplename):
     try:
@@ -54,11 +54,15 @@ def CondoredList(samplename):
         condlist = []
 
     if len(condlist) > 0:
+        toRel =False
         for condfile in condlist:
-            if not samplename.startswith('DY') and os.stat(path+samplename+"/"+condfile).st_size < 1024.:
+            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')
+                toRel =True
                 print("Something went wrong during condoring", samplename, "fix it and relaunch")
-                os.system("rm -r "+ path + samplename + "/*")
-                return CondoredList(samplename)
+                os.system("rm -r "+ path + samplename + "/" + condfile)
+
+        if toRel:
+            return CondoredList(samplename)
 
     return condlist
 
@@ -90,7 +94,7 @@ def AreAllCondored(crabname, condorname):
         print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
         return False
     elif lenstore==0 and len(condoredlist)==0:
-        print("Warning for", samplename, "False flag for crabbed files! need to recrab them")
+        print("Warning for", condorname, "False flag for crabbed files! need to recrab them")
         return True
     else:
         return True
@@ -102,6 +106,9 @@ def AreAllCondored(crabname, condorname):
 #print exsamples
 
 for k, v in merge_dict.items():
+    if opt.year not in k:
+        continue
+
     ismerged = False
     doesexist = []
     merging = []

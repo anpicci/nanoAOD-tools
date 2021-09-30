@@ -49,16 +49,42 @@ effLumi_2017 = {
             },
         }
 
+effLumi_2018 = {
+        "HT" : {
+            "PFHT250"                       : 0.0144,
+            "PFHT350"                       : 0.23,
+            },
+        "Ele" : {
+            "Ele35_WPTight_Gsf"                     : 59.56,
+            "Ele32_WPTight_Gsf_L1DoubleEG"          : 59.56,
+            "Photon200"                             : 59.96,
+            #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
+            #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
+            #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
+            },
+        "Mu" : {
+            "IsoMu27"                       : 59.96,
+            "IsoMu30"                       : 59.96,
+            "Mu50"                          : 59.96,
+            #"Mu8_TrkIsoVVL"                 : 0.0027,
+            #"Mu17_TrkIsoVVL"                : 0.0658,
+            },
+        }
+
 sqrt = lambda x : TMath.Power(x, 0.5)
 squared = lambda x : TMath.Power(x, 2.)
 LHEitem = lambda x : x.__getattr__("")
 
-def lumiFinder(particleTrig, vTrigger):
+def lumiFinder(particleTrig, vTrigger, year = '2017'):
     lumi=0
-    for trigtype in effLumi_2017:
+    if year == '2017':
+        effLdict = effLumi_2017
+    elif year == '2018':
+        effLdict = effLumi_2018
+    for trigtype in effLdict:
         if particleTrig==trigtype:
             for trig in vTrigger:
-                effLumi=effLumi_2017[trigtype][trig]
+                effLumi=effLdict[trigtype][trig]
                 if effLumi>lumi: lumi=effLumi
     return lumi
 
@@ -81,9 +107,25 @@ def trig_finder(HLT, year, samplename):
         if HLT.Photon200:                               vTrigEle.append("Photon200")
         if HLT.PFHT250:                                 vTrigHT.append("PFHT250")
         if HLT.PFHT350:                                 vTrigHT.append("PFHT350")
+
+    elif (year == 2018):
+        if HLT.IsoMu27:                                 vTrigMu.append("IsoMu27")
+        if HLT.IsoMu30:                                 vTrigMu.append("IsoMu30")
+        #if HLT.Mu50:                                    vTrigMu.append("Mu50")
+        #if HLT.Mu8_TrkIsoVVL:                           vTrigMu.append("Mu8_TrkIsoVVL")
+        #if HLT.Mu17_TrkIsoVVL:                          vTrigMu.append("Mu17_TrkIsoVVL")
+        if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
+        if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
+        #if not ('DataMuB' in samplename or 'DataEleB' in samplename or 'DataHTB' in samplename):
+            #if HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30:     vTrigEle.append("Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30")
+            #if HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30")
+            #if HLT.Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30")
+        if HLT.Photon200:                               vTrigEle.append("Photon200")
+        if HLT.PFHT250:                                 vTrigHT.append("PFHT250")
+        if HLT.PFHT350:                                 vTrigHT.append("PFHT350")
     
     else:
-        print('Wrong year! Please enter 2017')
+        print('Wrong year! Please enter 2017 or 2018')
    
     return vTrigEle, vTrigMu, vTrigHT
     
