@@ -1399,7 +1399,8 @@ for year in years:
         
         bin_deltaeta_ll = array("f", [-6., -4., -3., -2., -1.5, -1., -0.5, 0., 0.5, 1., 1.5, 2., 3., 4., 6.])
         nbin_deltaeta_ll = len(bin_deltaeta_ll) - 1
-        variables.append(variabile('deltaEta_' + lep12[0], '#Delta #eta_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  bin_deltaeta_ll, nbin_deltaeta_ll))
+        
+        variables.append(variabile('deltaEta_' + lep12[0], '#Delta #eta_{' + lep12[1] + '}',  wzero+'*('+cutbase+')',  nbin_deltaeta_ll, bin_deltaeta_ll))
 
         bin_deltaeta_lj = array("f", [-6., -4., -3., -2., -1., 0., 1., 2., 3., 4., 6.])
         nbin_deltaeta_lj = len(bin_deltaeta_lj) - 1
@@ -1434,7 +1435,6 @@ for year in years:
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
         
         #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
-
 
         for sample in dataset_new:
             print(sample)
