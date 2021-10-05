@@ -4,7 +4,7 @@ import sys
 from samples.samples import *
 
 cshname = "condorrun_tauwp.csh"
-split = 10#50
+split = 50
 
 def CondoredList(samplename):
     try:
@@ -17,10 +17,11 @@ def CondoredList(samplename):
         for condfile in condlist:
             if os.stat(path+samplename+"/"+condfile).st_size < 1024.:
                 toRel = True
-                print("Something went wrong during condoring", samplename, "fix it and relaunch")
-                os.system("rm -r "+ path + samplename + "/" + condfile)            
+                if not opt.check:
+                    os.system("rm -r "+ path + samplename + "/" + condfile)            
 
         if toRel:
+            print("Something went wrong during condoring", samplename, "fix it and relaunch")
             return CondoredList(samplename)
 
     return condlist

@@ -2377,7 +2377,7 @@ DataHT_2018.components = [DataHTA_2018, DataHTB_2018, DataHTC_2018, DataHTD_2018
 
 
 SampleHTFake_2018 = sample(ROOT.kBlack, 1, 1001, "Data", "SampleHTFake_2018")
-SampleHTFake_2018.year = 2017
+SampleHTFake_2018.year = 2018
 SampleHTFake_2018.components = [DataHTB_2018, DataHTC_2018, DataHTD_2018, WJetsHT70to100_2018, WJetsHT100to200_2018, WJetsHT200to400_2018, WJetsHT400to600_2018, WJetsHT600to800_2018, WJetsHT800to1200_2018, WJetsHT1200to2500_2018, WJetsHT2500toInf_2018, DY1JetsToLL_2018, DY2JetsToLL_2018, DY3JetsToLL_2018, DY4JetsToLL_2018, ZZTo2L2Nu_2018, ZZJJTo4L_EWK_2018, ZZJJTo4L_QCD_2018, GluGluToContinToZZTo2e2nu_2018, GluGluToContinToZZTo2e2mu_2018, GluGluToContinToZZTo2e2tau_2018, GluGluToContinToZZTo2mu2nu_2018, GluGluToContinToZZTo2mu2tau_2018, GluGluToContinToZZTo4e_2018, GluGluToContinToZZTo4mu_2018, GluGluToContinToZZTo4tau_2018]
 
 

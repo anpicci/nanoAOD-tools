@@ -140,7 +140,7 @@ for sample in samples:
             os.popen('condor_submit ' + condorsub)
             print('condor_submit ' + condorsub)
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + str(files))
-            print("python " + executpy)# + " " + args)#sample.label + " " + str(idx) + " " + str(files) + " remote")
+            print("python " + executpy + " " + sample.label + " " + str(idx) + " " + str(files) + " remote")
     else:
         for i in range(len(files_list)/split+1):
             if os.path.exists(opath + sample.label + "_part" + str(i) + ".root"):
@@ -150,4 +150,4 @@ for sample in samples:
             print('condor_submit ' + condorsub)
             os.popen('condor_submit ' + condorsub)
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]))
-            print("python " + executpy)# + " " + args)#sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote")
+            print("python " + executpy + " " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote")

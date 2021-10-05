@@ -45,7 +45,7 @@ print(path)
 #datas = opt.dataset + "_" + opt.year
 
 Debug = opt.check # True # False #
-split = 10 #50
+split = 50
 
 def CondoredList(samplename):
     try:
@@ -58,10 +58,11 @@ def CondoredList(samplename):
         for condfile in condlist:
             if os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')
                 toRel =True
-                print("Something went wrong during condoring", samplename, "fix it and relaunch")
-                os.system("rm -r "+ path + samplename + "/" + condfile)
+                if not opt.check:
+                    os.system("rm -r "+ path + samplename + "/" + condfile)
 
         if toRel:
+            print("Something went wrong during condoring", samplename, "fix it and relaunch")
             return CondoredList(samplename)
 
     return condlist
@@ -95,7 +96,7 @@ def AreAllCondored(crabname, condorname):
         return False
     elif lenstore==0 and len(condoredlist)==0:
         print("Warning for", condorname, "False flag for crabbed files! need to recrab them")
-        return True
+        return False
     else:
         return True
 
@@ -114,17 +115,14 @@ for k, v in merge_dict.items():
     merging = []
 
     kpath = path+k+"/"
-    print(k)
+
     if not opt.isfake:# or opt.ct == '':
         if k.startswith('DY'):# or k.startswith('DataHT'):
             continue
-        print("hello babe")
 
     elif opt.isfake:
         if not (k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
             continue
-        print("letsgoooo")
-
 
     if k.startswith('Fake'):
         mergable = False
