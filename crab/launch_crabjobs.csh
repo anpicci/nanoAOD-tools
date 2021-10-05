@@ -14,8 +14,8 @@ reset
 #python submit_crab.py -d WpWpJJ_EWK_$year --status #
 #python submit_crab.py -d WpWpJJ_QCD_$year --status #
 #python submit_crab.py -d VBS_SSWW_DIM6_SM_$year --status
-python submit_crab.py -d WWZTo3L1Nu2Q_$year --status # -s
-python submit_crab.py -d VBFHToTauTau_$year --status # -s 
+python submit_crab.py -d WWZTo3L1Nu2Q_$year -r # -s
+#python submit_crab.py -d VBFHToTauTau_$year --status # -s 
 #python submit_crab.py -d DataEle_$year --status #
 #python submit_crab.py -d DataMu_$year --status #
 
