@@ -4,7 +4,7 @@ set folder = v95
 
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder/stack_vsjet2/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder/stack_vsjet4/ #countings
-#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder/stack/* #countings
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder/stack/* #countings
 
 set LD_PRELOAD=libtcmalloc.so
 
