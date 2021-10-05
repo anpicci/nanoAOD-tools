@@ -1,4 +1,4 @@
-set year = '2017'
+set year = '2018'
 reset
 python submit_crab.py -d TT_$year --status 
 #python submit_crab.py -d WJets_$year --status 
