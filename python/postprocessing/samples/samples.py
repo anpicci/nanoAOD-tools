@@ -2738,6 +2738,7 @@ condor_dict={
     'DYJetsToLL_2017':DYJetsToLL_2017,
     'ZZtoLep_2018':ZZtoLep_2018,
     'TT_2018':TT_2018,
+    'TT_beff_2018':TT_beff_2018,
     'WJets_2018':WJets_2018,
     'DYJetsToLL_2018':DYJetsToLL_2018,
     # to here
@@ -2852,6 +2853,7 @@ merge_dict={
     'ZZtoLep_2018':ZZtoLep_2018,
     'TT_2017':TT_2017,
     'TT_2018':TT_2018,
+    'TT_beff_2018':TT_beff_2018,
     'WJets_2017':WJets_2017,
     'WJets_2018':WJets_2018,
     'DYJetsToLL_2017':DYJetsToLL_2017,

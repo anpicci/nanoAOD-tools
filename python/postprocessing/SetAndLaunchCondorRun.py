@@ -183,7 +183,7 @@ for prname, proc in condor_dict.items():
     else:
         if '_beff_' in prname:
             continue
-        
+
     toLaunch = True
 
     if hasattr(proc, 'components'):
