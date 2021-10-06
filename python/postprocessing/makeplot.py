@@ -71,9 +71,11 @@ def cutToTag(cut):
     return newstring
 
 folder = opt.folder 
-if ("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder:
+if not(opt.folder.startswith('FR_')) and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     folder += "/" + opt.channel
 pfolder = opt.folder
+
+print(folder)
 
 filerepo = '/eos/home-'+opt.user[0]+'/'+opt.user+'/VBS/nosynch/' + folder + '/'
 plotrepo = '/eos/home-'+opt.user[0]+'/'+opt.user+'/VBS/nosynch/' + pfolder + '/'

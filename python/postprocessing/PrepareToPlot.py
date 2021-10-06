@@ -37,7 +37,8 @@ ofolder += opt.folder# + "/"
 
 
 path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
-if ("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder:
+print(path, opt.isfake)
+if not opt.isfake and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     path += opt.channel + "/"
 
 print(path)
