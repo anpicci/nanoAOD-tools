@@ -225,7 +225,7 @@ for i in range(tree.GetEntries()):
     if 'DataHT' not in sample.label:
         if passEle and not passMu:
             if GoodEle != None and ele_lepton_veto:
-                GoodLep = copy.deepcopy(GoodEle)
+                GoodLep = GoodEle
                 lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
@@ -234,7 +234,7 @@ for i in range(tree.GetEntries()):
 
         elif passMu and not passEle:
             if GoodMu != None and mu_lepton_veto:
-                GoodLep = copy.deepcopy(GoodMu)
+                GoodLep = GoodMu
                 lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                 SingleEle = False
                 SingleMu = True
@@ -256,37 +256,37 @@ for i in range(tree.GetEntries()):
 
     if ElMu:
         if GoodMu==None and GoodEle!=None and ele_lepton_veto:
-            GoodLep = copy.deepcopy(GoodEle)
+            GoodLep = GoodEle
             lepton_TightRegion = copy.deepcopy(ele_TightRegion)
             SingleEle = True
             SingleMu = False
 
         elif GoodMu!=None and mu_lepton_veto and GoodEle==None:
-            GoodLep = copy.deepcopy(GoodMu)
+            GoodLep = GoodMu
             lepton_TightRegion = copy.deepcopy(mu_TightRegion)
             SingleMu = True
             SingleEle = False
                 
         elif GoodMu!=None and GoodEle!=None:
             if ele_lepton_veto and not mu_lepton_veto:
-                GoodLep = copy.deepcopy(GoodEle)
+                GoodLep = GoodEle
                 lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
             elif not ele_lepton_veto and mu_lepton_veto:            
-                GoodLep = copy.deepcopy(GoodMu)
+                GoodLep = GoodMu
                 lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                 SingleMu = True
                 SingleEle = False
 
             elif ele_lepton_veto and mu_lepton_veto:
                 if GoodEle.pt > GoodMu.pt:
-                    GoodLep = copy.deepcopy(GoodEle)
+                    GoodLep = GoodEle
                     lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                     SingleEle = True
                     SingleMu = False
                 else:
-                    GoodLep = copy.deepcopy(GoodMu)
+                    GoodLep = GoodMu
                     lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                     SingleMu = True
                     SingleEle = False
