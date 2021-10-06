@@ -33,7 +33,7 @@
 set year = '2018'
 #python files_writer_new.py -d TT_$year --fake -t HT
 #python files_writer_new.py -d WJets_$year 
-#python files_writer_new.py -d WJets_$year --fake -t HT
+python files_writer_new.py -d WJets_$year --fake -t HT
 #python files_writer_new.py -d WZ_$year #--fake -t HT
 #python files_writer_new.py -d DY1JetsToLL_$year 
 #python files_writer_new.py -d DYJetsToLL_$year --fake -t HT
