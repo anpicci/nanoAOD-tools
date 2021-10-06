@@ -197,19 +197,19 @@ for i in range(tree.GetEntries()):
 
     if noTrigger: continue
 
-    indexGoodEle, ele_TightRegion = SelectLepton(electrons, False) 
-    indexGoodMu, mu_TightRegion = SelectLepton(muons, True) 
+    GoodEle, ele_TightRegion = SelectLepton(electrons, False) 
+    GoodMu, mu_TightRegion = SelectLepton(muons, True) 
  
-    if indexGoodEle is None and indexGoodMu is None:
+    if GoodEle is None and GoodMu is None:
         continue
 
     ele_lepton_veto = -1
     mu_lepton_veto = -1
 
-    if indexGoodEle >= 0:
-        ele_lepton_veto = LepVeto(electrons[indexGoodEle], electrons, muons)
-    if indexGoodMu >= 0:
-        mu_lepton_veto = LepVeto(muons[indexGoodMu], electrons, muons)
+    if GoodEle != None:
+        ele_lepton_veto = LepVeto(GoodEle, electrons, muons)
+    if GoodMu != None:
+        mu_lepton_veto = LepVeto(GoodMu, electrons, muons)
 
     SingleEle=False
     SingleMu=False
@@ -217,15 +217,15 @@ for i in range(tree.GetEntries()):
 
     LeadLepFamily="not selected"
     
-    indexGoodLep = -1
+    GoodLep = None
     leptons = None
 
     lepton_TightRegion = 0
 
     if 'DataHT' not in sample.label:
         if passEle and not passMu:
-            if indexGoodEle>=0 and ele_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodEle)
+            if GoodEle != None and ele_lepton_veto:
+                GoodLep = copy.deepcopy(GoodEle)
                 lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
@@ -233,8 +233,8 @@ for i in range(tree.GetEntries()):
                 continue
 
         elif passMu and not passEle:
-            if indexGoodMu>=0 and mu_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodMu)
+            if GoodMu != None and mu_lepton_veto:
+                GoodLep = copy.deepcopy(GoodMu)
                 lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                 SingleEle = False
                 SingleMu = True
@@ -255,38 +255,38 @@ for i in range(tree.GetEntries()):
             continue
 
     if ElMu:
-        if indexGoodMu<0 and indexGoodEle>=0 and ele_lepton_veto:
-            indexGoodLep = copy.deepcopy(indexGoodEle)
+        if GoodMu==None and GoodEle!=None and ele_lepton_veto:
+            GoodLep = copy.deepcopy(GoodEle)
             lepton_TightRegion = copy.deepcopy(ele_TightRegion)
             SingleEle = True
             SingleMu = False
 
-        elif indexGoodMu>=0 and mu_lepton_veto and indexGoodEle<0:
-            indexGoodLep = copy.deepcopy(indexGoodMu)
+        elif GoodMu!=None and mu_lepton_veto and GoodEle==None:
+            GoodLep = copy.deepcopy(GoodMu)
             lepton_TightRegion = copy.deepcopy(mu_TightRegion)
             SingleMu = True
             SingleEle = False
                 
-        elif indexGoodMu>=0 and indexGoodEle>=0:
+        elif GoodMu!=None and GoodEle!=None:
             if ele_lepton_veto and not mu_lepton_veto:
-                indexGoodLep = copy.deepcopy(indexGoodEle)
+                GoodLep = copy.deepcopy(GoodEle)
                 lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                 SingleEle = True
                 SingleMu = False
             elif not ele_lepton_veto and mu_lepton_veto:            
-                indexGoodLep = copy.deepcopy(indexGoodMu)
+                GoodLep = copy.deepcopy(GoodMu)
                 lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                 SingleMu = True
                 SingleEle = False
 
             elif ele_lepton_veto and mu_lepton_veto:
-                if electrons[indexGoodEle].pt > muons[indexGoodMu].pt:
-                    indexGoodLep = copy.deepcopy(indexGoodEle)
+                if GoodEle.pt > GoodMu.pt:
+                    GoodLep = copy.deepcopy(GoodEle)
                     lepton_TightRegion = copy.deepcopy(ele_TightRegion)
                     SingleEle = True
                     SingleMu = False
                 else:
-                    indexGoodLep = copy.deepcopy(indexGoodMu)
+                    GoodLep = copy.deepcopy(GoodMu)
                     lepton_TightRegion = copy.deepcopy(mu_TightRegion)
                     SingleMu = True
                     SingleEle = False
@@ -316,7 +316,7 @@ for i in range(tree.GetEntries()):
     if SingleMu and dataEle:
         continue
    
-    if indexGoodLep<0 or indexGoodLep>=len(leptons) or (lepton_TightRegion < 1):
+    if GoodLep==None or (lepton_TightRegion < 1):
         if Debug:
             print("exiting at lepton selection (without saving)")
         continue
