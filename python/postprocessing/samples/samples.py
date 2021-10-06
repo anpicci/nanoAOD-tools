@@ -1575,7 +1575,7 @@ DY4JetsToLL_2018.sigma = 54.80
 DY4JetsToLL_2018.year = 2018
 DY4JetsToLL_2018.dataset = "/DY4JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
-DYJetsToLLM5to50_2018 = sample(ROOT.kCyan, 1, 1001, "DY M5to50", "DYJetsToLLM5to50_2017")
+DYJetsToLLM5to50_2018 = sample(ROOT.kCyan, 1, 1001, "DY M5to50", "DYJetsToLLM5to50_2018")
 DYJetsToLLM5to50_2018.sigma = 81880.0
 DYJetsToLLM5to50_2018.year = 2018
 DYJetsToLLM5to50_2018.dataset = "/DYJetsToLL_M-5to50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
