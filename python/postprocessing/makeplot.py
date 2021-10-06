@@ -146,9 +146,9 @@ elif opt.ttbar:
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)           
 elif opt.wjets:
-    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_b_veto==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")", 
-                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_b_veto==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_tau_veto==1&&MET_pt<=50.&&(mT_electron_MET>50.||mT_muon_MET>50.))*(" + cut + ")",
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.&&(mT_electron_MET>50.||mT_muon_MET>50.))*(" + cut + ")",
             }
     cut_tag = 'wjets_CR'
     if opt.cut != "1.":
@@ -1344,7 +1344,7 @@ for year in years:
         if opt.sr:
             bin_invm = array("f", [500., 600., 800., 1000., 1200., 2000.])
         elif opt.wjets or opt.qcd:
-            bin_invm = array("f", [0., 300., 450., 600., 1200., 1800., 2000., 2500.])
+            bin_invm = array("f", [0., 300., 450., 600., 1200., 1800., 2500.])
         else:
             bin_invm = array("f", [0., 150., 300., 450., 600., 750., 900., 1200., 1400., 1600., 1800., 2000., 2500.])
 
