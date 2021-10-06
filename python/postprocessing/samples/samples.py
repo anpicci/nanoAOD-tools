@@ -1272,9 +1272,18 @@ TT_Had_2018.sigma =  377.96 #pb
 TT_Had_2018.year = 2018
 TT_Had_2018.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
+TTTo2L2Nu_2018 = sample(ROOT.kAzure-9, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_2018")
+TTTo2L2Nu_2018.sigma =  88.287 #pb
+TTTo2L2Nu_2018.year = 2018
+TTTo2L2Nu_2018.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
 TT_2018 = sample(ROOT.kRed+3, 1, 1001, "t#bar{t}", "TT_2018")
 TT_2018.year = 2018
 TT_2018.components = [TT_SemiLep_2018, TT_Had_2018] #TT_DiLep_2018,
+
+TT_beff_2018 = sample(ROOT.kRed+3, 1, 1001, "t#bar{t} FH+SL", "TT_2018")
+TT_beff_2018.year = 2018
+TT_beff_2018.components = [TT_SemiLep_2018, TT_Had_2018, TTTo2L2Nu_2018]
 
 ###############################  TVX  ################################
 TTGJets_2018 = sample(ROOT.kRed-2, 1, 1001, "t#bar{t}#gamma + jets", "TTGJets_2018")
@@ -1378,11 +1387,6 @@ GluGluToWWToTNuTNu2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToTNuENu", "G
 GluGluToWWToTNuTNu2018.sigma = 45.62
 GluGluToWWToTNuTNu2018.year = 2018
 GluGluToWWToTNuTNu2018.dataset = "/GluGluToWWToTNTN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
-
-TTTo2L2Nu_2018 = sample(ROOT.kAzure-9, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_2018")
-TTTo2L2Nu_2018.sigma =  88.287 #pb
-TTTo2L2Nu_2018.year = 2018
-TTTo2L2Nu_2018.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 STtW_top_2018 = sample(ROOT.kAzure-9, 1, 1001, "single t", "STtW_top_2018")
 STtW_top_2018.sigma =  34.91#pb

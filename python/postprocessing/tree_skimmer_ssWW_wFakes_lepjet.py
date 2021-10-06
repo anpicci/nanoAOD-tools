@@ -1116,7 +1116,7 @@ for i in range(tree.GetEntries()):
         systTree.setWeightName("puUp", copy.deepcopy(PU_SFUp))
         systTree.setWeightName("puDown", copy.deepcopy(PU_SFDown))
     
-        btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets)
+        btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets, year)
         systTree.setWeightName("btagSF", copy.deepcopy(btagSF))
         systTree.setWeightName("btagUp", copy.deepcopy(btagUp))
         systTree.setWeightName("btagDown", copy.deepcopy(btagDown))
