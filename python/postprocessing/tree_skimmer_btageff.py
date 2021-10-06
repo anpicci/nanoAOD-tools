@@ -200,7 +200,7 @@ for i in range(tree.GetEntries()):
     indexGoodEle, ele_TightRegion = SelectLepton(electrons, False) 
     indexGoodMu, mu_TightRegion = SelectLepton(muons, True) 
  
-    if indexGoodEle < 0 and indexGoodMu < 0:
+    if indexGoodEle is None and indexGoodMu is None:
         continue
 
     ele_lepton_veto = -1
