@@ -151,7 +151,6 @@ if 'DataEle' in sample.name:
 #++++++++++++++++++++++++++++++++++
 outTreeFile = ROOT.TFile(sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
 
-
 trees = []
 for i in range(10):
     trees.append(None)
@@ -951,11 +950,11 @@ for i in range(tree.GetEntries()):
     
     if SingleEle==True:
         if isMC: 
-            HLT_effLumi[0] = lumiFinder("Ele", vTrigEle, str(sample.year))
+            HLT_effLumi[0] = lumiFinder("Ele", vTrigEle, sample.year)
         leptons = electrons
     elif SingleMu==True:
         if isMC:
-            HLT_effLumi[0] = lumiFinder("Mu", vTrigMu, str(sample.year))
+            HLT_effLumi[0] = lumiFinder("Mu", vTrigMu, sample.year)
         leptons = muons
 
     elif not (SingleMu or SingleEle):

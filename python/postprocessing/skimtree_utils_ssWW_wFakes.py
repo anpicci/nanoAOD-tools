@@ -75,11 +75,11 @@ sqrt = lambda x : TMath.Power(x, 0.5)
 squared = lambda x : TMath.Power(x, 2.)
 LHEitem = lambda x : x.__getattr__("")
 
-def lumiFinder(particleTrig, vTrigger, year = '2017'):
+def lumiFinder(particleTrig, vTrigger, year = 2017):
     lumi=0
-    if year == '2017':
+    if year == 2017:
         effLdict = effLumi_2017
-    elif year == '2018':
+    elif year == 2018:
         effLdict = effLumi_2018
     for trigtype in effLdict:
         if particleTrig==trigtype:

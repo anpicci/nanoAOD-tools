@@ -97,14 +97,15 @@ if 'DataEle' in sample.name:
 
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])
-folder = 'vbtag'
-if not os.path.exists("/eos/user/" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label):
-    os.makedirs("/eos/user/" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label)
-outpath = "/eos/user/" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label + "/"
+#folder = 'vbtag'
+#if not os.path.exists("/eos/user/" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label):
+    #os.makedirs("/eos/user/" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label)
+#outpath = "/eos/user/" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label + "/"
 #++++++++++++++++++++++++++++++++++
 #++   branching the new trees    ++
 #++++++++++++++++++++++++++++++++++
-outTreeFile = ROOT.TFile(outpath + sample.label+"_part"+str(part_idx)+".root", "RECREATE") #some name of the output file
+#print(outpath + sample.label+"_part"+str(part_idx)+".root")
+outTreeFile = ROOT.TFile(sample.label+"_part"+str(part_idx)+".root", "RECREATE") #some name of the output file
 
 #++++++++++++++++++++++++++++++++++
 #++         All category         ++
@@ -301,11 +302,11 @@ for i in range(tree.GetEntries()):
     
     if SingleEle==True:
         if isMC: 
-            HLT_effLumi = lumiFinder("Ele", vTrigEle)
+            HLT_effLumi = lumiFinder("Ele", vTrigEle, sample.year)
         leptons = electrons
     elif SingleMu==True:
         if isMC:
-            HLT_effLumi = lumiFinder("Mu", vTrigMu)
+            HLT_effLumi = lumiFinder("Mu", vTrigMu, sample.year)
         leptons = muons
 
     elif not (SingleMu or SingleEle):

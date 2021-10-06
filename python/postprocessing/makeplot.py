@@ -71,7 +71,7 @@ def cutToTag(cut):
     return newstring
 
 folder = opt.folder 
-if not(opt.folder.startswith('FR_')) and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
+if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     folder += "/" + opt.channel
 pfolder = opt.folder
 
@@ -255,7 +255,7 @@ def mergepart(dataset):
         hasFakeInside = 'Fake' in opt.folder
         ismcreco = 'mcreco' in opt.folder
 
-        if isltau and not(startWFR or hasFakeInside or ismcreco):
+        if isltau and not("btag" in opt.folder or startWFR or hasFakeInside or ismcreco):
             print("Processing events with Tommaso's BDT...")
             file_path = filerepo + sample.label + "/"  + sample.label + "_merged.root"
 
