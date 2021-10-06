@@ -34,7 +34,7 @@ def DoesSampleExist(samplename):
                 
 def AreAllCondored(crabname, condorname):
     condoredlist = CondoredList(condorname)
-    if not opt.beff:
+    if True:#not opt.beff:
         storelist = [line for line in open("../../crab/macros/files/"+crabname+".txt")]
 
         if condorname+"_merged.root" in condoredlist:
@@ -176,6 +176,13 @@ for prname, proc in condor_dict.items():
         continue
     if "Fake" in prname or prname.startswith("DataMET") or '_BSM_INT_' in prname:# or prname.startswith('DY') or prname.startswith('DataHT'):
         continue
+
+    if opt.beff:
+        if not '_beff_' in prname:
+            continue
+    else:
+        if '_beff_' in prname:
+            continue
         
     toLaunch = True
 

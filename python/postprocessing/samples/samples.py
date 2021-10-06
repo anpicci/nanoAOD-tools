@@ -2681,6 +2681,7 @@ sample_dict={
     'OtherWS_2018':OtherWS_2018,
     'Other_2018':Other_2018, 'WWTo2L2Nu_DoubleScattering_2018':WWTo2L2Nu_DoubleScattering_2018, 'WWW_4F_2018':WWW_4F_2018, 'WWZTo3L1Nu2Q_2018':WWZTo3L1Nu2Q_2018, 'WZZ_2018':WZZ_2018, 'ZZZ_2018':ZZZ_2018, 'WWG_2018':WWG_2018,
     'TTTo2L2Nu_2018':TTTo2L2Nu_2018,
+    'TT_beff_2018':TT_beff_2018,
     'WZ_2018':WZ_2018,
     'FakeMu_2018':FakeMu_2018,
     'DataMu_2018':DataMu_2018, 'DataMuA_2018':DataMuA_2018, 'DataMuB_2018':DataMuB_2018, 'DataMuC_2018':DataMuC_2018, 'DataMuD_2018':DataMuD_2018,
