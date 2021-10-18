@@ -34,8 +34,8 @@ condorsub = "condor"
 fsplitted = opt.folder.split("/")
 
 if len(fsplitted)==2 and (fsplitted[1]=='emu' or fsplitted[1]=='ltau'):
-    condorsub += "_" + fsplitted[1]
-condorsub += ".sub"
+    condorsub += "_" + fsplitted[0] + "_" + fsplitted[1]
+#condorsub += ".sub"
 
 
 wopstring = ''
@@ -55,7 +55,9 @@ elif opt.reco == "jl":
     executpy += "_jetlep.py"
 
 def sub_writer(sample, n, files, folder):
-    f = open(condorsub, "w")
+    condorsubb = condorsub + "_" + str(sample.year) + ".sub"
+    print(condorsub, condorsubb)
+    f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
     f.write("universe                = vanilla\n")
@@ -63,7 +65,7 @@ def sub_writer(sample, n, files, folder):
     f.write("use_x509userproxy       = true\n")
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
-    f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, skimtree_utils_ssWW_wFakes.py, CutsAndValues.py, FR_vsjet2_vsmuT_ZZ.root, FR_vsjet4_vsmuT_ZZ.root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_" + str(sample.year) + ".root, __init__.py, ./data\n")
+    f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, skimtree_utils_ssWW_wFakes.py, CutsAndValues.py, FR_vsjet2_" + str(sample.year) + ".root, FR_vsjet4_" + str(sample.year) + ".root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_" + str(sample.year) + ".root, __init__.py, ./data\n")
     f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     #args += "\n"
@@ -119,6 +121,7 @@ os.popen("cp /tmp/x509up_u" + str(uid) + " /afs/cern.ch/user/" + inituser + "/" 
 split = 50
 #Writing the configuration file
 for sample in samples:
+    condorsubb = condorsub + "_" + str(sample.year) + ".sub"
     isMC = True
     opath = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label + "/"
     if('Data' in sample.label):
@@ -137,8 +140,8 @@ for sample in samples:
             if os.path.exists(opath + sample.label + "_part" + str(idx) + ".root"):
                 continue
             sub_writer(sample, idx, files, folder)
-            os.popen('condor_submit ' + condorsub)
-            print('condor_submit ' + condorsub)
+            os.popen('condor_submit ' + condorsubb)
+            print('condor_submit ' + condorsubb)
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + str(files))
             print("python " + executpy + " " + sample.label + " " + str(idx) + " " + str(files) + " remote")
     else:
@@ -147,7 +150,7 @@ for sample in samples:
                 continue
             extmax = int(min([split*(i+1), len(files_list)]))
             sub_writer(sample, i,  ",".join( e for e in files_list[split*i:extmax]), folder)
-            print('condor_submit ' + condorsub)
-            os.popen('condor_submit ' + condorsub)
+            print('condor_submit ' + condorsubb)
+            os.popen('condor_submit ' + condorsubb)
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]))
             print("python " + executpy + " " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote")

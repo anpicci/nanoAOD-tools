@@ -21,6 +21,7 @@ parser.add_option('-d', '--debug', dest='debug', default = False, action='store_
 parser.add_option('--trig', dest='trig', type=str, default = 'all', help='trigger used, default all')
 parser.add_option('--inf', dest='infolder', type=str, default = '', help='Please enter an input folder folder, default FR_v10/Ele')
 parser.add_option('--user', dest='user', type=str, default = 'mmagheri', help='Enter user, default mmagheri')
+parser.add_option('-y', '--year', dest='year', type=str, default = '2017', help='Enter year, default 2017')
 (opt, args) = parser.parse_args()
 
 
@@ -486,24 +487,25 @@ def FakeCalc(sample, isData, nev):
 
 
 DataDict = {
-        'Ele' : "DataEleFake_2017/DataEleFake_2017.root",
-        'Mu'  : "DataMuFake_2017/DataMuFake_2017.root",
-        'Tau' : "DataHT_2017/DataHT_2017.root",
-        'all' : "DataHT_2017/DataHT_2017.root",
+        'Ele' : "DataEleFake_" + str(opt.year) + "/DataEleFake_" + str(opt.year) + ".root",
+        'Mu'  : "DataMuFake_" + str(opt.year) + "/DataMuFake_" + str(opt.year) + ".root",
+        'Tau' : "DataHT_" + str(opt.year) + "/DataHT_" + str(opt.year) + ".root",
+        'all' : "DataHT_" + str(opt.year) + "/DataHT_" + str(opt.year) + ".root",
         }
 
 DataDict = {
-        'Ele' : "DataHT_2017/DataHT_2017.root",
-        'Mu'  : "DataMuFake_2017/DataMuFake_2017.root",
-        'Tau' : "DataHT_2017/DataHT_2017.root",
-        'all' : "DataHT_2017/DataHT_2017.root",
+        'Ele' : "DataHT_" + str(opt.year) + "/DataHT_" + str(opt.year) + ".root",
+        'Mu'  : "DataMuFake_" + str(opt.year) + "/DataMuFake_" + str(opt.year) + ".root",
+        'Tau' : "DataHT_" + str(opt.year) + "/DataHT_" + str(opt.year) + ".root",
+        'all' : "DataHT_" + str(opt.year) + "/DataHT_" + str(opt.year) + ".root",
         }
 
 
 bkg_files = {
-        'DYJetsToLL' : "DYJetsToLL_2017/DYJetsToLL_2017.root", 
-        'WJets'      : "WJets_2017/WJets_2017.root",
-        'ZZToLep'    : "ZZtoLep_2017/ZZtoLep_2017.root",        
+        'DYJetsToLL' : "DYJetsToLL_" + str(opt.year) + "/DYJetsToLL_" + str(opt.year) + ".root", 
+        'WJets'      : "WJets_" + str(opt.year) + "/WJets_" + str(opt.year) + ".root",
+        'ZZToLep'    : "ZZtoLep_" + str(opt.year) + "/ZZtoLep_" + str(opt.year) + ".root",        
+        'TT'    : "TT_" + str(opt.year) + "/TT_" + str(opt.year) + ".root",        
         }
 
 

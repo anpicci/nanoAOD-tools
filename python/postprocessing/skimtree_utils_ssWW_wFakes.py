@@ -2193,12 +2193,12 @@ def Lepton_IDIso_SF(lepton):
         print("I dunno what to do with this particle :/")
         return -1.
 
-def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ', frvsjet4 = 'FR_vsjet4_vsmuT_ZZ'):
+def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017', frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
     #inFile = ROOT.TFile.Open("FR_vsjet2.root")
     if wp == 'vsjet2':
-        inFile = ROOT.TFile.Open(frvsjet2 + ".root")
+        inFile = ROOT.TFile.Open(frvsjet2 + str(year) + ".root")
     elif wp == 'vsjet4':
-        inFile = ROOT.TFile.Open(frvsjet4 + ".root")
+        inFile = ROOT.TFile.Open(frvsjet4 + str(year) + ".root")
     #if prompt:
     histo=ROOT.TH2F(inFile.Get("hFRDataeledif"))
     #else:
@@ -2222,13 +2222,13 @@ def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ'
 
     return FR/(1-FR)
 
-def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ', frvsjet4 = 'FR_vsjet4_vsmuT_ZZ'):
+def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017', frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
     histo = ROOT.TH2F()
     #inFile = ROOT.TFile.Open("FR_vsjet2.root")
     if wp == 'vsjet2':
-        inFile = ROOT.TFile.Open(frvsjet2 + ".root")
+        inFile = ROOT.TFile.Open(frvsjet2 + str(year) + ".root")
     elif wp == 'vsjet4':
-        inFile = ROOT.TFile.Open(frvsjet4 + ".root")
+        inFile = ROOT.TFile.Open(frvsjet4 + str(year) + ".root")
     #if prompt:
     histo=(ROOT.TH2F)(inFile.Get("hFRDatataudif"))
     #else:
@@ -2253,13 +2253,13 @@ def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ',
 
     return FR/(1-FR)
 
-def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', frvsjet2 = 'FR_vsjet2_vsmuT_ZZ', frvsjet4 = 'FR_vsjet4_vsmuT_ZZ'):
+def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
     histo = ROOT.TH2F()
     #inFile = ROOT.TFile.Open("FR_vsjet2.root")
     if wp == 'vsjet2':
-        inFile = ROOT.TFile.Open(frvsjet2 + ".root")
+        inFile = ROOT.TFile.Open(frvsjet2 + str(year) + ".root")
     elif wp == 'vsjet4':
-        inFile = ROOT.TFile.Open(frvsjet4 + ".root")
+        inFile = ROOT.TFile.Open(frvsjet4 + str(year) + ".root")
     #if prompt:
     histo=(ROOT.TH2F)(inFile.Get("hFRDatamudif"))
     #else:

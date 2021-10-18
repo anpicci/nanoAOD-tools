@@ -420,8 +420,8 @@ def getweightfromhisto(histogram, eta, pt):
     return histogram.GetBinContent(binx,biny)
 
 
-def efficiency(flv, eta, pt):
-    infile = ROOT.TFile.Open("Btag_eff.root")
+def efficiency(flv, eta, pt, year):
+    infile = ROOT.TFile.Open("Btag_eff_" + str(year) + ".root")
     h = ROOT.TH2F()
     if(flv == 5):
         h = infile.Get("h2_BTaggingEff_b").CreateHistogram()
@@ -432,7 +432,7 @@ def efficiency(flv, eta, pt):
     return getweightfromhisto(h, eta, pt)
  
 
-def btagcalc(JetsC):
+def btagcalc(JetsC, year):
     goodJets = get_Jet(JetsC, PT_CUT_JET)
     bjets, nobjets = bjet_filter(goodJets, 'DeepFlv', 'M')
     p_MC = 1.
@@ -446,32 +446,32 @@ def btagcalc(JetsC):
         #print('prima MC' , p_MC)
         #print(abs(jet.partonFlavour), jet.eta, jet.pt)
         #print(efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-        p_MC *= efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        p_MC *= efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
         #print('dopo MC' , p_MC)
-        p_data *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+        p_data *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
         if abs(jet.partonFlavour) == 4 or abs(jet.partonFlavour) == 5:
-            p_data_btagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
-            p_data_mistagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
-            p_data_btagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
-            p_data_mistagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_btagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
+            p_data_mistagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
+            p_data_btagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
+            p_data_mistagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
         else:
-            p_data_btagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
-            p_data_mistagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
-            p_data_btagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
-            p_data_mistagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt)
+            p_data_btagUp *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
+            p_data_mistagUp *= jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
+            p_data_btagDown *= jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
+            p_data_mistagDown *= jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year)
     for jet in nobjets:
-        p_MC *= (1 - efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-        p_data *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+        p_MC *= (1 - efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
+        p_data *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
         if abs(jet.partonFlavour) == 4 or abs(jet.partonFlavour) == 5:
-            p_data_btagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-            p_data_btagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_btagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
+            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
+            p_data_btagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
+            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
         else:
-            p_data_btagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-            p_data_btagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
-            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt))
+            p_data_btagUp *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
+            p_data_mistagUp *= (1 - jet.btagSF_deepjet_M_up*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
+            p_data_btagDown *= (1 - jet.btagSF_deepjet_M*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
+            p_data_mistagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
 
     return p_data/p_MC, p_data_btagUp/p_MC, p_data_btagDown/p_MC, p_data_mistagUp/p_MC, p_data_mistagDown/p_MC
 

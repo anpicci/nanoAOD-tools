@@ -14,15 +14,28 @@ def CondoredList(samplename):
 
     if len(condlist) > 0:
         toRel = False
+        wrongex = False
         for condfile in condlist:
-            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:
-                toRel = True
+            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')                                                                                                                                                                 
+                toRel =True
+                condlist.remove(condfile)
                 if not opt.check:
-                    os.system("rm -r "+ path + samplename + "/" + condfile)            
+                    os.system("rm -r "+ path + samplename + "/" + condfile)
+            else:
+                tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
+                try:
+                    tempentr = tempf.Get("events_all").GetEntries()
+                except (AttributeError, ReferenceError, RuntimeWarning) as e:
+                    condlist.remove(condfile)
+                    wrongex = True
+                    if not opt.check:
+                        os.system("rm "+ path + samplename + "/" + condfile)
 
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")
             return CondoredList(samplename)
+        elif wrongex:
+            print("Something when remapping rootfiles for ", samplename, "fix it and relaunch")
 
     return condlist
 

@@ -1485,7 +1485,7 @@ WWG_2018.dataset = "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/"+tag_2018+"_ext1-v1/NAN
 
 Other_2018 = sample(ROOT.kOrange-4, 1, 1001, "Other", "Other_2018")
 Other_2018.year = 2018
-Other_2018.components = [WWTo2L2Nu_DoubleScattering_2018, WWW_4F_2018, WWZTo3L1Nu2Q_2018, WZZ_2018, ZZZ_2018, WWG_2018]
+Other_2018.components = [WWTo2L2Nu_DoubleScattering_2018, WWW_4F_2018, WZZ_2018, ZZZ_2018, WWG_2018]#WWZTo3L1Nu2Q_2018, 
 
 OtherWS_2018 = sample(ROOT.kOrange-4, 1, 1001, "Other + Wrong Sign", "OtherWS_2018")
 OtherWS_2018.year = 2018
@@ -2257,7 +2257,7 @@ DataHTnoB_2017.components = [DataHTC_2017, DataHTD_2017, DataHTE_2017, DataHTF_2
 
 SampleHTFake_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "SampleHTFake_2017")
 SampleHTFake_2017.year = 2017
-SampleHTFake_2017.components = [DataHTB_2017, DataHTC_2017, DataHTD_2017, DataHTE_2017, DataHTF_2017, WJetsHT70to100_2017, WJetsHT100to200_2017, WJetsHT200to400_2017, WJetsHT400to600_2017, WJetsHT600to800_2017, WJetsHT800to1200_2017, WJetsHT1200to2500_2017, WJetsHT2500toInf_2017, DY1JetsToLL_2017, DY2JetsToLL_2017, DY3JetsToLL_2017, DY4JetsToLL_2017, DYJetsToLLM5to50_2017, ZZTo2L2Nu_2017, ZZJJTo4L_EWK_2017, ZZJJTo4L_QCD_2017, GluGluToContinToZZTo2e2nu_2017, GluGluToContinToZZTo2e2mu_2017, GluGluToContinToZZTo2e2tau_2017, GluGluToContinToZZTo2mu2nu_2017, GluGluToContinToZZTo2mu2tau_2017, GluGluToContinToZZTo4e_2017, GluGluToContinToZZTo4mu_2017, GluGluToContinToZZTo4tau_2017]
+SampleHTFake_2017.components = [DataHTB_2017, DataHTC_2017, DataHTD_2017, DataHTE_2017, DataHTF_2017, WJetsHT70to100_2017, WJetsHT100to200_2017, WJetsHT200to400_2017, WJetsHT400to600_2017, WJetsHT600to800_2017, WJetsHT800to1200_2017, WJetsHT1200to2500_2017, WJetsHT2500toInf_2017, DY1JetsToLL_2017, DY2JetsToLL_2017, DY3JetsToLL_2017, DY4JetsToLL_2017, DYJetsToLLM5to50_2017, ZZTo2L2Nu_2017, ZZJJTo4L_EWK_2017, ZZJJTo4L_QCD_2017, GluGluToContinToZZTo2e2nu_2017, GluGluToContinToZZTo2e2mu_2017, GluGluToContinToZZTo2e2tau_2017, GluGluToContinToZZTo2mu2nu_2017, GluGluToContinToZZTo2mu2tau_2017, GluGluToContinToZZTo4e_2017, GluGluToContinToZZTo4mu_2017, GluGluToContinToZZTo4tau_2017, TT_Had_2017, TT_SemiLep_2017]
 
 SampleHTFakepart_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "SampleHTFake_2017")
 SampleHTFakepart_2017.year = 2017
@@ -2387,7 +2387,7 @@ DataHT_2018.components = [DataHTA_2018, DataHTB_2018, DataHTC_2018, DataHTD_2018
 
 SampleHTFake_2018 = sample(ROOT.kBlack, 1, 1001, "Data", "SampleHTFake_2018")
 SampleHTFake_2018.year = 2018
-SampleHTFake_2018.components = [DataHTB_2018, DataHTC_2018, DataHTD_2018, WJetsHT70to100_2018, WJetsHT100to200_2018, WJetsHT200to400_2018, WJetsHT400to600_2018, WJetsHT600to800_2018, WJetsHT800to1200_2018, WJetsHT1200to2500_2018, WJetsHT2500toInf_2018, DY1JetsToLL_2018, DY2JetsToLL_2018, DY3JetsToLL_2018, DY4JetsToLL_2018, DYJetsToLLM5to50_2018, ZZTo2L2Nu_2018, ZZJJTo4L_EWK_2018, ZZJJTo4L_QCD_2018, GluGluToContinToZZTo2e2nu_2018, GluGluToContinToZZTo2e2mu_2018, GluGluToContinToZZTo2e2tau_2018, GluGluToContinToZZTo2mu2nu_2018, GluGluToContinToZZTo2mu2tau_2018, GluGluToContinToZZTo4e_2018, GluGluToContinToZZTo4mu_2018, GluGluToContinToZZTo4tau_2018]
+SampleHTFake_2018.components = [DataHTA_2018, DataHTB_2018, DataHTC_2018, DataHTD_2018, WJetsHT70to100_2018, WJetsHT100to200_2018, WJetsHT200to400_2018, WJetsHT400to600_2018, WJetsHT600to800_2018, WJetsHT800to1200_2018, WJetsHT1200to2500_2018, WJetsHT2500toInf_2018, DY1JetsToLL_2018, DY2JetsToLL_2018, DY3JetsToLL_2018, DY4JetsToLL_2018, DYJetsToLLM5to50_2018, ZZTo2L2Nu_2018, ZZJJTo4L_EWK_2018, ZZJJTo4L_QCD_2018, GluGluToContinToZZTo2e2nu_2018, GluGluToContinToZZTo2e2mu_2018, GluGluToContinToZZTo2e2tau_2018, GluGluToContinToZZTo2mu2nu_2018, GluGluToContinToZZTo2mu2tau_2018, GluGluToContinToZZTo4e_2018, GluGluToContinToZZTo4mu_2018, GluGluToContinToZZTo4tau_2018, TT_Had_2018, TT_SemiLep_2018]
 
 
 FakeElePromptTau_2018 = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_2018")
@@ -2677,7 +2677,7 @@ sample_dict={
     # to here
     'VG_2018':VG_2018, 'ZG_2018':ZG_2018, 'WG_2018':WG_2018,
     'TVX_2018':TVX_2018, 'TTGJets_2018':TTGJets_2018, 'TTZToQQ_2018':TTZToQQ_2018, 'TTZToLLNuNu_2018':TTZToLLNuNu_2018, 'TTWJetsToQQ_2018':TTWJetsToQQ_2018, 'TTWJetsToLNu_2018':TTWJetsToLNu_2018, 'tZq_ll_4f_2018':tZq_ll_4f_2018,
-    'WrongSign_2018': WrongSign_2018, 'WWto2L2Nu_2018':WWto2L2Nu_2018, 'GluGluToWWToENuENu_2018':GluGluToWWToENuENu_2018, 'GluGluToWWToENuMNu2017':GluGluToWWToENuMNu2017, 'GluGluToWWToENuTNu2017':GluGluToWWToENuTNu2017, 'GluGluToWWToMNuENu_2018':GluGluToWWToMNuENu_2018, 'GluGluToWWToMNuMNu2017':GluGluToWWToMNuMNu2017, 'GluGluToWWToMNuTNu2017':GluGluToWWToMNuTNu2017, 'GluGluToWWToTNuENu_2018':GluGluToWWToTNuENu_2018, 'GluGluToWWToTNuMNu2017':GluGluToWWToTNuMNu2017, 'GluGluToWWToTNuTNu2017':GluGluToWWToTNuTNu2017, 'STtW_top_2018':STtW_top_2018, 'GluGluHToWWTo2L2Nu_2018':GluGluHToWWTo2L2Nu_2018, 'GluGluHToZZTo2L2Q_2018':GluGluHToZZTo2L2Q_2018, 'GluGluHToZZTo4L_2018':GluGluHToZZTo4L_2018, 'GluGluHToTauTau_2018':GluGluHToTauTau_2018, 'VBFHToWWTo2L2Nu_2018':VBFHToWWTo2L2Nu_2018, 'VBFHToTauTau_2018':VBFHToTauTau_2018, 'ttHToNonbb_2018':ttHToNonbb_2018, 'VHToNonbb_2018':VHToNonbb_2018,
+    'WrongSign_2018': WrongSign_2018, 'WWto2L2Nu_2018':WWto2L2Nu_2018, 'GluGluToWWToENuENu_2018':GluGluToWWToENuENu_2018, 'GluGluToWWToENuMNu2018':GluGluToWWToENuMNu2018, 'GluGluToWWToENuTNu2018':GluGluToWWToENuTNu2018, 'GluGluToWWToMNuENu_2018':GluGluToWWToMNuENu_2018, 'GluGluToWWToMNuMNu2018':GluGluToWWToMNuMNu2018, 'GluGluToWWToMNuTNu2018':GluGluToWWToMNuTNu2018, 'GluGluToWWToTNuENu_2018':GluGluToWWToTNuENu_2018, 'GluGluToWWToTNuMNu2018':GluGluToWWToTNuMNu2018, 'GluGluToWWToTNuTNu2018':GluGluToWWToTNuTNu2018, 'STtW_top_2018':STtW_top_2018, 'GluGluHToWWTo2L2Nu_2018':GluGluHToWWTo2L2Nu_2018, 'GluGluHToZZTo2L2Q_2018':GluGluHToZZTo2L2Q_2018, 'GluGluHToZZTo4L_2018':GluGluHToZZTo4L_2018, 'GluGluHToTauTau_2018':GluGluHToTauTau_2018, 'VBFHToWWTo2L2Nu_2018':VBFHToWWTo2L2Nu_2018, 'VBFHToTauTau_2018':VBFHToTauTau_2018, 'ttHToNonbb_2018':ttHToNonbb_2018, 'VHToNonbb_2018':VHToNonbb_2018,
     'OtherWS_2018':OtherWS_2018,
     'Other_2018':Other_2018, 'WWTo2L2Nu_DoubleScattering_2018':WWTo2L2Nu_DoubleScattering_2018, 'WWW_4F_2018':WWW_4F_2018, 'WWZTo3L1Nu2Q_2018':WWZTo3L1Nu2Q_2018, 'WZZ_2018':WZZ_2018, 'ZZZ_2018':ZZZ_2018, 'WWG_2018':WWG_2018,
     'TTTo2L2Nu_2018':TTTo2L2Nu_2018,
@@ -2758,6 +2758,7 @@ condor_dict={
     'DataMu_2018':DataMu_2018,
     'DataEle_2018':DataEle_2018,
     'DataHT_2017':DataHT_2017,
+    'DataHT_2018':DataHT_2018,
 }
 
 merge_dict={
@@ -2853,7 +2854,7 @@ merge_dict={
     'ZZtoLep_2018':ZZtoLep_2018,
     'TT_2017':TT_2017,
     'TT_2018':TT_2018,
-    'TT_beff_2018':TT_beff_2018,
+    #'TT_beff_2018':TT_beff_2018,
     'WJets_2017':WJets_2017,
     'WJets_2018':WJets_2018,
     'DYJetsToLL_2017':DYJetsToLL_2017,
@@ -2877,7 +2878,8 @@ merge_dict={
     'DataMu_2018':DataMu_2018,
     'DataEle_2017':DataEle_2017,
     'DataEle_2018':DataEle_2018,
-    #'DataHT_2017':DataHT_2017,
+    'DataHT_2017':DataHT_2017,
+    'DataHT_2018':DataHT_2018,
     #'DataEleMu_2017':DataEleMu_2017,
 }
 

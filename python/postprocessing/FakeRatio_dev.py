@@ -522,7 +522,7 @@ for i in range(tree.GetEntries()):
         if not ("WZ" in sample.label or "WWTo2L2Nu_DoubleScattering"):
             LHE = Collection(event, "LHEPart")
         
-        btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets)
+        btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets, sample.year)
         
         systTree.setWeightName("btagSF", copy.deepcopy(btagSF))
         systTree.setWeightName("btagUp", copy.deepcopy(btagUp))

@@ -1000,11 +1000,11 @@ for i in range(tree.GetEntries()):
 
     #if not isMC:
     if abs(GoodLep.pdgId)==11:
-        lepton_SFFake_vsjet4[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet4')
-        lepton_SFFake_vsjet2[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet2')
+        lepton_SFFake_vsjet4[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', sample.year)
+        lepton_SFFake_vsjet2[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', sample.year)
     elif abs(GoodLep.pdgId)==13:
-        lepton_SFFake_vsjet4[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet4')
-        lepton_SFFake_vsjet2[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet2')
+        lepton_SFFake_vsjet4[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', sample.year)
+        lepton_SFFake_vsjet2[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', sample.year)
     #else:
     if isMC:
         lepton_isPrompt[0] = GoodLep.genPartFlav
@@ -1045,8 +1045,8 @@ for i in range(tree.GetEntries()):
     tau_DecayMode[0]        =   GoodTau.decayMode
 
     #if not isMC:
-    tau_SFFake_vsjet4[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet4')
-    tau_SFFake_vsjet2[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet2')
+    tau_SFFake_vsjet4[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet4', sample.year)
+    tau_SFFake_vsjet2[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet2', sample.year)
     #else:
     if isMC:
         tau_isPrompt[0] = GoodTau.genPartFlav

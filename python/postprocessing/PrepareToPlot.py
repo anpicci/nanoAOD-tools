@@ -37,11 +37,11 @@ ofolder += opt.folder# + "/"
 
 
 path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
-print(path, opt.isfake)
+#print(path, opt.isfake)
 if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     path += opt.channel + "/"
 
-print(path)
+#print(path)
 #dirlist = [dirs for dirs in os.listdir(path) if os.path.isdir(path+dirs) and opt.folder in dirs]
 #datas = opt.dataset + "_" + opt.year
 
@@ -55,16 +55,29 @@ def CondoredList(samplename):
         condlist = []
 
     if len(condlist) > 0:
-        toRel =False
+        toRel = False
+        wrongex = False
         for condfile in condlist:
             if os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')
                 toRel =True
+                condlist.remove(condfile)
                 if not opt.check:
                     os.system("rm -r "+ path + samplename + "/" + condfile)
-
+            else:
+                tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
+                try:
+                    tempentr = tempf.Get("events_all").GetEntries()
+                except (AttributeError, ReferenceError, RuntimeWarning) as e:
+                    condlist.remove(condfile)
+                    wrongex = True
+                    if not opt.check:
+                        os.system("rm "+ path + samplename + "/" + condfile)
+                    
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")
             return CondoredList(samplename)
+        elif wrongex:
+            print("Something when remapping rootfiles for ", samplename, "fix it and relaunch")
 
     return condlist
 
@@ -76,7 +89,6 @@ def DoesSampleExist(samplename):
 
 def AreAllCondored(crabname, condorname):
     storelist = [line for line in open(crabpath+crabname+".txt")]
-
     condoredlist = CondoredList(condorname)
 
     if condorname+"_merged.root" in condoredlist:
@@ -92,7 +104,7 @@ def AreAllCondored(crabname, condorname):
         if remainder > 0:
             lenstore += 1
 
-    if len(condoredlist) < lenstore:
+    if len(condoredlist) < (lenstore):
         print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
         return False
     elif lenstore==0 and len(condoredlist)==0:
@@ -107,7 +119,12 @@ def AreAllCondored(crabname, condorname):
 #exsamples = [d for d in os.listdir(path+dirn) if os.path.isdir(path+dirn+"/"+d)]
 #print exsamples
 
+#print("samples")
+#for k, v in merge_dict.items():
+    #print(k, v)
+
 for k, v in merge_dict.items():
+    #print("hello", k)
     if opt.year not in k:
         continue
 
@@ -122,7 +139,7 @@ for k, v in merge_dict.items():
             continue
 
     elif opt.isfake:
-        if not (k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
+        if not (k.startswith('TT_') or k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
             continue
 
     if k.startswith('Fake'):
@@ -185,7 +202,7 @@ for k, v in merge_dict.items():
                     os.system("python3 makeplot.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel)
                 print("Merged and lumied!")
             else:
-                print(c.label + " is already merged and lumied")
+                print(c.label + " already merged and lumied")
 
         samplemerge = False
 
@@ -248,4 +265,4 @@ for k, v in merge_dict.items():
                 os.system("python3 makeplot.py -y " + opt.year + " --merpart --lumi --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel)
             print("Merged and lumied!")
         else:
-            print(k + " is already merged and lumied")
+            print(k + " already merged and lumied")
