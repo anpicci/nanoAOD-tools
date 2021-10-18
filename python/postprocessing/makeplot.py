@@ -713,7 +713,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
           countf.write("\n\n")
           countf.close()
 
-def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
+def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
 
     if reg_ == 'ltau':
@@ -1032,7 +1032,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
     pad2.RedrawAxis()
     c1.Update()
     #c1.Print("stack/"+canvasname+".pdf")
-    c1.Print(pathstack + canvasname + ".png")
+    pathstack_tmp = pathstack + str(year) + "/"
+    c1.Print(pathstack_tmp + canvasname + ".png")
     del histo
     tmp.Delete()
     h.Delete()
@@ -1130,6 +1131,8 @@ for year in years:
 
 print("\nStarting")
 for year in years:
+    if not os.path.exists(pathstack + str(year) + "/"):
+        os.makedirs(pathstack + str(year) + "/")
     print(year)
     for lep in leptons:
         print(lep)
@@ -1464,7 +1467,7 @@ for year in years:
                 print(var._xmax)
                 #os.system('set LD_PRELOAD=libtcmalloc.so')
                 print("channel", opt.channel)
-                makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)])
+                makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)], year)
                 #os.system('set LD_PRELOAD=libtcmalloc.so')
 
         if lep == 'muon':
