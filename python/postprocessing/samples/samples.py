@@ -690,17 +690,17 @@ WpWpJJ_QCD_2017.sigma = 0.01538
 WpWpJJ_QCD_2017.year = 2017
 WpWpJJ_QCD_2017.dataset = "/WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8/" + tag_2017 + "-v1/NANOAODSIM"
 
-VBS_SSWW_LL_SM_2017 = sample(ROOT.kBlack, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_2017")
+VBS_SSWW_LL_SM_2017 = sample(ROOT.kGreen+3, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_2017")
 VBS_SSWW_LL_SM_2017.sigma = 0.002014
 VBS_SSWW_LL_SM_2017.year = 2017
 VBS_SSWW_LL_SM_2017.dataset = "/VBS_SSWW_LL_polarization_TuneCP5_13TeV-madgraph-pythia8/" + tag_2017 + "-v1/NANOAODSIM"
 
-VBS_SSWW_TL_SM_2017 = sample(ROOT.kBlack, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_2017")
+VBS_SSWW_TL_SM_2017 = sample(ROOT.kBlue+3, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_2017")
 VBS_SSWW_TL_SM_2017.sigma = 0.01036
 VBS_SSWW_TL_SM_2017.year = 2017
 VBS_SSWW_TL_SM_2017.dataset = "/VBS_SSWW_TL_polarization_TuneCP5_13TeV-madgraph-pythia8/" + tag_2017 + "-v1/NANOAODSIM"
 
-VBS_SSWW_TT_SM_2017 = sample(ROOT.kBlack, 1, 1001, "VBS ssWW TT", "VBS_SSWW_TT_SM_2017")
+VBS_SSWW_TT_SM_2017 = sample(ROOT.kMagenta+3, 1, 1001, "VBS ssWW TT", "VBS_SSWW_TT_SM_2017")
 VBS_SSWW_TT_SM_2017.sigma = 0.01595
 VBS_SSWW_TT_SM_2017.year = 2017
 VBS_SSWW_TT_SM_2017.dataset = "/VBS_SSWW_TT_polarization_TuneCP5_13TeV-madgraph-pythia8/" + tag_2017 + "-v1/NANOAODSIM"
@@ -1438,7 +1438,7 @@ VHToNonbb_2018.sigma =  2.127#pb
 VHToNonbb_2018.year = 2018
 VHToNonbb_2018.dataset = "/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
-WrongSign_2018 = sample(ROOT.kAzure-9, 1, 1001, "Leptonic t#bar{t} + WS", "WrongSign_2018")
+WrongSign_2018 = sample(ROOT.kGreen-10, 1, 1001, "Wrong Sign", "WrongSign_2018")
 WrongSign_2018.year = 2018
 WrongSign_2018.components = [WWto2L2Nu_2018, GluGluToWWToENuENu_2018, GluGluToWWToENuMNu2018, 
                             GluGluToWWToENuTNu2018, GluGluToWWToMNuENu_2018, GluGluToWWToMNuMNu2018, 
@@ -1549,7 +1549,7 @@ WJets_2018.year = 2018
 WJets_2018.components = [WJetsHT70to100_2018, WJetsHT100to200_2018, WJetsHT200to400_2018, WJetsHT400to600_2018, WJetsHT600to800_2018, WJetsHT800to1200_2018, WJetsHT1200to2500_2018, WJetsHT2500toInf_2018]
 
 ################################ WZ ################################
-WZ_2018 = sample(ROOT.kYellow-7, 1, 1001, "WZ", "WZ_2018")
+WZ_2018 = sample(ROOT.kYellow-4, 1, 1001, "WZ", "WZ_2018")
 WZ_2018.sigma = 47.13
 WZ_2018.year = 2018
 WZ_2018.dataset = "/WZ_TuneCP5_13TeV-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
@@ -1590,27 +1590,27 @@ WpWpJJ_EWK_2018.sigma = 0.02064
 WpWpJJ_EWK_2018.year = 2018
 WpWpJJ_EWK_2018.dataset = "/WpWpJJ_EWK_TuneCP5_13TeV-madgraph-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
-WpWpJJ_QCD_2018 = sample(ROOT.kBlue, 1, 1001, "QCD ssWW", "WpWpJJ_QCD_2018")
+WpWpJJ_QCD_2018 = sample(ROOT.kPink+1, 1, 1001, "QCD ssWW", "WpWpJJ_QCD_2018")
 WpWpJJ_QCD_2018.sigma = 0.01538
 WpWpJJ_QCD_2018.year = 2018
 WpWpJJ_QCD_2018.dataset = "/WpWpJJ_QCD_TuneCP5_13TeV-madgraph-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
-VBS_SSWW_LL_SM_2018 = sample(ROOT.kBlack, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_2018")
+VBS_SSWW_LL_SM_2018 = sample(ROOT.kGreen+3, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_2018")
 VBS_SSWW_LL_SM_2018.sigma = 0.002014
 VBS_SSWW_LL_SM_2018.year = 2018
 VBS_SSWW_LL_SM_2018.dataset = "/VBS_SSWW_LL_polarization_TuneCP5_13TeV-madgraph-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
-VBS_SSWW_TL_SM_2018 = sample(ROOT.kBlack, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_2018")
+VBS_SSWW_TL_SM_2018 = sample(ROOT.kBlue+3, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_2018")
 VBS_SSWW_TL_SM_2018.sigma = 0.01036
 VBS_SSWW_TL_SM_2018.year = 2018
 VBS_SSWW_TL_SM_2018.dataset = "/VBS_SSWW_TL_polarization_TuneCP5_13TeV-madgraph-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
-VBS_SSWW_TT_SM_2018 = sample(ROOT.kBlack, 1, 1001, "VBS ssWW TT", "VBS_SSWW_TT_SM_2018")
+VBS_SSWW_TT_SM_2018 = sample(ROOT.kMagenta+3, 1, 1001, "VBS ssWW TT", "VBS_SSWW_TT_SM_2018")
 VBS_SSWW_TT_SM_2018.sigma = 0.01595
 VBS_SSWW_TT_SM_2018.year = 2018
 VBS_SSWW_TT_SM_2018.dataset = "/VBS_SSWW_TT_polarization_TuneCP5_13TeV-madgraph-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
-VBS_SSWW_SM_2018 = sample(ROOT.kRed+2, 1, 1001, "VBS ssWW", "VBS_SSWW_SM_2018")
+VBS_SSWW_SM_2018 = sample(ROOT.kRed, 1, 1001, "VBS ssWW", "VBS_SSWW_SM_2018")
 VBS_SSWW_SM_2018.year = 2018
 VBS_SSWW_SM_2018.components = [VBS_SSWW_LL_SM_2018, VBS_SSWW_TL_SM_2018, VBS_SSWW_TT_SM_2018]
 
@@ -1809,7 +1809,7 @@ VBS_SSWW_FM1_0_2018.sigma = 0.1191
 VBS_SSWW_FM1_0_2018.year = 2018
 
 VBS_SSWW_FM1_25_SM_2018 = sample(ROOT.kGreen+3, 1, 1001, "f_{m1}/#Lambda^{4} = 25 TeV^{-4}", "VBS_SSWW_FM1_25_SM_2018", "VBS_SSWW_aQGC_2018")
-VBS_SSWW_FM1_25_SM_2018.year = 2018
+VBS_SSWW_FM1_25_SM_2018.year = 2018<
 VBS_SSWW_FM1_25_SM_2018.components = [VBS_SSWW_FM1_25_BSM_2018, VBS_SSWW_FM1_25_INT_2018, VBS_SSWW_FM1_0_2018]
 
 VBS_SSWW_FM1_5_SM_2018 = sample(ROOT.kGreen+3, 1, 1001, "f_{m1}/#Lambda^{4} = 10 TeV^{-4}", "VBS_SSWW_FM1_5_SM_2018", "VBS_SSWW_aQGC_2018")
@@ -2744,11 +2744,13 @@ condor_dict={
     # to here
     'VG_2017':VG_2017,
     'TVX_2017':TVX_2017,
-    'OtherWS_2017':OtherWS_2017,
+    'Other_2017':Other_2017,
+    'WrongSign_2017':WrongSign_2017,
     'TTTo2L2Nu_2017':TTTo2L2Nu_2017,
     'VG_2018':VG_2018,
     'TVX_2018':TVX_2018,
-    'OtherWS_2018':OtherWS_2018,
+    'Other_2018':Other_2018,
+    'WrongSign_2018':WrongSign_2018,
     'TTTo2L2Nu_2018':TTTo2L2Nu_2018,
     #'TT_beff_2017':TT_beff_2017,
     'WZ_2017':WZ_2017,
