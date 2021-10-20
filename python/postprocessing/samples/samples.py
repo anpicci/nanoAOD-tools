@@ -1344,47 +1344,47 @@ WWto2L2Nu_2018.year = 2018
 WWto2L2Nu_2018.dataset = "/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToENuENu_2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToENuENu", "GluGluToWWToENuENu_2018")
-GluGluToWWToENuENu_2018.sigma = 45.62
+GluGluToWWToENuENu_2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToENuENu_2018.year = 2018
 GluGluToWWToENuENu_2018.dataset = "/GluGluToWWToENEN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToENuMNu2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToENuENu", "GluGluToWWToENuMNu2018")
-GluGluToWWToENuMNu2018.sigma = 45.62
+GluGluToWWToENuMNu2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToENuMNu2018.year = 2018
 GluGluToWWToENuMNu2018.dataset = "/GluGluToWWToENMN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToENuTNu2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToENuENu", "GluGluToWWToENuTNu2018")
-GluGluToWWToENuTNu2018.sigma = 45.62
+GluGluToWWToENuTNu2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToENuTNu2018.year = 2018
 GluGluToWWToENuTNu2018.dataset = "/GluGluToWWToENTN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToMNuENu_2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToMNuENu", "GluGluToWWToMNuENu_2018")
-GluGluToWWToMNuENu_2018.sigma = 45.62
+GluGluToWWToMNuENu_2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToMNuENu_2018.year = 2018
 GluGluToWWToMNuENu_2018.dataset = "/GluGluToWWToMNEN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToMNuMNu2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToMNuENu", "GluGluToWWToMNuMNu2018")
-GluGluToWWToMNuMNu2018.sigma = 45.62
+GluGluToWWToMNuMNu2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToMNuMNu2018.year = 2018
 GluGluToWWToMNuMNu2018.dataset = "/GluGluToWWToMNMN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToMNuTNu2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToMNuENu", "GluGluToWWToMNuTNu2018")
-GluGluToWWToMNuTNu2018.sigma = 45.62
+GluGluToWWToMNuTNu2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToMNuTNu2018.year = 2018
 GluGluToWWToMNuTNu2018.dataset = "/GluGluToWWToMNTN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToTNuENu_2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToTNuENu", "GluGluToWWToTNuENu_2018")
-GluGluToWWToTNuENu_2018.sigma = 45.62
+GluGluToWWToTNuENu_2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToTNuENu_2018.year = 2018
 GluGluToWWToTNuENu_2018.dataset = "/GluGluToWWToTNEN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToTNuMNu2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToTNuENu", "GluGluToWWToTNuMNu2018")
-GluGluToWWToTNuMNu2018.sigma = 45.62
+GluGluToWWToTNuMNu2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToTNuMNu2018.year = 2018
 GluGluToWWToTNuMNu2018.dataset = "/GluGluToWWToTNMN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluToWWToTNuTNu2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluToWWToTNuENu", "GluGluToWWToTNuTNu2018")
-GluGluToWWToTNuTNu2018.sigma = 45.62
+GluGluToWWToTNuTNu2018.sigma = 45.62 * 1./9. * 1.4
 GluGluToWWToTNuTNu2018.year = 2018
 GluGluToWWToTNuTNu2018.dataset = "/GluGluToWWToTNTN_TuneCP5_13TeV_MCFM701_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
