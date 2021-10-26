@@ -136,7 +136,7 @@ for k, v in merge_dict.items():
 
     if not opt.isfake:# or opt.ct == '':
         if k.startswith('DY'):# or k.startswith('DataHT'):
-            continue
+            pass #continue
 
     elif opt.isfake:
         if not (k.startswith('TT_') or k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
