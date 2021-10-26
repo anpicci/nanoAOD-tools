@@ -119,9 +119,10 @@ def AreAllCondored(crabname, condorname):
 #exsamples = [d for d in os.listdir(path+dirn) if os.path.isdir(path+dirn+"/"+d)]
 #print exsamples
 
-#print("samples")
-#for k, v in merge_dict.items():
-    #print(k, v)
+print("samples")
+for k, v in merge_dict.items():
+    print(k, v)
+
 
 for k, v in merge_dict.items():
     #print("hello", k)
@@ -135,8 +136,9 @@ for k, v in merge_dict.items():
     kpath = path+k+"/"
 
     if not opt.isfake:# or opt.ct == '':
-        if k.startswith('DY'):# or k.startswith('DataHT'):
-            pass #continue
+        pass
+        #if k.startswith('DY'):# or k.startswith('DataHT'):
+            #pass #continue
 
     elif opt.isfake:
         if not (k.startswith('TT_') or k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
