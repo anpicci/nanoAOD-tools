@@ -767,7 +767,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_'+str(s.year) in s.label or 'SSWW_cW_'+str(s.year) in s.label or 'SSWW_FS0_'+str(s.year) in s.label or 'SSWW_FM1_'+str(s.year) in s.label or 'SSWW_FT2_'+str(s.year) in s.label):
             continue
         if opt.wfake != 'nofake':
-            if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('DY') or s.label.startswith('TT_'):
+            if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('TT_'):#or s.label.startswith('DY')
                 continue
             elif 'Fake' in s.label:
                 if opt.wfake.startswith('incl') and not (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_') or s.label.startswith('FakeEleMu_')):
@@ -793,7 +793,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_'+str(s.year) in s.label or 'SSWW_cW_'+str(s.year) in s.label or 'SSWW_FS0_'+str(s.year) in s.label or 'SSWW_FM1_'+str(s.year) in s.label or 'SSWW_FT2_'+str(s.year) in s.label):
             continue
         if opt.wfake != 'nofake':
-            if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('DY') or s.label.startswith('TT_'):
+            if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('TT_'):# or s.label.startswith('DY')
                 continue
             elif 'Fake' in s.label:
                 if opt.wfake.startswith('incl') and not (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_') or s.label.startswith('FakeEleMu_')):
@@ -1442,7 +1442,7 @@ for year in years:
         #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
 
         for sample in dataset_new:
-            print(sample)
+            print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
                 continue
             elif ('DataMu' in sample.label or 'DataEle' in sample.label or 'DataMET' in sample.label or 'QCD' in sample.label) and opt.folder.startswith("CTHT"):
@@ -1475,3 +1475,4 @@ for year in years:
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
 
+            
