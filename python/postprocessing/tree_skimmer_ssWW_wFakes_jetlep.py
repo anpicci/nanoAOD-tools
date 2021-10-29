@@ -840,8 +840,9 @@ for i in range(tree.GetEntries()):
     nJets[0] = len(jets)
     nBJets[0] = CountBJets(jets)#
 
-    leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
-
+    #leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
+    leadjet, subleadjet = SelectVBSJetsTagger(jets, modelPath = "/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p", modelType = 'xgboost',  applyDeltaEtaCut = True, lep1 = None, lep2 = None):
+    
     if leadjet == None or subleadjet == None or abs(leadjet.eta-subleadjet.eta) == 0.:
         continue  
 
