@@ -7,6 +7,14 @@ from os import path
 import array
 import types
 from CutsAndValues import *
+from xgboost import XGBClassifier
+from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.layers import Input, Dense, Activation, Flatten, BatchNormalization, Dropout
+import tensorflow.keras.optimizers
+import tensorflow.keras.initializers
+import tensorflow.keras.losses
+import tensorflow.keras.callbacks
+import pickle
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
@@ -291,7 +299,7 @@ def SelectVBSQGenJet(genparts, genjets):
     return finalgenjets
 
 
-def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = None, lep2 = None):
+def SelectVBSJets(jets, useMassCrit = False, useMaxPtCrit = True, useVBSTagger = False, modelPath = None, modelType = None,  applyDeltaEtaCut = True, lep1 = None, lep2 = None):
     jet1 = None
     jet2 = None
 
@@ -326,6 +334,16 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         return jet1, jet2
 
     maxInvMass = -999.
+    maxScore = -999.
+    
+    if useVBSTagger:
+    	if modelType == 'xgboost':
+            with openload(modelPath, 'rb') as file:
+                model = pickle.load(file)
+    	elif modelType == 'keras':
+            model = load_model(modelPath)
+    	else:
+            print("Tell me if it's either an XGboost or a Keras model") 
     #else, search for two isolated jets compatible with VBS
 
     idxjet1 = -1
@@ -357,14 +375,14 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         if len(compatible_jets) < 1:
             continue
         
-        if not useMassCrit:
+        if not useMaxPTCrit:
             #if criteria upon jj inv mass is not used, returns the compatible couple with highest pt
             idxjet1 = jets.index(jet)
             idxjet2 = jets.index(compatible_jets[0])
             break
         
         #else apply maximum mass criterion
-        else:
+        elif useMassCrit:
             for idxc, cjet in enumerate(compatible_jets):
                 #print("idxc:", idxc, "cjet:", cjet)
                 if jets.index(cjet) <= jets.index(jet):
@@ -376,6 +394,56 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
                     maxInvMass = invmass
                 #print("\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
                     
+        elif useVBSTagger: 
+            for idxc, cjet in enumerate(compatible_jets):
+                #print("idxc:", idxc, "cjet:", cjet)
+                if jets.index(cjet) <= jets.index(jet):
+                    continue
+
+                features = [
+			jet.area,
+			jet.chHEF,
+			#jet.eta,
+			#jet.mass,
+			jet.muEF,
+			jet.neEmEF,
+			jet.neHEF,
+			jet.phi,
+			jet.pt,
+			jet.puIdDisc,
+			jet.jetId,
+			jet.nConstituents,
+			jet.nElectrons,
+			jet.nMuons,
+			jet.puId,
+			cjet.area,
+			cjet.chHEF,
+			#cjet.eta,
+			#cjet.mass,
+			cjet.muEF,
+			cjet.neEmEF,
+			cjet.neHEF,
+			cjet.phi,
+			cjet.pt,
+			cjet.puIdDisc,
+			cjet.jetId,
+			cjet.nConstituents,
+			cjet.nElectrons,
+			cjet.nMuons,
+			cjet.puId,
+		]
+
+		X = np.asarray(features)
+                
+                if modelType == 'xgboost':
+                    score = model.predict_proba(X)[:,1] 
+                elif modelType == 'keras'
+                    score = model.predict(X)
+                
+                if score > maxScore:
+                    idxjet1 = jets.index(jet)
+                    idxjet2 = jets.index(cjet)
+                    maxScore = score
 
     #print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
     if idxjet1 > -1 and idxjet2 > -1:
