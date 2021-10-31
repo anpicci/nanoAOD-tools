@@ -643,7 +643,7 @@ DYJetsToLLM50_2017.sigma = 6529.0
 DYJetsToLLM50_2017.year = 2017
 DYJetsToLLM50_2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/" + tag2_2017 + "_ext1-v1/NANOAODSIM"
 
-DYJetsToLL_2017 = sample(ROOT.kCyan, 1, 1001, "DY + Jets", "DYJetsToLL_2017")
+DYJetsToLL_2017 = sample(ROOT.kRed-9, 1, 1001, "DY + Jets", "DYJetsToLL_2017")
 DYJetsToLL_2017.year = 2017
 DYJetsToLL_2017.components = [DY1JetsToLL_2017, DY2JetsToLL_2017, DY3JetsToLL_2017, DY4JetsToLL_2017, DYJetsToLLM5to50_2017]
 
@@ -1580,7 +1580,7 @@ DYJetsToLLM5to50_2018.sigma = 81880.0
 DYJetsToLLM5to50_2018.year = 2018
 DYJetsToLLM5to50_2018.dataset = "/DYJetsToLL_M-5to50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
-DYJetsToLL_2018 = sample(ROOT.kAzure+6, 1, 1001, "DY + Jets", "DYJetsToLL_2018")
+DYJetsToLL_2018 = sample(ROOT.kRed-9, 1, 1001, "DY + Jets", "DYJetsToLL_2018")
 DYJetsToLL_2018.year = 2018
 DYJetsToLL_2018.components = [DY1JetsToLL_2018, DY2JetsToLL_2018, DY3JetsToLL_2018, DY4JetsToLL_2018]
 
