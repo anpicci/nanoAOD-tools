@@ -119,10 +119,11 @@ def AreAllCondored(crabname, condorname):
 #exsamples = [d for d in os.listdir(path+dirn) if os.path.isdir(path+dirn+"/"+d)]
 #print exsamples
 
+'''
 print("samples")
 for k, v in merge_dict.items():
     print(k, v)
-
+'''
 
 for k, v in merge_dict.items():
     #print("hello", k)
