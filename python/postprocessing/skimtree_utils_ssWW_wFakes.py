@@ -8,12 +8,14 @@ import array
 import types
 from CutsAndValues import *
 from xgboost import XGBClassifier
-from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Input, Dense, Activation, Flatten, BatchNormalization, Dropout
-import tensorflow.keras.optimizers
-import tensorflow.keras.initializers
-import tensorflow.keras.losses
-import tensorflow.keras.callbacks
+#from tensorflow.keras.models import Sequential, load_model
+#from tensorflow.keras.layers import Input, Dense, Activation, Flatten, BatchNormalization, Dropout
+#import tensorflow.keras.optimizers
+#import tensorflow.keras.initializers
+#import tensorflow.keras.losses
+#import tensorflow.keras.callbacks
+from samples.samples import *
+import numpy as np
 import pickle
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
@@ -431,14 +433,14 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
     maxInvMass = -999.
     maxScore = -999.
     
-    if useVBSTagger:
-    	if modelType == 'xgboost':
-            with openload(modelPath, 'rb') as file:
-                model = pickle.load(file)
-    	elif modelType == 'keras':
-            model = load_model(modelPath)
-    	else:
-            print("Tell me if it's either an XGboost or a Keras model") 
+    if modelType == 'xgboost':
+        with open(modelPath, 'rb') as file:
+            model = pickle.load(file)
+    elif modelType == 'keras':
+        print('heiiii')
+        model = load_model(modelPath)
+    else:
+        print("Tell me if it's either an XGboost or a Keras model") 
     #else, search for two isolated jets compatible with VBS
 
     idxjet1 = -1
@@ -448,7 +450,7 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
 
     #print("\nuseMassCrit?", useMassCrit)
     #print("goodjets:", goodjets)
-
+    print(goodjets)
     for idxj, jet in enumerate(goodjets):
         #print("idxj:", idxj, "jet:", jet)
         skgoodjets = list(goodjets)
@@ -474,7 +476,8 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
             #print("idxc:", idxc, "cjet:", cjet)
             if jets.index(cjet) <= jets.index(jet):
                 continue
-            features = [
+            print(jets.index(jet),jets.index(cjet))
+            features = [[
 	        jet.area,
 		jet.chHEF,
 		#jet.eta,
@@ -482,8 +485,8 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
 		jet.muEF,
 		jet.neEmEF,
 		jet.neHEF,
-		jet.phi,
-		jet.pt,
+		#jet.phi,
+		#jet.pt,
 		jet.puIdDisc,
 		jet.jetId,
 		jet.nConstituents,
@@ -497,27 +500,31 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
 		cjet.muEF,
 		cjet.neEmEF,
 		cjet.neHEF,
-		cjet.phi,
-		cjet.pt,
+		#cjet.phi,
+		#cjet.pt,
 		cjet.puIdDisc,
 		cjet.jetId,
 		cjet.nConstituents,
 		cjet.nElectrons,
 		cjet.nMuons,
 		cjet.puId,
-	    ]
+	    ]]
 
-	    X = np.asarray(features)
+            X = np.asarray(features)
                 
             if modelType == 'xgboost':
                 score = model.predict_proba(X)[:,1] 
-            elif modelType == 'keras'
+            elif modelType == 'keras':
                 score = model.predict(X)
-                
+            
+            print('score:',score)
             if score > maxScore:
                 idxjet1 = jets.index(jet)
                 idxjet2 = jets.index(cjet)
                 maxScore = score
+        
+    print('maxScore:', maxScore)
+    print()
 
     #print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
     if idxjet1 > -1 and idxjet2 > -1:
