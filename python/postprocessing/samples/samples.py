@@ -109,7 +109,7 @@ DY4JetsToLL_2016.sigma = 54.80
 DY4JetsToLL_2016.year = 2016
 DY4JetsToLL_2016.dataset = "/DY4JetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/" + tag_2016 + "-v1/NANOAODSIM"
 
-DYJetsToLL_2016 = sample(ROOT.kAzure+6, 1, 1001, "DY + Jets", "DYJetsToLL_2016")
+DYJetsToLL_2016 = sample(ROOT.kRed-9, 1, 1001, "DY + Jets", "DYJetsToLL_2016")
 DYJetsToLL_2016.year = 2016
 DYJetsToLL_2016.components = [DY1JetsToLL_2016, DY2JetsToLL_2016, DY3JetsToLL_2016, DY4JetsToLL_2016]
 
