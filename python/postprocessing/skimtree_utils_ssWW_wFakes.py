@@ -437,7 +437,6 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
         with open(modelPath, 'rb') as file:
             model = pickle.load(file)
     elif modelType == 'keras':
-        print('heiiii')
         model = load_model(modelPath)
     else:
         print("Tell me if it's either an XGboost or a Keras model") 
@@ -450,7 +449,7 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
 
     #print("\nuseMassCrit?", useMassCrit)
     #print("goodjets:", goodjets)
-    print(goodjets)
+    #print(goodjets)
     for idxj, jet in enumerate(goodjets):
         #print("idxj:", idxj, "jet:", jet)
         skgoodjets = list(goodjets)
@@ -476,7 +475,7 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
             #print("idxc:", idxc, "cjet:", cjet)
             if jets.index(cjet) <= jets.index(jet):
                 continue
-            print(jets.index(jet),jets.index(cjet))
+            #print(jets.index(jet),jets.index(cjet))
             features = [[
 	        jet.area,
 		jet.chHEF,
@@ -517,14 +516,14 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
             elif modelType == 'keras':
                 score = model.predict(X)
             
-            print('score:',score)
+            #print('score:',score)
             if score > maxScore:
                 idxjet1 = jets.index(jet)
                 idxjet2 = jets.index(cjet)
                 maxScore = score
         
-    print('maxScore:', maxScore)
-    print()
+    #print('maxScore:', maxScore)
+    #print()
 
     #print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
     if idxjet1 > -1 and idxjet2 > -1:

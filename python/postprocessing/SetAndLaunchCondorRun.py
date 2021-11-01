@@ -97,6 +97,9 @@ parser.add_option('--mcreco', dest='mcreco', default = False, action='store_true
 parser.add_option('--masscrit', dest='masscr', default = False, action='store_true', help='Applying masscriterion, default does not')
 parser.add_option('--deltaeta', dest='deta', default = False, action='store_true', help='Launching deltaEtaCut before selection, default does not')
 parser.add_option('--reco', dest='reco', type=str, default = "not", help='Launching specified reco analysis, default does not')
+parser.add_option('--tagger', dest='tagger', default = False, action='store_true', help='Applying VBS Tagger, default does not')
+parser.add_option('--taggerPath', dest='taggerPath', type=str, default = "/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p", help='Tagger path')
+parser.add_option('--taggerType', dest='taggerType', type=str, default = "xgboost", help='Tagger type')
 
 (opt, args) = parser.parse_args()
 
@@ -168,6 +171,10 @@ elif opt.channel == "ltau":
         optstring += " --masscrit"
     if opt.deta:
         optstring += " --deltaeta"
+    if opt.tagger:
+        optstring += " --tagger"
+    optstring += " --taggerPath " + opt.taggerPath
+    optstring += " --taggerType " + opt.taggerType
 elif opt.channel == "emu":
     subpy = "diet_submit_condor.py"
 

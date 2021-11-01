@@ -95,6 +95,10 @@ fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
 
 MassCrit = bool(int(sys.argv[8])==1)
 DeltaEtaCutBeforeSel = bool(int(sys.argv[9])==1)
+tagger = bool(int(sys.argv[10])==1)
+print("tagger:", tagger)
+taggerPath = str(sys.argv[11])
+taggerType = str(sys.argv[12])
 print("MassCrit:", MassCrit, "DeltaEtaCut:", DeltaEtaCutBeforeSel)
 MCReco = True
 startTime = datetime.datetime.now()
@@ -840,8 +844,13 @@ for i in range(tree.GetEntries()):
     nJets[0] = len(jets)
     nBJets[0] = CountBJets(jets)#
 
-    #leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
-    leadjet, subleadjet = SelectVBSJetsTagger(jets = list(jets), modelPath = "/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p", modelType = 'xgboost',  applyDeltaEtaCut = True, lep1 = None, lep2 = None) 
+    if tagger == True:
+    	leadjet, subleadjet = SelectVBSJetsTagger(jets = list(jets), modelPath = taggerPath, modelType = taggerType,  applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep) 
+    else:
+        leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
+
+
+
     if leadjet == None or subleadjet == None or abs(leadjet.eta-subleadjet.eta) == 0.:
         continue  
 
