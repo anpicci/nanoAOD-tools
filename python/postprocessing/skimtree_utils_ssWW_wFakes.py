@@ -271,7 +271,8 @@ def SelectVBSQGenJet(genparts, genjets):
     print(genpart1, qflav1, genpart2, qflav2)
     light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10 and (x.partonFlavour==qflav1 or x.partonFlavour==qflav2), genjets))
     if len(light_genjets) < 2:
-        light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10, genjets))
+        #light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10, genjets))
+        return[None, None]
 
     print(light_genjets)
     #if len(light_genjets) > 2:
@@ -289,7 +290,8 @@ def SelectVBSQGenJet(genparts, genjets):
             discrim2 = copy.deepcopy(tmpdiscr2)
             idx_genjet2 = copy.deepcopy(k)
     
-    if(idx_genjet1 == -1 or idx_genjet2 == -1) or (idx_genjet1 == idx_genjet2):
+    discrim_thr = 10.
+    if(idx_genjet1 == -1 or idx_genjet2 == -1) or (idx_genjet1 == idx_genjet2) or (discrim1 > discrim_thr or discrim2 > discrim_thr):
         return [None, None]
 
     print("idx_genjet1:", idx_genjet1, "idx_genjet2:", idx_genjet2)
