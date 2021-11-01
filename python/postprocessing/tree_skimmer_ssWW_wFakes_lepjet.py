@@ -88,7 +88,10 @@ for cam in campaigns:
 
 MassCrit = bool(int(sys.argv[8])==1)
 DeltaEtaCutBeforeSel = bool(int(sys.argv[9])==1)
-
+tagger = bool(int(sys.argv[10])==1)
+print("tagger:", tagger)
+taggerPath = str(sys.argv[11])
+taggerType = str(sys.argv[12])
 #print(cam, vsjetWP, vseleWP, vsmuWP)
 tauSFTool_vsjet = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSjet', vsjetWP)
 tauSFTool_vsele = TauIDSFTool(act_camp, 'DeepTau2017v2p1VSe', vseleWP)
@@ -1231,8 +1234,10 @@ for i in range(tree.GetEntries()):
 
     nJets[0] = len(jets)
     nBJets[0] = CountBJets(jets)#
-
-    leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
+    if tagger == True:
+    	leadjet, subleadjet = SelectVBSJetsTagger(jets = list(jets), modelPath = taggerPath, modelType = taggerType,  applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep) 
+    else:
+        leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
 
     if leadjet == None or subleadjet == None or abs(leadjet.eta-subleadjet.eta)==0.:
         continue  
