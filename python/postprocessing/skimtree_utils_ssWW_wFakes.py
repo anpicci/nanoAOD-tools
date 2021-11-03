@@ -428,12 +428,12 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
     goodjets = get_Jet(jets)    
     goodjets = list(filter(lambda x : abs(deltaR(x.eta, x.phi, lep1eta, lep1phi)) > isocone1 and abs(deltaR(x.eta, x.phi, lep2eta, lep2phi)) > isocone2, goodjets))
 
+    
+    maxScore = -999.
     #if there are 0 or 1 goodjets, return default values
     if len(goodjets) < 2:
-        return jet1, jet2
+        return jet1, jet2, maxScore
 
-    maxInvMass = -999.
-    maxScore = -999.
     
     if modelType == 'xgboost':
         with open(modelPath, 'rb') as file:
@@ -535,7 +535,7 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
         #print("final\tjet1:", jet1, "jet2:", jet2)
         #print("abs(deltaEta_jj):", abs(jet1.eta - jet2.eta), "passes deltaEtacut?", bool(abs(jet1.eta - jet2.eta)>DELTAETA_JJ_CUT))
 
-    return jet1, jet2
+    return jet1, jet2, maxScore
 
 def SelectGenNus(genparts):
     wlnus = [gp for gp in genparts if (abs(gp.pdgId)==12 or abs(gp.pdgId)==14) and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==24]
