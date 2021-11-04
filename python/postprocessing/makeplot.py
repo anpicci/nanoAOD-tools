@@ -340,7 +340,8 @@ def mergepart(dataset):
                 for i in df.columns:
                     new_columns.append(i.split('[')[0])
                 df.columns = new_columns
-            
+
+                '''            
                 to_keep = ['lepton_pt',
                            'lepton_eta',
                            'lepton_phi',
@@ -431,6 +432,9 @@ def mergepart(dataset):
                            'event_Zeppenfeld_over_deltaEta_jj',
                            'event_RT',
                        ]
+                '''
+     
+                to_keep = ['m_jj', 'm_jjtaulep', 'm_taulep', 'mT_lep_MET', 'leadjet_pt', 'subleadjet_pt', 'tau_mass', 'MET_pt']
             
                 X = df[to_keep].to_numpy()
                 

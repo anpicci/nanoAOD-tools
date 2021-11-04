@@ -16,6 +16,9 @@ parser.add_option('--reco', dest='reco', type=str, default = '', help='Please en
 parser.add_option('--masscrit', dest='masscr', default = False, action='store_true', help='Applying masscriterion, default does not')
 parser.add_option('--deltaeta', dest='deta', default = False, action='store_true', help='Launching deltaEtaCut before selection, default does not')
 #parser.add_option('--wop', dest='wop', default = False, action='store_true', help='Default executes with FR without prompt substraction')
+parser.add_option('--tagger', dest='tagger', default = False, action='store_true', help='Applying VBS tagger, default does not')
+parser.add_option('--taggerPath', dest='taggerPath', type = str, default = "/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p", help='Applying VBS tagger, default does not')
+parser.add_option('--taggerType', dest='taggerType', type = str, default = "xgboost", help='Applying VBS tagger, default does not')
 #parser.add_option('-u', '--user', dest='us', type='string', default = 'ade', help="")
 (opt, args) = parser.parse_args()
 #Insert here your uid... you can see it typing echo $uid
@@ -79,7 +82,14 @@ def sub_writer(sample, n, files, folder):
     else:
         args += " 0"
     #print(executpy, args)
-
+    if opt.tagger:
+        args += " 1"
+    else:
+        args += " 0"
+    args += " " + opt.taggerPath
+    args += " " + opt.taggerType
+    
+    
     f.write("executable              = " + executpy + "\n")
     f.write("arguments               = " + args + "\n")#sample.label + " " + str(n) + " " + str(files) + " remote " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu + "\n")# + str(wopstring) + "\n")
     #f.write("input                   = input.txt\n")

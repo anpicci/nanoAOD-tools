@@ -7,6 +7,16 @@ from os import path
 import array
 import types
 from CutsAndValues import *
+from xgboost import XGBClassifier
+#from tensorflow.keras.models import Sequential, load_model
+#from tensorflow.keras.layers import Input, Dense, Activation, Flatten, BatchNormalization, Dropout
+#import tensorflow.keras.optimizers
+#import tensorflow.keras.initializers
+#import tensorflow.keras.losses
+#import tensorflow.keras.callbacks
+#from samples.samples import *
+import numpy as np
+import pickle
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
@@ -261,7 +271,8 @@ def SelectVBSQGenJet(genparts, genjets):
     print(genpart1, qflav1, genpart2, qflav2)
     light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10 and (x.partonFlavour==qflav1 or x.partonFlavour==qflav2), genjets))
     if len(light_genjets) < 2:
-        light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10, genjets))
+        #light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10, genjets))
+        return[None, None]
 
     print(light_genjets)
     #if len(light_genjets) > 2:
@@ -279,7 +290,8 @@ def SelectVBSQGenJet(genparts, genjets):
             discrim2 = copy.deepcopy(tmpdiscr2)
             idx_genjet2 = copy.deepcopy(k)
     
-    if(idx_genjet1 == -1 or idx_genjet2 == -1) or (idx_genjet1 == idx_genjet2):
+    discrim_thr = 10.
+    if(idx_genjet1 == -1 or idx_genjet2 == -1) or (idx_genjet1 == idx_genjet2) or (discrim1 > discrim_thr or discrim2 > discrim_thr):
         return [None, None]
 
     print("idx_genjet1:", idx_genjet1, "idx_genjet2:", idx_genjet2)
@@ -289,7 +301,6 @@ def SelectVBSQGenJet(genparts, genjets):
         finalgenjets = [light_genjets[idx_genjet2], light_genjets[idx_genjet1]]
               
     return finalgenjets
-
 
 def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = None, lep2 = None):
     jet1 = None
@@ -386,6 +397,145 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         #print("abs(deltaEta_jj):", abs(jet1.eta - jet2.eta), "passes deltaEtacut?", bool(abs(jet1.eta - jet2.eta)>DELTAETA_JJ_CUT))
 
     return jet1, jet2
+
+def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEtaCut = True, lep1 = None, lep2 = None):
+    jet1 = None
+    jet2 = None
+
+    #default value are 0, so if leps are None possible cut regarding jet-leps isolation does not really cuts
+    isocone1 = 0.
+    isocone2 = 0.
+
+    #default leps eta and phi are set to 0., in order to get jet-lep isocut uneffective if leps are None
+    lep1eta = 0.
+    lep2eta = 0.
+    lep1phi = 0.
+    lep2phi = 0.
+    
+    #saving jet-lep isocut depending on lepton flavours
+    if lep1 != None and lep2 != None:
+        isocone1 = DR_OVERLAP_CONE_OTHER
+        isocone2 = DR_OVERLAP_CONE_OTHER
+       
+        lep1eta = lep1.eta
+        lep2eta = lep2.eta
+        lep1phi = lep1.phi
+        lep2phi = lep2.phi
+    
+    #print("isocones:", isocone1, isocone2, "lep1:", lep1eta, lep1phi, "lep2:", lep2eta, lep2phi) 
+
+    #filtering jets with jet-related requests and then refiltering with jet-leps isocone
+    goodjets = get_Jet(jets)    
+    goodjets = list(filter(lambda x : abs(deltaR(x.eta, x.phi, lep1eta, lep1phi)) > isocone1 and abs(deltaR(x.eta, x.phi, lep2eta, lep2phi)) > isocone2, goodjets))
+
+    
+    maxScore = -999.
+    #if there are 0 or 1 goodjets, return default values
+    if len(goodjets) < 2:
+        return jet1, jet2, maxScore
+
+    
+    if modelType == 'xgboost':
+        with open(modelPath, 'rb') as file:
+            model = pickle.load(file)
+    elif modelType == 'keras':
+        model = load_model(modelPath)
+    else:
+        print("Tell me if it's either an XGboost or a Keras model") 
+    #else, search for two isolated jets compatible with VBS
+
+    idxjet1 = -1
+    idxjet2 = -1
+    jet1 = None
+    jet2 = None
+
+    #print("\nuseMassCrit?", useMassCrit)
+    #print("goodjets:", goodjets)
+    #print(goodjets)
+    for idxj, jet in enumerate(goodjets):
+        #print("idxj:", idxj, "jet:", jet)
+        skgoodjets = list(goodjets)
+
+        compatible_jets = list(filter(lambda x : IsNotTheSameObject(x, jet), skgoodjets))
+        #print("compatible_jets (first):", compatible_jets)
+        if applyDeltaEtaCut:
+            #print("applying DeltaEtaCut")
+            #refiltering compatible jets with deltaEtajj cut
+            compatible_jets = list(filter(lambda x : abs(x.eta - jet.eta) >= DELTAETA_JJ_CUT, compatible_jets))
+            for jj in compatible_jets:
+                if abs(jj.eta - jet.eta) < DELTAETA_JJ_CUT:
+                    print("Warning! Something went wrong")
+        #else:
+            #print("not applying DeltaEtaCut")
+
+        #print("compatible_jets (dEta cut):", compatible_jets)
+        #if there are no compatible jet, returns default value
+        if len(compatible_jets) < 1:
+            continue
+         
+        for idxc, cjet in enumerate(compatible_jets):
+            #print("idxc:", idxc, "cjet:", cjet)
+            if jets.index(cjet) <= jets.index(jet):
+                continue
+            #print(jets.index(jet),jets.index(cjet))
+            features = [[
+	        jet.area,
+		jet.chHEF,
+		#jet.eta,
+		#jet.mass,
+		jet.muEF,
+		jet.neEmEF,
+		jet.neHEF,
+		#jet.phi,
+		#jet.pt,
+		jet.puIdDisc,
+		jet.jetId,
+		jet.nConstituents,
+		jet.nElectrons,
+		jet.nMuons,
+		jet.puId,
+		cjet.area,
+		cjet.chHEF,
+		#cjet.eta,
+		#cjet.mass,
+		cjet.muEF,
+		cjet.neEmEF,
+		cjet.neHEF,
+		#cjet.phi,
+		#cjet.pt,
+		cjet.puIdDisc,
+		cjet.jetId,
+		cjet.nConstituents,
+		cjet.nElectrons,
+		cjet.nMuons,
+		cjet.puId,
+	    ]]
+
+            X = np.asarray(features)
+                
+            if modelType == 'xgboost':
+                score = model.predict_proba(X)[:,1] 
+            elif modelType == 'keras':
+                score = model.predict(X)
+            
+            #print('score:',score)
+            if score > maxScore:
+                idxjet1 = jets.index(jet)
+                idxjet2 = jets.index(cjet)
+                maxScore = score
+        
+    #print('maxScore:', maxScore)
+    #print()
+
+    #print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
+    if idxjet1 > -1 and idxjet2 > -1:
+        jet1 = jets[idxjet1]
+        jet2 = jets[idxjet2]
+
+        #print("final\tjet1:", jet1, "jet2:", jet2)
+        #print("abs(deltaEta_jj):", abs(jet1.eta - jet2.eta), "passes deltaEtacut?", bool(abs(jet1.eta - jet2.eta)>DELTAETA_JJ_CUT))
+
+    return jet1, jet2, maxScore
 
 def SelectGenNus(genparts):
     wlnus = [gp for gp in genparts if (abs(gp.pdgId)==12 or abs(gp.pdgId)==14) and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==24]

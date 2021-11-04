@@ -95,6 +95,10 @@ fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
 
 MassCrit = bool(int(sys.argv[8])==1)
 DeltaEtaCutBeforeSel = bool(int(sys.argv[9])==1)
+tagger = bool(int(sys.argv[10])==1)
+print("tagger:", tagger)
+taggerPath = str(sys.argv[11])
+taggerType = str(sys.argv[12])
 print("MassCrit:", MassCrit, "DeltaEtaCut:", DeltaEtaCutBeforeSel)
 MCReco = True
 startTime = datetime.datetime.now()
@@ -417,6 +421,7 @@ var_list.append(MET_phi)
 
 
 #inv and transv masses
+taggerScore                 =   array.array('f', [-999.])
 m_jjtau = array.array('f', [-999.])#
 m_jjtaulep = array.array('f', [-999.])#
 m_jj                        =   array.array('f', [-999.])
@@ -621,6 +626,7 @@ systTree.branchTreesSysts(trees, "all", "nBJets", outTreeFile, nBJets)#
 systTree.branchTreesSysts(trees, "all", "MET_pt",               outTreeFile, MET_pt)
 systTree.branchTreesSysts(trees, "all", "MET_phi",              outTreeFile, MET_phi)
 #masses#
+systTree.branchTreesSysts(trees, "all", "taggerScore",                  outTreeFile, taggerScore)
 systTree.branchTreesSysts(trees, "all", "m_jj",                  outTreeFile, m_jj)
 systTree.branchTreesSysts(trees, "all", "m_1T",                  outTreeFile, m_1T)
 systTree.branchTreesSysts(trees, "all", "m_o1",                  outTreeFile, m_o1)
@@ -840,7 +846,13 @@ for i in range(tree.GetEntries()):
     nJets[0] = len(jets)
     nBJets[0] = CountBJets(jets)#
 
-    leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
+    if tagger == True:
+        leadjet, subleadjet, VBStaggerScore = SelectVBSJetsTagger(jets = list(jets), modelPath = taggerPath, modelType = taggerType,  applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep) 
+        taggerScore[0] = VBStaggerScore
+    else:
+        leadjet, subleadjet = SelectVBSJets(jets = list(jets), useMassCrit = MassCrit, applyDeltaEtaCut = DeltaEtaCutBeforeSel, lep1 = GoodTau, lep2 = GoodLep)
+
+
 
     if leadjet == None or subleadjet == None or abs(leadjet.eta-subleadjet.eta) == 0.:
         continue  
