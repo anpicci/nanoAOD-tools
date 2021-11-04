@@ -13,6 +13,7 @@ import pandas as pd
 import uproot
 import pickle
 import numpy as np
+import sklearn
 
 #print TT_2017
 #ciao
@@ -56,7 +57,7 @@ parser.add_option('--signal', dest='signal', default = False, action='store_true
 #parser.add_option('--model', dest='model', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT.p', type='string', help='Path  to ML model for all events')
 #parser.add_option('--model_ele', dest='model_ele', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_ele.p', type='string', help='Path to ML model for electron events')
 #parser.add_option('--model_mu', dest='model_mu', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_mu.p', type='string', help='Path to ML model for muon events')
-parser.add_option('--model_SM', dest='model_SM', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_SM.p', type='string', help='Path to ML model for SM analysis')
+parser.add_option('--model_SM', dest='model_SM', default = '/afs/cern.ch/user/t/ttedesch/public/adaBDT_SM_v100.p', type='string', help='Path to ML model for SM analysis')
 parser.add_option('--model_dim6', dest='model_dim6', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_dim6.p', type='string', help='Path to ML model for dim6 analysis')
 parser.add_option('--model_dim8', dest='model_dim8', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_dim8.p', type='string', help='Path to ML model for dim8 analysis')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
