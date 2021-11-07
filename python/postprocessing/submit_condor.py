@@ -128,7 +128,7 @@ if not os.path.exists("/tmp/x509up_u" + str(uid)):
 os.popen("cp /tmp/x509up_u" + str(uid) + " /afs/cern.ch/user/" + inituser + "/" + username + "/private/x509up")
 
 
-split = 50
+split = 5
 #Writing the configuration file
 for sample in samples:
     condorsubb = condorsub + "_" + str(sample.year) + ".sub"
