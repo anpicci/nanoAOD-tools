@@ -290,13 +290,13 @@ def mergepart(dataset):
                 clf_SM = pickle.load(file)
                 file.close()
 
-                file = open(model_dim6_path,'rb')
-                clf_dim6 = pickle.load(file)
-                file.close()
+                #file = open(model_dim6_path,'rb')
+                #clf_dim6 = pickle.load(file)
+                #file.close()
                
-                file = open(model_dim8_path,'rb')
-                clf_dim8 = pickle.load(file)
-                file.close()
+                #file = open(model_dim8_path,'rb')
+                #clf_dim8 = pickle.load(file)
+                #file.close()
                
                 # load model 
                 #file = open(model_path,'rb')
@@ -460,8 +460,8 @@ def mergepart(dataset):
 
                 # update root file with BDT branch
                 BDT_output_SM_array = clf_SM.predict_proba(X)[:,1]
-                BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
-                BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
+                #BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
+                #BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
 
                 #BDT_output_SM_array = clf_SM.decision_function(X)
                 #BDT_output_dim6_array = clf_dim6.decision_function(X)
@@ -485,8 +485,11 @@ def mergepart(dataset):
                 numOfEvents = mytree.GetEntries()
                 for n in range(numOfEvents):
                     BDT_output_SM[0] = BDT_output_SM_array[n]
-                    BDT_output_dim6[0] = BDT_output_dim6_array[n]
-                    BDT_output_dim8[0] = BDT_output_dim8_array[n]
+                    BDT_output_dim6[0] = 1.
+                    BDT_output_dim8[0] = 1.
+                    #BDT_output_dim6[0] = BDT_output_dim6_array[n]
+                    #BDT_output_dim8[0] = BDT_output_dim8_array[n]
+                    
                     #BDT_output[0] = BDT_output_array[n]
                     #BDT_output_ele[0] = BDT_output_ele_array[n]
                     #BDT_output_mu[0] = BDT_output_mu_array[n]
