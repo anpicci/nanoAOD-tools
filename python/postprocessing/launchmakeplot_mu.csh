@@ -10,12 +10,12 @@ set channel = "ltau"
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder2/plot/muon/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder3/plot/muon/ #countings
 
-python3 makeplot.py -y 2017 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --user ttedesch
-python3 makeplot.py -y 2017 --lep muon --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch
-python3 makeplot.py -y 2017 --lep muon --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch
-python3 makeplot.py -y 2017 --lep muon --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch
-python3 makeplot.py -y 2017 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch
-python3 makeplot.py -y 2017 --lep muon --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch
+python3 makeplot.py -y 2017 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
+python3 makeplot.py -y 2017 --lep muon --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
+python3 makeplot.py -y 2017 --lep muon --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
+python3 makeplot.py -y 2017 --lep muon --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
+python3 makeplot.py -y 2017 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
+python3 makeplot.py -y 2017 --lep muon --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
 
 #python3 makeplot.py -y 2017 --lep muon --sr -f $folder1 -p --ch $channel --wfake incl_vsjet4  --count
 #python3 makeplot.py -y 2017 --lep muon --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet4  --count

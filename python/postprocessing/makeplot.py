@@ -61,7 +61,7 @@ parser.add_option('--model_SM', dest='model_SM', default = '/afs/cern.ch/user/t/
 parser.add_option('--model_dim6', dest='model_dim6', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_dim6.p', type='string', help='Path to ML model for dim6 analysis')
 parser.add_option('--model_dim8', dest='model_dim8', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_dim8.p', type='string', help='Path to ML model for dim8 analysis')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
-
+parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='Tag to distinguish between different makeplot runs')
 
 (opt, args) = parser.parse_args()
 #print (opt, args)
@@ -74,7 +74,7 @@ def cutToTag(cut):
 folder = opt.folder 
 if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     folder += "/" + opt.channel
-pfolder = opt.folder
+pfolder = opt.folder + opt.plot_tag
 
 print(folder)
 
