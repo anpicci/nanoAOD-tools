@@ -152,7 +152,7 @@ elif opt.fakes:
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.)*(" + cut + ")",
                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&pass_tau_veto==1&&MET_pt<=50.)*(" + cut + ")",
             }
-    cut_tag = 'wjets_CR'
+    cut_tag = 'fakes_CR'
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)
 elif opt.wjets:
