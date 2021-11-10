@@ -1,6 +1,7 @@
 #set LD_PRELOAD=libtcmalloc.so
-set year = 2017
-set folder0 = v100_tagger_DataSplit_MCnoSplit
+set year1 = 2017
+set year2 = 2018
+set folder0 = v100 #_tagger_DataSplit_MCnoSplit
 #set folder1 = v96
 #set folder2 = v97
 #set folder3 = v98
@@ -10,95 +11,88 @@ set channel = 'ltau' #
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder2/plot/electron/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder3/plot/electron/ #countings
 
+#python3 makeplot.py -y $year1 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count  
+#python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count  
+python3 makeplot.py -y $year1 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count  
 
-#python3 makeplot.py -y 2017 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch
-#python3 makeplot.py -y 2017 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch
-#python3 makeplot.py -y 2017 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch 
-#python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch
-#python3 makeplot.py -y 2017 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch 
+#python3 makeplot.py -y $year1 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
 
+#python3 makeplot.py -y $year1 --lep electron --ws -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --sr -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
 
-python3 makeplot.py -y 2017 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
-python3 makeplot.py -y 2017 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
-python3 makeplot.py -y 2017 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch  --plot_tag '_cut01' --cut 'taggerScore > 0.1'
-python3 makeplot.py -y 2017 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
-python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
-python3 makeplot.py -y 2017 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --user ttedesch --plot_tag '_cut01' --cut 'taggerScore > 0.1'
-
-#python3 makeplot.py -y 2017 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
-
-#python3 makeplot.py -y 2017 --lep electron --ws -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --sr -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --wjets -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --qcd -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
-
-#python3 makeplot.py -y 2017 --lep electron --ws -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --sr -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --wjets -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2017 --lep electron --qcd -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --ws -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --sr -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
 
 ####### 2018 #######################
 
-#python3 makeplot.py -y 2018 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
+python3 makeplot.py -y $year2 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count  
 
-#python3 makeplot.py -y 2018 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count 
 
-#python3 makeplot.py -y 2018 --lep electron --ws -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --bveto -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --sr -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --wjets -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --ttbar -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot.py -y 2018 --lep electron --qcd -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ws -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --bveto -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --sr -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --wjets -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count
+#python3 makeplot.py -y $year2 --lep electron --qcd -f $folder2 -p --ch $channel --wfake incl_vsjet2 --count 
 
-#python3 makeplot.py -y 2018 --lep electron --ws -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --bveto -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --sr -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --wjets -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --ttbar -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
-#python3 makeplot.py -y 2018 --lep electron --qcd -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ws -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --bveto -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --sr -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --wjets -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
+#python3 makeplot.py -y $year2 --lep electron --qcd -f $folder3 -p --ch $channel --wfake incl_vsjet2 --count 
 
-#python3 makeplot.py -y 2017 --lep electron --ws -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --sr -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --wjets -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
-#python3 makeplot.py -y 2017 --lep electron --qcd -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --ws -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --sr -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder1 -p --ch $channel --wfake sep_vsjet2 --count
 
 ##################### plot with BDT cuts #############################
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt #--blinded
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt #--blinded
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt #--blinded
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt #--blinded
 
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt #--blinded
-#python3 makeplot.py -y 2017 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt #--blinded
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt #--blinded
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt #--blinded
 
-#python3 makeplot.py -y 2017 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt #--blinded
-#python3 makeplot.py -y 2017 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt #--blinded
+#python3 makeplot.py -y $year1 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt #--blinded
+#python3 makeplot.py -y $year1 --lep electron --sr -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt #--blinded
 
-#python3 makeplot.py -y 2017 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt
-#python3 makeplot.py -y 2017 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt
 
-#python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt 
-#python3 makeplot.py -y 2017 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt
+#python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt 
+#python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt
 
-#python3 makeplot.py -y 2017 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt 
-#python3 makeplot.py -y 2017 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --bdt 
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count --ebdt

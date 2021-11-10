@@ -3077,6 +3077,7 @@ class_list=[
     Other_2018,
     TTTo2L2Nu_2018,
     WZ_2018,
+    DYJetsToLL_2018,
     #OtherWS_2018,
     WrongSign_2018,
     ZZtoLep_2018,
