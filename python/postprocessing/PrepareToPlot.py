@@ -46,7 +46,7 @@ if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and 
 #datas = opt.dataset + "_" + opt.year
 
 Debug = opt.check # True # False #
-split = 50
+split = 5
 
 def CondoredList(samplename):
     try:

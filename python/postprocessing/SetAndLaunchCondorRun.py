@@ -4,7 +4,7 @@ import sys
 from samples.samples import *
 
 cshname = "condorrun_tauwp.csh"
-split = 50
+split = 5
 
 def CondoredList(samplename):
     try:

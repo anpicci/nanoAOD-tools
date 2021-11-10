@@ -18,6 +18,10 @@ from xgboost import XGBClassifier
 import numpy as np
 import pickle
 
+with open('/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p', 'rb') as file:
+    model = pickle.load(file)
+print("model loaded outside loop")
+
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 WP_btagger = {
@@ -435,13 +439,13 @@ def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEta
         return jet1, jet2, maxScore
 
     
-    if modelType == 'xgboost':
-        with open(modelPath, 'rb') as file:
-            model = pickle.load(file)
-    elif modelType == 'keras':
-        model = load_model(modelPath)
-    else:
-        print("Tell me if it's either an XGboost or a Keras model") 
+    #if modelType == 'xgboost':
+        #with open(modelPath, 'rb') as file:
+            #model = pickle.load(file)
+    #elif modelType == 'keras':
+        #model = load_model(modelPath)
+    #else:
+        #print("Tell me if it's either an XGboost or a Keras model") 
     #else, search for two isolated jets compatible with VBS
 
     idxjet1 = -1
