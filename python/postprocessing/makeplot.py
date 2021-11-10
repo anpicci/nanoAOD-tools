@@ -1201,10 +1201,12 @@ for year in years:
             variables.append(variabile('BDT_output_SM', 'SM BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
             variables.append(variabile('BDT_output_dim6', 'dim6 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
             variables.append(variabile('BDT_output_dim8', 'dim8 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
+        '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
         except:
             pass
+        '''
 
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
