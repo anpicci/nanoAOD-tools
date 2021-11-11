@@ -170,69 +170,69 @@ set LD_PRELOAD=libtcmalloc.so
 
 set channel = 'emu'
 
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 #--blinded
 
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt #--blinded
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt #--blinded
 
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt #--blinded
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt #--blinded
-
-set LD_PRELOAD=libtcmalloc.so
-
-#python makeplot.py -y $year --lep incl --ws -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 #--blinded
-
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt #--blinded
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt #--blinded
-
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt #--blinded
-#python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt #--blinded
 
 set LD_PRELOAD=libtcmalloc.so
 
-#python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
-#python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake sep_vsjet2 #--blinded
+##python makeplot.py -y $year --lep incl --ws -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 #--blinded
 
-#python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt #--blinded
-#python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt #--blinded
 
-#python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt #--blinded
-#python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt #--blinded
-
-set LD_PRELOAD=libtcmalloc.so
-
-#python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake incl_vsjet2
-#python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake sep_vsjet2
-
-#python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt
-#python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt 
-
-#python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt
-#python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt #--blinded
+##python makeplot.py -y $year --lep incl --bveto -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt #--blinded
 
 set LD_PRELOAD=libtcmalloc.so
 
-#python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake incl_vsjet2
-#python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake sep_vsjet2
+##python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake incl_vsjet2 #--blinded
+##python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake sep_vsjet2 #--blinded
 
-#python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt
-#python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt 
+##python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt #--blinded
+##python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt #--blinded
 
-#python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt
-#python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt
+##python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt #--blinded
+##python makeplot.py -y $year --lep incl --sr -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt #--blinded
 
 set LD_PRELOAD=libtcmalloc.so
 
-#python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake incl_vsjet2
-#python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake sep_vsjet2
+##python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake incl_vsjet2
+##python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake sep_vsjet2
 
-#python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt
-#python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt 
+##python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt
+##python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt 
 
-#python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt
-#python  makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt
+##python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt
+##python makeplot.py -y $year --lep incl --wjets -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt
+
+set LD_PRELOAD=libtcmalloc.so
+
+##python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake incl_vsjet2
+##python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake sep_vsjet2
+
+##python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt
+##python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt 
+
+##python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt
+##python makeplot.py -y $year --lep incl --ttbar -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt
+
+set LD_PRELOAD=libtcmalloc.so
+
+##python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake incl_vsjet2
+##python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake sep_vsjet2
+
+##python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake incl_vsjet2 --bdt
+##python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake sep_vsjet2 --bdt 
+
+##python makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake incl_vsjet2 --mubdt
+##python  makeplot.py -y $year --lep incl --qcd -f $folder -s --ch $channel --wfake sep_vsjet2 --mubdt
 
 set LD_PRELOAD=libtcmalloc.so
 
