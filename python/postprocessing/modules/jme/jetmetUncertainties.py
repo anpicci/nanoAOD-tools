@@ -78,7 +78,21 @@ class jetmetUncertaintiesProducer(Module):
             elif era == "2018" and False:  # jetSmearer not working with 2018 JERs yet
                 self.jerInputFileName = "Autumn18_V7_MC_PtResolution_" + jetType + ".txt"
                 self.jerUncertaintyInputFileName = "Autumn18_V7_MC_SF_" + jetType + ".txt"
-
+            elif era == "UL2016APV":
+                self.jerInputFileName = "Summer20UL16APV_JRV3_MC_PtResolution_" + jetType + ".txt"
+                self.jerUncertaintyInputFileName = "Summer20UL16APV_JRV3_MC_SF_" + jetType + ".txt"
+            elif era == "UL2016":
+                self.jerInputFileName = "Summer20UL16_JRV3_MC_PtResolution_" + jetType + ".txt"
+                self.jerUncertaintyInputFileName = "Summer20UL16_JRV3_MC_SF_" + jetType + ".txt"
+            elif era == "UL2017":
+                if not (jetType == "PFAK4chs"):
+                    raise ValueError("For UL2017 only PFAK4chs jer uncertainties are available up to now")
+                self.jerInputFileName = "Summer19UL17_JRV2_MC_PtResolution_" + jetType + ".txt"
+                self.jerUncertaintyInputFileName = "Summer19UL17_JRV2_MC_SF_" + jetType + ".txt"
+            elif era == "UL2018":
+                self.jerInputFileName = "Summer19UL18_JRV2_MC_PtResolution_" + jetType + ".txt"
+                self.jerUncertaintyInputFileName = "Summer19UL18_JRV2_MC_SF_" + jetType + ".txt"
+                
         self.jetSmearer = jetSmearer(globalTag, jetType, self.jerInputFileName,
                                      self.jerUncertaintyInputFileName)
 
