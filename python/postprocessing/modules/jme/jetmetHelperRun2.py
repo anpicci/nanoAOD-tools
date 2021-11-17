@@ -11,6 +11,8 @@ jecTagsMC = {
     '2016': 'Summer16_07Aug2017_V11_MC',
     '2017': 'Fall17_17Nov2017_V32_MC',
     '2018': 'Autumn18_V19_MC',
+    'UL2016APV': 'Summer19UL16APV_V7_MC',
+    'UL2016': 'Summer19UL16_V7_MC',
     'UL2017': 'Summer19UL17_V6_MC',
     'UL2018': 'Summer19UL18_V5_MC',
 }
@@ -19,14 +21,18 @@ jecTagsFastSim = {
     '2016': 'Spring16_25nsFastSimV1_MC',
     '2017': 'Fall17_FastSimV1_MC',
     '2018': 'Autumn18_FastSimV1_MC',
+    #UL not available
 }
 
 archiveTagsDATA = {
     '2016': 'Summer16_07Aug2017_V11_DATA',
     '2017': 'Fall17_17Nov2017_V32_DATA',
     '2018': 'Autumn18_V19_DATA',
-    'UL2017': 'Summer19UL17_V6_DATA',
-    'UL2018': 'Summer19UL18_V5_DATA'
+    'UL2016APV': None,
+    'UL2016': None,
+    'UL2017': None,
+    'UL2018': None,
+    #For ULs None is a dummy value, preferrable to use jecTagsData for every RunEra to face the UL mess
 }
 
 jecTagsDATA = {
@@ -46,11 +52,15 @@ jecTagsDATA = {
     '2018B': 'Autumn18_RunB_V19_DATA',
     '2018C': 'Autumn18_RunC_V19_DATA',
     '2018D': 'Autumn18_RunD_V19_DATA',
-    'UL2016B': 'Summer19UL17_RunB_V6_DATA',
-    'UL2016C': 'Summer19UL17_RunC_V6_DATA',
-    'UL2016D': 'Summer19UL17_RunD_V6_DATA',
-    'UL2016E': 'Summer19UL17_RunE_V6_DATA',
-    'UL2016F': 'Summer19UL17_RunF_V6_DATA',
+    'UL2016B-ver1_HIPM': 'Summer19UL16APV_RunBCD_V7_DATA', ##APV
+    'UL2016B-ver2_HIPM': 'Summer19UL16APV_RunBCD_V7_DATA', ##APV
+    'UL2016C': 'Summer19UL16APV_RunBCD_V6_DATA', ##APV
+    'UL2016D': 'Summer19UL16APV_RunBCD_V6_DATA', ##APV
+    'UL2016E': 'Summer19UL16APV_RunEF_V6_DATA', ##APV
+    'UL2016F-HIPM': 'Summer19UL16APV_RunEF_V6_DATA', ##APV
+    'UL2016F': 'Summer19UL16_RunFGH_V6_DATA',
+    'UL2016G': 'Summer19UL16_RunFGH_V6_DATA',
+    'UL2016H': 'Summer19UL16_RunFGH_V6_DATA',
     'UL2017B': 'Summer19UL17_RunB_V6_DATA',
     'UL2017C': 'Summer19UL17_RunC_V6_DATA',
     'UL2017D': 'Summer19UL17_RunD_V6_DATA',
@@ -66,6 +76,8 @@ jerTagsMC = {
     '2016': 'Summer16_25nsV1_MC',
     '2017': 'Fall17_V3_MC',
     '2018': 'Autumn18_V7b_MC',
+    'UL2016APV': 'Summer20UL16APV_JRV3_MC',
+    'UL2016': 'Summer20UL16_JRV3_MC',
     'UL2017': 'Summer19UL17_JRV2_MC',
     'UL2018': 'Summer19UL18_JRV2_MC',
 }
@@ -77,8 +89,10 @@ jmrValues = {
     '2017': [1.09, 1.14, 1.04],
     # Use 2017 values for 2018 until 2018 are released
     '2018': [1.09, 1.14, 1.04],
-    'UL2017': [1.00, 1.00, 1.00],  # placeholder
-    'UL2018': [1.00, 1.00, 1.00],  # placeholder
+    'UL2016APV': [1.0, 1.2, 0.8]
+    'UL2016': [1.0, 1.2, 0.8]
+    'UL2017': [1.09, 1.14, 1.04],
+    'UL2018': [1.09, 1.14, 1.04],
 }
 
 # jet mass scale
@@ -89,8 +103,10 @@ jmsValues = {
     '2017': [0.982, 0.978, 0.986],
     # Use 2017 values for 2018 until 2018 are released
     '2018': [0.982, 0.978, 0.986],
-    'UL2017': [1.000, 1.000, 1.000],  # placeholder
-    'UL2018': [1.000, 1.000, 1.000],  # placeholder
+    'UL2016APV': [1.00, 0.9906, 1.0094],  # nominal, down, up
+    'UL2016': [1.00, 0.9906, 1.0094],  # nominal, down, up
+    'UL2017': [0.982, 0.978, 0.986],  # placeholder
+    'UL2018': [0.982, 0.978, 0.986],  # placeholder
 }   
 
 

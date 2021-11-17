@@ -62,6 +62,8 @@ class jetmetUncertaintiesProducer(Module):
         # smear jet pT to account for measured difference in JER between data
         # and simulation.
         if jerTag != "":
+            if era == "UL2017" and not jetType == "PFAK4chs":
+                    raise ValueError("For UL2017 only PFAK4chs jer uncertainties are available up to now")
             self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
             self.jerUncertaintyInputFileName = jerTag + "_SF_" + jetType + ".txt"
         else:
