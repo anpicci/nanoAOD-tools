@@ -168,3 +168,24 @@ class PrefCorr(Module):
             pref_prob = max(pref_prob - math.sqrt(stat * stat + syst * syst),
                             0.0)
         return pref_prob
+
+PrefireCorr_UL2016APV = lambda : PrefireCorr(
+                 jetroot="L1PrefiringMaps.root",
+                 jetmapname="L1prefiring_jetptvseta_UL2016preVFP",
+                 photonroot="L1PrefiringMaps.root",
+                 photonmapname="L1prefiring_photonptvseta_UL2016preVFP",
+)
+
+PrefireCorr_UL2016 = lambda : PrefireCorr(
+                 jetroot="L1PrefiringMaps.root",
+                 jetmapname="L1prefiring_jetptvseta_UL2016postVFP",
+                 photonroot="L1PrefiringMaps.root",
+                 photonmapname="L1prefiring_photonptvseta_UL2016postVFP",
+)
+
+PrefireCorr_UL2017 = lambda : PrefireCorr(
+                 jetroot="L1PrefiringMaps.root",
+                 jetmapname="L1prefiring_jetptvseta_UL2017BtoF",
+                 photonroot="L1PrefiringMaps.root",
+                 photonmapname="L1prefiring_photonptvseta_UL2017BtoF",
+)
