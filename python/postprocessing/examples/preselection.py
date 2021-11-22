@@ -20,36 +20,34 @@ class preselection(Module):
         pass
     def analyze(self, event):
         goodEvent = False
-        #isVetoMu = False
-        #isVetoEle = False
+
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        #electrons = Collection(event, "Electron")
-        #muons = Collection(event, "Muon")
+
+        electrons = Collection(event, "Electron")
+        muons = Collection(event, "Muon")
+        taus = Collection(event, "Tau")
         jets = Collection(event, "Jet")
-        #fatjets = Collection(event, "FatJet")
         PV = Object(event, "PV")
-        #goodEle = []
-        #goodJet = []
+
         eventSum = ROOT.TLorentzVector()
 
-        isGoodPV = (PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2)
+        isGoodPV = (PV.ndof>4 and abs(PV.z)<24 and math.hypot(PV.x, PV.y)<2)
 
-        #goodMu = list(filter(lambda x : x.tightId and abs(x.eta) < 2.4 and x.miniPFRelIso_all < 0.1, muons))
-        #looseMu = list(filter(lambda x : x.looseId and not x.tightId and x.pt > 35 and x.miniPFRelIso_all < 0.4 and abs(x.eta) < 2.4, muons))
-        #goodEle = list(filter(lambda x : x.mvaFall17V2noIso_WP90 and x.miniPFRelIso_all < 0.1 and ((abs(x.eta) < 1.4442) or (abs(x.eta) > 1.566 and abs(x.eta) < 2.5)), electrons))
-        #looseEle = list(filter(lambda x : x.mvaFall17V2noIso_WPL and not x.mvaFall17V2noIso_WP90 and x.miniPFRelIso_all < 0.4 and x.pt > 35 and ((abs(x.eta) < 1.4442) or (abs(x.eta) > 1.566 and abs(x.eta)< 2.5)), electrons))
-        #goodJet = list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 2.4 and x.pt > 25, jets))
+        looseMu = list(filter(lambda x : x.looseId and x.pt > 35. and x.pfRelIso04_all < 1. and x.pfRelIso04_all>=0. and abs(x.eta) < 2.4, muons))
+        looseEle = list(filter(lambda x : x.mvaFall17V2Iso_WPL and x.jetRelIso < 1. and x.jetRelIso >= 0. and x.pt > 35. and ((abs(x.eta) < 1.4442) or (abs(x.eta) > 1.566 and abs(x.eta)< 2.5)), electrons))
+        looseTau = list(filter(lambda x : x.idDeepTau2017v2p1VSjet >= 8 and x.idDeepTau2017v2p1VSe >= 4 and x.idDeepTau2017v2p1VSmu >= 8 and x.idDecayModeNewDMs and x.pt > 30. and abs(x.eta) < 2.3, taus))
+        looseJet = list(filter(lambda x : x.pt > 30 and abs(x.eta) < 5. and x.pt > 30. and (x.pt >= 50. or (x.pt < 50. and x.puId >= 7)), jets))
 
         for j in jets:
             eventSum += j.p4()
 
         self.out.fillBranch("HT_eventHT", eventSum.Pt())
 
-        #isGoodEvent = ((((len(goodMu) >= 1) and (len(goodEle) == 0)) or ((len(goodMu) == 0) and (len(goodEle) >= 1))) and len(goodJet)>=1)
-        isGoodEvent = True
+        isGoodEvent = (len(looseEle) > 0 or len(looseMu) > 0) and len(looseTau) > 0 and len(looseJet) > =
+        #isGoodEvent = True
+
         goodEvent = isGoodPV and isGoodEvent
-        #if(goodEvent):
-            #print "No. Mu = ", len(goodMu), " No. Ele = ", len(goodEle), " veto Mu is ", not isVetoMu, " veto Ele is ", not isVetoEle, " No. barrel jets = ", len(goodJet)
+
         return goodEvent
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
