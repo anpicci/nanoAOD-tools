@@ -688,7 +688,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
           #cut = cut + "*10."
 
      if opt.horn:
-         cut = cut + "*(abs(leadjet_eta)<3.2&&abs(leadjet_eta)>2.5)*(abs(subleadjet_eta)<3.2&&abs(subleadjet_eta)>2.5)"
+         cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
 
      print('cut:', str(cut))
      foutput = pathplot + sample.label + "_" + lep + ".root"
