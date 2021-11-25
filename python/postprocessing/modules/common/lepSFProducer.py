@@ -52,7 +52,7 @@ class lepSFProducer(Module):
         
         if muonSelectionTag == "TightWP_UL2016APV":
             mu_f = ["MuID_Tight_UL2016APV.root", "MuTRIG_UL2016APV.root", "MuISO_Tight_UL2016APV.root"]#, "MuRECO_UL2016APV.root"]
-            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt". "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt"]#, "NUM_TrackerMuons_DEN_genTracks"]
+            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt"] #, "NUM_TrackerMuons_DEN_genTracks"]
 
         if electronSelectionTag == "IsoMVA90_UL2016APV":
             el_f = ["EleRECO_UL2016APV_EGM2D.root", "EleID_WP90Iso_UL2016APV_EGM2D.root"]
@@ -62,7 +62,7 @@ class lepSFProducer(Module):
         
         if muonSelectionTag == "TightWP_UL2016":
             mu_f = ["MuID_Tight_UL2016.root", "MuTRIG_UL2016.root", "MuISO_Tight_UL2016.root", "MuRECO_UL2016.root"]
-            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt". "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
+            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
 
         if electronSelectionTag == "IsoMVA90_UL2016":
             el_f = ["EleRECO_UL2016_EGM2D.root", "EleID_WP90Iso_UL2016_EGM2D.root"]
@@ -72,7 +72,7 @@ class lepSFProducer(Module):
         
         if muonSelectionTag == "TightWP_UL2017":
             mu_f = ["MuID_Tight_UL2017.root", "MuTRIG_UL2017.root", "MuISO_Tight_UL2017.root", "MuRECO_UL2017.root"]
-            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt". "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
+            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
 
         if electronSelectionTag == "IsoMVA90_UL2017":
             el_f = ["EleRECO_UL2017_EGM2D.root", "EleID_WP90Iso_UL2017_EGM2D.root"]
@@ -82,7 +82,7 @@ class lepSFProducer(Module):
         
         if muonSelectionTag == "TightWP_UL2018":
             mu_f = ["MuID_Tight_UL2018.root", "MuTRIG_UL2018.root", "MuISO_Tight_UL2018.root", "MuRECO_UL2018.root"]
-            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt". "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
+            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
 
         if electronSelectionTag == "IsoMVA90_UL2018":
             el_f = ["EleRECO_UL2018_EGM2D.root", "EleID_WP90Iso_UL2018_EGM2D.root"]

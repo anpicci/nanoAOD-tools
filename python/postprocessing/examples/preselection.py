@@ -43,7 +43,7 @@ class preselection(Module):
 
         self.out.fillBranch("HT_eventHT", eventSum.Pt())
 
-        isGoodEvent = (len(looseEle) > 0 or len(looseMu) > 0) and len(looseTau) > 0 and len(looseJet) > =
+        isGoodEvent = ((len(looseEle) > 0 or len(looseMu) > 0) and len(looseTau) > 0 and len(looseJet) >= 0 )
         #isGoodEvent = True
 
         goodEvent = isGoodPV and isGoodEvent

@@ -111,7 +111,7 @@ jmsValues = {
 
 
 def createJMECorrector(isMC=True,
-                       dataYear=2016,
+                       dataYear="2016",
                        runPeriod="B",
                        jesUncert="Total",
                        jetType="AK4PFchs",

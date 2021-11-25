@@ -18,8 +18,11 @@ reset
 #python submit_crab.py -d VBFHToTauTau_$year --status # -s 
 #python submit_crab.py -d DataEle_$year --status #
 #python submit_crab.py -d DataMu_$year --status #
-python submit_crab.py -d QCD_$year --status #
+#python submit_crab.py -d QCD_$year --status #
 
 #set year = '2017'
 #python submit_crab.py -d DataEle_$year --status
 #python submit_crab.py -d DataMu_$year --status
+
+######### UL ########
+python submit_crab.py -d TTTo2L2Nu_UL2017 -s
