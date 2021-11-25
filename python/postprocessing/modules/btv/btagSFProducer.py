@@ -361,3 +361,8 @@ class btagSFProducer(Module):
 btagSF2016 = lambda : btagSFProducer("Legacy2016", "deepjet")
 btagSF2017 = lambda : btagSFProducer("2017", "deepjet")
 btagSF2018 = lambda : btagSFProducer("2018", "deepjet")
+
+btagSFUL2016APV = lambda : btagSFProducer("Legacy2016", "deepjet")
+btagSFUL2016 = lambda : btagSFProducer("Legacy2016", "deepjet")
+btagSFUL2017 = lambda : btagSFProducer("UL2017", "deepjet")
+btagSFUL2018 = lambda : btagSFProducer("UL2018", "deepjet")
