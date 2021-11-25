@@ -5,12 +5,12 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
 class MCweight_writer(Module):
-    def __init__(self, samplename, LHAPDFs=None):
+    def __init__(self, samplename):#, LHAPDFs=None):
         self.writeHistFile=True
-        self.addLHA=False
-        if not(LHAPDFs is None):
-            self.addLHA=True
-            self.LHAPDFs=LHAPDFs
+        #self.addLHA=False
+        #if not(LHAPDFs is None):
+            #self.addLHA=True
+            #self.LHAPDFs=LHAPDFs
 
         self.samplename = samplename
 
@@ -26,9 +26,9 @@ class MCweight_writer(Module):
         self.addObject(self.h_psweight)
         self.addObject(self.h_PDFweight)
 
-        if(self.addLHA):
-            self.h_LHAPDFweight = [ROOT.TH1F() for l in self.LHAPDFs]
-            [self.addObject(self.h_LHAPDFweight[l]) for l in range(0,len(self.LHAPDFs))]
+        #if(self.addLHA):
+            #self.h_LHAPDFweight = [ROOT.TH1F() for l in self.LHAPDFs]
+            #[self.addObject(self.h_LHAPDFweight[l]) for l in range(0,len(self.LHAPDFs))]
 
     def analyze(self, event):
 
@@ -69,7 +69,8 @@ class MCweight_writer(Module):
             self.h_psweight.Fill('FSRdown', PSWeight[0].__getattr__(""))
             self.h_psweight.Fill('ISRup', PSWeight[0].__getattr__(""))
             self.h_psweight.Fill('FSRup', PSWeight[0].__getattr__(""))
-
+        
+        '''
         if(self.addLHA):
             if len(self.LHAPDFs)>0:#For now only single-pdf implemented//
                 for l in range(0,len(self.LHAPDFs)):
@@ -89,6 +90,7 @@ class MCweight_writer(Module):
                             #print(" i ",i , " pdfw ",pdfw)
                             self.h_LHAPDFweight[l].GetXaxis().SetBinLabel(i, 'pdf['+str(i)+']')
                             self.h_LHAPDFweight[l].AddBinContent(i, pdfw)          
+        '''
 
         self.h_genweight.Fill("SumEvents", 1)
         self.h_genweight.Fill("GenWeights", Generator.weight)

@@ -103,7 +103,7 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.hepmcDump import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
-    f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.LHAPDFWeightProducer import *\n") 
+    #f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.LHAPDFWeightProducer import *\n") 
     f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlag import *\n")
 
 

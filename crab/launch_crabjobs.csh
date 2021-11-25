@@ -25,4 +25,4 @@ reset
 #python submit_crab.py -d DataMu_$year --status
 
 ######### UL ########
-python submit_crab.py -d TTTo2L2Nu_UL2017 -p
+python submit_crab.py -d TTTo2L2Nu_UL2017 -s
