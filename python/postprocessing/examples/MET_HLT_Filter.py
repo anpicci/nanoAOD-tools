@@ -17,7 +17,7 @@ class MET_HLT_Filter(Module):
         HLT = Object(event, "HLT")
         L1 = Object(event, "L1")
         flag = Object(event, 'Flag')
-        if not "UL" in year:
+        if not "UL" in self.year:
             good_MET = flag.goodVertices and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter
             if(self.year == "2016"):
                 good_HLT = (HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf or HLT.IsoMu24 or HLT.IsoTkMu24) and flag.globalSuperTightHalo2016Filter
@@ -29,9 +29,9 @@ class MET_HLT_Filter(Module):
                 print("Please specify the year: possible choices are 2016, 2017 or 2018")
 
         else:
-            if "2017" in year or "2018" in year:
+            if "2017" in self.year or "2018" in self.year:
                 good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.BadPFMuonDzFilter and flag.eeBadScFilter and flag.ecalBadCalibFilter
-            elif "2016" in year:
+            elif "2016" in self.year:
                 good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.BadPFMuonDzFilter and flag.eeBadScFilter
         
             if(self.year == "UL2016APV" or self.year == "UL2016"):

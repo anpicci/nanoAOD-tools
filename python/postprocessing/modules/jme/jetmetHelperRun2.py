@@ -78,9 +78,21 @@ jerTagsMC = {
     '2018': 'Autumn18_V7b_MC',
     'UL2016APV': 'Summer20UL16APV_JRV3_MC',
     'UL2016': 'Summer20UL16_JRV3_MC',
-    'UL2017': 'Summer19UL17_JRV2_MC',
+    'UL2017': 'Summer19UL17_JRV3_MC',
     'UL2018': 'Summer19UL18_JRV2_MC',
 }
+
+'''
+jerTagsDATA = {
+    '2016': 'Summer16_25nsV1_MC',
+    '2017': 'Fall17_V3_MC',
+    '2018': 'Autumn18_V7b_MC',
+    'UL2016APV': 'Summer20UL16APV_JRV3_MC',
+    'UL2016': 'Summer20UL16_JRV3_MC',
+    'UL2017': 'Summer19UL17_JRV3_MC',
+    'UL2018': 'Summer19UL18_JRV2_MC',
+}
+'''
 
 # jet mass resolution: https://twiki.cern.ch/twiki/bin/view/CMS/JetWtagging
 #nominal, up, down
@@ -133,6 +145,7 @@ def createJMECorrector(isMC=True,
         jecTag_ = jecTagsDATA[dataYear + runPeriod]
 
     jmeUncert_ = [x for x in jesUncert.split(",")]
+    
     jerTag_ = jerTagsMC[dataYear]
     jmrValues_ = jmrValues[dataYear]
     jmsValues_ = jmsValues[dataYear]

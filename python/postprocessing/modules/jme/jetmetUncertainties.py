@@ -62,8 +62,8 @@ class jetmetUncertaintiesProducer(Module):
         # smear jet pT to account for measured difference in JER between data
         # and simulation.
         if jerTag != "":
-            if era == "UL2017" and not jetType == "PFAK4chs":
-                    raise ValueError("For UL2017 only PFAK4chs jer uncertainties are available up to now")
+            #if era == "UL2017" and not jetType == "AK4PFchs":
+                    #raise ValueError("For UL2017 only AK4PFchs jer uncertainties are available up to now")
             self.jerInputFileName = jerTag + "_PtResolution_" + jetType + ".txt"
             self.jerUncertaintyInputFileName = jerTag + "_SF_" + jetType + ".txt"
         else:
@@ -142,7 +142,7 @@ class jetmetUncertaintiesProducer(Module):
                 ]
                 sources = [x[1:-1] for x in sources]
                 self.jesUncertainties = sources
-        if applyHEMfix:
+        if applyHEMfix and (era == "UL2018" or era == "2018"):
             self.jesUncertainties.append("HEMIssue")
 
         # Define the jet recalibrator

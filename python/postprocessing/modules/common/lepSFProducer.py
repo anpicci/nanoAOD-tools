@@ -71,8 +71,11 @@ class lepSFProducer(Module):
         ##### UL2017 #####
         
         if muonSelectionTag == "TightWP_UL2017":
+            #mu_f = ["MuID_Tight_UL2017.root", "MuTRIG_UL2017.root", "MuISO_Tight_UL2016.root", "MuRECO_UL2016.root"]
+            #mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
+
             mu_f = ["MuID_Tight_UL2017.root", "MuTRIG_UL2017.root", "MuISO_Tight_UL2017.root", "MuRECO_UL2017.root"]
-            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
+            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu27_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
 
         if electronSelectionTag == "IsoMVA90_UL2017":
             el_f = ["EleRECO_UL2017_EGM2D.root", "EleID_WP90Iso_UL2017_EGM2D.root"]
@@ -82,7 +85,7 @@ class lepSFProducer(Module):
         
         if muonSelectionTag == "TightWP_UL2018":
             mu_f = ["MuID_Tight_UL2018.root", "MuTRIG_UL2018.root", "MuISO_Tight_UL2018.root", "MuRECO_UL2018.root"]
-            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_or_IsoTkMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
+            mu_h = ["NUM_TightID_DEN_TrackerMuons_abseta_pt", "NUM_IsoMu24_DEN_CutBasedIdTight_and_PFIsoTight_abseta_pt", "NUM_TightRelIso_DEN_TightIDandIPCut_abseta_pt", "NUM_TrackerMuons_DEN_genTracks"]
 
         if electronSelectionTag == "IsoMVA90_UL2018":
             el_f = ["EleRECO_UL2018_EGM2D.root", "EleID_WP90Iso_UL2018_EGM2D.root"]
@@ -166,3 +169,4 @@ lepSF_UL2017 = lambda : lepSFProducer("TightWP_UL2017", "IsoMVA90_UL2017")
 lepSF_UL2018 = lambda : lepSFProducer("TightWP_UL2018", "IsoMVA90_UL2018")
 
 #lepSF = lambda: lepSFProducer("LooseWP_2016", "GPMVA90_2016")
+

@@ -14,8 +14,13 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import 
 metCorrector = createJMECorrector(isMC=True, dataYear=2017, jesUncert='All', applyHEMfix=True)
 fatJetCorrector = createJMECorrector(isMC=True, dataYear=2017, jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')
 
-p = PostProcessor('.', ['/store/mc/RunIIFall17NanoAODv7/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/PU2017_12Apr2018_Nano02Apr2020_new_pmx_102X_mc2017_realistic_v8-v1/60000/15CBBFFC-A5FB-0543-90C1-12DE4418883C.root'], '', modules=[MCweight_writer('TTTo2L2Nu_2017'), MET_HLT_Filter_2017(), preselection(), PrefCorr(), metCorrector(), fatJetCorrector(), lepSF_2017(), btagSF2017()],
-outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), histFileName="histOut.root", histDirName="plots", maxEntries=1000, provenance=True, fwkJobReport=True)
+p = PostProcessor('.', ['root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL17NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/20UL17JMENano_106X_mc2017_realistic_v9-v1/40000/014A4BBB-6379-2F48-8D50-25E51BDD1E9E.root'], '', 
+                  modules=[
+                      #MCweight_writer('TTTo2L2Nu_2017'), MET_HLT_Filter_2017(), 
+                      #preselection(), #PrefCorr(), metCorrector(), fatJetCorrector(),
+                      lepSF_UL2018(),# btagSF2017()
+                  ],
+outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), histFileName="histOut.root", histDirName="plots", maxEntries=2, provenance=True, fwkJobReport=True)
 p.run()
 print('DONE')
 #, PrefCorr(), metCorrector(), fatJetCorrector()

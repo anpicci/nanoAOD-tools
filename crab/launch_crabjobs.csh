@@ -24,5 +24,8 @@ reset
 #python submit_crab.py -d DataEle_$year --status
 #python submit_crab.py -d DataMu_$year --status
 
-######### UL ########
-python submit_crab.py -d TTTo2L2Nu_UL2017 -s
+######### UL ######
+python submit_crab.py -d TTTo2L2Nu_UL2016APV -s
+python submit_crab.py -d TTTo2L2Nu_UL2016 -s
+#python submit_crab.py -d TTTo2L2Nu_UL2017 --status
+python submit_crab.py -d TTTo2L2Nu_UL2018 -s

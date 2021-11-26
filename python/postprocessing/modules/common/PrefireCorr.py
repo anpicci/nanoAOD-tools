@@ -169,28 +169,28 @@ class PrefCorr(Module):
                             0.0)
         return pref_prob
 
-PrefireCorr_UL2016APV = lambda : PrefireCorr(
+PrefireCorr_UL2016APV = lambda : PrefCorr(
                  jetroot="L1PrefiringMaps.root",
                  jetmapname="L1prefiring_jetptvseta_UL2016preVFP",
                  photonroot="L1PrefiringMaps.root",
                  photonmapname="L1prefiring_photonptvseta_UL2016preVFP",
 )
 
-PrefireCorr_UL2016 = lambda : PrefireCorr(
+PrefireCorr_UL2016 = lambda : PrefCorr(
                  jetroot="L1PrefiringMaps.root",
                  jetmapname="L1prefiring_jetptvseta_UL2016postVFP",
                  photonroot="L1PrefiringMaps.root",
                  photonmapname="L1prefiring_photonptvseta_UL2016postVFP",
 )
 
-PrefireCorr_UL2017 = lambda : PrefireCorr(
+PrefireCorr_UL2017 = lambda : PrefCorr(
                  jetroot="L1PrefiringMaps.root",
                  jetmapname="L1prefiring_jetptvseta_UL2017BtoF",
                  photonroot="L1PrefiringMaps.root",
                  photonmapname="L1prefiring_photonptvseta_UL2017BtoF",
 )
 
-PrefireCorr_UL2018 = lambda : PrefireCorr(
+PrefireCorr_UL2018 = lambda : PrefCorr(
                  jetroot="L1PrefiringMaps.root",
                  jetmapname="L1prefiring_jetptvseta_UL2017BtoF",
                  photonroot="L1PrefiringMaps.root",
