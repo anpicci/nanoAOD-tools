@@ -23,6 +23,9 @@ TTdilepcolor = ROOT.kAzure-9
 TVXcolor = ROOT.kCyan-7
 VGcolor = ROOT.kSpring+7
 WScolor = ROOT.kGreen-10
+TBcolor = ROOT.kOrange-4
+WJcolor = ROOT.kGreen+2
+WZcolor = ROOT.kYellow-4
 
 ######### UL2016APV ##########
 
@@ -328,6 +331,109 @@ WrongSign_UL2016APV.components = [
     VHToNonbb_UL2016APV,
 ]
 
+### Triboson ###
+
+#### in production stage ####
+WWTo2L2Nu_DoubleScattering_UL2016APV = sample(OTcolor, 1, 1001, "WWTo2L2Nu_DoubleScattering", "WWTo2L2Nu_DoubleScattering_UL2016APV")
+WWTo2L2Nu_DoubleScattering_UL2016APV.year = "UL2016APV"
+WWTo2L2Nu_DoubleScattering_UL2016APV.dataset = ""
+WWTo2L2Nu_DoubleScattering_UL2016APV.sigma =  0.1703#pb
+
+WWW_4F_UL2016APV = sample(OTcolor, 1, 1001, "WWW_4F", "WWW_4F_UL2016APV")
+WWW_4F_UL2016APV.year = "UL2016APV"
+WWW_4F_UL2016APV.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+WWW_4F_UL2016APV.sigma =  0.2158#pb
+
+WWZ_4F_UL2016APV = sample(OTcolor, 1, 1001, "WWZ_4F", "WWZ_4F_UL2016APV")
+WWZ_4F_UL2016APV.year = "UL2016APV"
+WWZ_4F_UL2016APV.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+WWZ_4F_UL2016APV.sigma =  0.1707#pb
+
+WZZ_UL2016APV = sample(OTcolor, 1, 1001, "WZZ", "WZZ_UL2016APV")
+WZZ_UL2016APV.year = "UL2016APV"
+WZZ_UL2016APV.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+WZZ_UL2016APV.sigma =  0.05709#pb
+
+ZZZ_UL2016APV = sample(OTcolor, 1, 1001, "ZZZ", "ZZZ_UL2016APV")
+ZZZ_UL2016APV.year = "UL2016APV"
+ZZZ_UL2016APV.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+ZZZ_UL2016APV.sigma =  0.01476#pb
+
+WWG_UL2016APV = sample(OTcolor, 1, 1001, "WWG", "WWG_UL2016APV")
+WWG_UL2016APV.year = "UL2016APV"
+WWG_UL2016APV.dataset = "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WWG_UL2016APV.sigma = 0.2147#pb
+
+Triboson_UL2016APV = sample(OTcolor, 1, 1001, "Triboson", "Triboson_UL2016APV")
+Triboson_UL2016APV.year = "UL2016APV"
+Triboson_UL2016APV.components = [
+    #WWTo2L2Nu_DoubleScattering_UL2016APV,
+    WWW_4F_UL2016APV,
+    WWZ_4F_UL2016APV,
+    WZZ_UL2016APV,
+    ZZZ_UL2016APV,
+    WWG_UL2016APV,
+]
+
+### WJets ###
+
+#### to be replaced with v9 when available ####
+WJetsHT70to100_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets 70 < HT < 100", "WJetsHT70to100_UL2016APV")
+WJetsHT70to100_UL2016APV.year = "UL2016APV"
+WJetsHT70to100_UL2016APV.dataset = "/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv2-106X_mcRun2_asymptotic_preVFP_v9-v1/NANOAODSIM"
+WJetsHT70to100_UL2016APV.sigma = 1264. * 1.21 #pb
+
+WJetsHT100to200_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets 100 < HT < 200", "WJetsHT100to200_UL2016APV")
+WJetsHT100to200_UL2016APV.year = "UL2016APV"
+WJetsHT100to200_UL2016APV.dataset = "/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WJetsHT100to200_UL2016APV.sigma = 1256 * 1.21 #pb
+
+WJetsHT200to400_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets 200 < HT < 400", "WJetsHT200to400_UL2016APV")
+WJetsHT200to400_UL2016APV.year = "UL2016APV"
+WJetsHT200to400_UL2016APV.dataset = "/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WJetsHT200to400_UL2016APV.sigma = 335.5 * 1.21 #pb
+
+WJetsHT400to600_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets 400 < HT < 600", "WJetsHT400to600_UL2016APV")
+WJetsHT400to600_UL2016APV.year = "UL2016APV"
+WJetsHT400to600_UL2016APV.dataset = "/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WJetsHT400to600_UL2016APV.sigma = 45.25 * 1.21 #pb
+
+WJetsHT600to800_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets 600 < HT < 800", "WJetsHT600to800_UL2016APV")
+WJetsHT600to800_UL2016APV.year = "UL2016APV"
+WJetsHT600to800_UL2016APV.dataset = "/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WJetsHT600to800_UL2016APV.sigma = 10.97 * 1.21 #pb
+
+WJetsHT800to1200_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets 800 < HT < 1200", "WJetsHT800to1200_UL2016APV")
+WJetsHT800to1200_UL2016APV.year = "UL2016APV"
+WJetsHT800to1200_UL2016APV.dataset = "/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WJetsHT800to1200_UL2016APV.sigma = 4.933 * 1.21 #pb
+
+WJetsHT2500toInf_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets HT > 2500", "WJetsHT2500toInf_UL2016APV")
+WJetsHT2500toInf_UL2016APV.year = "UL2016APV"
+WJetsHT2500toInf_UL2016APV.dataset = "/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+WJetsHT2500toInf_UL2016APV.sigma = 0.008001 * 1.21 #pb
+
+WJets_UL2016APV = sample(WJcolor, 1, 1001, "W + Jets", "WJets_UL2016APV")
+WJets_UL2016APV.year = "UL2016APV"
+WJets_UL2016APV.components = [
+    WJetsHT70to100_UL2016APV,
+    WJetsHT100to200_UL2016APV,
+    WJetsHT200to400_UL2016APV,
+    WJetsHT400to600_UL2016APV,
+    WJetsHT600to800_UL2016APV,
+    WJetsHT800to1200_UL2016APV,
+    WJetsHT1200to2500_UL2016APV,
+    WJetsHT2500toInf_UL2016APV,
+]
+
+### WZ ###
+
+WZ_UL2016APV = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2016APV")
+WZ_U2016APV.year = "2016APV"
+WZ_UL2016APV.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WZ_UL2016APV.sigma = 27.59
+
+
 
 ######### UL2016 ##########
 
@@ -619,6 +725,112 @@ WrongSign_UL2016.components = [
     ttHToNonbb_UL2016,
     VHToNonbb_UL2016,
 ]
+
+### Triboson ###
+
+WWTo2L2Nu_DoubleScattering_UL2016 = sample(OTcolor, 1, 1001, "WWTo2L2Nu_DoubleScattering", "WWTo2L2Nu_DoubleScattering_UL2016")
+WWTo2L2Nu_DoubleScattering_UL2016.year = "UL2016"
+WWTo2L2Nu_DoubleScattering_UL2016.dataset = ""
+WWTo2L2Nu_DoubleScattering_UL2016.sigma =  0.1703#pb
+
+WWW_4F_UL2016 = sample(OTcolor, 1, 1001, "WWW_4F", "WWW_4F_UL2016")
+WWW_4F_UL2016.year = "UL2016"
+WWW_4F_UL2016.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+WWW_4F_UL2016.sigma =  0.2158#pb
+
+WWZ_4F_UL2016 = sample(OTcolor, 1, 1001, "WWZ_4F", "WWZ_4F_UL2016")
+WWZ_4F_UL2016.year = "UL2016"
+WWZ_4F_UL2016.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+WWZ_4F_UL2016.sigma =  0.1707#pb
+
+WZZ_UL2016 = sample(OTcolor, 1, 1001, "WZZ", "WZZ_UL2016")
+WZZ_UL2016.year = "UL2016"
+WZZ_UL2016.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+WZZ_UL2016.sigma =  0.05709#pb
+
+ZZZ_UL2016 = sample(OTcolor, 1, 1001, "ZZZ", "ZZZ_UL2016")
+ZZZ_UL2016.year = "UL2016"
+ZZZ_UL2016.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+ZZZ_UL2016.sigma =  0.01476#pb
+
+WWG_UL2016 = sample(OTcolor, 1, 1001, "WWG", "WWG_UL2016")
+WWG_UL2016.year = "UL2016"
+WWG_UL2016.dataset = "WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WWG_UL2016.sigma = 0.2147#pb
+
+Triboson_UL2016 = sample(OTcolor, 1, 1001, "Triboson", "Triboson_UL2016")
+Triboson_UL2016.year = "UL2016"
+Triboson_UL2016.components = [
+    #WWTo2L2Nu_DoubleScattering_UL2016,
+    WWW_4F_UL2016,
+    WWZ_4F_UL2016,
+    WZZ_UL2016,
+    ZZZ_UL2016,
+    WWG_UL2016,
+]
+
+### WJets ###
+
+WJetsHT70to100_UL2016 = sample(WJcolor, 1, 1001, "W + Jets", "WJetsHT70to100_UL2016")
+WJetsHT70to100_UL2016.year = UL2016
+WJetsHT70to100_UL2016.dataset = "/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WJetsHT70to100_UL2016.sigma = 1264. * 1.21 #pb
+
+WJetsHT100to200_UL2016 = sample(WJcolor, 1, 1001, "W + Jets 100 < HT < 200", "WJetsHT100to200_UL2016")
+WJetsHT100to200_UL2016.year = UL2016
+WJetsHT100to200_UL2016.dataset = "/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WJetsHT100to200_UL2016.sigma = 1256 * 1.21 #pb
+
+WJetsHT200to400_UL2016 = sample(WJcolor, 1, 1001, "W + Jets 200 < HT < 400", "WJetsHT200to400_UL2016")
+WJetsHT200to400_UL2016.year = UL2016
+WJetsHT200to400_UL2016.dataset = "/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WJetsHT200to400_UL2016.sigma = 335.5 * 1.21 #pb
+
+WJetsHT400to600_UL2016 = sample(WJcolor, 1, 1001, "W + Jets 400 < HT < 600", "WJetsHT400to600_UL2016")
+WJetsHT400to600_UL2016.year = UL2016
+WJetsHT400to600_UL2016.dataset = "/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WJetsHT400to600_UL2016.sigma = 45.25 * 1.21 #pb
+
+WJetsHT600to800_UL2016 = sample(WJcolor, 1, 1001, "W + Jets 600 < HT < 800", "WJetsHT600to800_UL2016")
+WJetsHT600to800_UL2016.year = UL2016
+WJetsHT600to800_UL2016.dataset = "/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WJetsHT600to800_UL2016.sigma = 10.97 * 1.21 #pb
+
+WJetsHT800to1200_UL2016 = sample(WJcolor, 1, 1001, "W + Jets 800 < HT < 1200", "WJetsHT800to1200_UL2016")
+WJetsHT800to1200_UL2016.year = UL2016
+WJetsHT800to1200_UL2016.dataset = "/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WJetsHT800to1200_UL2016.sigma = 4.933 * 1.21 #pb
+
+WJetsHT1200to2500_UL2016 = sample(WJcolor, 1, 1001, "W + Jets 1200 < HT < 2500", "WJetsHT1200to2500_UL2016")
+WJetsHT1200to2500_UL2016.year = "UL2016"
+WJetsHT1200to2500_UL2016.dataset = "/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WJetsHT1200to2500_UL2016.sigma = 1.16 * 1.21 #pb
+
+WJetsHT2500toInf_UL2016 = sample(WJcolor, 1, 1001, "W + Jets HT > 2500", "WJetsHT2500toInf_UL2016")
+WJetsHT2500toInf_UL2016.year = "UL2016"
+WJetsHT2500toInf_UL2016.dataset = "/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
+WJetsHT2500toInf_UL2016.sigma = 0.008001 * 1.21 #pb
+
+WJets_UL2016 = sample(WJcolor, 1, 1001, "W + Jets", "WJets_UL2016")
+WJets_UL2016.year = "UL2016"
+WJets_UL2016.components = [
+    WJetsHT70to100_UL2016,
+    WJetsHT100to200_UL2016,
+    WJetsHT200to400_UL2016,
+    WJetsHT400to600_UL2016,
+    WJetsHT600to800_UL2016,
+    WJetsHT800to1200_UL2016,
+    WJetsHT1200to2500_UL2016,
+    WJetsHT2500toInf_UL2016,
+]
+
+### WZ ###
+
+WZ_UL2016 = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2016")
+WZ_U2016.year = "2016"
+WZ_UL2016.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WZ_UL2016.sigma = 27.59
+
 
 ######### UL2017 ##########
 
@@ -913,6 +1125,112 @@ WrongSign_UL2017.components = [
     VHToNonbb_UL2017,
 ]
 
+### Triboson ###
+
+WWTo2L2Nu_DoubleScattering_UL2017 = sample(OTcolor, 1, 1001, "WWTo2L2Nu_DoubleScattering", "WWTo2L2Nu_DoubleScattering_UL2017")
+WWTo2L2Nu_DoubleScattering_UL2017.year = "UL2017"
+WWTo2L2Nu_DoubleScattering_UL2017.dataset = ""
+WWTo2L2Nu_DoubleScattering_UL2017.sigma =  0.1703#pb
+
+WWW_4F_UL2017 = sample(OTcolor, 1, 1001, "WWW_4F", "WWW_4F_UL2017")
+WWW_4F_UL2017.year = "UL2017"
+WWW_4F_UL2017.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9_ext1-v1/NANOAODSIM"
+WWW_4F_UL2017.sigma =  0.2158#pb
+
+WWZ_4F_UL2017 = sample(OTcolor, 1, 1001, "WWZ_4F", "WWZ_4F_UL2017")
+WWZ_4F_UL2017.year = "UL2017"
+WWZ_4F_UL2017.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WWZ_4F_UL2017.sigma =  0.1707#pb
+
+WZZ_UL2017 = sample(OTcolor, 1, 1001, "WZZ", "WZZ_UL2017")
+WZZ_UL2017.year = "UL2017"
+WZZ_UL2017.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9_ext1-v1/NANOAODSIM"
+WZZ_UL2017.sigma =  0.05709#pb
+
+ZZZ_UL2017 = sample(OTcolor, 1, 1001, "ZZZ", "ZZZ_UL2017")
+ZZZ_UL2017.year = "UL2017"
+ZZZ_UL2017.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9_ext1-v1/NANOAODSIM"
+ZZZ_UL2017.sigma =  0.01476#pb
+
+WWG_UL2017 = sample(OTcolor, 1, 1001, "WWG", "WWG_UL2017")
+WWG_UL2017.year = "UL2017"
+WWG_UL2017.dataset = "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WWG_UL2017.sigma = 0.2147#pb
+
+Triboson_UL2017 = sample(OTcolor, 1, 1001, "Triboson", "Triboson_UL2017")
+Triboson_UL2017.year = "UL2017"
+Triboson_UL2017.components = [
+    #WWTo2L2Nu_DoubleScattering_UL2017,
+    WWW_4F_UL2017,
+    WWZ_4F_UL2017,
+    WZZ_UL2017,
+    ZZZ_UL2017,
+    WWG_UL2017,
+]
+
+### WJets ###
+
+WJetsHT70to100_UL2017 = sample(WJcolor, 1, 1001, "W + Jets", "WJetsHT70to100_UL2017")
+WJetsHT70to100_UL2017.year = "UL2017"
+WJetsHT70to100_UL2017.dataset = "/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WJetsHT70to100_UL2017.sigma = 1264. * 1.21 #pb
+
+WJetsHT100to200_UL2017 = sample(WJcolor, 1, 1001, "W + Jets 100 < HT < 200", "WJetsHT100to200_UL2017")
+WJetsHT100to200_UL2017.year = "UL2017"
+WJetsHT100to200_UL2017.dataset = "/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WJetsHT100to200_UL2017.sigma = 1256 * 1.21 #pb
+
+WJetsHT200to400_UL2017 = sample(WJcolor, 1, 1001, "W + Jets 200 < HT < 400", "WJetsHT200to400_UL2017")
+WJetsHT200to400_UL2017.year = "UL2017"
+WJetsHT200to400_UL2017.dataset = "/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WJetsHT200to400_UL2017.sigma = 335.5 * 1.21 #pb
+
+WJetsHT400to600_UL2017 = sample(WJcolor, 1, 1001, "W + Jets 400 < HT < 600", "WJetsHT400to600_UL2017")
+WJetsHT400to600_UL2017.year = "UL2017"
+WJetsHT400to600_UL2017.dataset = "/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WJetsHT400to600_UL2017.sigma = 45.25 * 1.21 #pb
+
+WJetsHT600to800_UL2017 = sample(WJcolor, 1, 1001, "W + Jets 600 < HT < 800", "WJetsHT600to800_UL2017")
+WJetsHT600to800_UL2017.year = "UL2017"
+WJetsHT600to800_UL2017.dataset = "/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WJetsHT600to800_UL2017.sigma = 10.97 * 1.21 #pb
+
+#### to be replaced with v9 when available ####
+WJetsHT800to1200_UL2017 = sample(WJcolor, 1, 1001, "W + Jets 800 < HT < 1200", "WJetsHT800to1200_UL2017")
+WJetsHT800to1200_UL2017.year = "UL2017"
+WJetsHT800to1200_UL2017.dataset = "/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv2-106X_mc2017_realistic_v8-v1/NANOAODSIM"
+WJetsHT800to1200_UL2017.sigma = 4.933 * 1.21 #pb
+
+WJetsHT1200to2500_UL2017 = sample(WJcolor, 1, 1001, "W + Jets 1200 < HT < 2500", "WJetsHT1200to2500_UL2017")
+WJetsHT1200to2500_UL2017.year = "UL2017"
+WJetsHT1200to2500_UL2017.dataset = "/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WJetsHT1200to2500_UL2017.sigma = 1.16 * 1.21 #pb
+
+WJetsHT2500toInf_UL2017 = sample(WJcolor, 1, 1001, "W + Jets HT > 2500", "WJetsHT2500toInf_UL2017")
+WJetsHT2500toInf_UL2017.year = "UL2017"
+WJetsHT2500toInf_UL2017.dataset = "/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
+WJetsHT2500toInf_UL2017.sigma = 0.008001 * 1.21 #pb
+
+WJets_UL2017 = sample(WJcolor, 1, 1001, "W + Jets", "WJets_UL2017")
+WJets_UL2017.year = "UL2017"
+WJets_UL2017.components = [
+    WJetsHT70to100_UL2017,
+    WJetsHT100to200_UL2017,
+    WJetsHT200to400_UL2017,
+    WJetsHT400to600_UL2017,
+    WJetsHT600to800_UL2017,
+    WJetsHT800to1200_UL2017,
+    WJetsHT1200to2500_UL2017,
+    WJetsHT2500toInf_UL2017,
+]
+
+### WZ ###
+
+WZ_UL2017 = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2017")
+WZ_U2017.year = "2017"
+WZ_UL2017.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WZ_UL2017.sigma = 27.59
+
 
 ######### UL2018 ##########
 
@@ -1206,6 +1524,110 @@ WrongSign_UL2018.components = [
     VHToNonbb_UL2018,
 ]
 
+### Triboson ###
+
+WWTo2L2Nu_DoubleScattering_UL2018 = sample(OTcolor, 1, 1001, "WWTo2L2Nu_DoubleScattering", "WWTo2L2Nu_DoubleScattering_UL2018")
+WWTo2L2Nu_DoubleScattering_UL2018.year = "UL2018"
+WWTo2L2Nu_DoubleScattering_UL2018.dataset = ""
+WWTo2L2Nu_DoubleScattering_UL2018.sigma =  0.1703#pb
+
+WWW_4F_UL2018 = sample(OTcolor, 1, 1001, "WWW_4F", "WWW_4F_UL2018")
+WWW_4F_UL2018.year = "UL2018"
+WWW_4F_UL2018.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"
+WWW_4F_UL2018.sigma = 0.2158#pb
+
+WWZ_4F_UL2018 = sample(OTcolor, 1, 1001, "WWZ_4F", "WWZ_4F_UL2018")
+WWZ_4F_UL2018.year = "UL2018"
+WWZ_4F_UL2018.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"
+WWZ_4F_UL2018.sigma =  0.1707#pb
+
+WZZ_UL2018 = sample(OTcolor, 1, 1001, "WZZ", "WZZ_UL2018")
+WZZ_UL2018.year = "UL2018"
+WZZ_UL2018.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1_ext1-v1/NANOAODSIM"
+WZZ_UL2018.sigma =  0.05709#pb
+
+ZZZ_UL2018 = sample(OTcolor, 1, 1001, "ZZZ", "ZZZ_UL2018")
+ZZZ_UL2018.year = "UL2018"
+ZZZ_UL2018.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1_ext1-v1/NANOAODSIM"
+ZZZ_UL2018.sigma =  0.01476#pb
+
+WWG_UL2018 = sample(OTcolor, 1, 1001, "WWG", "WWG_UL2018")
+WWG_UL2018.year = "UL2018"
+WWG_UL2018.dataset = "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
+WWG_UL2018.sigma = 0.2147#pb
+
+Triboson_UL2018 = sample(OTcolor, 1, 1001, "Triboson", "Triboson_UL2018")
+Triboson_UL2018.year = "UL2018"
+Triboson_UL2018.components = [
+    #WWTo2L2Nu_DoubleScattering_UL2018,
+    WWW_4F_UL2018,
+    WWZ_4F_UL2018,
+    WZZ_UL2018,
+    ZZZ_UL2018,
+    WWG_UL2018,
+]
+
+### WJets ###
+
+WJetsHT70to100_UL2018 = sample(WJcolor, 1, 1001, "W + Jets", "WJetsHT70to100_UL2018")
+WJetsHT70to100_UL2018.year = UL2018
+WJetsHT70to100_UL2018.dataset = "/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2018_realistic_v9-v1/NANOAODSIM"
+WJetsHT70to100_UL2018.sigma = 1264. * 1.21 #pb
+
+WJetsHT100to200_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 100 < HT < 200", "WJetsHT100to200_UL2018")
+WJetsHT100to200_UL2018.year = UL2018
+WJetsHT100to200_UL2018.dataset = "/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2018_realistic_v9-v1/NANOAODSIM"
+WJetsHT100to200_UL2018.sigma = 1256 * 1.21 #pb
+
+WJetsHT200to400_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 200 < HT < 400", "WJetsHT200to400_UL2018")
+WJetsHT200to400_UL2018.year = UL2018
+WJetsHT200to400_UL2018.dataset = "/WJetsToLNu_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WJetsHT200to400_UL2018.sigma = 335.5 * 1.21 #pb
+
+WJetsHT400to600_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 200 < HT < 400", "WJetsHT400to600_UL2018")
+WJetsHT400to600_UL2018.year = UL2018
+WJetsHT400to600_UL2018.dataset = "/WJetsToLNu_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WJetsHT400to600_UL2018.sigma = 45.25 * 1.21 #pb
+
+WJetsHT600to800_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 600 < HT < 800", "WJetsHT600to800_UL2018")
+WJetsHT600to800_UL2018.year = UL2018
+WJetsHT600to800_UL2018.dataset = "/WJetsToLNu_HT-600To800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WJetsHT600to800_UL2018.sigma = 10.97 * 1.21 #pb
+
+WJetsHT800to1200_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 800 < HT < 1200", "WJetsHT800to1200_UL2018")
+WJetsHT800to1200_UL2018.year = "UL2018"
+WJetsHT800to1200_UL2018.dataset = "/WJetsToLNu_HT-800To1200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WJetsHT800to1200_UL2018.sigma = 4.933 * 1.21 #pb
+
+WJetsHT1200to2500_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 1200 < HT < 2500", "WJetsHT1200to2500_UL2018")
+WJetsHT1200to2500_UL2018.year = "UL2018"
+WJetsHT1200to2500_UL2018.dataset = "/WJetsToLNu_HT-1200To2500_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WJetsHT1200to2500_UL2018.sigma = 1.16 * 1.21 #pb
+
+WJetsHT2500toInf_UL2018 = sample(WJcolor, 1, 1001, "W + Jets HT > 2500", "WJetsHT2500toInf_UL2018")
+WJetsHT2500toInf_UL2018.year = "UL2018"
+WJetsHT2500toInf_UL2018.dataset = "/WJetsToLNu_HT-2500ToInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
+WJetsHT2500toInf_UL2018.sigma = 0.008001 * 1.21 #pb
+
+WJets_UL2018 = sample(WJcolor, 1, 1001, "W + Jets", "WJets_UL2018")
+WJets_UL2018.year = "UL2018"
+WJets_UL2018.components = [
+    WJetsHT70to100_UL2018,
+    WJetsHT100to200_UL2018,
+    WJetsHT200to400_UL2018,
+    WJetsHT400to600_UL2018,
+    WJetsHT600to800_UL2018,
+    WJetsHT800to1200_UL2018,
+    WJetsHT1200to2500_UL2018,
+    WJetsHT2500toInf_UL2018,
+]
+
+### WZ ###
+
+WZ_UL2018 = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2018")
+WZ_U2018.year = "2018"
+WZ_UL2018.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WZ_UL2018.sigma = 27.59
 
 ########################################################
 
@@ -1220,7 +1642,12 @@ sample_dict={
     "VG_UL2016APV":VG_UL2016APV,
     "ZG_UL2016APV":ZG_UL2016APV, "WG_UL2016APV":WG_UL2016APV,
     "WrongSign_UL2016APV":WrongSign_UL2016APV,
-    "WWto2L2Nu_UL2016APV":WWto2L2Nu_UL2016APV, "GluGluToWWToENEN_UL2016APV":GluGluToWWToENEN_UL2016APV, "GluGluToWWToENMN_UL2016APV":GluGluToWWToENMN_UL2016APV, "GluGluToWWToENTN_UL2016APV":GluGluToWWToENTN_UL2016APV, "GluGluToWWToMNEN_UL2016APV":GluGluToWWToMNEN_UL2016APV, "GluGluToWWToMNMN_UL2016APV":GluGluToWWToMNMN_UL2016APV, "GluGluToWWToMNTN_UL2016APV":GluGluToWWToMNTN_UL2016APV, "GluGluToWWToTNEN_UL2016APV":GluGluToWWToTNEN_UL2016APV, "GluGluToWWToTNMN_UL2016APV":GluGluToWWToTNMN_UL2016APV, "GluGluToWWToTNTN_UL2016APV":GluGluToWWToTNTN_UL2016APV, "ST_tW_top_UL2016APV":ST_tW_top_UL2016APV, "ST_tW_antitop_UL2016APV":ST_tW_antitop_UL2016APV, "GluGluHToWWTo2L2Nu_UL2016APV":GluGluHToWWTo2L2Nu_UL2016APV, "GluGluHToWWToLNuQQ_UL2016APV":GluGluHToWWToLNuQQ_UL2016APV, "GluGluHToZZTo4L_UL2016APV":GluGluHToZZTo4L_UL2016APV, "GluGluHToTauTau_UL2016APV":GluGluHToTauTau_UL2016APV, "VBFHToWWTo2L2Nu_UL2016APV": VBFHToWWTo2L2Nu_UL2016APV, "VBFHToTauTau_UL2016APV":VBFHToTauTau_UL2016APV, "ttHToNonbb_UL2016APV":ttHToNonbb_UL2016APV, "VHToNonbb_UL2016APV":VHToNonbb_UL2016APV,
+    "WWto2L2Nu_UL2016APV":WWto2L2Nu_UL2016APV, "GluGluToWWToENEN_UL2016APV":GluGluToWWToENEN_UL2016APV, "GluGluToWWToENMN_UL2016APV":GluGluToWWToENMN_UL2016APV, "GluGluToWWToENTN_UL2016APV":GluGluToWWToENTN_UL2016APV, "GluGluToWWToMNEN_UL2016APV":GluGluToWWToMNEN_UL2016APV, "GluGluToWWToMNMN_UL2016APV":GluGluToWWToMNMN_UL2016APV, "GluGluToWWToMNTN_UL2016APV":GluGluToWWToMNTN_UL2016APV, "GluGluToWWToTNEN_UL2016APV":GluGluToWWToTNEN_UL2016APV, "GluGluToWWToTNMN_UL2016APV":GluGluToWWToTNMN_UL2016APV, "GluGluToWWToTNTN_UL2016APV":GluGluToWWToTNTN_UL2016APV, "ST_tW_top_UL2016APV":ST_tW_top_UL2016APV, "ST_tW_antitop_UL2016APV":ST_tW_antitop_UL2016APV, "GluGluHToWWTo2L2Nu_UL2016APV":GluGluHToWWTo2L2Nu_UL2016APV, "GluGluHToWWToLNuQQ_UL2016APV":GluGluHToWWToLNuQQ_UL2016APV, "GluGluHToZZTo4L_UL2016APV":GluGluHToZZTo4L_UL2016APV, "GluGluHToTauTau_UL2016APV":GluGluHToTauTau_UL2016APV, "VBFHToWWTo2L2Nu_UL2016APV": VBFHToWWTo2L2Nu_UL2016APV, "VBFHToTauTau_UL2016APV":VBFHToTauTau_UL2016APV, "ttHToNonbb_UL2016APV":ttHToNonbb_UL2016APV, "VHToNonbb_UL2016APV":VHToNonbb_UL2016APV, 
+    "Triboson_2016APV":Triboson_2016APV,
+    "WWTo2L2Nu_DoubleScattering_UL2016":WWTo2L2Nu_DoubleScattering_UL2016, "WWW_4F_UL2016APV":WWW_4F_UL2016APV, "WWZ_4F_UL2016APV":WWZ_4F_UL2016APV, "WZZ_UL2016APV":WZZ_UL2016APV, "ZZZ_UL2016APV":ZZZ_UL2016APV, "ZZZ_UL2016APV":ZZZ_UL2016APV,
+    "WJets_UL2016APV":WJets_UL2016APV,
+    "WJetsHT70to100_UL2016APV":WJetsHT70to100_UL2016APV, "WJetsHT100to200_UL2016APV":WJetsHT100to200_UL2016APV, "WJetsHT200to400_UL2016APV:":WJetsHT200to400_UL2016APV, "WJetsHT400to600_UL2016APV":WJetsHT400to600_UL2016APV, "WJetsHT600to800_UL2016APV":WJetsHT600to800_UL2016APV, "WJetsHT800to1200_UL2016APV":WJetsHT800to1200_UL2016APV, "WJetsHT1200to2500_UL2016APV":WJetsHT1200to2500_UL2016APV, "WJetsHT2500toInf_UL2016APV":WJetsHT2500toInf_UL2016APV,
+    "WZ_UL2016APV":WZ_UL2016APV,
 
     "ZZtoLep_UL2016":ZZtoLep_UL2016,
     "ZZTo2L2Nu_UL2016":ZZTo2L2Nu_UL2016, "ZZTo4L_UL2016":ZZTo4L_UL2016, "GluGluToContinToZZTo4e_UL2016":GluGluToContinToZZTo4e_UL2016, "GluGluToContinToZZTo2e2mu_UL2016":GluGluToContinToZZTo2e2mu_UL2016, "GluGluToContinToZZTo2e2tau_UL2016":GluGluToContinToZZTo2e2tau_UL2016, "GluGluToContinToZZTo2mu2nu_UL2016":GluGluToContinToZZTo2mu2nu_UL2016, "GluGluToContinToZZTo4mu_UL2016":GluGluToContinToZZTo4mu_UL2016, "GluGluToContinToZZTo2mu2tau_UL2016":GluGluToContinToZZTo2mu2tau_UL2016, "GluGluToContinToZZTo2tau2nu_UL2016":GluGluToContinToZZTo2tau2nu_UL2016, "GluGluToContinToZZTo4tau_UL2016":GluGluToContinToZZTo4tau_UL2016, "GluGluToContinToZZTo2e2nu_UL2016":GluGluToContinToZZTo2e2nu_UL2016,
@@ -1233,6 +1660,11 @@ sample_dict={
     "ZG_UL2016":ZG_UL2016, "WG_UL2016":WG_UL2016,
     "WrongSign_UL2016":WrongSign_UL2016,
     "WWto2L2Nu_UL2016":WWto2L2Nu_UL2016, "GluGluToWWToENEN_UL2016":GluGluToWWToENEN_UL2016, "GluGluToWWToENMN_UL2016":GluGluToWWToENMN_UL2016, "GluGluToWWToENTN_UL2016":GluGluToWWToENTN_UL2016, "GluGluToWWToMNEN_UL2016":GluGluToWWToMNEN_UL2016, "GluGluToWWToMNMN_UL2016":GluGluToWWToMNMN_UL2016, "GluGluToWWToMNTN_UL2016":GluGluToWWToMNTN_UL2016, "GluGluToWWToTNEN_UL2016":GluGluToWWToTNEN_UL2016, "GluGluToWWToTNMN_UL2016":GluGluToWWToTNMN_UL2016, "GluGluToWWToTNTN_UL2016":GluGluToWWToTNTN_UL2016, "ST_tW_top_UL2016":ST_tW_top_UL2016, "ST_tW_antitop_UL2016":ST_tW_antitop_UL2016, "GluGluHToWWTo2L2Nu_UL2016":GluGluHToWWTo2L2Nu_UL2016, "GluGluHToWWToLNuQQ_UL2016":GluGluHToWWToLNuQQ_UL2016, "GluGluHToZZTo4L_UL2016":GluGluHToZZTo4L_UL2016, "GluGluHToTauTau_UL2016":GluGluHToTauTau_UL2016, "VBFHToWWTo2L2Nu_UL2016": VBFHToWWTo2L2Nu_UL2016, "VBFHToTauTau_UL2016":VBFHToTauTau_UL2016, "ttHToNonbb_UL2016":ttHToNonbb_UL2016, "VHToNonbb_UL2016":VHToNonbb_UL2016,
+    "Triboson_UL2016":Triboson_UL2016,
+    "WWTo2L2Nu_DoubleScattering_UL2016":WWTo2L2Nu_DoubleScattering_UL2016, "WWW_4F_UL2016":WWW_4F_UL2016, "WWZ_4F_UL2016":WWZ_4F_UL2016, "WZZ_UL2016":WZZ_UL2016, "ZZZ_UL2016":ZZZ_UL2016, "ZZZ_UL2016":ZZZ_UL2016,
+    "WJets_UL2016":WJets_UL2016,
+    "WJetsHT70to100_UL2016":WJetsHT70to100_UL2016, "WJetsHT100to200_UL2016":WJetsHT100to200_UL2016, "WJetsHT200to400_UL2016:":WJetsHT200to400_UL2016, "WJetsHT400to600_UL2016":WJetsHT400to600_UL2016, "WJetsHT600to800_UL2016":WJetsHT600to800_UL2016, "WJetsHT800to1200_UL2016":WJetsHT800to1200_UL2016, "WJetsHT1200to2500_UL2016":WJetsHT1200to2500_UL2016, "WJetsHT2500toInf_UL2016":WJetsHT2500toInf_UL2016,
+    "WZ_UL2016":WZ_UL2016,
 
     "ZZtoLep_UL2017":ZZtoLep_UL2017,
     "ZZTo2L2Nu_UL2017":ZZTo2L2Nu_UL2017, "ZZTo4L_UL2017":ZZTo4L_UL2017, "GluGluToContinToZZTo4e_UL2017":GluGluToContinToZZTo4e_UL2017, "GluGluToContinToZZTo2e2mu_UL2017":GluGluToContinToZZTo2e2mu_UL2017, "GluGluToContinToZZTo2e2tau_UL2017":GluGluToContinToZZTo2e2tau_UL2017, "GluGluToContinToZZTo2mu2nu_UL2017":GluGluToContinToZZTo2mu2nu_UL2017, "GluGluToContinToZZTo4mu_UL2017":GluGluToContinToZZTo4mu_UL2017, "GluGluToContinToZZTo2mu2tau_UL2017":GluGluToContinToZZTo2mu2tau_UL2017, "GluGluToContinToZZTo2tau2nu_UL2017":GluGluToContinToZZTo2tau2nu_UL2017, "GluGluToContinToZZTo4tau_UL2017":GluGluToContinToZZTo4tau_UL2017, "GluGluToContinToZZTo2e2nu_UL2017":GluGluToContinToZZTo2e2nu_UL2017,
@@ -1245,6 +1677,11 @@ sample_dict={
     "ZG_UL2017":ZG_UL2017, "WG_UL2017":WG_UL2017,
     "WrongSign_UL2017":WrongSign_UL2017,
     "WWto2L2Nu_UL2017":WWto2L2Nu_UL2017, "GluGluToWWToENEN_UL2017":GluGluToWWToENEN_UL2017, "GluGluToWWToENMN_UL2017":GluGluToWWToENMN_UL2017, "GluGluToWWToENTN_UL2017":GluGluToWWToENTN_UL2017, "GluGluToWWToMNEN_UL2017":GluGluToWWToMNEN_UL2017, "GluGluToWWToMNMN_UL2017":GluGluToWWToMNMN_UL2017, "GluGluToWWToMNTN_UL2017":GluGluToWWToMNTN_UL2017, "GluGluToWWToTNEN_UL2017":GluGluToWWToTNEN_UL2017, "GluGluToWWToTNMN_UL2017":GluGluToWWToTNMN_UL2017, "GluGluToWWToTNTN_UL2017":GluGluToWWToTNTN_UL2017, "ST_tW_top_UL2017":ST_tW_top_UL2017, "ST_tW_antitop_UL2017":ST_tW_antitop_UL2017, "GluGluHToWWTo2L2Nu_UL2017":GluGluHToWWTo2L2Nu_UL2017, "GluGluHToWWToLNuQQ_UL2017":GluGluHToWWToLNuQQ_UL2017, "GluGluHToZZTo4L_UL2017":GluGluHToZZTo4L_UL2017, "GluGluHToTauTau_UL2017":GluGluHToTauTau_UL2017, "VBFHToWWTo2L2Nu_UL2017": VBFHToWWTo2L2Nu_UL2017, "VBFHToTauTau_UL2017":VBFHToTauTau_UL2017, "ttHToNonbb_UL2017":ttHToNonbb_UL2017, "VHToNonbb_UL2017":VHToNonbb_UL2017,
+    "Triboson_UL2017":Triboson_UL2017,
+    "WWTo2L2Nu_DoubleScattering_UL2017":WWTo2L2Nu_DoubleScattering_UL2017, "WWW_4F_UL2017":WWW_4F_UL2017, "WWZ_4F_UL2017":WWZ_4F_UL2017, "WZZ_UL2017":WZZ_UL2017, "ZZZ_UL2017":ZZZ_UL2017, "ZZZ_UL2017":ZZZ_UL2017,
+    "WJets_UL2017":WJets_UL2017,
+    "WJetsHT70to100_UL2017":WJetsHT70to100_UL2017, "WJetsHT100to200_UL2017":WJetsHT100to200_UL2017, "WJetsHT200to400_UL2017:":WJetsHT200to400_UL2017, "WJetsHT400to600_UL2017":WJetsHT400to600_UL2017, "WJetsHT600to800_UL2017":WJetsHT600to800_UL2017, "WJetsHT800to1200_UL2017":WJetsHT800to1200_UL2017, "WJetsHT1200to2500_UL2017":WJetsHT1200to2500_UL2017, "WJetsHT2500toInf_UL2017":WJetsHT2500toInf_UL2017,
+    "WZ_UL2017":WZ_UL2017,
 
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
     "ZZTo2L2Nu_UL2018":ZZTo2L2Nu_UL2018, "ZZTo4L_UL2018":ZZTo4L_UL2018, "GluGluToContinToZZTo4e_UL2018":GluGluToContinToZZTo4e_UL2018, "GluGluToContinToZZTo2e2mu_UL2018":GluGluToContinToZZTo2e2mu_UL2018, "GluGluToContinToZZTo2e2tau_UL2018":GluGluToContinToZZTo2e2tau_UL2018, "GluGluToContinToZZTo2mu2nu_UL2018":GluGluToContinToZZTo2mu2nu_UL2018, "GluGluToContinToZZTo4mu_UL2018":GluGluToContinToZZTo4mu_UL2018, "GluGluToContinToZZTo2mu2tau_UL2018":GluGluToContinToZZTo2mu2tau_UL2018, "GluGluToContinToZZTo2tau2nu_UL2018":GluGluToContinToZZTo2tau2nu_UL2018, "GluGluToContinToZZTo4tau_UL2018":GluGluToContinToZZTo4tau_UL2018, "GluGluToContinToZZTo2e2nu_UL2018":GluGluToContinToZZTo2e2nu_UL2018,
@@ -1257,7 +1694,11 @@ sample_dict={
     "ZG_UL2018":ZG_UL2018, "WG_UL2018":WG_UL2018,
     "WrongSign_UL2018":WrongSign_UL2018,
     "WWto2L2Nu_UL2018":WWto2L2Nu_UL2018, "GluGluToWWToENEN_UL2018":GluGluToWWToENEN_UL2018, "GluGluToWWToENMN_UL2018":GluGluToWWToENMN_UL2018, "GluGluToWWToENTN_UL2018":GluGluToWWToENTN_UL2018, "GluGluToWWToMNEN_UL2018":GluGluToWWToMNEN_UL2018, "GluGluToWWToMNMN_UL2018":GluGluToWWToMNMN_UL2018, "GluGluToWWToMNTN_UL2018":GluGluToWWToMNTN_UL2018, "GluGluToWWToTNEN_UL2018":GluGluToWWToTNEN_UL2018, "GluGluToWWToTNMN_UL2018":GluGluToWWToTNMN_UL2018, "GluGluToWWToTNTN_UL2018":GluGluToWWToTNTN_UL2018, "ST_tW_top_UL2018":ST_tW_top_UL2018, "ST_tW_antitop_UL2018":ST_tW_antitop_UL2018, "GluGluHToWWTo2L2Nu_UL2018":GluGluHToWWTo2L2Nu_UL2018, "GluGluHToWWToLNuQQ_UL2018":GluGluHToWWToLNuQQ_UL2018, "GluGluHToZZTo4L_UL2018":GluGluHToZZTo4L_UL2018, "GluGluHToTauTau_UL2018":GluGluHToTauTau_UL2018, "VBFHToWWTo2L2Nu_UL2018": VBFHToWWTo2L2Nu_UL2018, "VBFHToTauTau_UL2018":VBFHToTauTau_UL2018, "ttHToNonbb_UL2018":ttHToNonbb_UL2018, "VHToNonbb_UL2018":VHToNonbb_UL2018,
-
+    "Triboson_UL2018":Triboson_UL2018,
+    "WWTo2L2Nu_DoubleScattering_UL2018":WWTo2L2Nu_DoubleScattering_UL2018, "WWW_4F_UL2018":WWW_4F_UL2018, "WWZ_4F_UL2018":WWZ_4F_UL2018, "WZZ_UL2018":WZZ_UL2018, "ZZZ_UL2018":ZZZ_UL2018, "ZZZ_UL2018":ZZZ_UL2018,
+    "WJets_UL2018":WJets_UL2018,
+    "WJetsHT70to100_UL2018":WJetsHT70to100_UL2018, "WJetsHT100to200_UL2018":WJetsHT100to200_UL2018, "WJetsHT200to400_UL2018:":WJetsHT200to400_UL2018, "WJetsHT400to600_UL2018":WJetsHT400to600_UL2018, "WJetsHT600to800_UL2018":WJetsHT600to800_UL2018, "WJetsHT800to1200_UL2018":WJetsHT800to1200_UL2018, "WJetsHT1200to2500_UL2018":WJetsHT1200to2500_UL2018, "WJetsHT2500toInf_UL2018":WJetsHT2500toInf_UL2018,
+    "WZ_UL2018":WZ_UL2018,
 }
 
 
