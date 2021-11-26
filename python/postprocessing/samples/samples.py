@@ -447,12 +447,16 @@ VHToNonbb_2017.dataset = "/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/"+t
 
 WrongSign_2017 = sample(ROOT.kGreen-10, 1, 1001, "Wrong Sign", "WrongSign_2017")
 WrongSign_2017.year = 2017
-WrongSign_2017.components = [WWto2L2Nu_2017, GluGluToWWToENuENu_2017, GluGluToWWToENuMNu2017, 
-                            GluGluToWWToENuTNu2017, GluGluToWWToMNuENu_2017, GluGluToWWToMNuMNu2017, 
-                            GluGluToWWToMNuTNu2017, GluGluToWWToTNuENu_2017, GluGluToWWToTNuMNu2017, 
-                            GluGluToWWToTNuTNu2017, STtW_top_2017, GluGluHToWWTo2L2Nu_2017, 
-                            GluGluHToZZTo2L2Q_2017, GluGluHToZZTo4L_2017, GluGluHToTauTau_2017, 
-                            VBFHToWWTo2L2Nu_2017, VBFHToTauTau_2017, ttHToNonbb_2017, VHToNonbb_2017]
+WrongSign_2017.components = [
+    WWto2L2Nu_2017, GluGluToWWToENuENu_2017, GluGluToWWToENuMNu2017, 
+    GluGluToWWToENuTNu2017, GluGluToWWToMNuENu_2017, GluGluToWWToMNuMNu2017, 
+    GluGluToWWToMNuTNu2017, GluGluToWWToTNuENu_2017, GluGluToWWToTNuMNu2017, 
+    GluGluToWWToTNuTNu2017, STtW_top_2017, 
+    GluGluHToWWTo2L2Nu_2017, 
+    #GluGluHToZZTo2L2Q_2017,
+    GluGluHToZZTo4L_2017,
+    GluGluHToTauTau_2017, 
+    VBFHToWWTo2L2Nu_2017, VBFHToTauTau_2017, ttHToNonbb_2017, VHToNonbb_2017]
 
 
 ###############################      NEW    ################################
