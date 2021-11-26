@@ -537,7 +537,7 @@ GluGluHToWWToLNuQQ_UL2016.sigma = 0.# check nowe
 GluGluHToZZTo4L_UL2016 = sample(WScolor, 1, 1001, "Single top", "GluGluHToZZTo4L_UL2016")
 GluGluHToZZTo4L_UL2016.year = "UL2016"
 GluGluHToZZTo4L_UL2016.dataset = "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
-GluGluHToZZTo4L_UL2016.sigma = 28.84.# check nowe
+GluGluHToZZTo4L_UL2016.sigma = 28.84 # check nowe
 
 #### to be replaced with v9 when available ####
 GluGluHToTauTau_UL2016 = sample(WScolor, 1, 1001, "Single top", "GluGluHToTauTau_UL2016")
@@ -807,7 +807,7 @@ GluGluHToWWToLNuQQ_UL2017.sigma = 0.# check nowe
 GluGluHToZZTo4L_UL2017 = sample(WScolor, 1, 1001, "Single top", "GluGluHToZZTo4L_UL2017")
 GluGluHToZZTo4L_UL2017.year = "UL2017"
 GluGluHToZZTo4L_UL2017.dataset = "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluHToZZTo4L_UL2017.sigma = 28.84.# check nowe
+GluGluHToZZTo4L_UL2017.sigma = 28.84# check nowe
 
 GluGluHToTauTau_UL2017 = sample(WScolor, 1, 1001, "Single top", "GluGluHToTauTau_UL2017")
 GluGluHToTauTau_UL2017.year = "UL2017"
@@ -1076,7 +1076,7 @@ GluGluHToWWToLNuQQ_UL2018.sigma = 0.# check nowe
 GluGluHToZZTo4L_UL2018 = sample(WScolor, 1, 1001, "Single top", "GluGluHToZZTo4L_UL2018")
 GluGluHToZZTo4L_UL2018.year = "UL2018"
 GluGluHToZZTo4L_UL2018.dataset = "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-GluGluHToZZTo4L_UL2018.sigma = 28.84.# check nowe
+GluGluHToZZTo4L_UL2018.sigma = 28.84# check nowe
 
 GluGluHToTauTau_UL2018 = sample(WScolor, 1, 1001, "Single top", "GluGluHToTauTau_UL2018")
 GluGluHToTauTau_UL2018.year = "UL2018"

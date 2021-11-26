@@ -25,7 +25,7 @@ reset
 #python submit_crab.py -d DataMu_$year --status
 
 ######### UL ######
-python submit_crab.py -d TTTo2L2Nu_UL2016APV -s
-python submit_crab.py -d TTTo2L2Nu_UL2016 -s
-#python submit_crab.py -d TTTo2L2Nu_UL2017 --status
-python submit_crab.py -d TTTo2L2Nu_UL2018 -s
+#python submit_crab.py -d TTTo2L2Nu_UL2016APV --status #--sampleFlag
+#python submit_crab.py -d TTTo2L2Nu_UL2016 --status #--sampleFlag
+#python submit_crab.py -d TTTo2L2Nu_UL2017 --status #--sampleFlag
+python submit_crab.py -d TTTo2L2Nu_UL2018 -r #--sampleFlag

@@ -105,6 +105,7 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
     #f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.LHAPDFWeightProducer import *\n") 
     f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlag import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.dummyColumns import *\n")
 
 
     #f.write("infile = "+str(sample.files)+"\n")
@@ -189,7 +190,14 @@ for sample in samples:
         mht_producer = 'mht()'
         if ('Data' in sample.label):
             isMC = False
-            presel = "(Flag_goodVertices && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter) "
+            if not "UL" in sample.year:
+                presel = "(Flag_goodVertices && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter) "
+            else:
+                if "2017" in self.year or "2018" in self.year:
+                    presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)"
+                elif "2016" in self.year:
+                    presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)"
+        
             if year == '2016':# and sample.runP != 'H':
                 if 'DataHT' not in sample.label:
                     presel += " &&((HLT_Ele27_WPTight_Gsf || HLT_Ele32_WPTight_Gsf || HLT_IsoMu24 || HLT_IsoTkMu24) && Flag_globalSuperTightHalo2016Filter)"
@@ -205,6 +213,22 @@ for sample in samples:
                     presel +=" && (HLT_IsoMu27 || HLT_Mu50 || HLT_Ele35_WPTight_Gsf || HLT_Ele32_WPTight_Gsf_L1DoubleEG || HLT_Photon200)"
                 else:
                     presel += " && (HLT_PFHT250 || HLT_PFHT350)"# || HLT_PFHT370 || HLT_PFHT430 || HLT_PFHT510 || HLT_PFHT590 || HLT_PFHT680 || HLT_PFHT780 || HLT_PFHT890)"
+            elif year.startswith('UL2016'):# and sample.runP != 'H':
+                if 'DataHT' not in sample.label:
+                    presel += " && (HLT_IsoMu24 || HLT_IsoTkMu24 || HLT_Mu50 || HLT_TkMu50 || HLT_Ele27_WPTight_Gsf || HLT_Ele32_WPTight_Gsf || HLT_Photon175)"
+                else:
+                    presel += " && (HLT_PFHT250 || HLT_PFHT300)"
+            elif year == 'UL2017':# and sample.runP != 'B':
+                if 'DataHT' not in sample.label:
+                    presel += " && (HLT_IsoMu27 || HLT_Mu50 || HLT_OldMu100 || HLT_TkMu100 || HLT_Ele35_WPTight_Gsf || (HLT_Ele32_WPTight_Gsf_L1DoubleEG and (L1_SingleIsoEG30er2p1 || L1_SingleIsoEG32 || L1_SingleEG40)) || HLT_Photon200)"
+                else:
+                    presel += " && (HLT_PFHT250 || HLT_PFHT350)"# || HLT_PFHT370 || HLT_PFHT430 || HLT_PFHT510 || HLT_PFHT590 || HLT_PFHT680 || HLT_PFHT780 || HLT_PFHT890)"
+            elif year == 'UL2018':
+                if 'DataHT' not in sample.label:
+                    presel +=" && (HLT_IsoMu24 || HLT_Mu50 || HLT_OldMu100 || HLT_TkMu100 || HLT_Ele32_WPTight_Gsf || HLT_Photon200)"
+                else:
+                    presel += " && (HLT_PFHT250 || HLT_PFHT350)"# || HLT_PFHT370 || HLT_PFHT430 || HLT_PFHT510 || HLT_PFHT590 || HLT_PFHT680 || HLT_PFHT780 || HLT_PFHT890)"
+
         else:
             isMC = True
             presel = ""
@@ -222,9 +246,9 @@ for sample in samples:
                 modules = "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(sample.year) + "(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab        
         else:
             if opt.sampleFlag == True:
-                modules = "sampleFlag('" + sample.label + "'), " + "preselection(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+                modules = "sampleFlag('" + sample.label + "'), " + "preselection(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
             else:
-                modules = "preselection(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+                modules = "preselection(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
 
         print("Producing crab script")
         crab_script_writer(sample,'.', isMC, modules, presel)
