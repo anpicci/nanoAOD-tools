@@ -85,7 +85,7 @@ for s in complist:
                 print "\t" + outline.replace("\n", "")
                 j = i + 1
                 while j < len(crabout) and crabout[j].startswith("\t"):
-                    print "\t" + crabout[j]
+                    print "\t" + crabout[j].replace("\n", "")
                     j += 1
                 
             if "COMPLETED" in outline:
@@ -140,7 +140,7 @@ for s in complist:
             print "\tAnyway, let's pass to the next sample..."
 
         else:#if sstatus == "PROCESSING":
-            print "\tCrab is processing " + s.label + "..."
+            print "\n\tCrab is processing " + s.label + "..."
 
     else:
         print "\tThis sample is not submitted to crab yet..."
