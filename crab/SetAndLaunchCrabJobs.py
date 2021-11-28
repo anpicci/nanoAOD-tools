@@ -15,17 +15,20 @@ usage = 'python3 SetAndLaunchCrabJobs.py'
 parser = optparse.OptionParser(usage)
 parser.add_option('-y', dest='year', type=str, default = 'UL2017', help='Please enter a year, default is UL2017')
 parser.add_option('-d', '--dat', dest='dat', type=str, default = '', help='Please enter a dataset name')
-parser.add_option('--status', dest = 'status', default = False, action = 'store_true', help = 'Default do not check the status')
-parser.add_option('--verb', dest = 'verb', default = False, action = 'store_true', help = 'Default do not verbosely check the sta\
-tus')
-parser.add_option('-s', '--sub', dest = 'sub', default = False, action = 'store_true', help = 'Default do not submit')
-parser.add_option('-k', '--kill', dest = 'kill', default = False, action = 'store_true', help = 'Default do not kill')
-parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'store_true', help = 'Default do not kill')
-parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'store_true', help = 'Default do not resubmit')
-parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
+#parser.add_option('--status', dest = 'status', default = False, action = 'store_true', help = 'Default do not check the status')
+#parser.add_option('--verb', dest = 'verb', default = False, action = 'store_true', help = 'Default do not verbosely check the status')
+#parser.add_option('-s', '--sub', dest = 'sub', default = False, action = 'store_true', help = 'Default do not submit')
+#parser.add_option('-k', '--kill', dest = 'kill', default = False, action = 'store_true', help = 'Default do not kill')
+#parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'store_true', help = 'Default do not kill')
+#parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'store_true', help = 'Default do not resubmit')
+#parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
 parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action = 'store_true', help = 'Add sample flag')
 parser.add_option('--fake',  dest = 'forFR', default = False, action = 'store_true', help = 'configuration for FR samples')
 (opt, args) = parser.parse_args()
+
+submitflag = " -s"
+if opt.sampleFlag:
+    submitflag += " --sampleFlag"
 
 if "UL" not in opt.year:
     raise ValueError("This macro is intended to be use ONLY with UL samples!")
@@ -102,7 +105,7 @@ for s in samlist:
 
                     toSub = str(raw_input("\tWould you like to submit another time the jobs? (type Y or N)\t"))
                     if toSub == "Y":
-                        crabcommand = crabcommand.replace(" -p", " -s")
+                        crabcommand = crabcommand.replace(" -p", submitflag)
                         print "\t(Re)submitting..."
                         crabout = os.popen(crabcommand).readlines()
                         PrintOutput(crabout)
@@ -123,6 +126,6 @@ for s in samlist:
 
     else:
         print "\tThis sample is not submitted to crab yet..."
-        crabcommand += " -s"
+        crabcommand += submitflag
         crabout = os.popen(crabcommand).readlines()
         PrintOutput(crabout)
