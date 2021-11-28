@@ -39,6 +39,7 @@ class dummyColumns(Module):
         pass
 
     def analyze(self, event):
+        print self.dummy
         muons = Collection(event, "Muon")
         electrons = Collection(event, "Electron")
         taus = Collection(event, "Tau")
@@ -61,3 +62,5 @@ class dummyColumns(Module):
         self.out.fillBranch("puWeight", self.dummy)
 
         return True
+
+dummyCol = dummyColumns
