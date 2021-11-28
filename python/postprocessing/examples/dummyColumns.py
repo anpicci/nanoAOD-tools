@@ -11,12 +11,14 @@ class dummyColumns(Module):
         pass
 
     def beginJob(self,histFile=None,histDirName=None):
+        self.dummy = -999
         pass
 
     def endJob(self):
         pass
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        self.dummy = -999
         self.out = wrappedOutputTree
         # Jet_btagSF_deepjet_M_up Jet_btagSF_deepjet_M_down Jet_btagSF_deepjet_M Jet_partonFlavour PrefireWeight puWeight
         self.out.branch("Muon_genPartFlav", "I", lenVar="nMuon")
@@ -39,7 +41,6 @@ class dummyColumns(Module):
         pass
 
     def analyze(self, event):
-        print self.dummy
         muons = Collection(event, "Muon")
         electrons = Collection(event, "Electron")
         taus = Collection(event, "Tau")

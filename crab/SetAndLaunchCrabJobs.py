@@ -2,6 +2,7 @@ import os
 import optparse
 import sys
 import time
+import copy
 from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
 
 """ module to launch and check crab jobs for UL """
@@ -26,6 +27,7 @@ parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action 
 parser.add_option('--fake',  dest = 'forFR', default = False, action = 'store_true', help = 'configuration for FR samples')
 (opt, args) = parser.parse_args()
 
+
 submitflag = " -s"
 if opt.sampleFlag:
     submitflag += " --sampleFlag"
@@ -35,33 +37,49 @@ if "UL" not in opt.year:
 
 year = str(opt.year)
 
-if year not in opt.dat:
+if opt.dat != "" and year not in opt.dat:
     print "Overriding year..."
     year = opt.dat.split("_")[1]
 
 crabdirs = [cdir.replace("crab_", "") for cdir in os.listdir(".") if os.path.isdir("./" + cdir) and cdir != "macros"]
 
-samlist = crab_dict[year]
-
-print opt.dat
+if not opt.forFR:
+    samlist = crab_dict[year]
+else:
+    samlist = crab_dict_Fake[year]
 
 if opt.dat != "":
     samlist = list(filter(lambda x : x.label == opt.dat, samlist))
 
-crabcommand = "python submit_crab.py"
+if opt.forFR:
+    crabc = "python submit_crab_fake.py"
+else:
+    crabc = "python submit_crab.py"
 
-for s in samlist:
-    print s.label
-    print "Considering " + s.label + " sample..."
-    crabcommand += " -d " + str(s.label)
+complist = []
+for samp in samlist:
+    if hasattr(samp, "components"):
+        for c in samp.components:
+            complist.append(copy.deepcopy(c))
+    else:
+        complist.append(copy.deepcopy(samp))
 
-    if s.label in crabdirs:
+for s in complist:
+    print "\n\nConsidering " + s.label + " sample..."
+    crabcommand = crabc + " -d " + str(s.label)
+
+    dirlab = s.label
+    if opt.forFR:
+        dirlab += "_FakeHT"
+
+    if dirlab in crabdirs:
         sstatus = ""
         print "\t" + s.label + " already submitted, check the status..."
         crabcommand += " --status --verb"
         #os.system(crabcommand)
         crabout = os.popen(crabcommand).readlines()
         crabout = list(filter(lambda x : x != "\n", crabout))
+
         for i, outline in enumerate(crabout):
             if "Jobs status" in outline:
                 print "\t" + outline.replace("\n", "")
@@ -127,5 +145,8 @@ for s in samlist:
     else:
         print "\tThis sample is not submitted to crab yet..."
         crabcommand += submitflag
-        crabout = os.popen(crabcommand).readlines()
-        PrintOutput(crabout)
+        crabout = os.system(crabcommand)
+        #crabout = os.popen(crabcommand).readlines()
+        #PrintOutput(crabout)
+
+print "\n\n\n...and that's all from crab! Bye!\n\n\n"

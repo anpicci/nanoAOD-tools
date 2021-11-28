@@ -1,5 +1,3 @@
-from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
-from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
 import os
 import optparse
 import sys
@@ -15,7 +13,14 @@ parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'st
 parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'store_true', help = 'Default do not resubmit')
 parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
 parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action = 'store_true', help = 'Add sample flag')
+parser.add_option('--notUL',  dest = 'UL', default = True, action = 'store_false', help = 'Add sample flag')
 (opt, args) = parser.parse_args()
+
+if not opt.UL:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+else:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+
 
 print(opt.dat)
 
@@ -192,19 +197,19 @@ for sample in samples:
         ht_producer = 'ht()'
         mht_producer = 'mht()'
         sampleFlag_mod = ""
-        if sampleFlag == True:
+        if opt.sampleFlag == True:
             sampleFlag_mod = "sampleFlag"
             if "UL" in sample.year:
                 sampleFlag_mod += "UL"
-            sampleFlag_mod += "(" + sample.label + ")"
+            sampleFlag_mod += "(\"" + sample.label + "\")"
         if ('Data' in sample.label):
             isMC = False
             if not "UL" in sample.year:
                 presel = "(Flag_goodVertices && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter) "
             else:
-                if "2017" in self.year or "2018" in self.year:
+                if "2017" in sample.year or "2018" in sample.year:
                     presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)"
-                elif "2016" in self.year:
+                elif "2016" in sample.year:
                     presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)"
         
             if year == '2016':# and sample.runP != 'H':

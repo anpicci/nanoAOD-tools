@@ -6,7 +6,7 @@ import sys
 usage = 'python submit_crab.py'
 parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dat', type=str, default = '', help='Please enter a dataset name')
-parser.add_option('-t', '--trig', dest='trig', type=str, default = 'Lep', help='Please enter a trigger path')
+parser.add_option('-t', '--trig', dest='trig', type=str, default = 'HT', help='Please enter a trigger path')
 parser.add_option('--status', dest = 'status', default = False, action = 'store_true', help = 'Default do not check the status')
 parser.add_option('--verb', dest = 'verb', default = False, action = 'store_true', help = 'Default do not verbosely check the status')
 parser.add_option('-s', '--sub', dest = 'sub', default = False, action = 'store_true', help = 'Default do not submit')
@@ -14,7 +14,13 @@ parser.add_option('-k', '--kill', dest = 'kill', default = False, action = 'stor
 parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'store_true', help = 'Default do not resubmit')
 parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
 parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'store_true', help = 'Default do not kill')
+parser.add_option('--notUL',  dest = 'UL', default = True, action = 'store_false', help = 'Add sample flag')
 (opt, args) = parser.parse_args()
+
+if not opt.UL:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+else:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
 
 print opt.dat
 
@@ -216,7 +222,7 @@ for sample in samples:
 
         print "Producing crab configuration file"
 
-        cfg_writer(sample, isMC, "VBSFake")
+        cfg_writer(sample, isMC, "VBSFake_UL")
 
         if isMC:
             modules = "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
