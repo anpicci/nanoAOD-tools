@@ -24,9 +24,12 @@ p = PostProcessor('.', ['root://cms-xrd-global.cern.ch//store/data/Run2017B/Sing
                       #preselection(), #PrefCorr(), metCorrector(), fatJetCorrector(),
                       #lepSF_UL2018(),# btagSF2017()
                       sampleFlagUL('DataMuB_UL2017'),
-                      dummyCol(),
-                  ],
-outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), histFileName="histOut.root", histDirName="plots", maxEntries=2, provenance=True, fwkJobReport=True)
+                      dummyCol()],
+                      provenance=True, 
+                      fwkJobReport=True,
+                      histFileName='hist.root', 
+                      histDirName='plots',
+outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), maxEntries=2)
 p.run()
 print('DONE')
 #, PrefCorr(), metCorrector(), fatJetCorrector()

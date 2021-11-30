@@ -30,9 +30,9 @@ class MET_HLT_Filter(Module):
 
         else:
             if "2017" in self.year or "2018" in self.year:
-                good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.BadPFMuonDzFilter and flag.eeBadScFilter and flag.ecalBadCalibFilter
+                good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.eeBadScFilter and flag.ecalBadCalibFilter and flag.BadPFMuonDzFilter 
             elif "2016" in self.year:
-                good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.BadPFMuonDzFilter and flag.eeBadScFilter
+                good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.eeBadScFilter and flag.BadPFMuonDzFilter 
         
             if(self.year == "UL2016APV" or self.year == "UL2016"):
                 good_HLT = (HLT.IsoMu24 or HLT.IsoTkMu24 or HLT.Mu50 or HLT.TkMu50 or HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf or HLT.Photon175)
