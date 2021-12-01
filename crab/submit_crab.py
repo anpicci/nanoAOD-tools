@@ -109,7 +109,7 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.hepmcDump import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
     #f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.LHAPDFWeightProducer import *\n") 
-    if not "UL" in sample.year:
+    if not "UL" in str(sample.year):
         f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlag import *\n")
     else:
         f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlagUL import *\n")
@@ -251,7 +251,7 @@ for sample in samples:
 
         print("Producing crab configuration file")
 
-        if "UL" in sample.year:
+        if "UL" in str(sample.year):
             cfg_writer(sample, isMC, "VBS_UL")
         else:
             cfg_writer(sample, isMC, "VBS_PG")
