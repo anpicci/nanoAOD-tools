@@ -3,7 +3,7 @@ import optparse
 import sys
 from samples.samples import *
 
-cshname = "condorrun_tauwp.csh"
+cshname = "condorrun_tauwp_hello.csh"
 split = 5
 
 def CondoredList(samplename):
@@ -236,13 +236,16 @@ for prname, proc in condor_dict.items():
                 print(sample.label, " completely condored")
 
     else:
-
         if opt.dat != 'all':
             if not prname.startswith(opt.dat):
                 continue
 
         if not DoesSampleExist(proc.name):
             continue
+
+        if opt.dat in prname:
+            print("hello: ", prname)
+
         if os.path.exists(path+proc.label):
             if opt.rw:
                 print('Relaunching all the jobs for', proc.label)
