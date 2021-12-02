@@ -618,22 +618,22 @@ WZ_2017.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIIFall17NanoAODv7-PU2017_12Apr20
 
 ################################ DrellYan ################################
 DY1JetsToLL_2017 = sample(ROOT.kCyan, 1, 1001, "DY + 1 Jet", "DY1JetsToLL_2017")
-DY1JetsToLL_2017.sigma = 1012.0
+DY1JetsToLL_2017.sigma = 877.8
 DY1JetsToLL_2017.year = 2017
 DY1JetsToLL_2017.dataset = "/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag2_2017 + "-v1/NANOAODSIM"
 
 DY2JetsToLL_2017 = sample(ROOT.kCyan, 1, 1001, "DY + 2 Jets", "DY2JetsToLL_2017")
-DY2JetsToLL_2017.sigma = 330.4
+DY2JetsToLL_2017.sigma = 304.4
 DY2JetsToLL_2017.year = 2017
 DY2JetsToLL_2017.dataset = "/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag2_2017 + "_ext1-v1/NANOAODSIM"
 
 DY3JetsToLL_2017 = sample(ROOT.kCyan, 1, 1001, "DY + 3 Jets", "DY3JetsToLL_2017")
-DY3JetsToLL_2017.sigma = 101.8
+DY3JetsToLL_2017.sigma = 111.5
 DY3JetsToLL_2017.year = 2017
 DY3JetsToLL_2017.dataset = "/DY3JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2017 + "-v1/NANOAODSIM"
 
 DY4JetsToLL_2017 = sample(ROOT.kCyan, 1, 1001, "DY + 4+ Jets", "DY4JetsToLL_2017")
-DY4JetsToLL_2017.sigma = 54.80
+DY4JetsToLL_2017.sigma = 44.03
 DY4JetsToLL_2017.year = 2017
 DY4JetsToLL_2017.dataset = "/DY4JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag1_2017 + "-v1/NANOAODSIM"
 
@@ -1560,22 +1560,22 @@ WZ_2018.dataset = "/WZ_TuneCP5_13TeV-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
 ################################ DrellYan ################################
 DY1JetsToLL_2018 = sample(ROOT.kAzure+6, 1, 1001, "DY + 1 Jet", "DY1JetsToLL_2018")
-DY1JetsToLL_2018.sigma = 1012.0
+DY1JetsToLL_2018.sigma = 877.8
 DY1JetsToLL_2018.year = 2018
 DY1JetsToLL_2018.dataset = "/DY1JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
 DY2JetsToLL_2018 = sample(ROOT.kAzure+6, 1, 1001, "DY + 2 Jets", "DY2JetsToLL_2018")
-DY2JetsToLL_2018.sigma = 330.4
+DY2JetsToLL_2018.sigma = 304.4
 DY2JetsToLL_2018.year = 2018
 DY2JetsToLL_2018.dataset = "/DY2JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
 DY3JetsToLL_2018 = sample(ROOT.kAzure+6, 1, 1001, "DY + 3 Jets", "DY3JetsToLL_2018")
-DY3JetsToLL_2018.sigma = 101.8
+DY3JetsToLL_2018.sigma = 111.5
 DY3JetsToLL_2018.year = 2018
 DY3JetsToLL_2018.dataset = "/DY3JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
 DY4JetsToLL_2018 = sample(ROOT.kAzure+6, 1, 1001, "DY + 4+ Jets", "DY4JetsToLL_2018")
-DY4JetsToLL_2018.sigma = 54.80
+DY4JetsToLL_2018.sigma = 44.03
 DY4JetsToLL_2018.year = 2018
 DY4JetsToLL_2018.dataset = "/DY4JetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/" + tag_2018 + "-v1/NANOAODSIM"
 
