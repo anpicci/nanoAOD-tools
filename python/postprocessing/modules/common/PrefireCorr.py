@@ -196,3 +196,10 @@ PrefireCorr_UL2018 = lambda : PrefCorr(
                  photonroot="L1PrefiringMaps.root",
                  photonmapname="L1prefiring_photonptvseta_UL2017BtoF",
 )
+
+PrefireCorr_2018 = lambda : PrefCorr(
+                 jetroot="L1PrefiringMaps.root",
+                 jetmapname="L1prefiring_jetptvseta_2017BtoF",
+                 photonroot="L1PrefiringMaps.root",
+                 photonmapname="L1prefiring_photonptvseta_2017BtoF",
+)

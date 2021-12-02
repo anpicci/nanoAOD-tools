@@ -34,7 +34,8 @@ class btagSFProducer(Module):
     """Calculate btagging scale factors
     """
 
-    def __init__(self, era, algo='csvv2', selectedWPs=['M', 'shape_corr'], sfFileName=None, verbose=0, jesSystsForShape=["jes"]):
+    #def __init__(self, era, algo='csvv2', selectedWPs=['M', 'shape_corr'], sfFileName=None, verbose=0, jesSystsForShape=["jes"]):
+    def __init__(self, era, algo='csvv2', selectedWPs=['M'], sfFileName=None, verbose=0, jesSystsForShape=["jes"]):
         self.era = era
         self.algo = algo.lower()
         self.selectedWPs = selectedWPs
@@ -88,8 +89,9 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
+
                 'UL2017': {
-                    'inputFileName': "DeepCSV_106XUL17SF.csv",
+                    'inputFileName': "wp_deepJet_106XUL17_v3_new.csv",#DeepCSV_106XUL17SF.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -135,8 +137,29 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
+ 
+               'UL2016APV': {
+                    'inputFileName': "DeepJet_106XUL16preVFPSF_v1_new.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["L", "M", "T"]
+                },
+
+               'UL2016': {
+                    'inputFileName': "DeepJet_106XUL16postVFPSF_v2_new.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["L", "M", "T"]
+                },
+
                 'UL2017': {
-                    'inputFileName': "DeepJet_106XUL17SF.csv",
+                    'inputFileName': "DeepJet_106XUL17_v3_new.csv",
                     'measurement_types': {
                         0: "comb",  # b
                         1: "comb",  # c
@@ -144,6 +167,18 @@ class btagSFProducer(Module):
                     },
                     'supported_wp': ["L", "M", "T", "shape_corr"]
                 },
+
+                'UL2018': {
+                    'inputFileName': "DeepJet_106XUL18_v2_new.csv",
+                    'measurement_types': {
+                        0: "comb",  # b
+                        1: "comb",  # c
+                        2: "incl"   # light
+                    },
+                    'supported_wp': ["L", "M", "T", "shape_corr"]
+                },
+
+
                 '2018': {
                     'inputFileName': "DeepJet_102XSF_V1.csv",
                     'measurement_types': {
@@ -236,8 +271,8 @@ class btagSFProducer(Module):
     def beginJob(self):
         # initialize BTagCalibrationReader
         # (cf. https://twiki.cern.ch/twiki/bin/viewauth/CMS/BTagCalibration )
-        self.calibration = ROOT.BTagCalibration(
-            self.algo, os.path.join(self.inputFilePath, self.inputFileName))
+        print self.algo, os.path.join(self.inputFilePath, self.inputFileName)
+        self.calibration = ROOT.BTagCalibration(self.algo, os.path.join(self.inputFilePath, self.inputFileName))
         self.readers = {}
         for wp in self.selectedWPs:
             wp_btv = {"l": 0, "m": 1, "t": 2,
@@ -362,7 +397,7 @@ btagSF2016 = lambda : btagSFProducer("Legacy2016", "deepjet")
 btagSF2017 = lambda : btagSFProducer("2017", "deepjet")
 btagSF2018 = lambda : btagSFProducer("2018", "deepjet")
 
-btagSFUL2016APV = lambda : btagSFProducer("Legacy2016", "deepjet")
-btagSFUL2016 = lambda : btagSFProducer("Legacy2016", "deepjet")
+btagSFUL2016APV = lambda : btagSFProducer("UL2016APV", "deepjet", selectedWPs=['M'])
+btagSFUL2016 = lambda : btagSFProducer("UL2016", "deepjet", selectedWPs=['M'])
 btagSFUL2017 = lambda : btagSFProducer("UL2017", "deepjet")
 btagSFUL2018 = lambda : btagSFProducer("UL2018", "deepjet")

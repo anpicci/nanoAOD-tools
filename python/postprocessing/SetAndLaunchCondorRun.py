@@ -288,7 +288,7 @@ if not opt.check:
     t.write("PT_CUT_LEP_VETO_MU=         10\n")
     t.write("ETA_CUT_LEP_VETO_MU=        2.4\n\n")
     
-    t.write("DR_OVERLAP_CONE_TAU=        0.5\n")
+    t.write("DR_OVERLAP_CONE_TAU=        0.5#0.2\n")
     t.write("DR_OVERLAP_CONE_OTHER=      0.4\n\n")
     
     t.write("PT_CUT_JET= 30\n")
