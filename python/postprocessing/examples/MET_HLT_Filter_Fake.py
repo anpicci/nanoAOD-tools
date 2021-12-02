@@ -6,7 +6,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
 class MET_HLT_Filter_Fake(Module):
     def __init__(self, year, trig="Lep"):
-        self.year = year
+        self.year = str(year)
         self.trig = trig
         pass
     def endJob(self):
@@ -41,7 +41,7 @@ class MET_HLT_Filter_Fake(Module):
                 if self.trig == "HT":
                     good_HLT = HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
         
-        else:
+        elif "UL" in self.year:
             if("2016" in self.year):
                 if self.trig == "HT":
                     good_HLT = HLT.PFHT125 or HLT.PFHT200 or HLT.PFHT250 or HLT.PFHT300 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890

@@ -18,7 +18,8 @@ from xgboost import XGBClassifier
 import numpy as np
 import pickle
 
-with open('/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p', 'rb') as file:
+#with open('/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p', 'rb') as file:
+with open('VBSTagger_XGB.p', 'rb') as file:
     model = pickle.load(file)
 print("model loaded outside loop")
 
