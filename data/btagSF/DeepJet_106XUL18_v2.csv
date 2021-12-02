@@ -1,4 +1,4 @@
-OperatingPoint,measurementType,sysType,jetFlavor,etaMin,etaMax,ptMin,ptMax,discrMin,discrMax,formula 
+DeepJet;OperatingPoint,measurementType,sysType,jetFlavor,etaMin,etaMax,ptMin,ptMax,discrMin,discrMax,formula 
 0,incl,central,0,0.0,2.5,20.0,1000.0,0.0,1.0,1.46193+-0.000605595*x+3.30224e-07*x*x+-0.367873/x 
 0,incl,down,0,0.0,2.5,20.0,1000.0,0.0,1.0,(1.46193+-0.000605595*x+3.30224e-07*x*x+-0.367873/x)*(1-(0.083685+-0.000104849*x+9.12824e-08*x*x)) 
 0,incl,down_correlated,0,0.0,2.5,20.0,1000.0,0.0,1.0,(1.46193+-0.000605595*x+3.30224e-07*x*x+-0.367873/x)*(1-(0.050987+7.03101e-05*x+-1.09927e-07*x*x)) 

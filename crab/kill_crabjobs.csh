@@ -39,7 +39,7 @@ reset
 #python submit_crab.py -p -d WpWpJJ_EWK_UL2017
 #python submit_crab.py -p -d WpWpJJ_QCD_UL2017
 #python submit_crab.py -p -d VBS_SSWW_DIM6_SM_UL2017
-python submit_crab.py -s -d VBS_SSWW_aQGC_2018 --notUL
+python submit_crab.py --status -d VBS_SSWW_aQGC_2018 --notUL
 #python submit_crab.py -p -d DataMu_UL2017
 #python submit_crab.py -p -d DataEle_UL2017
 #python submit_crab.py -p -d DataHT_UL2017
