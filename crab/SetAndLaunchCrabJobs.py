@@ -52,6 +52,8 @@ else:
 if opt.dat != "":
     samlist = list(filter(lambda x : x.label == opt.dat, samlist))
 
+print samlist 
+
 if opt.forFR:
     crabc = "python submit_crab_fake.py"
 else:
