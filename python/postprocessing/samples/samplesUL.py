@@ -3234,7 +3234,7 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2016APV,
         DataMu_UL2016APV,
         DataEle_UL2016APV,
-        DataHT_UL2016APV,
+        #DataHT_UL2016APV,
     ],
 
     ##### UL2016 #####
@@ -3255,7 +3255,7 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2016,
         DataMu_UL2016,
         DataEle_UL2016,
-        DataHT_UL2016,
+        #DataHT_UL2016,
     ],
 
     ##### UL2017 #####
@@ -3276,7 +3276,7 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2017,
         DataMu_UL2017,
         DataEle_UL2017,
-        DataHT_UL2017,
+        #DataHT_UL2017,
     ],
 
     ##### UL2018 #####
@@ -3297,7 +3297,7 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2018,
         DataMu_UL2018,
         DataEle_UL2018,
-        DataHT_UL2018,
+        #DataHT_UL2018,
     ],
 }
 

@@ -18,12 +18,13 @@ class MET_HLT_Filter_Fake(Module):
         HLT = Object(event, "HLT")
         L1 = Object(event, "L1")
         flag = Object(event, 'Flag')
-        good_MET = flag.goodVertices and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter
+
 
         if not "UL" in self.year:
+            good_MET = flag.goodVertices and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter
             if("2016" in self.year):
                 if self.trig == "HT":
-                    good_HLT = HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
+                    good_HLT = HLT.PFHT125 or HLT.PFHT200 or HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
                     #good_HLT = (HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf or HLT.IsoMu24 or HLT.IsoTkMu24) and flag.globalSuperTightHalo2016Filter
             elif("2017" in self.year):
                 #if self.trig == "Lep":
@@ -31,7 +32,7 @@ class MET_HLT_Filter_Fake(Module):
                 #elif self.trig == "Tau":
                 #good_HLT = HLT.IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1 or HLT.Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1 or HLT.MediumChargedIsoPFTau50_Trk30_eta2p1_1pr
                 if self.trig == "HT":
-                    good_HLT = HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
+                    good_HLT = HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
 
             elif("2018" in self.year):
                 #if self.trig == "Lep":
@@ -39,9 +40,21 @@ class MET_HLT_Filter_Fake(Module):
                 #elif self.trig == "Tau":
                 #good_HLT = HLT.IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1 or HLT.Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1 or HLT.MediumChargedIsoPFTau50_Trk30_eta2p1_1pr
                 if self.trig == "HT":
-                    good_HLT = HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
+                    good_HLT = HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
         
         elif "UL" in self.year:
+            if "2017" in self.year or "2018" in self.year:
+                try:
+                    good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.eeBadScFilter and flag.ecalBadCalibFilter and flag.BadPFMuonDzFilter
+                except:
+                    good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.eeBadScFilter and flag.ecalBadCalibFilter
+
+            elif "2016" in self.year:
+                try:
+                    good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.eeBadScFilter and flag.BadPFMuonDzFilter
+                except:
+                    good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.eeBadScFilter
+
             if("2016" in self.year):
                 if self.trig == "HT":
                     good_HLT = HLT.PFHT125 or HLT.PFHT200 or HLT.PFHT250 or HLT.PFHT300 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890

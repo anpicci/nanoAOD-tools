@@ -1,6 +1,6 @@
 #prende i path da path_writer (crab_paths.txt) e usando gfal-ls scorre su tutti i file e li salva su un file .txt
-from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
-#from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+#from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
 import os
 import optparse
 

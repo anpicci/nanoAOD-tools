@@ -33,8 +33,12 @@ class MCweight_writer(Module):
     def analyze(self, event):
 
         lheweight = True
-        #if "WZ" in self.samplename or "WWTo2L2Nu_DoubleScattering" in self.samplename:
-            #lheweight = False
+        if "WZ" in self.samplename or "WWTo2L2Nu_DoubleScattering" in self.samplename:
+            lheweight = False
+        try:
+            LHEPdfWeight = Collection(event, 'LHEPdfWeight')
+        except:
+            lheweight = False
         #print(lheweight)
         """process event, return True (go to next module) or False (fail, go to next event)"""
 
