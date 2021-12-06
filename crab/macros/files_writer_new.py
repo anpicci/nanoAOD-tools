@@ -16,7 +16,7 @@ print "Is Fake?", opt.fake
 if not (opt.trig == "Lep" or opt.trig == "Tau" or opt.trig == "HT"):
     raise ValueError
 
-dirtag = "_Fake" + opt.trig + "/"
+dirtag = "_Fake" + opt.trig# + "/"
 
 if not(opt.dat in sample_dict.keys()):
     print sample_dict.keys()
@@ -40,7 +40,7 @@ for sample in samples:
         dirpath = dirpath + "Fake/" + opt.trig + "/"
         crabdir = crabdir + dirtag
     else:
-        crabdir = crabdir + "/"
+        crabdir = crabdir #+ "/"
 
     print "Saving txts in ", dirpath, "\t CrabDir:", crabdir
 
@@ -48,7 +48,8 @@ for sample in samples:
         os.makedirs(dirpath)
 
     f = open(dirpath+str(sample.label)+".txt", "w")
-    url = os.popen('crab getoutput --xrootd --quantity="all" -d ' + path + crabdir).readlines()
+    url = os.popen('crab getoutput --xrootd --jobids 1 -d ' + path + crabdir).readlines()
+
     print "Printing out crabbed files for "+str(sample.label)
 
     url_dict = {}
@@ -70,15 +71,18 @@ for sample in samples:
                 crabgo = str(intmin)+'-'+str(intmax)
 
                 print 'Finding rootfile produced by jobs', str(crabgo), "..."
+                print 'crab getoutput --xrootd --jobids=' + str(crabgo) + ' -d ' + path + crabdir
                 curl = os.popen('crab getoutput --xrootd --jobids=' + str(crabgo) + ' -d ' + path + crabdir).readlines()
                 if 'files to retrieve' in curl:
                     print 'Files not reachable with xrootd, relaunch jobs with another remote output folder.'
                     finished = True
                     break
 
+                print curl
                 cidx = 0
                 while cidx < len(curl):
                     cu = curl[cidx]
+                    #print cu
                     if cu.startswith('The job with id '):
                         cu_err = int(cu.split('The job with id ')[-1].split(' is not')[0])
                         print cu_err, " is missing, retrying without considering it..."

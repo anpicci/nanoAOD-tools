@@ -14,6 +14,8 @@ parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'st
 parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
 parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'store_true', help = 'Default do not kill')
 parser.add_option('--notUL',  dest = 'UL', default = True, action = 'store_false', help = 'Add sample flag')
+parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action = 'store_true', help = 'Add sample flag')
+
 (opt, args) = parser.parse_args()
 
 if not opt.UL:
@@ -106,7 +108,11 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
         f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.hepmcDump import *\n")
-
+    if not "UL" in str(sample.year):
+        f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlag import *\n")
+    else:
+        f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlagUL import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.dummyColumns import *\n")
 
 
     #f.write("infile = "+str(sample.files)+"\n")
@@ -192,6 +198,13 @@ for sample in samples:
         pu_mod = 'puWeight_'+year+'()'
         ht_producer = 'ht()'
         mht_producer = 'mht()'
+        sampleFlag_mod = ""
+        if opt.sampleFlag == True:
+            sampleFlag_mod = "sampleFlag"
+            if "UL" in sample.year:
+                sampleFlag_mod += "UL"
+            sampleFlag_mod += "(\"" + sample.label + "\"), "
+
         if ('Data' in sample.label):
             isMC = False
             if not "UL" in year:
@@ -250,9 +263,9 @@ for sample in samples:
         cfg_writer(sample, isMC, "VBSFake_UL")
 
         if isMC:
-            modules = "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection_Fake(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection_Fake(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
         else:
-            modules = "preselection_Fake(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            modules = sampleFlag_mod + "preselection_Fake(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
         #print "modules:", modules
         print "Producing crab script"
         crab_script_writer(sample,'/eos/user/'+str(os.environ.get('USER')[0]) + '/'+str(os.environ.get('USER'))+'/Wprime/nosynch/', isMC, modules, presel)

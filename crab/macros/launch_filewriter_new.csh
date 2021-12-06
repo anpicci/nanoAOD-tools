@@ -47,7 +47,7 @@ set year = '2018'
 #python files_writer_new.py -d ZZtoLep_$year --fake -t HT
 #python files_writer_new.py -d DYJetsToLLM5to50_$year --fake -t HT
 #python files_writer_new.py -d VBS_SSWW_DIM6_SM_$year #--fake -t HT
-python files_writer_new.py -d VBS_SSWW_aQGC_$year #--fake -t HT
+#python files_writer_new.py -d VBS_SSWW_aQGC_$year #--fake -t HT
 #python files_writer_new.py -d WpWpJJ_EWK_$year #--fake -t HT
 #python files_writer_new.py -d WpWpJJ_QCD_$year #--fake -t HT
 #python files_writer_new.py -d DataHT_$year --fake -t HT
@@ -55,6 +55,7 @@ python files_writer_new.py -d VBS_SSWW_aQGC_$year #--fake -t HT
 #python files_writer_new.py -d VBFHToTauTau_$year # --fake -t HT
 #python files_writer_new.py -d DataEle_$year 
 #python files_writer_new.py -d DataMu_$year 
+python files_writer_new.py -d DataHTC_UL2017 --fake -t HT 
 
 #python files_writer_new.py -d TTTo2L2Nu_UL2016APV 
 #python files_writer_new.py -d TTTo2L2Nu_UL2016 
