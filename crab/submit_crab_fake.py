@@ -1,9 +1,8 @@
-from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
 import os
 import optparse
 import sys
 
-usage = 'python submit_crab.py'
+usage = 'python submit_crab_fake.py'
 parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dat', type=str, default = '', help='Please enter a dataset name')
 parser.add_option('-t', '--trig', dest='trig', type=str, default = 'HT', help='Please enter a trigger path')
@@ -15,6 +14,8 @@ parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'st
 parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
 parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'store_true', help = 'Default do not kill')
 parser.add_option('--notUL',  dest = 'UL', default = True, action = 'store_false', help = 'Add sample flag')
+parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action = 'store_true', help = 'Add sample flag')
+
 (opt, args) = parser.parse_args()
 
 if not opt.UL:
@@ -58,13 +59,13 @@ def cfg_writer(sample, isMC, outdir):
     f.write("config.Data.inputDBS = 'global'\n")
     if not isMC:
         f.write("config.Data.splitting = 'LumiBased'\n")
-        if sample.year == '2016':
+        if str(sample.year) == '2016':
             f.write("config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_ReReco_07Aug2017_Collisions16_JSON.txt'\n")
-        elif sample.year == '2017':
+        elif str(sample.year) == '2017':
             f.write("config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/ReReco/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON_v1.txt'\n")
-        elif sample.year == '2018':
+        elif str(sample.year) == '2018':
             f.write("config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'\n")
-        if not ((sample.label.startswith("DataHT")) and sample.year == '2018'):
+        if not ((sample.label.startswith("DataHT")) and str(sample.year) == '2018'):
             f.write("config.Data.unitsPerJob = 50\n")
         else:
             f.write("config.Data.unitsPerJob = 1\n")
@@ -99,7 +100,7 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     if isMC:
         f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.MCweight_writer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.MET_HLT_Filter_Fake import *\n")
-    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.preselection import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.preselection_Fake import *\n")
     if isMC:
         f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import *\n")
         f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *\n")
@@ -107,21 +108,25 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
         f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.muonScaleResProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.hepmcDump import *\n")
-
+    if not "UL" in str(sample.year):
+        f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlag import *\n")
+    else:
+        f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.sampleFlagUL import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.dummyColumns import *\n")
 
 
     #f.write("infile = "+str(sample.files)+"\n")
     #f.write("outpath = '"+ outpath+"'\n")
     #Deafult PostProcessor(outputDir,inputFiles,cut=None,branchsel=None,modules=[],compression='LZMA:9',friend=False,postfix=None, jsonInput=None,noOut=False,justcount=False,provenance=False,haddFileName=None,fwkJobReport=False,histFileName=None,histDirName=None, outputbranchsel=None,maxEntries=None,firstEntry=0, prefetch=False,longTermCache=False)\n")
     if isMC:
-        f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", jesUncert='All', applyHEMfix=True)\n")
-        f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
-        #f.write("jmeCorrections = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", jesUncert='All', redojec=True, jetType = 'AK8PFchs')\n")
+        f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='All', applyHEMfix=True)\n")
+        f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
+        #f.write("jmeCorrections = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='All', redojec=True, jetType = 'AK8PFchs')\n")
         f.write("p=PostProcessor('.', inputFiles(), '', modules=["+modules+"], provenance=True, fwkJobReport=True, histFileName='hist.root', histDirName='plots', outputbranchsel='keep_and_drop.txt')\n")# haddFileName='"+sample.label+".root'
     else:
-        f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", runPeriod='"+str(sample.runP)+"', applyHEMfix=True, jesUncert='All')\n")
-        f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", runPeriod='"+str(sample.runP)+"', jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
-        #f.write("jmeCorrections = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", runPeriod='"+str(sample.runP)+"', jesUncert='All', redojec=True, jetType = 'AK8PFchs')\n")
+        f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', applyHEMfix=True, jesUncert='All')\n")
+        f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
+        #f.write("jmeCorrections = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', jesUncert='All', redojec=True, jetType = 'AK8PFchs')\n")
         f.write("p=PostProcessor('.', inputFiles(), '"+presel+"', modules=["+modules+"], provenance=True, fwkJobReport=True, jsonInput=runsAndLumis(), haddFileName='tree_hadd.root', outputbranchsel='keep_and_drop.txt')\n")#
     f.write("p.run()\n")
     f.write("print 'DONE'\n")
@@ -158,7 +163,7 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     f_sh.close()
 
 if not(opt.dat in sample_dict.keys()):
-    print sample_dict.keys()
+    print opt.dat in sample_dict.keys()
 dataset = sample_dict[opt.dat]
 
 samples = []
@@ -179,7 +184,7 @@ getout = opt.gout
 #Writing the configuration file
 
 for sample in samples:
-    if ('DataEleB' in sample.label or 'DataMuB' in sample.label or ('DataHTB' in sample.label and opt.trig=="Lep") and sample.year == 2017):
+    if ('DataEleB' in sample.label or 'DataMuB' in sample.label or ('DataHTB' in sample.label and opt.trig=="Lep") and str(sample.year) == "2017"):
         continue
     print 'Launching sample ' + sample.label + dirtag
     if submit:
@@ -193,9 +198,23 @@ for sample in samples:
         pu_mod = 'puWeight_'+year+'()'
         ht_producer = 'ht()'
         mht_producer = 'mht()'
+        sampleFlag_mod = ""
+        if opt.sampleFlag == True:
+            sampleFlag_mod = "sampleFlag"
+            if "UL" in sample.year:
+                sampleFlag_mod += "UL"
+            sampleFlag_mod += "(\"" + sample.label + "\"), "
+
         if ('Data' in sample.label):
             isMC = False
-            presel = "(Flag_goodVertices && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter) "
+            if not "UL" in year:
+                presel = "(Flag_goodVertices && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter) "
+            else:
+                if "2017" in year or "2018" in year:
+                    presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)"
+                elif "2016" in year:
+                    presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)"
+                
             if year == '2016':# and sample.runP != 'H':
                 if 'DataHT' not in sample.label:
                     presel += " &&((HLT_Ele27_WPTight_Gsf || HLT_Ele32_WPTight_Gsf || HLT_IsoMu24 || HLT_IsoTkMu24) && Flag_globalSuperTightHalo2016Filter)"
@@ -214,6 +233,25 @@ for sample in samples:
                     presel += " && (HLT_IsoMu24 || HLT_Ele32_WPTight_Gsf_L1DoubleEG)"
                 else:
                     presel += " && (HLT_PFHT250 || HLT_PFHT350)"
+
+            elif year.startswith('UL2016'):                                                                                                                                                                        
+                if 'DataHT' not in sample.label:    
+                    presel += " && (HLT_IsoMu24 || HLT_IsoTkMu24 || HLT_Mu50 || HLT_TkMu50 || HLT_Ele27_WPTight_Gsf || HLT_Ele32_WPTight_Gsf || HLT_Photon175)"
+                else:
+                    presel += " && (HLT_PFHT125 || HLT_PFHT200 || HLT_PFHT250 || HLT_PFHT350 || HLT_PFHT370 || HLT_PFHT430 || HLT_PFHT510 || HLT_PFHT590 || HLT_PFHT680 || HLT_PFHT780 || HLT_PFHT890)"
+
+            elif year == 'UL2017':# and sample.runP != 'B':                                                                                                                                                            
+                if 'DataHT' not in sample.label:
+                    presel += " && (HLT_IsoMu27 || HLT_Mu50 || HLT_OldMu100 || HLT_TkMu100 || HLT_Ele35_WPTight_Gsf || (HLT_Ele32_WPTight_Gsf_L1DoubleEG and (L1_SingleIsoEG30er2p1 || L1_SingleIsoEG32 || L1_SingleEG40)) || HLT_Photon200)"
+                else:
+                    presel += " && (HLT_PFHT180 || HLT_PFHT250 || HLT_PFHT350 || HLT_PFHT370 || HLT_PFHT430 || HLT_PFHT510 || HLT_PFHT590 || HLT_PFHT680 || HLT_PFHT780 || HLT_PFHT890)"
+
+            elif year == 'UL2018':# and sample.runP != 'B':                                                                                                                                                            
+                if 'DataHT' not in sample.label:
+                    presel += " && (HLT_IsoMu27 || HLT_Mu50 || HLT_OldMu100 || HLT_TkMu100 || HLT_Ele35_WPTight_Gsf || (HLT_Ele32_WPTight_Gsf_L1DoubleEG and (L1_SingleIsoEG30er2p1 || L1_SingleIsoEG32 || L1_SingleEG40)) || HLT_Photon200)"
+                else:
+                    presel += " && (HLT_PFHT180 || HLT_PFHT250 || HLT_PFHT350 || HLT_PFHT370 || HLT_PFHT430 || HLT_PFHT510 || HLT_PFHT590 || HLT_PFHT680 || HLT_PFHT780 || HLT_PFHT890)"
+
         else:
             isMC = True
             presel = ""
@@ -225,9 +263,9 @@ for sample in samples:
         cfg_writer(sample, isMC, "VBSFake_UL")
 
         if isMC:
-            modules = "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection_Fake(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefCorr(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
         else:
-            modules = "preselection(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            modules = sampleFlag_mod + "preselection_Fake(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
         #print "modules:", modules
         print "Producing crab script"
         crab_script_writer(sample,'/eos/user/'+str(os.environ.get('USER')[0]) + '/'+str(os.environ.get('USER'))+'/Wprime/nosynch/', isMC, modules, presel)
@@ -240,7 +278,7 @@ for sample in samples:
     if kill:
         print("Killing crab jobs...")
         os.system("crab kill -d crab_" + sample.label + dirtag)
-        #os.system("rm -rf crab_" + sample.label  + dirtag)
+        os.system("rm -rf crab_" + sample.label  + dirtag)
 
     if purge:
         print("Purging crab jobs...")

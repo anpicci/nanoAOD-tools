@@ -35,7 +35,7 @@ class preselection(Module):
 
         looseMu = list(filter(lambda x : x.looseId and x.pt > 35. and x.pfRelIso04_all < 1. and x.pfRelIso04_all>=0. and abs(x.eta) < 2.4, muons))
         looseEle = list(filter(lambda x : x.mvaFall17V2Iso_WPL and x.jetRelIso < 1. and x.jetRelIso >= 0. and x.pt > 35. and ((abs(x.eta) < 1.4442) or (abs(x.eta) > 1.566 and abs(x.eta)< 2.5)), electrons))
-        looseTau = list(filter(lambda x : x.idDeepTau2017v2p1VSjet >= 8 and x.idDeepTau2017v2p1VSe >= 4 and x.idDeepTau2017v2p1VSmu >= 8 and x.pt > 30. and abs(x.eta) < 2.3, taus))
+        looseTau = list(filter(lambda x : x.idDeepTau2017v2p1VSjet >= 2 and x.idDeepTau2017v2p1VSe >= 4 and x.idDeepTau2017v2p1VSmu >= 8 and x.pt > 30. and abs(x.eta) < 2.3, taus))
         looseJet = list(filter(lambda x : x.pt > 30 and abs(x.eta) < 5. and x.pt > 30. and (x.pt >= 50. or (x.pt < 50. and x.puId >= 7)), jets))
 
         for j in jets:
@@ -43,7 +43,7 @@ class preselection(Module):
 
         self.out.fillBranch("HT_eventHT", eventSum.Pt())
 
-        isGoodEvent = ((len(looseEle) > 0 or len(looseMu) > 0) and len(looseTau) > 0 and len(looseJet) >= 0 )
+        isGoodEvent = ((len(looseEle) > 0 or len(looseMu) > 0) and len(looseTau) > 0 and len(looseJet) > 0 )
         #isGoodEvent = True
 
         goodEvent = isGoodPV and isGoodEvent

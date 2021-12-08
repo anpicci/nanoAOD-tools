@@ -16,7 +16,8 @@ usage = 'python3 SetAndLaunchCrabJobs.py'
 parser = optparse.OptionParser(usage)
 parser.add_option('-y', dest='year', type=str, default = 'UL2017', help='Please enter a year, default is UL2017')
 parser.add_option('-d', '--dat', dest='dat', type=str, default = '', help='Please enter a dataset name')
-#parser.add_option('--status', dest = 'status', default = False, action = 'store_true', help = 'Default do not check the status')
+parser.add_option('--save', dest = 'save', default = False, action = 'store_true', help = 'Default do not check the save')
+parser.add_option('--resave', dest = 'resave', default = False, action = 'store_true', help = 'Default do not resave')
 #parser.add_option('--verb', dest = 'verb', default = False, action = 'store_true', help = 'Default do not verbosely check the status')
 parser.add_option('-s', '--sub', dest = 'sub', default = False, action = 'store_true', help = 'Default do not submit')
 parser.add_option('-k', '--kill', dest = 'kill', default = False, action = 'store_true', help = 'Default do not kill')
@@ -51,6 +52,8 @@ else:
 if opt.dat != "":
     samlist = list(filter(lambda x : x.label == opt.dat, samlist))
 
+print samlist 
+
 if opt.forFR:
     crabc = "python submit_crab_fake.py"
 else:
@@ -84,24 +87,50 @@ for s in complist:
                 
 
             for i, outline in enumerate(crabout):
-                '''
-                if "Jobs status" in outline:
-                    print "\t" + outline.replace("\n", "")
-                    j = i + 1
-                    while j < len(crabout) and crabout[j].startswith("\t"):
-                        print "\t" + crabout[j].replace("\n", "")
-                       j += 1
-                '''
+
+                #if "Jobs status" in outline:
+                    #print "\t" + outline.replace("\n", "")
+                    #j = i + 1
+                    #while j < len(crabout) and crabout[j].startswith("\t"):
+                        #print "\t" + crabout[j].replace("\n", "")
+                       #j += 1
+
 
                 if "COMPLETED" in outline:
                     sstatus = "COMPLETED"
-                elif "FAILED" in outline or "SUBMITFAILED" in outline:
+                    break
+                elif "FAILED" in outline or "SUBMITFAILED" in outline:# or "failed" in outline:
                     sstatus = "FAILED"
+                    break
+                elif "Cannot find .requestcache" in outline:
+                    sstatus = "FAILED"
+                    break
                 #else:
                 #sstatus = "PROCESSING"
 
             if sstatus == "COMPLETED":
-                print "\t" + s.label + " is COMPLETED, pass to the next sample..."
+                print "\t" + s.label + " is COMPLETED!"
+                printpath = "./macros/files/"
+                if opt.forFR:
+                    printpath += "Fake/HT/"
+
+                printpath += s.label + ".txt"
+                toPrint = False
+
+                if not os.path.exists(printpath):
+                    toPrint = True #str(raw_input("\tWould you like to print out the file paths? (type Y or N)\t"))
+                    if (toPrint and opt.save) or opt.resave:
+                        printcommand = "cd macros; python files_writer_new.py -d " + s.label
+                        if opt.forFR:
+                            printcommand += " --fake -t HT"
+                        printcommand += "; cd -;"
+                        
+                        print "\tSaving Pisa paths in txts..."
+                        os.system(printcommand)
+                    else:
+                        print "\tLet's pass to the next sample..."
+                else:
+                    print "\tFile paths already printed out! Let's pass to the next sample..."
 
             elif sstatus == "FAILED":
                 print "\t" + s.label + " is FAILED, let's see what happened there..."
@@ -113,6 +142,7 @@ for s in complist:
                     #crabout = os.popen(crabcommand).readlines()
                     #PrintOutput(crabout)
                     os.system(crabcommand)
+
                 elif toRel == "N":
                     toKill = str(raw_input("\tWould you like to kill the jobs? (type Y or N)\t"))
                     if toKill == "Y":
@@ -121,17 +151,17 @@ for s in complist:
                         #crabout = os.popen(crabcommand).readlines()
                         #PrintOutput(crabout)
                         os.system(crabcommand)
-                        print "\tWaiting 1 minutes before purging..."
-                        time.sleep(60)
-                        crabcommand = crabcommand.replace(" -k", " -p")
-                        print "\tPurging..."
+                        #print "\tWaiting 1 minutes before purging..."
+                        #time.sleep(60)
+                        #crabcommand = crabcommand.replace(" -k", " -p")
+                        #print "\tPurging..."
                         #crabout = os.popen(crabcommand).readlines()
                         #PrintOutput(crabout)
-                        os.system(crabcommand)
+                        #os.system(crabcommand)
 
                         toSub = str(raw_input("\tWould you like to submit another time the jobs? (type Y or N)\t"))
                         if toSub == "Y":
-                            crabcommand = crabcommand.replace(" -p", submitflag)
+                            crabcommand = crabcommand.replace(" -k", submitflag)
                             print "\t(Re)submitting..."
                             #crabout = os.popen(crabcommand).readlines()
                             #PrintOutput(crabout)
@@ -151,14 +181,15 @@ for s in complist:
             else:#if sstatus == "PROCESSING":
                 print "\n\tCrab is processing " + s.label + "..."
 
+
         else:
             print "\tThis sample is not submitted to crab yet..."
-        crabcommand += submitflag
-        crabout = os.system(crabcommand)
-        #crabout = os.popen(crabcommand).readlines()
-        #PrintOutput(crabout)
+            crabcommand += submitflag
+            crabout = os.system(crabcommand)
+            #crabout = os.popen(crabcommand).readlines()
+            #PrintOutput(crabout)
     else:
-        crabcommand += " -p"
+        crabcommand += " -k"
         crabout = os.system(crabcommand)
 
 print "\n\n\n...and that's all from crab! Bye!\n\n\n"

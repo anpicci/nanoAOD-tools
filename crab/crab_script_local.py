@@ -17,14 +17,16 @@ metCorrector = createJMECorrector(isMC=True, dataYear=2017, jesUncert='All', app
 fatJetCorrector = createJMECorrector(isMC=True, dataYear=2017, jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')
 
 p = PostProcessor('.', [#'root://cms-xrd-global.cern.ch//store/data/Run2017B/SingleMuon/NANOAOD/UL2017_MiniAODv2_NanoAODv9-v1/120000/09FD9FD6-A164-9A45-80BB-F3D1FBF9C462.root'
-'root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL17NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/20UL17JMENano_106X_mc2017_realistic_v9-v1/40000/014A4BBB-6379-2F48-8D50-25E51BDD1E9E.root'
+#'root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL17NanoAODv9/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/NANOAODSIM/20UL17JMENano_106X_mc2017_realistic_v9-v1/40000/014A4BBB-6379-2F48-8D50-25E51BDD1E9E.root'
+'root://cms-xrd-global.cern.ch//store/mc/RunIISummer20UL17NanoAODv9/GluGluToWWToTNMN_TuneCP5_13TeV_MCFM701_pythia8/NANOAODSIM/106X_mc2017_realistic_v9-v1/2520000/07846BC7-40F2-9345-A3EF-C47491B0C916.root',
                     ], '', 
                   modules=[
-                      #MCweight_writer('TTTo2L2Nu_2017'), MET_HLT_Filter_2017(), 
+                      #MCweight_writer('TTTo2L2Nu_2017'), 
+                      #MET_HLT_Filter_UL2017(), 
                       #preselection(), #PrefCorr(), metCorrector(), fatJetCorrector(),
                       #lepSF_UL2018(),#
                       #btagSF2017(),
-                      btagSFUL2017(),
+                      btagSFUL2016(),
                       #sampleFlagUL('DataMuB_UL2017'),
                       #dummyCol()
                   ],

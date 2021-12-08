@@ -26,6 +26,10 @@ class preselection_Fake(Module):
         met = Object(event, "MET")
         pmet = Object(event, "PuppiMET")
         PV = Object(event, "PV")
+        muons = Collection(event, "Muon")
+        electrons = Collection(event, "Electron")
+        taus = Collection(event, "Tau")
+        jets = Collection(event, "Jet")
 
         eventSum = ROOT.TLorentzVector()
 
@@ -35,7 +39,7 @@ class preselection_Fake(Module):
 
         looseMu = list(filter(lambda x : x.looseId and x.pfRelIso04_all < 1. and x.pfRelIso04_all>=0. and abs(x.eta) < 2.4, muons))
         looseEle = list(filter(lambda x : x.mvaFall17V2Iso_WPL and x.jetRelIso < 1. and x.jetRelIso >= 0. and ((abs(x.eta) < 1.4442) or (abs(x.eta) > 1.566 and abs(x.eta)< 2.5)), electrons))
-        looseTau = list(filter(lambda x : x.idDeepTau2017v2p1VSjet >= 2 and x.idDeepTau2017v2p1VSe >= 4 and x.idDeepTau2017v2p1VSmu >= 8 and x.idDecayModeNewDMs and abs(x.eta) < 2.3, taus))
+        looseTau = list(filter(lambda x : x.idDeepTau2017v2p1VSjet >= 2 and x.idDeepTau2017v2p1VSe >= 4 and x.idDeepTau2017v2p1VSmu >= 8 and abs(x.eta) < 2.3, taus))
 
         for j in jets:
             eventSum += j.p4()

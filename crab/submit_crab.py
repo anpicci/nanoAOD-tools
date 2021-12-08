@@ -252,7 +252,7 @@ for sample in samples:
         print("Producing crab configuration file")
 
         if "UL" in str(sample.year):
-            cfg_writer(sample, isMC, "VBS_UL")
+            cfg_writer(sample, isMC, "ULVBS_PG")
         else:
             cfg_writer(sample, isMC, "VBS_PG")
 
@@ -272,12 +272,12 @@ for sample in samples:
     if kill:
         print("Killing crab jobs...")
         os.system("crab kill -d crab_" + sample.label)
-        #os.system("rm -rf crab_" + sample.label)
+        os.system("rm -rf crab_" + sample.label)
 
     if purge:
         print("Purging crab jobs...")
         os.system("crab purge -d crab_" + sample.label)
-        os.system("rm -rf crab_" + sample.label)
+        #os.system("rm -rf crab_" + sample.label)
 
     if resubmit:
         print("Resubmitting crab jobs...")

@@ -3126,7 +3126,7 @@ sample_dict={
     "Triboson_UL2017":Triboson_UL2017,
     "WWTo2L2Nu_DoubleScattering_UL2017":WWTo2L2Nu_DoubleScattering_UL2017, "WWW_4F_UL2017":WWW_4F_UL2017, "WWZ_4F_UL2017":WWZ_4F_UL2017, "WZZ_UL2017":WZZ_UL2017, "ZZZ_UL2017":ZZZ_UL2017, "ZZZ_UL2017":ZZZ_UL2017, "WWG_UL2017":WWG_UL2017,
     "WJets_UL2017":WJets_UL2017,
-    "WJetsHT70to100_UL2017":WJetsHT70to100_UL2017, "WJetsHT100to200_UL2017":WJetsHT100to200_UL2017, "WJetsHT200to400_UL2017:":WJetsHT200to400_UL2017, "WJetsHT400to600_UL2017":WJetsHT400to600_UL2017, "WJetsHT600to800_UL2017":WJetsHT600to800_UL2017, "WJetsHT800to1200_UL2017":WJetsHT800to1200_UL2017, "WJetsHT1200to2500_UL2017":WJetsHT1200to2500_UL2017, "WJetsHT2500toInf_UL2017":WJetsHT2500toInf_UL2017,
+    "WJetsHT70to100_UL2017":WJetsHT70to100_UL2017, "WJetsHT100to200_UL2017":WJetsHT100to200_UL2017, "WJetsHT200to400_UL2017":WJetsHT200to400_UL2017, "WJetsHT400to600_UL2017":WJetsHT400to600_UL2017, "WJetsHT600to800_UL2017":WJetsHT600to800_UL2017, "WJetsHT800to1200_UL2017":WJetsHT800to1200_UL2017, "WJetsHT1200to2500_UL2017":WJetsHT1200to2500_UL2017, "WJetsHT2500toInf_UL2017":WJetsHT2500toInf_UL2017,
     "WZ_UL2017":WZ_UL2017,
     "DYJetsToLL_UL2017":DYJetsToLL_UL2017,
     "DYJetsToLL_M10to50_UL2017":DYJetsToLL_M10to50_UL2017, "DYJetsToLL_M50_UL2017":DYJetsToLL_M50_UL2017,
@@ -3234,7 +3234,7 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2016APV,
         DataMu_UL2016APV,
         DataEle_UL2016APV,
-        DataHT_UL2016APV,
+        #DataHT_UL2016APV,
     ],
 
     ##### UL2016 #####
@@ -3255,7 +3255,7 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2016,
         DataMu_UL2016,
         DataEle_UL2016,
-        DataHT_UL2016,
+        #DataHT_UL2016,
     ],
 
     ##### UL2017 #####
@@ -3276,7 +3276,7 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2017,
         DataMu_UL2017,
         DataEle_UL2017,
-        DataHT_UL2017,
+        #DataHT_UL2017,
     ],
 
     ##### UL2018 #####
@@ -3297,29 +3297,45 @@ crab_dict = {
         VBS_SSWW_DIM6_UL2018,
         DataMu_UL2018,
         DataEle_UL2018,
-        DataHT_UL2018,
+        #DataHT_UL2018,
     ],
 }
 
 crab_dict_Fake = {
     ##### UL2016APV #####
     "UL2016APV":[
-        SampleHTFake_UL2016APV,
+        WJets_UL2016APV,
+        DYJetsToLL_UL2016APV,
+        ZZtoLep_UL2016APV,
+        TT_UL2016APV,
+        DataHT_UL2016APV,
     ],
 
     ##### UL2016 #####
     "UL2016":[
-        SampleHTFake_UL2016,
+        WJets_UL2016,
+        DYJetsToLL_UL2016,
+        ZZtoLep_UL2016,
+        TT_UL2016,
+        DataHT_UL2016,
     ],
 
     ##### UL2017 #####
     "UL2017":[
-        SampleHTFake_UL2017,
+        WJets_UL2017,
+        DYJetsToLL_UL2017,
+        ZZtoLep_UL2017,
+        TT_UL2017,
+        DataHT_UL2017,
     ],
 
     ##### UL2018 #####
     "UL2018":[
-        SampleHTFake_UL2018,
+        WJets_UL2018,
+        DYJetsToLL_UL2018,
+        ZZtoLep_UL2018,
+        TT_UL2018,
+        DataHT_UL2018,
     ],
 }
 
