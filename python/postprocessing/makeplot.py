@@ -14,6 +14,7 @@ import uproot
 import pickle
 import numpy as np
 import sklearn
+import xgboost
 
 #print TT_2017
 #ciao
@@ -59,9 +60,9 @@ parser.add_option('--horn', dest='horn', default = False, action='store_true', h
 #parser.add_option('--model', dest='model', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT.p', type='string', help='Path  to ML model for all events')
 #parser.add_option('--model_ele', dest='model_ele', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_ele.p', type='string', help='Path to ML model for electron events')
 #parser.add_option('--model_mu', dest='model_mu', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_mu.p', type='string', help='Path to ML model for muon events')
-parser.add_option('--model_SM', dest='model_SM', default = '/afs/cern.ch/user/t/ttedesch/public/adaBDT_SM_v100.p', type='string', help='Path to ML model for SM analysis')
-parser.add_option('--model_dim6', dest='model_dim6', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_dim6.p', type='string', help='Path to ML model for dim6 analysis')
-parser.add_option('--model_dim8', dest='model_dim8', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_dim8.p', type='string', help='Path to ML model for dim8 analysis')
+parser.add_option('--model_SM', dest='model_SM', default = '/afs/cern.ch/user/t/ttedesch/public/xgb_SM_v100.model', type='string', help='Path to ML model for SM analysis')
+parser.add_option('--model_dim6', dest='model_dim6', default = '/afs/cern.ch/user/t/ttedesch/public/xgb_cH-chW-SM_v100.model', type='string', help='Path to ML model for dim6 analysis')
+parser.add_option('--model_dim8', dest='model_dim8', default = '/afs/cern.ch/user/t/ttedesch/public/xgb_aQGC_v100.model', type='string', help='Path to ML model for dim8 analysis')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='Tag to distinguish between different makeplot runs')
 
@@ -295,19 +296,27 @@ def mergepart(dataset):
                 #print(model_ele_path)
                 #print(model_mu_path)
 
-                # load model 
-                file = open(model_SM_path,'rb')
-                clf_SM = pickle.load(file)
-                file.close()
-
+                # load sklearn models 
+                #file = open(model_SM_path,'rb')
+                #clf_SM = pickle.load(file)
+                #file.close()
                 #file = open(model_dim6_path,'rb')
                 #clf_dim6 = pickle.load(file)
                 #file.close()
-               
                 #file = open(model_dim8_path,'rb')
                 #clf_dim8 = pickle.load(file)
                 #file.close()
                
+                #load xgboost model
+                clf_SM = xgboost.XGBClassifier()
+                clf_SM.load_model(model_SM_path)
+
+                clf_dim6 = xgboost.XGBClassifier()
+                clf_dim6.load_model(model_dim6_path)
+
+                clf_dim8 = xgboost.XGBClassifier()
+                clf_dim8.load_model(model_dim8_path)
+                
                 # load model 
                 #file = open(model_path,'rb')
                 #clf = pickle.load(file)
@@ -320,6 +329,8 @@ def mergepart(dataset):
                 #file = open(model_mu_path,'rb')
                 #clf_mu = pickle.load(file)
                 #file.close()
+
+                
 
                 # open root file
                 file = uproot.open(file_path_cp)
@@ -470,9 +481,13 @@ def mergepart(dataset):
 
                 # update root file with BDT branch
                 BDT_output_SM_array = clf_SM.predict_proba(X)[:,1]
-                #BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
-                #BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
-
+                BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
+                BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
+                
+                #print(BDT_output_SM_array)
+                #print(BDT_output_dim6_array)
+                #print(BDT_output_dim8_array)
+                #print()
                 #BDT_output_SM_array = clf_SM.decision_function(X)
                 #BDT_output_dim6_array = clf_dim6.decision_function(X)
                 #BDT_output_dim8_array = clf_dim8.decision_function(X)
@@ -495,10 +510,10 @@ def mergepart(dataset):
                 numOfEvents = mytree.GetEntries()
                 for n in range(numOfEvents):
                     BDT_output_SM[0] = BDT_output_SM_array[n]
-                    BDT_output_dim6[0] = 1.
-                    BDT_output_dim8[0] = 1.
-                    #BDT_output_dim6[0] = BDT_output_dim6_array[n]
-                    #BDT_output_dim8[0] = BDT_output_dim8_array[n]
+                    #BDT_output_dim6[0] = 1.
+                    #BDT_output_dim8[0] = 1.
+                    BDT_output_dim6[0] = BDT_output_dim6_array[n]
+                    BDT_output_dim8[0] = BDT_output_dim8_array[n]
                     
                     #BDT_output[0] = BDT_output_array[n]
                     #BDT_output_ele[0] = BDT_output_ele_array[n]
@@ -1206,15 +1221,12 @@ for year in years:
             variables.append(variabile('BDT_output_dim6', 'dim6 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
             variables.append(variabile('BDT_output_dim8', 'dim8 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
 
-
         '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
         except:
             pass
         '''
-
-
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         
