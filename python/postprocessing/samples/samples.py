@@ -445,7 +445,7 @@ VHToNonbb_2017.sigma =  2.127#pb
 VHToNonbb_2017.year = 2017
 VHToNonbb_2017.dataset = "/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/"+tag_2017+"-v1/NANOAODSIM"
 
-WrongSign_2017 = sample(ROOT.kGreen-10, 1, 1001, "Wrong Sign", "WrongSign_2017")
+WrongSign_2017 = sample(ROOT.kGreen-10, 1, 1001, "Opposite Sign", "WrongSign_2017")
 WrongSign_2017.year = 2017
 WrongSign_2017.components = [
     WWto2L2Nu_2017, GluGluToWWToENuENu_2017, GluGluToWWToENuMNu2017, 
@@ -495,7 +495,7 @@ WWG_2017.sigma =  0.2147#pb
 WWG_2017.year = 2017
 WWG_2017.dataset = "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/"+tag3_2017+"-v1/NANOAODSIM"
 
-Other_2017 = sample(ROOT.kOrange-4, 1, 1001, "Other", "Other_2017")
+Other_2017 = sample(ROOT.kOrange-4, 1, 1001, "Triboson", "Other_2017")
 Other_2017.year = 2017
 Other_2017.components = [WWTo2L2Nu_DoubleScattering_2017, WWW_4F_2017, WWZTo3L1Nu2Q_2017, WZZ_2017, ZZZ_2017, WWG_2017]
 
@@ -1442,7 +1442,7 @@ VHToNonbb_2018.sigma =  2.127#pb
 VHToNonbb_2018.year = 2018
 VHToNonbb_2018.dataset = "/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
-WrongSign_2018 = sample(ROOT.kGreen-10, 1, 1001, "Wrong Sign", "WrongSign_2018")
+WrongSign_2018 = sample(ROOT.kGreen-10, 1, 1001, "Opposite Sign", "WrongSign_2018")
 WrongSign_2018.year = 2018
 WrongSign_2018.components = [WWto2L2Nu_2018, GluGluToWWToENuENu_2018, GluGluToWWToENuMNu2018, 
                             GluGluToWWToENuTNu2018, GluGluToWWToMNuENu_2018, GluGluToWWToMNuMNu2018, 
@@ -1487,7 +1487,7 @@ WWG_2018.sigma =  0.2147#pb
 WWG_2018.year = 2018
 WWG_2018.dataset = "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/"+tag_2018+"_ext1-v1/NANOAODSIM"
 
-Other_2018 = sample(ROOT.kOrange-4, 1, 1001, "Other", "Other_2018")
+Other_2018 = sample(ROOT.kOrange-4, 1, 1001, "Triboson", "Other_2018")
 Other_2018.year = 2018
 Other_2018.components = [WWTo2L2Nu_DoubleScattering_2018, WWW_4F_2018, WZZ_2018, ZZZ_2018, WWG_2018]#WWZTo3L1Nu2Q_2018, 
 
@@ -2776,18 +2776,21 @@ merge_dict={
     'VBS_SSWW_cHW_2017':VBS_SSWW_cHW_2017,
     'VBS_SSWW_cHW_2018':VBS_SSWW_cHW_2018,
     'VBS_SSWW_cHW_BSM_2017':VBS_SSWW_cHW_BSM_2017,
+    'VBS_SSWW_cHW_BSM_2018':VBS_SSWW_cHW_BSM_2018,
     'VBS_SSWW_cHW_SM_2017':VBS_SSWW_cHW_SM_2017,
+    'VBS_SSWW_cHW_SM_2018':VBS_SSWW_cHW_SM_2018,
     'VBS_SSWW_cW_2017':VBS_SSWW_cW_2017,
     'VBS_SSWW_cW_2018':VBS_SSWW_cW_2018,
     'VBS_SSWW_cW_BSM_2017':VBS_SSWW_cW_BSM_2017,
+    'VBS_SSWW_cW_BSM_2018':VBS_SSWW_cW_BSM_2018,
     'VBS_SSWW_cW_SM_2017':VBS_SSWW_cW_SM_2017,
+    'VBS_SSWW_cW_SM_2018':VBS_SSWW_cW_SM_2018,
     'VBS_SSWW_cW_cHW_2017':VBS_SSWW_cW_cHW_2017,
+    'VBS_SSWW_cW_cHW_2018':VBS_SSWW_cW_cHW_2018,
     'VBS_SSWW_DIM6_2017':VBS_SSWW_DIM6_2017,
     'VBS_SSWW_DIM6_2018':VBS_SSWW_DIM6_2018,
     'VBS_SSWW_DIM6_SM_2017':VBS_SSWW_DIM6_SM_2017,
     'VBS_SSWW_DIM6_SM_2018':VBS_SSWW_DIM6_SM_2018,
-    #'VBS_SSWW_cHW_SM_2017':VBS_SSWW_cHW_SM_2017,
-    #'VBS_SSWW_cW_SM_2017':VBS_SSWW_cW_SM_2017,    
     'VBS_SSWW_aQGC_2017':VBS_SSWW_aQGC_2017,
     'VBS_SSWW_aQGC_2018':VBS_SSWW_aQGC_2018,
     #'VBS_SSWW_FS0_25_SM_2017':VBS_SSWW_FS0_25_SM_2017,
@@ -2887,8 +2890,8 @@ merge_dict={
     'DataMu_2018':DataMu_2018,
     'DataEle_2017':DataEle_2017,
     'DataEle_2018':DataEle_2018,
-    'DataHT_2017':DataHT_2017,
-    'DataHT_2018':DataHT_2018,
+    #'DataHT_2017':DataHT_2017,
+    #'DataHT_2018':DataHT_2018,
     #'DataEleMu_2017':DataEleMu_2017,
 }
 
