@@ -3110,7 +3110,7 @@ class_list=[
 ]
 
 class_list_bis = [
-    WWto2L2Nu_2017,
+    #WWto2L2Nu_2017,
     GluGluToWWToENuENu_2017,
     GluGluToWWToENuMNu2017,
     GluGluToWWToENuTNu2017,
