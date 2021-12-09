@@ -2777,7 +2777,7 @@ VBS_SSWW_cW_BSM_UL2018.sigma = 0.01388
 
 VBS_SSWW_cW_INT_UL2018 = sample(CWcolor, 1, 1001, "VBS ssWW c_{W} (only INT)", "VBS_SSWW_cW_INT_UL2018")
 VBS_SSWW_cW_INT_UL2018.year = "UL2018"
-VBS_SSWW_cW_INT_UL2018.dataset = "/VBS_SSWW_cW_INT_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2018_realistic_v9-v1/NANOAODSIM"
+VBS_SSWW_cW_INT_UL2018.dataset = "/VBS_SSWW_cW_INT_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 VBS_SSWW_cW_INT_UL2018.sigma = 0.0009987
 
 VBS_SSWW_cW_UL2018 = sample(CWcolor, 1, 1001, "VBS ssWW c_{W} (BSM+INT)", "VBS_SSWW_cW_UL2018")
