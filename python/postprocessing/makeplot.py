@@ -1234,10 +1234,10 @@ for year in years:
             variables.append(variabile('BDT_output_dim8', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         
 
-        if opt.channel == 'ltau':
-            variables.append(variabile('BDT_output_SM_ada', 'AdABoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-            variables.append(variabile('BDT_output_dim6_ada', 'AdABoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-            variables.append(variabile('BDT_output_dim8_ada', 'AdABoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #if opt.channel == 'ltau':
+            #variables.append(variabile('BDT_output_SM_ada', 'AdABoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            #variables.append(variabile('BDT_output_dim6_ada', 'AdABoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            #variables.append(variabile('BDT_output_dim8_ada', 'AdABoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
 
         '''
         try:
@@ -1245,9 +1245,11 @@ for year in years:
         except:
             pass
         '''
+
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         
+
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
 
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 12, -3., 3.))
@@ -1504,6 +1506,7 @@ for year in years:
 
         #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
         '''
+
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
