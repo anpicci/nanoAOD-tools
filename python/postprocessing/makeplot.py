@@ -240,6 +240,8 @@ print(cut_tag)
 pathplot = plotrepo + lepstr  + "/" # + "_" + str(FRtag) + "/"
 pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 #pathstack = plotrepo + "stack_" + str(FRtag) + "/" + cut_tag + "/"
+print (plotrepo, pathplot)
+
 
 if opt.plot:
     if not os.path.exists(pathplot):
