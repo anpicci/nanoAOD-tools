@@ -1223,31 +1223,31 @@ for year in years:
         
         cutbase = cut_dict[lep]
 
-
+        '''
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
         if opt.channel == 'ltau':
             variables.append(variabile('BDT_output_SM', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
             variables.append(variabile('BDT_output_dim6', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
             variables.append(variabile('BDT_output_dim8', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
-
+        '''
 
         if opt.channel == 'ltau':
-            variables.append(variabile('BDT_output_SM_ada', 'AdABoost SM BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
-            variables.append(variabile('BDT_output_dim6_ada', 'AdABoost dim6 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
-            variables.append(variabile('BDT_output_dim8_ada', 'AdABoost dim8 BDT output', wzero+'*('+cutbase+')', 10, 0., 1.))
+            variables.append(variabile('BDT_output_SM_ada', 'AdABoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            variables.append(variabile('BDT_output_dim6_ada', 'AdABoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            variables.append(variabile('BDT_output_dim8_ada', 'AdABoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
 
-
+        '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
         except:
             pass
-
+        '''
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
-
+        '''
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 12, -3., 3.))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
 
@@ -1336,7 +1336,7 @@ for year in years:
 
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 10, -5., 5.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-
+        '''
         '''
         bin_ak8leadjet_pt = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
@@ -1366,7 +1366,7 @@ for year in years:
         variables.append(variabile('AK8subleadjet_tau32', 'AK8 Sublead jet #tau_{32}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('AK8subleadjet_tau43', 'AK8 Sublead jet #tau_{43}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         '''
-
+        '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_subleadjet_pt = array("f", [0., 50., 100., 200.])
         else:
@@ -1498,7 +1498,7 @@ for year in years:
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
 
         #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
-
+        '''
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
