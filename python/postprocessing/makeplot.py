@@ -92,12 +92,12 @@ print("FRtag:", FRtag)
 
 ROOT.gROOT.SetBatch() # don't pop up canvases
 if opt.lep != 'incl':
-    lepstr = 'plot/' + opt.lep
+    lepstr = 'plot_bdt/' + opt.lep
 else:
     if opt.channel == 'emu':
-        lepstr = 'plot/' + opt.channel
+        lepstr = 'plot_bdt/' + opt.channel
     else:
-        lepstr = 'plot/' + opt.lep
+        lepstr = 'plot_bdt/' + opt.lep
 
 cut = opt.cut #default cut must be obvious, for example 1.
 
