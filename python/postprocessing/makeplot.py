@@ -1431,11 +1431,15 @@ for year in years:
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("f", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
+        elif opt.sr:
+            bin_m1 = array("f", [0., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
         else:
             bin_m1 = array("f", [0., 50., 100., 150., 200., 300., 400., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
+
 
         if opt.sr:
             bin_mTs = array("f", [0., 50., 100., 150., 300.])
