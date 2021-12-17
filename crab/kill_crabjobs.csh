@@ -27,9 +27,11 @@ reset
 #python submit_crab.py -d DataMu_$year -s
 
 #python submit_crab.py -p -d ZZtoLep_UL2017
-python submit_crab.py -k -d TTTo2L2Nu_UL2016APV
-python submit_crab.py -k -d TTTo2L2Nu_UL2016
-python submit_crab.py -k -d TTTo2L2Nu_UL2018
+#python submit_crab.py -k -d TTTo2L2Nu_UL2016APV
+#python submit_crab.py -k -d TTTo2L2Nu_UL2016
+python submit_crab.py -k -d TTWJetsToLNu_UL2018
+python submit_crab.py -k -d VBS_SSWW_cW_INT_UL2018
+python submit_crab.py -k -d TTZToLLNuNu_UL2016APV
 #python submit_crab.py -p -d TTTo2L2Nu_UL2017
 #python submit_crab.py -p -d TVX_UL2017
 #python submit_crab.py -p -d VG_UL2017

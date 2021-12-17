@@ -153,12 +153,12 @@ TTGJets_UL2016APV.sigma = 3.757
 
 TTZToQQ_UL2016APV = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTZToQQ_UL2016APV")
 TTZToQQ_UL2016APV.year = "UL2016APV"
-TTZToQQ_UL2016APV.dataset = "/TTZToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
+TTZToQQ_UL2016APV.dataset = "/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 TTZToQQ_UL2016APV.sigma = 0.5104
 
 TTZToLLNuNu_UL2016APV = sample(TVXcolor, 1, 1001, "t#bar{t}Z --> 2l2#nu", "TTZToLLNuNu_UL2016APV")
 TTZToLLNuNu_UL2016APV.year = "UL2016APV"
-TTZToLLNuNu_UL2016APV.dataset = "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+TTZToLLNuNu_UL2016APV.dataset = "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 TTZToLLNuNu_UL2016APV.sigma = 0.2439
 
 #### to be replaced with v9 when available ####
@@ -2438,7 +2438,7 @@ TTWJetsToQQ_UL2018.sigma = 0.4377
 #### to be replaced with v9 when available ####
 TTWJetsToLNu_UL2018 = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToLNu_UL2018")
 TTWJetsToLNu_UL2018.year = "UL2018"
-TTWJetsToLNu_UL2018.dataset = "/TTWJetsToLNu_TuneCP5down_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
+TTWJetsToLNu_UL2018.dataset = "/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 TTWJetsToLNu_UL2018.sigma = 0.216
 
 #### to be replaced with v9 when available ####
@@ -2653,12 +2653,12 @@ Triboson_UL2018.components = [
 
 WJetsHT70to100_UL2018 = sample(WJcolor, 1, 1001, "W + Jets", "WJetsHT70to100_UL2018")
 WJetsHT70to100_UL2018.year = "UL2018"
-WJetsHT70to100_UL2018.dataset = "/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2018_realistic_v9-v1/NANOAODSIM"
+WJetsHT70to100_UL2018.dataset = "/WJetsToLNu_HT-70To100_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 WJetsHT70to100_UL2018.sigma = 1264. * 1.21 #pb
 
 WJetsHT100to200_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 100 < HT < 200", "WJetsHT100to200_UL2018")
 WJetsHT100to200_UL2018.year = "UL2018"
-WJetsHT100to200_UL2018.dataset = "/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2018_realistic_v9-v1/NANOAODSIM"
+WJetsHT100to200_UL2018.dataset = "/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv2-106X_upgrade2018_realistic_v15_L1v1-v1/NANOAODSIM"
 WJetsHT100to200_UL2018.sigma = 1256 * 1.21 #pb
 
 WJetsHT200to400_UL2018 = sample(WJcolor, 1, 1001, "W + Jets 200 < HT < 400", "WJetsHT200to400_UL2018")
@@ -2777,7 +2777,7 @@ VBS_SSWW_cW_BSM_UL2018.sigma = 0.01388
 
 VBS_SSWW_cW_INT_UL2018 = sample(CWcolor, 1, 1001, "VBS ssWW c_{W} (only INT)", "VBS_SSWW_cW_INT_UL2018")
 VBS_SSWW_cW_INT_UL2018.year = "UL2018"
-VBS_SSWW_cW_INT_UL2018.dataset = "/VBS_SSWW_cW_INT_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2018_realistic_v9-v1/NANOAODSIM"
+VBS_SSWW_cW_INT_UL2018.dataset = "/VBS_SSWW_cW_INT_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 VBS_SSWW_cW_INT_UL2018.sigma = 0.0009987
 
 VBS_SSWW_cW_UL2018 = sample(CWcolor, 1, 1001, "VBS ssWW c_{W} (BSM+INT)", "VBS_SSWW_cW_UL2018")
@@ -3093,7 +3093,7 @@ sample_dict={
     "Triboson_UL2016":Triboson_UL2016,
     "WWTo2L2Nu_DoubleScattering_UL2016":WWTo2L2Nu_DoubleScattering_UL2016, "WWW_4F_UL2016":WWW_4F_UL2016, "WWZ_4F_UL2016":WWZ_4F_UL2016, "WZZ_UL2016":WZZ_UL2016, "ZZZ_UL2016":ZZZ_UL2016, "ZZZ_UL2016":ZZZ_UL2016, "WWG_UL2016":WWG_UL2016,
     "WJets_UL2016":WJets_UL2016,
-    "WJetsHT70to100_UL2016":WJetsHT70to100_UL2016, "WJetsHT100to200_UL2016":WJetsHT100to200_UL2016, "WJetsHT200to400_UL2016:":WJetsHT200to400_UL2016, "WJetsHT400to600_UL2016":WJetsHT400to600_UL2016, "WJetsHT600to800_UL2016":WJetsHT600to800_UL2016, "WJetsHT800to1200_UL2016":WJetsHT800to1200_UL2016, "WJetsHT1200to2500_UL2016":WJetsHT1200to2500_UL2016, "WJetsHT2500toInf_UL2016":WJetsHT2500toInf_UL2016,
+    "WJetsHT70to100_UL2016":WJetsHT70to100_UL2016, "WJetsHT100to200_UL2016":WJetsHT100to200_UL2016, "WJetsHT200to400_UL2016":WJetsHT200to400_UL2016, "WJetsHT400to600_UL2016":WJetsHT400to600_UL2016, "WJetsHT600to800_UL2016":WJetsHT600to800_UL2016, "WJetsHT800to1200_UL2016":WJetsHT800to1200_UL2016, "WJetsHT1200to2500_UL2016":WJetsHT1200to2500_UL2016, "WJetsHT2500toInf_UL2016":WJetsHT2500toInf_UL2016,
     "WZ_UL2016":WZ_UL2016,
     "DYJetsToLL_UL2016":DYJetsToLL_UL2016,
     "DYJetsToLL_M10to50_UL2016":DYJetsToLL_M10to50_UL2016, "DYJetsToLL_M50_UL2016":DYJetsToLL_M50_UL2016,
