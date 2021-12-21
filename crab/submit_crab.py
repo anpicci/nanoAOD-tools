@@ -17,10 +17,11 @@ parser.add_option('--notUL',  dest = 'UL', default = True, action = 'store_false
 (opt, args) = parser.parse_args()
 
 if not opt.UL:
-    #from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
-    from samples import *
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+    #from samples import *
 else:
-    from samplesUL import *
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+    #from samplesUL import *
 
 
 print(opt.dat)

@@ -3,8 +3,8 @@ import optparse
 import sys
 import time
 import copy
-#from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
-from samplesUL import *
+from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+#from samplesUL import *
 
 """ module to launch and check crab jobs for UL """
 

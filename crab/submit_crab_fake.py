@@ -19,11 +19,11 @@ parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action 
 (opt, args) = parser.parse_args()
 
 if not opt.UL:
-    #from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
-    from samples import *
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+    #from samples import *
 else:
-    #from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
-    from samplesUL import *
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+    #from samplesUL import *
 
 print opt.dat
 
