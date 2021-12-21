@@ -57,15 +57,15 @@ class MET_HLT_Filter_Fake(Module):
 
             if("2016" in self.year):
                 if self.trig == "HT":
-                    good_HLT = HLT.PFHT125 or HLT.PFHT200 or HLT.PFHT250 or HLT.PFHT300 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
+                    good_HLT = HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT125 or HLT.PFHT200 or HLT.PFHT250 or HLT.PFHT300 or HLT.PFHT350 #or HLT.PFHT400 HLT.PFHT475 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
             
             elif("2017" in self.year):
                 if self.trig == "HT":
-                    good_HLT = HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
+                    good_HLT = HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350# or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
 
             elif("2018" in self.year):
                 if self.trig == "HT":
-                    good_HLT = HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
+                    good_HLT = HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350 #or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890
         else:
             print "Please specify the year: possible choices are 2016, 2017 or 2018"
         return good_MET and good_HLT
