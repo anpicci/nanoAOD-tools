@@ -50,6 +50,8 @@ if not opt.forFR:
 else:
     samlist = crab_dict_Fake[year]
 
+print samlist
+
 if opt.dat != "":
     samlist = list(filter(lambda x : x.label == opt.dat, samlist))
 
@@ -109,6 +111,7 @@ for s in complist:
                 #else:
                 #sstatus = "PROCESSING"
 
+            toPrint = False
             if sstatus == "COMPLETED":
                 print "\t" + s.label + " is COMPLETED!"
                 printpath = "./macros/files/"
@@ -116,22 +119,9 @@ for s in complist:
                     printpath += "Fake/HT/"
 
                 printpath += s.label + ".txt"
-                toPrint = False
 
                 if not os.path.exists(printpath):
                     toPrint = True #str(raw_input("\tWould you like to print out the file paths? (type Y or N)\t"))
-                    if (toPrint and opt.save) or opt.resave:
-                        printcommand = "cd macros; python files_writer_new.py -d " + s.label
-                        if opt.forFR:
-                            printcommand += " --fake -t HT"
-                        printcommand += "; cd -;"
-                        
-                        print "\tSaving Pisa paths in txts..."
-                        os.system(printcommand)
-                    else:
-                        print "\tLet's pass to the next sample..."
-                else:
-                    print "\tFile paths already printed out! Let's pass to the next sample..."
 
             elif sstatus == "FAILED":
                 print "\t" + s.label + " is FAILED, let's see what happened there..."
@@ -182,6 +172,17 @@ for s in complist:
             else:#if sstatus == "PROCESSING":
                 print "\n\tCrab is processing " + s.label + "..."
 
+            if (toPrint and opt.save) or opt.resave:
+                printcommand = "cd macros; python files_writer_new.py -d " + s.label
+                if opt.forFR:
+                    printcommand += " --fake -t HT"
+                printcommand += "; cd -;"
+                        
+                print "\tSaving Pisa paths in txts..."
+                os.system(printcommand)
+            else:
+                print "\tFile paths already printed out! Let's pass to the next sample..."
+                print "\tLet's pass to the next sample..."
 
         else:
             print "\tThis sample is not submitted to crab yet..."
