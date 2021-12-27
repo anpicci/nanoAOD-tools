@@ -33,7 +33,7 @@ reset
 #python submit_crab.py -k -d DataMuB1_UL2016APV
 #python submit_crab.py -k -d DataHTB1_UL2016APV
 #python submit_crab_fake.py -k -d DataHTB1_UL2016APV -t HT
-python submit_crab_fake.py -s -d WJetsHT100to200_UL2016APV -t HT
+python submit_crab_fake.py -k -d WJetsHT70to100_UL2016APV -t HT
 #python submit_crab.py -p -d TTTo2L2Nu_UL2017
 #python submit_crab.py -p -d TVX_UL2017
 #python submit_crab.py -p -d VG_UL2017
