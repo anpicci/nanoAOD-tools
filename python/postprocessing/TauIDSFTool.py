@@ -7,7 +7,11 @@ from ROOT import TFile, TH1
 #datapath  = os.path.join(os.environ['CMSSW_BASE'],"src/TauPOG/TauIDSFs/data")
 
 datapath = "./data/tauSF"
-campaigns = ['2016Legacy','2017ReReco','2018ReReco']
+#campaigns = ['2016Legacy','2017ReReco','2018ReReco']
+campaigns = [
+  '2016Legacy','2017ReReco','2018ReReco',
+  'UL2016APV', 'UL2016', 'UL2017', 'UL2018',
+]
 
 def ensureTFile(filename, option='READ', verbose=False):
     """Open TFile, checking if the file in the given path exists."""
@@ -83,6 +87,12 @@ class TauIDSFTool:
           emb:          use SFs for embedded samples
           otherVSlepWP: extra uncertainty if you are using a different DeepTauVSe/mu WP than used in the measurement
         """
+        year = str(year)
+
+        if "UL" in year and "VSmu" in id:
+            print(">>> TauIDSFTool: Warning! Using pre-UL (%r) SFs for %s..."%(year,id))
+            year = '2016Legacy' if '2016' in year else '2017ReReco' if '2017' in year else '2018ReReco'
+            print("now:", year)
         assert year in campaigns, "You must choose a year from %s."%(', '.join(campaigns))
         self.ID       = id
         self.WP       = wp
@@ -156,7 +166,9 @@ class TauIDSFTool:
             elif unc=='Up':
               return sf+errUp
             elif unc=='Down':
-              return sf-errDown
+              sfDown = (sf-errDown) if errDown<sf else 0.0 # prevent negative SF
+              return sfDown
+
           else:
             if unc=='All':
               return self.func['Down'].Eval(pt), self.func[None].Eval(pt), self.func['Up'].Eval(pt)
@@ -176,9 +188,10 @@ class TauIDSFTool:
           if unc=='Up':
             sf += err
           elif unc=='Down':
-            sf -= err
+            sf = (sf-err) if err<sf else 0.0 # prevent negative SF
           elif unc=='All':
-            return sf-err, sf, sf+err
+            sfDown = (sf-err) if err<sf else 0.0 # prevent negative SF
+            return sfDown, sf, sf+err
           return sf
         elif unc=='All':
           return 1.0, 1.0, 1.0
@@ -196,9 +209,10 @@ class TauIDSFTool:
           if unc=='Up':
             sf += err
           elif unc=='Down':
-            sf -= err
+            sf = (sf-err) if err<sf else 0.0 # prevent negative SF
           elif unc=='All':
-            return sf-err, sf, sf+err
+            sfDown = (sf-err) if err<sf else 0.0 # prevent negative SF
+            return sfDown, sf, sf+err
           return sf
         elif unc=='All':
           return 1.0, 1.0, 1.0
@@ -212,9 +226,19 @@ class TauIDSFTool:
 class TauESTool:
     def __init__(self, year, id='DeepTau2017v2p1VSjet', path=datapath):
         """Choose the IDs and WPs for SFs."""
+        if "UL" in year:
+          print(">>> TauESTool: Warning! Using pre-UL (%r) TESs at high pT (for uncertainties only)..."%(year))
+          year_highpt = '2016Legacy' if '2016' in year else '2017ReReco' if '2017' in year else '2018ReReco'
+        else:
+          year_highpt = year
+        assert year in campaigns, "You must choose a year from %s! Got %r."%(', '.join(campaigns),year)
+        assert year_highpt in campaigns, "You must choose a year from %s! Got %r."%(', '.join(campaigns),year_highpt)
+        file_lowpt  = ensureTFile(os.path.join(path,"TauES_dm_%s_%s.root"%(id,year)))
+        file_highpt = ensureTFile(os.path.join(path,"TauES_dm_%s_%s_ptgt100.root"%(id,year_highpt)))
+
         assert year in campaigns, "You must choose a year from %s."%(', '.join(campaigns))
         file_lowpt  = ensureTFile(os.path.join(path,"TauES_dm_%s_%s.root"%(id,year)))
-        file_highpt = ensureTFile(os.path.join(path,"TauES_dm_%s_%s_ptgt100.root"%(id,year)))
+        file_highpt = ensureTFile(os.path.join(path,"TauES_dm_%s_%s_ptgt100.root"%(id,year_highpt)))
         self.hist_lowpt  = extractTH1(file_lowpt,'tes')
         self.hist_highpt = extractTH1(file_highpt,'tes')
         self.hist_lowpt.SetDirectory(0)
@@ -244,9 +268,10 @@ class TauESTool:
             if unc=='Up':
               tes += err
             elif unc=='Down':
-              tes -= err
+              tes = (tes-err) if err<tes else 0.0 # prevent negative TES
             elif unc=='All':
-              return tes-err, tes, tes+err
+              tesDown = (tes-err) if err<tes else 0.0 # prevent negative TES
+              return tesDown, tes, tes+err
           return tes
         elif unc=='All':
           return 1.0, 1.0, 1.0
@@ -257,13 +282,16 @@ class TauESTool:
         if genmatch==5 and dm in self.DMs:
           bin = self.hist_highpt.GetXaxis().FindBin(dm)
           tes = self.hist_highpt.GetBinContent(bin)
+          err = self.hist_highpt.GetBinError(bin)
           if unc=='Up':
-            tes += self.hist_highpt.GetBinError(bin)
+            tes += err
           elif unc=='Down':
-            tes -= self.hist_highpt.GetBinError(bin)
+            tes = (tes-err) if err<tes else 0.0 # prevent negative TES
           elif unc=='All':
-            return tes-self.hist_highpt.GetBinError(bin), tes, tes+self.hist_highpt.GetBinError(bin)
+            tesDown = (tes-err) if err<tes else 0.0 # prevent negative TES
+            return tesDown, tes, tes+err
           return tes
+
         elif unc=='All':
           return 1.0, 1.0, 1.0
         return 1.0
@@ -273,7 +301,11 @@ class TauFESTool:
     
     def __init__(self, year, id='DeepTau2017v2p1VSe', path=datapath):
         """Choose the IDs and WPs for SFs."""
-        assert year in campaigns, "You must choose a year from %s."%(', '.join(campaigns))
+        if "UL" in year:
+          print(">>> TauFESTool: Warning! Using pre-UL (%r) energy scales for e -> tau fakes..."%(year))
+          year = '2016Legacy' if '2016' in year else '2017ReReco' if '2017' in year else '2018ReReco'
+        assert year in campaigns, "You must choose a year from %s! Got %r."%(', '.join(campaigns),year)
+
         file  = ensureTFile(os.path.join(path,"TauFES_eta-dm_%s_%s.root"%(id,year)))
         graph = file.Get('fes')
         FESs  = { 'barrel':  { }, 'endcap': { } }
@@ -284,8 +316,9 @@ class TauFESTool:
             y    = graph.GetY()[i]
             yup  = graph.GetErrorYhigh(i)
             ylow = graph.GetErrorYlow(i)
-            FESs[region][dm] = (y-ylow,y,y+yup)
+            FESs[region][dm] = (max(0,y-ylow),y,y+yup) # prevent negative FES
             i += 1
+
         file.Close()
         self.FESs       = FESs
         self.DMs        = [0,1]

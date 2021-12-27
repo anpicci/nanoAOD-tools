@@ -9,7 +9,7 @@ reset
 
 
 #######    2018   #######
-python3 SetAndLaunchCondorRun_old.py -f v100 --reco jl --masscrit --deltaeta -y 2018 -d VBS_SSWW_aQGC_2018
+python3 SetAndLaunchCondorRun_old.py -f vUL001 --reco jl --masscrit --deltaeta -y 2017 -d TTTo2L2Nu_UL2017
 #python3 SetAndLaunchCondorRun_old.py -f v101 --reco lj --masscrit --deltaeta -y 2018
 #python3 SetAndLaunchCondorRun_old.py -f v102 --reco jl --masscrit -y 2018
 #python3 SetAndLaunchCondorRun_old.py -f v103 --reco lj --masscrit -y 2018

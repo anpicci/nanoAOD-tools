@@ -888,40 +888,74 @@ def get_HT(jets):
         HT += jet.pt
     return HT
 
-def trig_map(HLT, PV, year, runPeriod, flag):
+def trig_map(HLT, PV, yearr, runPeriod, flag):
     isGoodPV = copy.deepcopy(pass_MET(flag)) #(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passMu = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passEle = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passHT = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     noTrigger = False#not(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     
-    if(year == 2016):# and runPeriod != 'H'):
+    year = str(yearr)
+
+    if(year == "2016"):# and runPeriod != 'H'):
         if(HLT.IsoMu24 or HLT.IsoTkMu24):
             passMu = True
         if(HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf):
             passEle = True
+        if not(passMu or passEle) and not isGoodPV:
+            noTrigger = True
         if(HLT.PFHT250 or HLT.PFHT300):
             passHT = True
-        if not(passMu or passEle or passHT) and not isGoodPV:
-            noTrigger = True
-    elif(year == 2017):#and runPeriod != 'B'):
+
+    elif(year == "2017"):#and runPeriod != 'B'):
         if(HLT.IsoMu27 or HLT.Mu50):#HLT.IsoMu24 or 
             passMu = True
         if(HLT.Ele35_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG or HLT.Photon200):#HLT.Ele27_WPTight_Gsf or 
             passEle = True  
         #if(HLT.PFHT250 or HLT.PFHT350):# or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890):
+        if not(passMu or passEle) and not isGoodPV:
+            noTrigger = True
         if(HLT.PFHT250 or HLT.PFHT350 or HLT.PFHT370 or HLT.PFHT430 or HLT.PFHT510 or HLT.PFHT590 or HLT.PFHT680 or HLT.PFHT780 or HLT.PFHT890):
             passHT = True
-        if not(passMu or passEle or passHT) and not isGoodPV:
-            noTrigger = True
-    elif(year == 2018):
+
+    elif(year == "2018"):
         if(HLT.IsoMu27 and HLT.IsoMu30 and HLT.Mu50):
             passMu = True
         if(HLT.Ele35_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG or HLT.Photon200):#HLT.Ele27_WPTight_Gsf or 
             passEle = True  
-        if not(passMu or passEle or passHT) and not isGoodPV:
+        if not(passMu or passEle) and not isGoodPV:
             noTrigger = True
         if(HLT.PFHT250 or HLT.PFHT350):
+            passHT = True
+
+    elif(year.startswith("UL2016")):
+        if(HLT.IsoMu24 or HLT.IsoTkMu24):# or HLT.Mu50 or HLT.TkMu50)
+            passMu = True
+        if(HLT.Ele27_WPTight_Gsf):# or HLT.Ele32_WPTight_Gsf or HLT.Photon175)
+            passEle = True  
+        if not(passMu or passEle) and not isGoodPV:
+            noTrigger = True
+        if(HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT125 or HLT.PFHT200 or HLT.PFHT250 or HLT.PFHT300 or HLT.PFHT350):
+            passHT = True
+
+    elif(year == "UL2017"):
+        if(HLT.IsoMu27):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100):
+            passMu = True
+        if(HLT.Ele35_WPTight_Gsf):# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)
+            passEle = True  
+        if not(passMu or passEle) and not isGoodPV:
+            noTrigger = True
+        if(HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350):
+            passHT = True
+
+    elif(year == "UL2018"):
+        if(HLT.IsoMu27):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100):
+            passMu = True
+        if(HLT.Ele32_WPTight_Gsf):# or HLT.Photon200):
+            passEle = True  
+        if not(passMu or passEle) and not isGoodPV:
+            noTrigger = True
+        if(HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350):
             passHT = True
             
     else:

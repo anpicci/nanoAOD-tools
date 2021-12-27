@@ -684,11 +684,11 @@ def trig_map(HLT, PV, year, runPeriod):
             passHT = True
         if not(passMu or passEle) and not isGoodPV:
             noTrigger = True
-        if runPeriod != 'B' and (HLT.Mu8_TrkIsoVVL or HLT.Mu17_TrkIsoVVL or HLT.Mu15_IsoVVVL_PFHT600):
+        #if runPeriod != 'B' and (HLT.Mu8_TrkIsoVVL or HLT.Mu17_TrkIsoVVL or HLT.Mu15_IsoVVVL_PFHT600):
 #       if runPeriod != 'B' and (HLT.Mu15_IsoVVVL_PFHT600):
-            passMuLoose = True
-        if runPeriod != 'B' and (HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30 or HLT.Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30 or HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30):
-            passEleLoose = True
+            #passMuLoose = True
+        #if runPeriod != 'B' and (HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30 or HLT.Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30 or HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30):
+            #passEleLoose = True
     elif(year == 2018):
         if(HLT.IsoMu24):
             passMu = True
@@ -698,7 +698,38 @@ def trig_map(HLT, PV, year, runPeriod):
             noTrigger = True
         if(HLT.PFHT250 or HLT.PFHT350):
             passHT = True
-            
+
+    elif(year.startswith("UL2016")):
+        if(HLT.IsoMu24 or HLT.IsoTkMu24):# or HLT.Mu50 or HLT.TkMu50)                                                                                                                                                                                                
+            passMu = True
+        if(HLT.Ele27_WPTight_Gsf):# or HLT.Ele32_WPTight_Gsf or HLT.Photon175)                                                                                                                                                                                       
+            passEle = True
+        if not(passMu or passEle) and not isGoodPV:
+            noTrigger = True
+        if(HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT125 or HLT.PFHT200 or HLT.PFHT250 or HLT.PFHT300 or HLT.PFHT350):
+            passHT = True
+
+    elif(year == "UL2017"):
+        if(HLT.IsoMu27):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100):                                                                                                                                                                               
+            passMu = True
+        if(HLT.Ele35_WPTight_Gsf):# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)                                                                                                    
+            passEle = True
+        if not(passMu or passEle or passHT) and not isGoodPV:
+            noTrigger = True
+        if(HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350):
+            passHT = True
+
+    elif(year == "UL2018"):
+        if(HLT.IsoMu27):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100):                                                                                                                                                                                            
+            passMu = True
+        if(HLT.Ele32_WPTight_Gsf):# or HLT.Photon200):                                                                                                                                                                                                               
+            passEle = True
+        if not(passMu or passEle or passHT) and not isGoodPV:
+            noTrigger = True
+        if(HLT.PFJet40 or HLT.PFJet60 or HLT.PFJet80 or HLT.PFJet140 or HLT.PFJet200 or HLT.PFJet260 or HLT.PFHT180 or HLT.PFHT250 or HLT.PFHT350):
+            passHT = True
+        
+
     else:
         print('Wrong year! Please enter 2016, 2017, or 2018')
     
