@@ -30,8 +30,42 @@ WP_btagger = {
   },
 }
 
+effLumi_2016 = {
+        "HT" : {
+            "PFJet40"                       : 0.0003,
+            "PFJet60"                       : 0.0007,
+            "PFJet80"                       : 0.0028,
+            "PFJet140"                      : 0.0243,
+            "PFJet200"                      : 0.10,
+            "PFJet260"                      : 0.59,
+            "PFHT125"                       : 0.0037,
+            "PFHT200"                       : 0.0065,
+            "PFHT250"                       : 0.0096,
+            "PFHT300"                       : 0.0390,
+            "PFHT350"                       : 0.0779,
+            },
+        "Ele" : {
+            "Ele27_WPTight_Gsf"                     : 36.47,
+            "Ele32_WPTight_Gsf"                     : 8.76,
+            "Photon175"                             : 36.47,
+            },
+        "Mu" : {
+            "IsoMu24"                       : 36.47,
+            "IsoTkMu24"                     : 36.47,
+            "Mu50"                          : 36.47,
+            "TkMu50"                        : 33.64,
+            },
+        }
+
 effLumi_2017 = {
         "HT" : {
+            "PFJet40"                       : 0.0003,
+            "PFJet60"                       : 0.0010,
+            "PFJet80"                       : 0.0042,
+            "PFJet140"                      : 0.0397,
+            "PFJet200"                      : 0.22,
+            "PFJet260"                      : 0.55,
+            "PFHT180"                       : 0.0102,
             "PFHT250"                       : 0.0147,
             "PFHT350"                       : 0.17,
             },
@@ -39,18 +73,51 @@ effLumi_2017 = {
             "Ele35_WPTight_Gsf"                     : 41.54,
             "Ele32_WPTight_Gsf_L1DoubleEG"          : 41.54,
             "Photon200"                             : 41.54,
-            "Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
-            "Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
-            "Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
+            #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,                                                                                      
+            #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,                                                                                      
+            #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,      
             },
         "Mu" : {
             "IsoMu27"                       : 41.54,
             "Mu50"                          : 41.54,
-            "Mu8_TrkIsoVVL"                 : 0.0027,
-            "Mu17_TrkIsoVVL"                : 0.0658,
-            "Mu15_IsoVVVL_PFHT600"          : 0.0012,    
+            "OldMu100"                      : 36.75,
+            "TkMu100"                       : 36.75,
+            #"Mu8_TrkIsoVVL"                 : 0.0027,             
+            #"Mu17_TrkIsoVVL"                : 0.0658,             
             },
         }
+
+effLumi_2018 = {
+        "HT" : {
+            "PFJet40"                       : 0.0002,
+            "PFJet60"                       : 0.0008,
+            "PFJet80"                       : 0.0051,
+            "PFJet140"                      : 0.0486,
+            "PFJet200"                      : 0.21,
+            "PFJet260"                      : 0.47,
+            "PFHT180"                       : 0.0052,
+            "PFHT250"                       : 0.0144,
+            "PFHT350"                       : 0.23,
+            },
+        "Ele" : {
+            "Ele35_WPTight_Gsf"                     : 59.56,
+            "Ele32_WPTight_Gsf"                     : 59.56,
+            "Photon200"                             : 59.96,
+            #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,     
+            #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,     
+            #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,     
+            },
+        "Mu" : {
+            "IsoMu27"                       : 59.96,
+            "IsoMu30"                       : 59.96,
+            "Mu50"                          : 59.96,
+            "OldMu100"                      : 59.96,
+            "TkMu100"                       : 59.96,
+            #"Mu8_TrkIsoVVL"                 : 0.0027,             
+            #"Mu17_TrkIsoVVL"                : 0.0658,             
+            },
+        }
+
 
 orderList= ['11', '12', '13', '14',
             '21', '22', '23', '24',
@@ -129,19 +196,36 @@ def trig_finder(HLT, year, samplename):
     vTrigMu = []
     vTrigHT = []
     
-    if (year == 2017):
-        if HLT.Mu15_IsoVVVL_PFHT600:                    vTrigMu.append("Mu15_IsoVVVL_PFHT600")
-        if HLT.IsoMu27:                                 vTrigMu.append("IsoMu27")
-        if HLT.Mu50:                                    vTrigMu.append("Mu50")
-        if HLT.Mu8_TrkIsoVVL:                           vTrigMu.append("Mu8_TrkIsoVVL")
-        if HLT.Mu17_TrkIsoVVL:                          vTrigMu.append("Mu17_TrkIsoVVL")
-        if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
-        if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
-        if not ('DataMuB' in samplename or 'DataEleB' in samplename):
-            if HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30:     vTrigEle.append("Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30")
-            if HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30")
-            if HLT.Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30")
-        if HLT.Photon200:                               vTrigEle.append("Photon200")
+    if ("2016" in year):
+        if HLT.PFJet40:                                 vTrigHT.append("PFJet40")
+        if HLT.PFJet60:                                 vTrigHT.append("PFJet60")
+        if HLT.PFJet80:                                 vTrigHT.append("PFJet80")
+        if HLT.PFJet140:                                vTrigHT.append("PFJet140")
+        if HLT.PFJet260:                                vTrigHT.append("PFJet260")
+        if HLT.PFHT125:                                 vTrigHT.append("PFHT125")
+        if HLT.PFHT200:                                 vTrigHT.append("PFHT200")
+        if HLT.PFHT250:                                 vTrigHT.append("PFHT250")
+        if HLT.PFHT300:                                 vTrigHT.append("PFHT300")
+        if HLT.PFHT350:                                 vTrigHT.append("PFHT350")
+    elif ("2017" in year or "2018" in year):
+        #if HLT.Mu15_IsoVVVL_PFHT600:                    vTrigMu.append("Mu15_IsoVVVL_PFHT600")
+        #if HLT.IsoMu27:                                 vTrigMu.append("IsoMu27")
+        #if HLT.Mu50:                                    vTrigMu.append("Mu50")
+        #if HLT.Mu8_TrkIsoVVL:                           vTrigMu.append("Mu8_TrkIsoVVL")
+        #if HLT.Mu17_TrkIsoVVL:                          vTrigMu.append("Mu17_TrkIsoVVL")
+        #if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
+        #if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
+        #if not ('DataMuB' in samplename or 'DataEleB' in samplename):
+            #if HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30:     vTrigEle.append("Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30")
+            #if HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30")
+            #if HLT.Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30")
+        #if HLT.Photon200:                               vTrigEle.append("Photon200")
+        if HLT.PFJet40:                                 vTrigHT.append("PFJet40")
+        if HLT.PFJet60:                                 vTrigHT.append("PFJet60")
+        if HLT.PFJet80:                                 vTrigHT.append("PFJet80")
+        if HLT.PFJet140:                                vTrigHT.append("PFJet140")
+        if HLT.PFJet260:                                vTrigHT.append("PFJet260")
+        if HLT.PFHT180:                                 vTrigHT.append("PFHT180")
         if HLT.PFHT250:                                 vTrigHT.append("PFHT250")
         if HLT.PFHT350:                                 vTrigHT.append("PFHT350")
     
@@ -150,9 +234,6 @@ def trig_finder(HLT, year, samplename):
    
     return vTrigEle, vTrigMu, vTrigHT
     
-       
-
-
 def Chi_TopMass(mT):
   sigma = 28.8273
   mST = 174.729
@@ -169,7 +250,8 @@ def Chi_W(mT):
 ###         Begin of generic utils          ###   
 ###############################################
 ROOT.gStyle.SetOptStat(0)
-ROOT.gROOT.SetBatch()        # don't pop up canvases                                                                                                                                              
+ROOT.gROOT.SetBatch()        # don't pop up canvases                                                                                             
+
 ROOT.TH1.SetDefaultSumw2()
 ROOT.TGaxis.SetMaxDigits(3)
 

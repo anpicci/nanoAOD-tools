@@ -1,7 +1,6 @@
 import os
 import optparse
 import sys
-from samples.samples import *
 
 usage = 'python3 PrepareToPlot.py -y year -f folder'
 parser = optparse.OptionParser(usage)
@@ -15,6 +14,15 @@ parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is an
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 
 (opt, args) = parser.parse_args()
+
+print("UL" in opt.year)
+
+if "UL" in opt.year:
+    print("hello1")
+    from samples.samplesUL import *
+else:
+    print("hello2")
+    from samples.samples import *
 
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])

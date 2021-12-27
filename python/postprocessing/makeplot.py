@@ -7,7 +7,6 @@ import math
 from variabile import variabile
 import copy as copy
 from CMS_lumi import CMS_lumi
-from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
 from array import array
 import pandas as pd
 import uproot
@@ -70,6 +69,12 @@ parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='T
 (opt, args) = parser.parse_args()
 #print (opt, args)
 print("to stack?", opt.tostack)
+
+if "UL" in opt.year:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+else:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+
 
 def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
@@ -233,14 +238,14 @@ if opt.bdt or opt.ebdt or opt.mubdt:
         cut_tag = cut_tag + "_lepBDTcut"        
 
 
-lumi = {'2016': 35.9, "2017": 41.53, "2018": 59.7}
+lumi = {'2016': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83}
 
 print(cut_tag)
 
 pathplot = plotrepo + lepstr  + "/" # + "_" + str(FRtag) + "/"
 pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 #pathstack = plotrepo + "stack_" + str(FRtag) + "/" + cut_tag + "/"
-print (plotrepo, pathplot)
+#print (plotrepo, pathplot)
 
 
 if opt.plot:
@@ -1111,8 +1116,10 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 leptons = opt.lep.split(',')
 
 #dataset_dict = {'2016':[],'2017':[],'2018':[]}
-dataset_dict = {'2017':[],'2018':[]}
-
+if not "UL" in opt.year:
+    dataset_dict = {'2017':[],'2018':[]}
+else:
+    dataset_dict = {'UL2016APV':[], 'UL2016': [], 'UL2017':[], 'UL2018':[]}
 #print(class_list)
 
 if(opt.dat != 'all'):
