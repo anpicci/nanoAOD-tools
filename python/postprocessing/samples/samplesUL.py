@@ -631,7 +631,7 @@ DataMuF_UL2016APV.dataset = "/SingleMuon/Run2016F-HIPM_UL2016_MiniAODv2_JMENanoA
 DataMu_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMu_UL2016APV")
 DataMu_UL2016APV.year = "UL2016APV"
 DataMu_UL2016APV.components =  [
-    DataMuB1_UL2016APV,
+    #DataMuB1_UL2016APV,
     DataMuB2_UL2016APV,
     DataMuC_UL2016APV,
     DataMuD_UL2016APV,
@@ -672,7 +672,7 @@ DataEleF_UL2016APV.dataset = "/SingleElectron/Run2016F-HIPM_UL2016_MiniAODv2_Nan
 DataEle_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataEle_UL2016APV")
 DataEle_UL2016APV.year = "UL2016APV"
 DataEle_UL2016APV.components =  [
-    DataEleB1_UL2016APV,
+    #DataEleB1_UL2016APV,
     DataEleB2_UL2016APV,
     DataEleC_UL2016APV,
     DataEleD_UL2016APV,
@@ -713,7 +713,7 @@ DataHTF_UL2016APV.dataset = "/JetHT/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/
 DataHT_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataHT_UL2016APV")
 DataHT_UL2016APV.year = "UL2016APV"
 DataHT_UL2016APV.components =  [
-    DataHTB1_UL2016APV,
+    #DataHTB1_UL2016APV,
     DataHTB2_UL2016APV,
     DataHTC_UL2016APV,
     DataHTD_UL2016APV,
@@ -1153,7 +1153,7 @@ ZZZ_UL2016.sigma =  0.01476#pb
 
 WWG_UL2016 = sample(TBcolor, 1, 1001, "WWG", "WWG_UL2016")
 WWG_UL2016.year = "UL2016"
-WWG_UL2016.dataset = "WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WWG_UL2016.dataset = "/WWG_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 WWG_UL2016.sigma = 0.2147#pb
 
 Triboson_UL2016 = sample(TBcolor, 1, 1001, "Triboson", "Triboson_UL2016")

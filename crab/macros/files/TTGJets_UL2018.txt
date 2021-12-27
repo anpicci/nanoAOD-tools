@@ -6,3 +6,4 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/TTGJets_TuneCP5_13Te
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/TTGJets_UL2018/211222_000841/0000/tree_hadd_6.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/TTGJets_UL2018/211222_000841/0000/tree_hadd_7.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/TTGJets_UL2018/211222_000841/0000/tree_hadd_8.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/TTGJets_UL2018/211222_000841/0000/tree_hadd_9.root

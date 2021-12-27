@@ -224,6 +224,7 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL20
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_224.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_225.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_226.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_227.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_228.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_229.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_230.root
@@ -467,7 +468,11 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL20
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_468.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_469.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_470.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_471.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_472.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_473.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_474.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_475.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_476.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_477.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_478.root
@@ -498,6 +503,8 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL20
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_503.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_504.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_505.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_506.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_507.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_508.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_509.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/EGamma/DataEleA_UL2018/211222_005843/0000/tree_hadd_510.root

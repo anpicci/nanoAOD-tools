@@ -45,6 +45,7 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/GluGluHToTauTau_UL2018/211222_003340/0000/tree_hadd_45.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/GluGluHToTauTau_UL2018/211222_003340/0000/tree_hadd_46.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/GluGluHToTauTau_UL2018/211222_003340/0000/tree_hadd_47.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/GluGluHToTauTau_UL2018/211222_003340/0000/tree_hadd_48.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/GluGluHToTauTau_UL2018/211222_003340/0000/tree_hadd_49.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/GluGluHToTauTau_UL2018/211222_003340/0000/tree_hadd_50.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/GluGluHToTauTau_M125_TuneCP5_13TeV-powheg-pythia8/GluGluHToTauTau_UL2018/211222_003340/0000/tree_hadd_51.root
