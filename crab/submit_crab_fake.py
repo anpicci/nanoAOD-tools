@@ -260,13 +260,13 @@ for sample in samples:
                 if 'DataHT' not in sample.label:
                     presel += " && (HLT_IsoMu27 || HLT_Mu50 || HLT_OldMu100 || HLT_TkMu100 || HLT_Ele35_WPTight_Gsf || (HLT_Ele32_WPTight_Gsf_L1DoubleEG and (L1_SingleIsoEG30er2p1 || L1_SingleIsoEG32 || L1_SingleEG40)) || HLT_Photon200)"
                 else:
-                    presel += " && (HLT_PFJet40 || HLT_PFJet60 || HLT_PFJet80 || HLT_PFJet140 || HLT_PFJet200 || HLT_PFJet260 || HLT_PFHT125 || HLT_PFHT200 || HLT_PFHT250 || HLT_PFHT300 || HLT_PFHT350)"
+                    presel += " && (HLT_PFJet40 || HLT_PFJet60 || HLT_PFJet80 || HLT_PFJet140 || HLT_PFJet200 || HLT_PFJet260 || HLT_PFHT180 || HLT_PFHT250 || HLT_PFHT350)"
 
             elif year == 'UL2018':# and sample.runP != 'B':                                                                                                                                                            
                 if 'DataHT' not in sample.label:
                     presel += " && (HLT_IsoMu27 || HLT_Mu50 || HLT_OldMu100 || HLT_TkMu100 || HLT_Ele35_WPTight_Gsf || (HLT_Ele32_WPTight_Gsf_L1DoubleEG and (L1_SingleIsoEG30er2p1 || L1_SingleIsoEG32 || L1_SingleEG40)) || HLT_Photon200)"
                 else:
-                    presel += " && (HLT_PFJet40 || HLT_PFJet60 || HLT_PFJet80 || HLT_PFJet140 || HLT_PFJet200 || HLT_PFJet260 || HLT_PFHT125 || HLT_PFHT200 || HLT_PFHT250 || HLT_PFHT300 || HLT_PFHT350)"
+                    presel += " && (HLT_PFJet40 || HLT_PFJet60 || HLT_PFJet80 || HLT_PFJet140 || HLT_PFJet200 || HLT_PFJet260 || HLT_PFHT180 || HLT_PFHT250 || HLT_PFHT350)"
 
         else:
             isMC = True
