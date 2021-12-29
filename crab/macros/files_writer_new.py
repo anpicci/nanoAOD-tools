@@ -47,7 +47,6 @@ for sample in samples:
     if not os.path.exists(dirpath):
         os.makedirs(dirpath)
 
-    f = open(dirpath+str(sample.label)+".txt", "w")
     url = os.popen('crab getoutput --xrootd --jobids 1 -d ' + path + crabdir).readlines()
 
     print "Printing out crabbed files for "+str(sample.label)
@@ -110,11 +109,12 @@ for sample in samples:
 
     print len(url_dict), "paths found for", sample.label
     pr = 0
-    for k, v in url_dict.items():
-        f.write(v)
-        pr += 1
+    if len(url_dict)>0:
+        f = open(dirpath+str(sample.label)+".txt", "w")
+        for k, v in url_dict.items():
+            f.write(v)
+            pr += 1
+        f.close()
        
     print pr, "paths saved for", sample.label
-
-    f.close()
 
