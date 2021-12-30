@@ -1233,14 +1233,14 @@ for year in years:
         cutbase = cut_dict[lep]
 
 
-        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
+        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
-        '''
+        
         if opt.channel == 'ltau':
             variables.append(variabile('BDT_output_SM', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim6', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim8', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
+        
         '''        
         #if opt.channel == 'ltau':
             #variables.append(variabile('BDT_output_SM_ada', 'AdABoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
@@ -1253,7 +1253,7 @@ for year in years:
         except:
             pass
         '''
-        '''
+        
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         
@@ -1305,10 +1305,10 @@ for year in years:
             variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  7, -3.50, 3.50))
         else:
             variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-        '''
-        '''
+
+
         if opt.channel == "ltau":
-            variables.append(variabile(lep2[0] + '_DecayMode', '#tau decay mode',  wzero+'*('+cutbase+')', 12, -0.5, 11.5))
+            #variables.append(variabile(lep2[0] + '_DecayMode', '#tau decay mode',  wzero+'*('+cutbase+')', 12, -0.5, 11.5))
             
             variables.append(variabile('tauleadTk_ptOverTau',  '#tau LeadTk relative p_{T}',  wzero+'*('+cutbase+')', 10, 0, 1))
             variables.append(variabile('tauleadTk_deltaPhi',  '#tau LeadTk relative #Delta#phi',  wzero+'*('+cutbase+')', 4, -0.5, 0.5))
@@ -1338,7 +1338,7 @@ for year in years:
             #variables.append(variabile('tau_DeepTauVsMu_WP', '#tau DeepTauVsMu WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsJet_WP', '#tau DeepTauVsJet WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
         '''
-        '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_leadjet_pt = array("f", [0., 50., 100., 150., 250., 400.])
             nbin_leadjet_pt = len(bin_leadjet_pt)-1
@@ -1349,7 +1349,7 @@ for year in years:
 
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 10, -5., 5.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-        '''
+
         '''
         bin_ak8leadjet_pt = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
@@ -1379,7 +1379,7 @@ for year in years:
         variables.append(variabile('AK8subleadjet_tau32', 'AK8 Sublead jet #tau_{32}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('AK8subleadjet_tau43', 'AK8 Sublead jet #tau_{43}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         '''
-        '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_subleadjet_pt = array("f", [0., 50., 100., 200.])
         else:
@@ -1446,8 +1446,8 @@ for year in years:
             nbin_m1 = len(bin_m1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
-        '''
-        '''
+
+
         if opt.sr:
             bin_mTs = array("f", [0., 50., 100., 150., 300.])
             nbin_mTs = len(bin_mTs) - 1
@@ -1488,7 +1488,7 @@ for year in years:
         variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', nbin_deltaeta_lj, bin_deltaeta_lj))#
         variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', nbin_deltaeta_lj, bin_deltaeta_lj))#
         variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', nbin_deltaeta_lj, bin_deltaeta_lj))#
-        '''
+
         '''
         bin_deltatheta_jj = array("f", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
         nbin_deltatheta_jj = len(bin_deltatheta_jj) - 1
@@ -1515,8 +1515,7 @@ for year in years:
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
 
-        #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
-        '''
+        variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
 
         for sample in dataset_new:
             print(sample.label, sample.name)
@@ -1552,4 +1551,4 @@ for year in years:
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
 
-            
+           
