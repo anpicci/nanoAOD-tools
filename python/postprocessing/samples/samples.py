@@ -5,6 +5,11 @@ import os
 path = os.path.dirname(os.path.abspath(__file__))
 
 class sample:
+    sigma       = None
+    dataset     = None
+    sigma       = None
+    components  = None
+    year = None
     def __init__(self, color, style, fill, leglabel, label, name=""):
         self.color = color
         self.style = style
@@ -21,7 +26,7 @@ tag_2017  = 'RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_102X_mc2017_rea
 tag1_2017 = 'RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_v2_102X_mc2017_realistic_v8'
 tag2_2017 = 'RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_new_pmx_102X_mc2017_realistic_v8'
 tag3_2017 = 'RunIIFall17NanoAODv7-PU2017_12Apr2018_Nano02Apr2020_EXT_102X_mc2017_realistic_v8'
-tag_2018 = 'RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21'
+tag_2018  = 'RunIIAutumn18NanoAODv7-Nano02Apr2020_102X_upgrade2018_realistic_v21'
 ###################################################################################################################################################################
 ############################################################                                           ############################################################
 ############################################################                    2016                   ############################################################

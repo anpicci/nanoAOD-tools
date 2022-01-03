@@ -5,6 +5,11 @@ import os
 path = os.path.dirname(os.path.abspath(__file__))
 
 class sample:
+    sigma       = None
+    dataset     = None
+    sigma       = None
+    components  = None
+    year = None
     def __init__(self, color, style, fill, leglabel, label, name=""):
         self.color = color
         self.style = style
