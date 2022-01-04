@@ -579,6 +579,9 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL20
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_579.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_580.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_581.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_582.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_583.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_584.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_585.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_586.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/JetHT/DataHTC_UL2017_FakeHT/211227_205515/0000/tree_hadd_587.root

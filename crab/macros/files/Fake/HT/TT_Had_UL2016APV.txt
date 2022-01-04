@@ -93,6 +93,9 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneC
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_103.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_104.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_105.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_106.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_108.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_111.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_112.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_114.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSFake_UL/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/TT_Had_UL2016APV_FakeHT/211227_194647/0000/tree_hadd_115.root
