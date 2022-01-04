@@ -1631,14 +1631,14 @@ TT_SemiLep_UL2017.sigma = 365.3 #pb to check
 #### in production stage ####
 TT_Had_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2017")
 TT_Had_UL2017.year = "UL2017"
-TT_Had_UL2017.dataset = ""
+TT_Had_UL2017.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
 TT_Had_UL2017.sigma = 377.96 #pb to check
 
 TT_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2017")
 TT_UL2017.year = "UL2017"
 TT_UL2017.components = [
     TT_SemiLep_UL2017,
-    #TT_Had_UL2017,
+    TT_Had_UL2017,
 ]
 
 TTTo2L2Nu_UL2017 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2017")
