@@ -3342,6 +3342,7 @@ crab_dict_Fake = {
 condor_dict = {
     "ZZtoLep_UL2016APV":ZZtoLep_UL2016APV,
     "TT_UL2016APV":TT_UL2016APV,
+    "TT_beff_UL2016APV":TT_beff_UL2016APV,
     "TTTo2L2Nu_UL2016APV":TTTo2L2Nu_UL2016APV,
     #"TT_beff_UL2016APV":TT_beff_UL2016APV,
     "TVX_UL2016APV":TVX_UL2016APV,
@@ -3360,6 +3361,7 @@ condor_dict = {
 
     "ZZtoLep_UL2016":ZZtoLep_UL2016,
     "TT_UL2016":TT_UL2016,
+    "TT_beff_UL2016":TT_beff_UL2016,
     "TTTo2L2Nu_UL2016":TTTo2L2Nu_UL2016,
     #"TT_beff_UL2016":TT_beff_UL2016,
     "TVX_UL2016":TVX_UL2016,
@@ -3378,8 +3380,9 @@ condor_dict = {
 
     "ZZtoLep_UL2017":ZZtoLep_UL2017,
     "TT_UL2017":TT_UL2017,
+    "TT_beff_UL2017":TT_beff_UL2017,
+    #"TT_Had_UL2017":TT_Had_UL2017,
     "TTTo2L2Nu_UL2017":TTTo2L2Nu_UL2017,
-    #"TT_beff_UL2017":TT_beff_UL2017,
     "TVX_UL2017":TVX_UL2017,
     "VG_UL2017":VG_UL2017,
     "WrongSign_UL2017":WrongSign_UL2017,
@@ -3397,7 +3400,7 @@ condor_dict = {
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
     "TT_UL2018":TT_UL2018,
     "TTTo2L2Nu_UL2018":TTTo2L2Nu_UL2018,
-    #"TT_beff_UL2018":TT_beff_UL2018,
+    "TT_beff_UL2018":TT_beff_UL2018,
     "TVX_UL2018":TVX_UL2018,
     "VG_UL2018":VG_UL2018,
     "WrongSign_UL2018":WrongSign_UL2018,
@@ -3479,6 +3482,7 @@ merge_dict = {
 
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
     "TT_UL2018":TT_UL2018,
+    "TT_beff_UL2018":TT_beff_UL2018,
     "TTTo2L2Nu_UL2018":TTTo2L2Nu_UL2018,
     "TVX_UL2018":TVX_UL2018,
     "VG_UL2018":VG_UL2018,
