@@ -105,7 +105,7 @@ for s in complist:
                 elif "FAILED" in outline or "SUBMITFAILED" in outline:# or "failed" in outline:
                     sstatus = "FAILED"
                     break
-                elif "Cannot find .requestcache" in outline:
+                elif "Cannot find .requestcache" in outline or "Cannot retrieve the status_cache" in outline:
                     sstatus = "FAILED"
                     break
                 #else:
