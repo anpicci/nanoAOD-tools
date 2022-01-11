@@ -320,7 +320,7 @@ VHToNonbb_UL2016APV.year = "UL2016APV"
 VHToNonbb_UL2016APV.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
 VHToNonbb_UL2016APV.sigma = 2.528 # check nowe
 
-WrongSign_UL2016APV = sample(WScolor, 1, 1001, "V#gamma", "WrongSign_UL2016APV")
+WrongSign_UL2016APV = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2016APV")
 WrongSign_UL2016APV.year = "UL2016APV"
 WrongSign_UL2016APV.components = [
     WWto2L2Nu_UL2016APV,
@@ -465,7 +465,7 @@ DYJetsToLL_M50_UL2016APV.year = "UL2016APV"
 DYJetsToLL_M50_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_Pilot_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 DYJetsToLL_M50_UL2016APV.sigma = 6404.
 
-DYJetsToLL_UL2016APV = sample(DYcolor, 1, 1001, "W + Jets", "DYJetsToLL_UL2016APV")
+DYJetsToLL_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2016APV")
 DYJetsToLL_UL2016APV.year = "UL2016APV"
 DYJetsToLL_UL2016APV.components = [
     DYJetsToLL_M10to50_UL2016APV,
@@ -1099,7 +1099,7 @@ VHToNonbb_UL2016.year = "UL2016"
 VHToNonbb_UL2016.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
 VHToNonbb_UL2016.sigma = 2.528 # check nowe
 
-WrongSign_UL2016 = sample(WScolor, 1, 1001, "V#gamma", "WrongSign_UL2016")
+WrongSign_UL2016 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2016")
 WrongSign_UL2016.year = "UL2016"
 WrongSign_UL2016.components = [
     WWto2L2Nu_UL2016,
@@ -1242,7 +1242,7 @@ DYJetsToLL_M50_UL2016.year = "UL2016"
 DYJetsToLL_M50_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_Pilot_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 DYJetsToLL_M50_UL2016.sigma = 6404.
 
-DYJetsToLL_UL2016 = sample(DYcolor, 1, 1001, "W + Jets", "DYJetsToLL_UL2016")
+DYJetsToLL_UL2016 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2016")
 DYJetsToLL_UL2016.year = "UL2016"
 DYJetsToLL_UL2016.components = [
     DYJetsToLL_M10to50_UL2016,
@@ -1821,7 +1821,7 @@ VHToNonbb_UL2017.year = "UL2017"
 VHToNonbb_UL2017.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
 VHToNonbb_UL2017.sigma = 2.528 # check nowe
 
-WrongSign_UL2017 = sample(WScolor, 1, 1001, "V#gamma", "WrongSign_UL2017")
+WrongSign_UL2017 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2017")
 WrongSign_UL2017.year = "UL2017"
 WrongSign_UL2017.components = [
     WWto2L2Nu_UL2017,
@@ -1964,7 +1964,7 @@ DYJetsToLL_M50_UL2017.year = "UL2017"
 DYJetsToLL_M50_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_Pilot_106X_mc2017_realistic_v9-v1/NANOAODSIM"
 DYJetsToLL_M50_UL2017.sigma = 6404.
 
-DYJetsToLL_UL2017 = sample(DYcolor, 1, 1001, "W + Jets", "DYJetsToLL_UL2017")
+DYJetsToLL_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2017")
 DYJetsToLL_UL2017.year = "UL2017"
 DYJetsToLL_UL2017.components = [
     DYJetsToLL_M10to50_UL2017,
@@ -2581,7 +2581,7 @@ VHToNonbb_UL2018.year = "UL2018"
 VHToNonbb_UL2018.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
 VHToNonbb_UL2018.sigma = 2.528 # check nowe
 
-WrongSign_UL2018 = sample(WScolor, 1, 1001, "V#gamma", "WrongSign_UL2018")
+WrongSign_UL2018 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2018")
 WrongSign_UL2018.year = "UL2018"
 WrongSign_UL2018.components = [
     WWto2L2Nu_UL2018,
@@ -2723,7 +2723,7 @@ DYJetsToLL_M50_UL2018.year = "UL2018"
 DYJetsToLL_M50_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_Pilot_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 DYJetsToLL_M50_UL2018.sigma = 6404.
 
-DYJetsToLL_UL2018 = sample(DYcolor, 1, 1001, "W + Jets", "DYJetsToLL_UL2018")
+DYJetsToLL_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2018")
 DYJetsToLL_UL2018.year = "UL2018"
 DYJetsToLL_UL2018.components = [
     DYJetsToLL_M10to50_UL2018,
@@ -3594,12 +3594,12 @@ class_list = [
     DYJetsToLL_UL2018,
     WrongSign_UL2018,
     #WJets_UL2018,
-    #FakeMu_UL2018,
+    FakeMu_UL2018,
     #FakeMuPromptTau_UL2018,
     #PromptMuFakeTau_UL2018,
     #FakeMuFakeTau_UL2018,
     DataMu_UL2018,
-    #FakeEle_UL2018,
+    FakeEle_UL2018,
     #FakeElePromptTau_UL2018,
     #PromptEleFakeTau_UL2018,
     ##FakeEleFakeTau_UL2018,

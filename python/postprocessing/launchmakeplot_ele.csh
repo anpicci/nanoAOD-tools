@@ -6,7 +6,7 @@ set folder0 = vUL001 #_tagger_DataSplit_MCnoSplit
 #set folder2 = v97
 #set folder3 = v98
 set channel = 'ltau' # 
-#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/ #countings
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder1/plot/electron/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder2/plot/electron/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder3/plot/electron/ #countings
