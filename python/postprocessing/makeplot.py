@@ -1337,7 +1337,6 @@ for year in years:
             #variables.append(variabile('tau_DeepTauVsEle_WP', '#tau DeepTauVsEle WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsMu_WP', '#tau DeepTauVsMu WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsJet_WP', '#tau DeepTauVsJet WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
-        '''
 
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_leadjet_pt = array("f", [0., 50., 100., 150., 250., 400.])
@@ -1498,7 +1497,7 @@ for year in years:
         variables.append(variabile('deltaTheta_' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')',  nbin_deltatheta_jj, bin_deltatheta_jj))
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
-
+        '''
 
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_ptRel = array("f", [0., 50., 75., 100., 125, 150., 250.])
