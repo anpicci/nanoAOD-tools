@@ -219,47 +219,47 @@ WWto2L2Nu_UL2016APV.sigma = 11.09
 GluGluToWWToENEN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> 2e2#nu", "GluGluToWWToENEN_UL2016APV")
 GluGluToWWToENEN_UL2016APV.year = "UL2016APV"
 GluGluToWWToENEN_UL2016APV.dataset = "/GluGluToWWToENEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToENEN_UL2016APV.sigma = 36.8 * 1./9. * 1.4
+GluGluToWWToENEN_UL2016APV.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENMN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#mu2#nu", "GluGluToWWToENMN_UL2016APV")
 GluGluToWWToENMN_UL2016APV.year = "UL2016APV"
 GluGluToWWToENMN_UL2016APV.dataset = "/GluGluToWWToENMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToENMN_UL2016APV.sigma = 36.8 * 1./9. * 1.4
+GluGluToWWToENMN_UL2016APV.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENTN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToENTN_UL2016APV")
 GluGluToWWToENTN_UL2016APV.year = "UL2016APV"
 GluGluToWWToENTN_UL2016APV.dataset = "/GluGluToWWToENTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToENTN_UL2016APV.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToENTN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNEN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNEN_UL2016APV")
 GluGluToWWToMNEN_UL2016APV.year = "UL2016APV"
 GluGluToWWToMNEN_UL2016APV.dataset = "/GluGluToWWToMNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToMNEN_UL2016APV.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNEN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNMN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNMN_UL2016APV")
 GluGluToWWToMNMN_UL2016APV.year = "UL2016APV"
 GluGluToWWToMNMN_UL2016APV.dataset = "/GluGluToWWToMNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToMNMN_UL2016APV.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNMN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNTN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNTN_UL2016APV")
 GluGluToWWToMNTN_UL2016APV.year = "UL2016APV"
 GluGluToWWToMNTN_UL2016APV.dataset = "/GluGluToWWToMNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToMNTN_UL2016APV.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNTN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNEN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNEN_UL2016APV")
 GluGluToWWToTNEN_UL2016APV.year = "UL2016APV"
 GluGluToWWToTNEN_UL2016APV.dataset = "/GluGluToWWToTNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToTNEN_UL2016APV.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNEN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNMN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNMN_UL2016APV")
 GluGluToWWToTNMN_UL2016APV.year = "UL2016APV"
 GluGluToWWToTNMN_UL2016APV.dataset = "/GluGluToWWToTNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToTNMN_UL2016APV.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNMN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNTN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNTN_UL2016APV")
 GluGluToWWToTNTN_UL2016APV.year = "UL2016APV"
 GluGluToWWToTNTN_UL2016APV.dataset = "/GluGluToWWToTNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-GluGluToWWToTNTN_UL2016APV.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNTN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 ST_tW_top_UL2016APV = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2016APV")
 ST_tW_top_UL2016APV.year = "UL2016APV"
@@ -1005,47 +1005,47 @@ WWto2L2Nu_UL2016.sigma = 11.09
 GluGluToWWToENEN_UL2016 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2016")
 GluGluToWWToENEN_UL2016.year = "UL2016"
 GluGluToWWToENEN_UL2016.dataset = "/GluGluToWWToENEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToENEN_UL2016.sigma = 36.8
+GluGluToWWToENEN_UL2016.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENMN_UL2016 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENMN_UL2016")
 GluGluToWWToENMN_UL2016.year = "UL2016"
 GluGluToWWToENMN_UL2016.dataset = "/GluGluToWWToENMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToENMN_UL2016.sigma = 36.8
+GluGluToWWToENMN_UL2016.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENTN_UL2016 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToENTN_UL2016")
 GluGluToWWToENTN_UL2016.year = "UL2016"
 GluGluToWWToENTN_UL2016.dataset = "/GluGluToWWToENTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToENTN_UL2016.sigma = 36.81
+GluGluToWWToENTN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNEN_UL2016 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNEN_UL2016")
 GluGluToWWToMNEN_UL2016.year = "UL2016"
 GluGluToWWToMNEN_UL2016.dataset = "/GluGluToWWToMNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToMNEN_UL2016.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNEN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNMN_UL2016 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNMN_UL2016")
 GluGluToWWToMNMN_UL2016.year = "UL2016"
 GluGluToWWToMNMN_UL2016.dataset = "/GluGluToWWToMNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToMNMN_UL2016.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNMN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNTN_UL2016 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNTN_UL2016")
 GluGluToWWToMNTN_UL2016.year = "UL2016"
 GluGluToWWToMNTN_UL2016.dataset = "/GluGluToWWToMNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToMNTN_UL2016.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNTN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNEN_UL2016 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNEN_UL2016")
 GluGluToWWToTNEN_UL2016.year = "UL2016"
 GluGluToWWToTNEN_UL2016.dataset = "/GluGluToWWToTNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToTNEN_UL2016.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNEN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNMN_UL2016 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNMN_UL2016")
 GluGluToWWToTNMN_UL2016.year = "UL2016"
 GluGluToWWToTNMN_UL2016.dataset = "/GluGluToWWToTNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToTNMN_UL2016.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNMN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNTN_UL2016 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNTN_UL2016")
 GluGluToWWToTNTN_UL2016.year = "UL2016"
 GluGluToWWToTNTN_UL2016.dataset = "/GluGluToWWToTNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToWWToTNTN_UL2016.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNTN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 ST_tW_top_UL2016 = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2016")
 ST_tW_top_UL2016.year = "UL2016"
@@ -1726,48 +1726,48 @@ WWto2L2Nu_UL2017.sigma = 11.09
 GluGluToWWToENEN_UL2017 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2017")
 GluGluToWWToENEN_UL2017.year = "UL2017"
 GluGluToWWToENEN_UL2017.dataset = "/GluGluToWWToENEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToENEN_UL2017.sigma = 36.8
+GluGluToWWToENEN_UL2017.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENMN_UL2017 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENMN_UL2017")
 GluGluToWWToENMN_UL2017.year = "UL2017"
 GluGluToWWToENMN_UL2017.dataset = "/GluGluToWWToENMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToENMN_UL2017.sigma = 36.8
+GluGluToWWToENMN_UL2017.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENTN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToENTN_UL2017")
 GluGluToWWToENTN_UL2017.year = "UL2017"
 GluGluToWWToENTN_UL2017.dataset = "/GluGluToWWToENTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToENTN_UL2017.sigma = 36.81
+GluGluToWWToENTN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNEN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNEN_UL2017")
 GluGluToWWToMNEN_UL2017.year = "UL2017"
 GluGluToWWToMNEN_UL2017.dataset = "/GluGluToWWToMNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToMNEN_UL2017.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNEN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNMN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNMN_UL2017")
 GluGluToWWToMNMN_UL2017.year = "UL2017"
 GluGluToWWToMNMN_UL2017.dataset = "/GluGluToWWToMNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToMNMN_UL2017.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNMN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNTN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNTN_UL2017")
 GluGluToWWToMNTN_UL2017.year = "UL2017"
 GluGluToWWToMNTN_UL2017.dataset = "/GluGluToWWToMNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToMNTN_UL2017.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNTN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNEN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNEN_UL2017")
 GluGluToWWToTNEN_UL2017.year = "UL2017"
 GluGluToWWToTNEN_UL2017.dataset = "/GluGluToWWToTNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToTNEN_UL2017.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNEN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 #### to be replaced with v9 when available ####
 GluGluToWWToTNMN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNMN_UL2017")
 GluGluToWWToTNMN_UL2017.year = "UL2017"
 GluGluToWWToTNMN_UL2017.dataset = "/GluGluToWWToTNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv2-106X_mc2017_realistic_v8-v1/NANOAODSIM"
-GluGluToWWToTNMN_UL2017.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNMN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNTN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNTN_UL2017")
 GluGluToWWToTNTN_UL2017.year = "UL2017"
 GluGluToWWToTNTN_UL2017.dataset = "/GluGluToWWToTNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToTNTN_UL2017.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNTN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 ST_tW_top_UL2017 = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2017")
 ST_tW_top_UL2017.year = "UL2017"
@@ -2487,47 +2487,47 @@ WWto2L2Nu_UL2018.sigma = 11.09
 GluGluToWWToENEN_UL2018 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2018")
 GluGluToWWToENEN_UL2018.year = "UL2018"
 GluGluToWWToENEN_UL2018.dataset = "/GluGluToWWToENEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToWWToENEN_UL2018.sigma = 36.8
+GluGluToWWToENEN_UL2018.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENMN_UL2018 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENMN_UL2018")
 GluGluToWWToENMN_UL2018.year = "UL2018"
 GluGluToWWToENMN_UL2018.dataset = "/GluGluToWWToENMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToWWToENMN_UL2018.sigma = 36.8
+GluGluToWWToENMN_UL2018.sigma = 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENTN_UL2018 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToENTN_UL2018")
 GluGluToWWToENTN_UL2018.year = "UL2018"
 GluGluToWWToENTN_UL2018.dataset = "/GluGluToWWToENTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-GluGluToWWToENTN_UL2018.sigma = 36.81
+GluGluToWWToENTN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNEN_UL2018 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNEN_UL2018")
 GluGluToWWToMNEN_UL2018.year = "UL2018"
 GluGluToWWToMNEN_UL2018.dataset = "/GluGluToWWToMNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToWWToMNEN_UL2018.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNEN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNMN_UL2018 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNMN_UL2018")
 GluGluToWWToMNMN_UL2018.year = "UL2018"
 GluGluToWWToMNMN_UL2018.dataset = "/GluGluToWWToMNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToWWToMNMN_UL2018.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNMN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNTN_UL2018 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNTN_UL2018")
 GluGluToWWToMNTN_UL2018.year = "UL2018"
 GluGluToWWToMNTN_UL2018.dataset = "/GluGluToWWToMNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-GluGluToWWToMNTN_UL2018.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToMNTN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNEN_UL2018 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNEN_UL2018")
 GluGluToWWToTNEN_UL2018.year = "UL2018"
 GluGluToWWToTNEN_UL2018.dataset = "/GluGluToWWToTNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-GluGluToWWToTNEN_UL2018.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNEN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNMN_UL2018 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNMN_UL2018")
 GluGluToWWToTNMN_UL2018.year = "UL2018"
 GluGluToWWToTNMN_UL2018.dataset = "/GluGluToWWToTNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-GluGluToWWToTNMN_UL2018.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNMN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNTN_UL2018 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNTN_UL2018")
 GluGluToWWToTNTN_UL2018.year = "UL2018"
 GluGluToWWToTNTN_UL2018.dataset = "/GluGluToWWToTNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToWWToTNTN_UL2018.sigma = 36.81 * 1./9. * 1.4
+GluGluToWWToTNTN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001 
 
 ST_tW_top_UL2018 = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2018")
 ST_tW_top_UL2018.year = "UL2018"
