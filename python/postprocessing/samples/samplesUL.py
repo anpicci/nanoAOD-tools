@@ -3356,7 +3356,7 @@ condor_dict = {
     #"WpWpJJ_QCD_UL2016APV":WpWpJJ_QCD_UL2016APV,
     "VBS_SSWW_DIM6_SM_UL2016APV":VBS_SSWW_DIM6_SM_UL2016APV,
     "DataMu_UL2016APV":DataMu_UL2016APV,
-    "DataEle_UL2016APV":DataMu_UL2016APV,
+    "DataEle_UL2016APV":DataEle_UL2016APV,
     "DataHT_UL2016APV":DataHT_UL2016APV,
 
     "ZZtoLep_UL2016":ZZtoLep_UL2016,
@@ -3375,7 +3375,7 @@ condor_dict = {
     #"WpWpJJ_QCD_UL2016":WpWpJJ_QCD_UL2016,
     "VBS_SSWW_DIM6_SM_UL2016":VBS_SSWW_DIM6_SM_UL2016,
     "DataMu_UL2016":DataMu_UL2016,
-    "DataEle_UL2016":DataMu_UL2016,
+    "DataEle_UL2016":DataEle_UL2016,
     "DataHT_UL2016":DataHT_UL2016,
 
     "ZZtoLep_UL2017":ZZtoLep_UL2017,
@@ -3394,7 +3394,7 @@ condor_dict = {
     #"WpWpJJ_QCD_UL2017":WpWpJJ_QCD_UL2017,
     "VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
     "DataMu_UL2017":DataMu_UL2017,
-    "DataEle_UL2017":DataMu_UL2017,
+    "DataEle_UL2017":DataEle_UL2017,
     "DataHT_UL2017":DataHT_UL2017,
 
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
@@ -3412,7 +3412,7 @@ condor_dict = {
     #"WpWpJJ_QCD_UL2018":WpWpJJ_QCD_UL2018,
     "VBS_SSWW_DIM6_SM_UL2018":VBS_SSWW_DIM6_SM_UL2018,
     "DataMu_UL2018":DataMu_UL2018,
-    "DataEle_UL2018":DataMu_UL2018,
+    "DataEle_UL2018":DataEle_UL2018,
     "DataHT_UL2018":DataHT_UL2018,
 }
 
@@ -3435,7 +3435,7 @@ merge_dict = {
     "VBS_SSWW_DIM6_UL2016APV":VBS_SSWW_DIM6_UL2016APV,
     "VBS_SSWW_DIM6_SM_UL2016APV":VBS_SSWW_DIM6_SM_UL2016APV,
     "DataMu_UL2016APV":DataMu_UL2016APV,
-    "DataEle_UL2016APV":DataMu_UL2016APV,
+    "DataEle_UL2016APV":DataEle_UL2016APV,
     "DataHT_UL2016APV":DataHT_UL2016APV,
 
     "ZZtoLep_UL2016":ZZtoLep_UL2016,
@@ -3456,7 +3456,7 @@ merge_dict = {
     "VBS_SSWW_DIM6_UL2016":VBS_SSWW_DIM6_UL2016,
     "VBS_SSWW_DIM6_SM_UL2016":VBS_SSWW_DIM6_SM_UL2016,
     "DataMu_UL2016":DataMu_UL2016,
-    "DataEle_UL2016":DataMu_UL2016,
+    "DataEle_UL2016":DataEle_UL2016,
     "DataHT_UL2016":DataHT_UL2016,
 
     "ZZtoLep_UL2017":ZZtoLep_UL2017,
@@ -3477,7 +3477,7 @@ merge_dict = {
     "VBS_SSWW_DIM6_UL2017":VBS_SSWW_DIM6_UL2017,
     "VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
     "DataMu_UL2017":DataMu_UL2017,
-    "DataEle_UL2017":DataMu_UL2017,
+    "DataEle_UL2017":DataEle_UL2017,
     "DataHT_UL2017":DataHT_UL2017,
 
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
@@ -3499,7 +3499,7 @@ merge_dict = {
     "VBS_SSWW_DIM6_UL2018":VBS_SSWW_DIM6_UL2018,
     "VBS_SSWW_DIM6_SM_UL2018":VBS_SSWW_DIM6_SM_UL2018,
     "DataMu_UL2018":DataMu_UL2018,
-    "DataEle_UL2018":DataMu_UL2018,
+    "DataEle_UL2018":DataEle_UL2018,
     "DataHT_UL2018":DataHT_UL2018,
 }
 
@@ -3587,18 +3587,18 @@ class_list = [
     #WJets_UL2018,
     WZ_UL2018,
     DYJetsToLL_UL2018,
-    WpWpJJ_EWK_UL2018,
-    WpWpJJ_QCD_UL2018,
+    #WpWpJJ_EWK_UL2018,
+    #WpWpJJ_QCD_UL2018,
     VBS_SSWW_DIM6_SM_UL2018,
-    FakeMu_UL2018,
-    FakeMuPromptTau_UL2018,
-    PromptMuFakeTau_UL2018,
-    FakeMuFakeTau_UL2018,
+    #FakeMu_UL2018,
+    #FakeMuPromptTau_UL2018,
+    #PromptMuFakeTau_UL2018,
+    #FakeMuFakeTau_UL2018,
     DataMu_UL2018,
-    FakeEle_UL2018,
-    FakeElePromptTau_UL2018,
-    PromptEleFakeTau_UL2018,
-    FakeEleFakeTau_UL2018,
+    #FakeEle_UL2018,
+    #FakeElePromptTau_UL2018,
+    #PromptEleFakeTau_UL2018,
+    #FakeEleFakeTau_UL2018,
     DataEle_UL2018,
 ]
 
