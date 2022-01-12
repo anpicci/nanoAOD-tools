@@ -3197,6 +3197,18 @@ sample_dict={
     "DataEle_UL2018":DataEle_UL2018,
     "DataEleA_UL2018":DataEleA_UL2018, "DataEleB_UL2018":DataEleB_UL2018, "DataEleC_UL2018":DataEleC_UL2018, "DataEleD_UL2018":DataEleD_UL2018,
 
+    ################### FakeMu ###################
+    "FakeMu_UL2018":FakeMu_UL2018,
+    "FakeMuPromptTau_UL2018":FakeMuPromptTau_UL2018,
+    "PromptMuFakeTau_UL2018":PromptMuFakeTau_UL2018,
+    "FakeMuFakeTau_UL2018":FakeMuFakeTau_UL2018,
+
+    ################### FakeEle ###################
+    "FakeEle_UL2018":FakeEle_UL2018,
+    "FakeElePromptTau_UL2018":FakeElePromptTau_UL2018,
+    "PromptEleFakeTau_UL2018":PromptEleFakeTau_UL2018,
+    "FakeEleFakeTau_UL2018":FakeEleFakeTau_UL2018,
+
     ################### DataHT ###################
     "DataHT_UL2016APV":DataHT_UL2016APV,
     "DataHTB1_UL2016APV":DataHTB1_UL2016APV, "DataHTB2_UL2016APV":DataHTB2_UL2016APV, "DataHTC_UL2016APV":DataHTC_UL2016APV, "DataHTD_UL2016APV":DataHTD_UL2016APV, "DataHTE_UL2016APV":DataHTE_UL2016APV, "DataHTF_UL2016APV":DataHTF_UL2016APV,
@@ -3569,12 +3581,12 @@ class_list = [
     TTTo2L2Nu_UL2017,
     WrongSign_UL2017,
     #WJets_UL2017,
-    #FakeMu_UL2017,
+    FakeMu_UL2017,
     #FakeMuPromptTau_UL2017,
     #PromptMuFakeTau_UL2017,
     #FakeMuFakeTau_UL2017,
     DataMu_UL2017,
-    #FakeEle_UL2017,
+    FakeEle_UL2017,
     #FakeElePromptTau_UL2017,
     #PromptEleFakeTau_UL2017,
     ##FakeEleFakeTau_UL2017,
@@ -3602,7 +3614,7 @@ class_list = [
     FakeEle_UL2018,
     #FakeElePromptTau_UL2018,
     #PromptEleFakeTau_UL2018,
-    ##FakeEleFakeTau_UL2018,
+    #FakeEleFakeTau_UL2018,
     DataEle_UL2018,
 ]
 

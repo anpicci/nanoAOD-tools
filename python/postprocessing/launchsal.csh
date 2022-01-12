@@ -11,7 +11,7 @@ reset
 
 #######    2018   #######
 #python3 SetAndLaunchCondorRun_old.py -f vUL001 --reco jl --masscrit --deltaeta -y UL2017 --nodata
-python3 SetAndLaunchCondorRun_old.py -f vUL001 --reco jl --masscrit --deltaeta -y UL2018 --nodata
+python3 SetAndLaunchCondorRun_old.py -f vUL001 --reco jl --masscrit --deltaeta -y UL2018 -d DataEle_UL2018 --rw
 #python3 SetAndLaunchCondorRun_old.py -f vbtag_UL18 --beff -y UL2018 -d TT_beff_UL2018 
 #python3 SetAndLaunchCondorRun_old.py -f v101 --reco lj --masscrit --deltaeta -y 2018
 #python3 SetAndLaunchCondorRun_old.py -f v102 --reco jl --masscrit -y 2018
