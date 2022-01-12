@@ -40,7 +40,7 @@ CHWcolor = ROOT.kMagenta+2
 ZZTo2L2Nu_UL2016APV = sample(ZZcolor, 1, 1001, "ZZ --> 2l2\nu", "ZZTo2L2Nu_UL2016APV")
 ZZTo2L2Nu_UL2016APV.year = "UL2016APV"
 ZZTo2L2Nu_UL2016APV.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-ZZTo2L2Nu_UL2016APV.sigma = 0.9738 #pb NLO
+ZZTo2L2Nu_UL2016APV.sigma = 0.564 #pb NLO
 
 ZZTo4L_UL2016APV = sample(ZZcolor, 1, 1001, "ZZ --> 4l", "ZZTo4L_UL2016APV") ### not sure is the right background
 ZZTo4L_UL2016APV.year = "UL2016APV"
@@ -51,50 +51,50 @@ ZZTo4L_UL2016APV.sigma = 13.74 #pb NLO
 GluGluToContinToZZTo2e2nu_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2nu", "GluGluToContinToZZTo2e2nu_UL2016APV")
 GluGluToContinToZZTo2e2nu_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo2e2nu_UL2016APV.dataset = ""
-GluGluToContinToZZTo2e2nu_UL2016APV.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2nu_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4e_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4e", "GluGluToContinToZZTo4e_UL2016APV")
 GluGluToContinToZZTo4e_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo4e_UL2016APV.dataset = "/GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-GluGluToContinToZZTo4e_UL2016APV.sigma = 1.619 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4e_UL2016APV.sigma = 0.001586 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2e2mu_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2mu", "GluGluToContinToZZTo2e2mu_UL2016APV")
 GluGluToContinToZZTo2e2mu_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo2e2mu_UL2016APV.dataset = "/GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2mu_UL2016APV.sigma = 3.292 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2mu_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2e2tau_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2tau", "GluGluToContinToZZTo2e2tau_UL2016APV")
 GluGluToContinToZZTo2e2tau_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo2e2tau_UL2016APV.dataset = "/GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2tau_UL2016APV.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2tau_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### in production stage ######
 GluGluToContinToZZTo2mu2nu_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2nu", "GluGluToContinToZZTo2mu2nu_UL2016APV")
 GluGluToContinToZZTo2mu2nu_UL2016APV.year = "UL2016APV"
 #GluGluToContinToZZTo2mu2nu_UL2016APV.dataset = ""
-GluGluToContinToZZTo2mu2nu_UL2016APV.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2nu_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### to be replaced with v9 when available ####
 GluGluToContinToZZTo4mu_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4mu", "GluGluToContinToZZTo4mu_UL2016APV")
 GluGluToContinToZZTo4mu_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo4mu_UL2016APV.dataset = "/GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv2-106X_mcRun2_asymptotic_preVFP_v9-v1/NANOAODSIM"
-GluGluToContinToZZTo4mu_UL2016APV.sigma = 1.608 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4mu_UL2016APV.sigma = 0.001586 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2mu2tau_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2tau", "GluGluToContinToZZTo2mu2tau_UL2016APV")
 GluGluToContinToZZTo2mu2tau_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo2mu2tau_UL2016APV.dataset = "/GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-GluGluToContinToZZTo2mu2tau_UL2016APV.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2tau_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### to be produced ####
 GluGluToContinToZZTo2tau2nu_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2tau2nu", "GluGluToContinToZZTo2tau2nu_UL2016APV")
 GluGluToContinToZZTo2tau2nu_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo2tau2nu_UL2016APV.dataset = ""
-GluGluToContinToZZTo2tau2nu_UL2016APV.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2tau2nu_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4tau_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4tau", "GluGluToContinToZZTo4tau_UL2016APV")
 GluGluToContinToZZTo4tau_UL2016APV.year = "UL2016APV"
 GluGluToContinToZZTo4tau_UL2016APV.dataset = "/GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-GluGluToContinToZZTo4tau_UL2016APV.sigma = 1.626 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4tau_UL2016APV.sigma = 0.001586 # * 0.001 #pb to be checked
 
 ZZtoLep_UL2016APV = sample(ZZcolor, 1, 1001, "ZZ", "ZZtoLep_UL2016APV")
 ZZtoLep_UL2016APV.year = "UL2016APV"
@@ -134,7 +134,7 @@ TT_UL2016APV.components = [
 TTTo2L2Nu_UL2016APV = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016APV")
 TTTo2L2Nu_UL2016APV.year = "UL2016APV"
 TTTo2L2Nu_UL2016APV.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-TTTo2L2Nu_UL2016APV.sigma = 88.29 #pb
+TTTo2L2Nu_UL2016APV.sigma = 87.31 #pb
 
 TT_beff_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016APV")
 TT_beff_UL2016APV.year = "UL2016APV"
@@ -149,23 +149,23 @@ TT_beff_UL2016APV.components = [
 TTGJets_UL2016APV = sample(TVXcolor, 1, 1001, "t#bar{t}Z --> qq", "TTGJets_UL2016APV")
 TTGJets_UL2016APV.year = "UL2016APV"
 TTGJets_UL2016APV.dataset = "/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-TTGJets_UL2016APV.sigma = 3.757
+TTGJets_UL2016APV.sigma = 3.697
 
 TTZToQQ_UL2016APV = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTZToQQ_UL2016APV")
 TTZToQQ_UL2016APV.year = "UL2016APV"
 TTZToQQ_UL2016APV.dataset = "/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-TTZToQQ_UL2016APV.sigma = 0.5104
+TTZToQQ_UL2016APV.sigma = 0.5297
 
 TTZToLLNuNu_UL2016APV = sample(TVXcolor, 1, 1001, "t#bar{t}Z --> 2l2#nu", "TTZToLLNuNu_UL2016APV")
 TTZToLLNuNu_UL2016APV.year = "UL2016APV"
 TTZToLLNuNu_UL2016APV.dataset = "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-TTZToLLNuNu_UL2016APV.sigma = 0.2439
+TTZToLLNuNu_UL2016APV.sigma = 0.2529
 
 #### to be replaced with v9 when available ####
 TTWJetsToQQ_UL2016APV = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToQQ_UL2016APV")
 TTWJetsToQQ_UL2016APV.year = "UL2016APV"
 TTWJetsToQQ_UL2016APV.dataset = "/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODAPVv2-106X_mcRun2_asymptotic_preVFP_v9-v1/NANOAODSIM"
-TTWJetsToQQ_UL2016APV.sigma = 0.4377
+TTWJetsToQQ_UL2016APV.sigma = 0.4062
 
 #### to be replaced with v9 when available ####
 TTWJetsToLNu_UL2016APV = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToLNu_UL2016APV")
@@ -176,7 +176,7 @@ TTWJetsToLNu_UL2016APV.sigma = 0.216
 tZq_ll_4f_UL2016APV = sample(TVXcolor, 1, 1001, "tZq --> ll", "tZq_ll_4f_UL2016APV")
 tZq_ll_4f_UL2016APV.year = "UL2016APV"
 tZq_ll_4f_UL2016APV.dataset = "/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-tZq_ll_4f_UL2016APV.sigma = 0.07561
+tZq_ll_4f_UL2016APV.sigma = 0.0758
 
 TVX_UL2016APV = sample(TVXcolor, 1, 1001, "tVX", "TVX_UL2016APV")
 TVX_UL2016APV.year = "UL2016APV"
@@ -214,7 +214,7 @@ VG_UL2016APV.components = [
 WWto2L2Nu_UL2016APV = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "WWto2L2Nu_UL2016APV")
 WWto2L2Nu_UL2016APV.year = "UL2016APV"
 WWto2L2Nu_UL2016APV.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-WWto2L2Nu_UL2016APV.sigma = 11.09
+WWto2L2Nu_UL2016APV.sigma = 12.178
 
 GluGluToWWToENEN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> 2e2#nu", "GluGluToWWToENEN_UL2016APV")
 GluGluToWWToENEN_UL2016APV.year = "UL2016APV"
@@ -264,12 +264,12 @@ GluGluToWWToTNTN_UL2016APV.sigma = 36.81 * 1./9. * 1.4 * 0.001
 ST_tW_top_UL2016APV = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2016APV")
 ST_tW_top_UL2016APV.year = "UL2016APV"
 ST_tW_top_UL2016APV.dataset = "/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-ST_tW_top_UL2016APV.sigma =  34.91
+ST_tW_top_UL2016APV.sigma =  35.85 
 
 ST_tW_antitop_UL2016APV = sample(WScolor, 1, 1001, "Single top", "ST_tW_antitop_UL2016APV")
 ST_tW_antitop_UL2016APV.year = "UL2016APV"
 ST_tW_antitop_UL2016APV.dataset = "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-ST_tW_antitop_UL2016APV.sigma =  34.97
+ST_tW_antitop_UL2016APV.sigma =  35.85 
 
 GluGluHToWWTo2L2Nu_UL2016APV = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2016APV")
 GluGluHToWWTo2L2Nu_UL2016APV.year = "UL2016APV"
@@ -318,7 +318,7 @@ ttHToNonbb_UL2016APV.sigma = 0.5638 # check nowe
 VHToNonbb_UL2016APV = sample(WScolor, 1, 1001, "VH", "VHToNonbb_UL2016APV")
 VHToNonbb_UL2016APV.year = "UL2016APV"
 VHToNonbb_UL2016APV.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-VHToNonbb_UL2016APV.sigma = 2.528 # check nowe
+VHToNonbb_UL2016APV.sigma = 0.952 # check nowe
 
 WrongSign_UL2016APV = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2016APV")
 WrongSign_UL2016APV.year = "UL2016APV"
@@ -458,12 +458,12 @@ WZ_UL2016APV.sigma = 27.59
 DYJetsToLL_M10to50_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2016APV")
 DYJetsToLL_M10to50_UL2016APV.year = "UL2016APV"
 DYJetsToLL_M10to50_UL2016APV.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv2-106X_mcRun2_asymptotic_preVFP_v9-v1/NANOAODSIM"
-DYJetsToLL_M10to50_UL2016APV.sigma = 15890.
+DYJetsToLL_M10to50_UL2016APV.sigma = 18610.
 
 DYJetsToLL_M50_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2016APV")
 DYJetsToLL_M50_UL2016APV.year = "UL2016APV"
 DYJetsToLL_M50_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_Pilot_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-DYJetsToLL_M50_UL2016APV.sigma = 6404.
+DYJetsToLL_M50_UL2016APV.sigma = 6077.22
 
 DYJetsToLL_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2016APV")
 DYJetsToLL_UL2016APV.year = "UL2016APV"
@@ -842,48 +842,48 @@ ZZTo4L_UL2016.sigma = 13.74 #pb NLO
 GluGluToContinToZZTo2e2nu_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2nu", "GluGluToContinToZZTo2e2nu_UL2016")
 GluGluToContinToZZTo2e2nu_UL2016.year = "UL2016"
 GluGluToContinToZZTo2e2nu_UL2016.dataset = "/GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToContinToZZTo2e2nu_UL2016.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2nu_UL2016.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4e_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4e", "GluGluToContinToZZTo4e_UL2016")
 GluGluToContinToZZTo4e_UL2016.year = "UL2016"
 GluGluToContinToZZTo4e_UL2016.dataset = "/GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
-GluGluToContinToZZTo4e_UL2016.sigma = 1.619 # * 0.001 #pb
+GluGluToContinToZZTo4e_UL2016.sigma = 0.001586 # * 0.001 #pb
 
 GluGluToContinToZZTo2e2mu_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2mu", "GluGluToContinToZZTo2e2mu_UL2016")
 GluGluToContinToZZTo2e2mu_UL2016.year = "UL2016"
 GluGluToContinToZZTo2e2mu_UL2016.dataset = "/GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToContinToZZTo2e2mu_UL2016.sigma = 3.292 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2mu_UL2016.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2e2tau_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2tau", "GluGluToContinToZZTo2e2tau_UL2016")
 GluGluToContinToZZTo2e2tau_UL2016.year = "UL2016"
 GluGluToContinToZZTo2e2tau_UL2016.dataset = "/GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToContinToZZTo2e2tau_UL2016.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2tau_UL2016.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2mu2nu_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2nu", "GluGluToContinToZZTo2mu2nu_UL2016")
 GluGluToContinToZZTo2mu2nu_UL2016.year = "UL2016"
 GluGluToContinToZZTo2mu2nu_UL2016.dataset = "/GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToContinToZZTo2mu2nu_UL2016.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2nu_UL2016.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4mu_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4mu", "GluGluToContinToZZTo4mu_UL2016")
 GluGluToContinToZZTo4mu_UL2016.year = "UL2016"
 GluGluToContinToZZTo4mu_UL2016.dataset = "/GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
-GluGluToContinToZZTo4mu_UL2016.sigma = 1.608 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4mu_UL2016.sigma = 0.001586 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2mu2tau_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2tau", "GluGluToContinToZZTo2mu2tau_UL2016")
 GluGluToContinToZZTo2mu2tau_UL2016.year = "UL2016"
 GluGluToContinToZZTo2mu2tau_UL2016.dataset = "/GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToContinToZZTo2mu2tau_UL2016.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2tau_UL2016.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### to be produced ####
 GluGluToContinToZZTo2tau2nu_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2tau2nu", "GluGluToContinToZZTo2tau2nu_UL2016")
 GluGluToContinToZZTo2tau2nu_UL2016.year = "UL2016"
 GluGluToContinToZZTo2tau2nu_UL2016.dataset = ""
-GluGluToContinToZZTo2tau2nu_UL2016.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2tau2nu_UL2016.sigma = 0.003194# * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4tau_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4tau", "GluGluToContinToZZTo4tau_UL2016")
 GluGluToContinToZZTo4tau_UL2016.year = "UL2016"
 GluGluToContinToZZTo4tau_UL2016.dataset = "/GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluToContinToZZTo4tau_UL2016.sigma = 1.626 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4tau_UL2016.sigma = 0.001586 # * 0.001 #pb to be checked
 
 ZZtoLep_UL2016 = sample(ZZcolor, 1, 1001, "ZZ", "ZZtoLep_UL2016")
 ZZtoLep_UL2016.year = "UL2016"
@@ -923,7 +923,7 @@ TT_UL2016.components = [
 TTTo2L2Nu_UL2016 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016")
 TTTo2L2Nu_UL2016.year = "UL2016"
 TTTo2L2Nu_UL2016.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TTTo2L2Nu_UL2016.sigma =  88.29 #pb
+TTTo2L2Nu_UL2016.sigma =  87.31 #pb
 
 TT_beff_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016")
 TT_beff_UL2016.year = "UL2016"
@@ -938,22 +938,22 @@ TT_beff_UL2016.components = [
 TTGJets_UL2016 = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTGJets_UL2016")
 TTGJets_UL2016.year = "UL2016"
 TTGJets_UL2016.dataset = "/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TTGJets_UL2016.sigma = 3.757
+TTGJets_UL2016.sigma = 3.697
 
 TTZToQQ_UL2016 = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTZToQQ_UL2016")
 TTZToQQ_UL2016.year = "UL2016"
 TTZToQQ_UL2016.dataset = "/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TTZToQQ_UL2016.sigma = 0.5104
+TTZToQQ_UL2016.sigma = 0.5297
 
 TTZToLLNuNu_UL2016 = sample(TVXcolor, 1, 1001, "t#bar{t}Z --> 2l2#nu", "TTZToLLNuNu_UL2016")
 TTZToLLNuNu_UL2016.year = "UL2016"
 TTZToLLNuNu_UL2016.dataset = "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TTZToLLNuNu_UL2016.sigma = 0.2439
+TTZToLLNuNu_UL2016.sigma = 0.2529
 
 TTWJetsToQQ_UL2016 = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToQQ_UL2016")
 TTWJetsToQQ_UL2016.year = "UL2016"
 TTWJetsToQQ_UL2016.dataset = "/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TTWJetsToQQ_UL2016.sigma = 0.4377
+TTWJetsToQQ_UL2016.sigma = 0.4062
 
 TTWJetsToLNu_UL2016 = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToLNu_UL2016")
 TTWJetsToLNu_UL2016.year = "UL2016"
@@ -963,7 +963,7 @@ TTWJetsToLNu_UL2016.sigma = 0.216
 tZq_ll_4f_UL2016 = sample(TVXcolor, 1, 1001, "tZq --> ll", "tZq_ll_4f_UL2016")
 tZq_ll_4f_UL2016.year = "UL2016"
 tZq_ll_4f_UL2016.dataset = "/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-tZq_ll_4f_UL2016.sigma = 0.07561
+tZq_ll_4f_UL2016.sigma = 0.0758
 
 TVX_UL2016 = sample(TVXcolor, 1, 1001, "tVX", "TVX_UL2016")
 TVX_UL2016.year = "UL2016"
@@ -1000,7 +1000,7 @@ VG_UL2016.components = [
 WWto2L2Nu_UL2016 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "WWto2L2Nu_UL2016")
 WWto2L2Nu_UL2016.year = "UL2016"
 WWto2L2Nu_UL2016.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-WWto2L2Nu_UL2016.sigma = 11.09
+WWto2L2Nu_UL2016.sigma = 12.178
 
 GluGluToWWToENEN_UL2016 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2016")
 GluGluToWWToENEN_UL2016.year = "UL2016"
@@ -1050,12 +1050,12 @@ GluGluToWWToTNTN_UL2016.sigma = 36.81 * 1./9. * 1.4 * 0.001
 ST_tW_top_UL2016 = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2016")
 ST_tW_top_UL2016.year = "UL2016"
 ST_tW_top_UL2016.dataset = "/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
-ST_tW_top_UL2016.sigma = 34.91
+ST_tW_top_UL2016.sigma = 35.85 
 
 ST_tW_antitop_UL2016 = sample(WScolor, 1, 1001, "Single top", "ST_tW_antitop_UL2016")
 ST_tW_antitop_UL2016.year = "UL2016"
 ST_tW_antitop_UL2016.dataset = "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
-ST_tW_antitop_UL2016.sigma =  34.97
+ST_tW_antitop_UL2016.sigma =  35.85 
 
 GluGluHToWWTo2L2Nu_UL2016 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2016")
 GluGluHToWWTo2L2Nu_UL2016.year = "UL2016"
@@ -1097,7 +1097,7 @@ ttHToNonbb_UL2016.sigma = 0.5638 # check nowe
 VHToNonbb_UL2016 = sample(WScolor, 1, 1001, "VH", "VHToNonbb_UL2016")
 VHToNonbb_UL2016.year = "UL2016"
 VHToNonbb_UL2016.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
-VHToNonbb_UL2016.sigma = 2.528 # check nowe
+VHToNonbb_UL2016.sigma = 0.952 # check nowe
 
 WrongSign_UL2016 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2016")
 WrongSign_UL2016.year = "UL2016"
@@ -1235,12 +1235,12 @@ WZ_UL2016.sigma = 27.59
 DYJetsToLL_M10to50_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2016")
 DYJetsToLL_M10to50_UL2016.year = "UL2016"
 DYJetsToLL_M10to50_UL2016.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv2-106X_mcRun2_asymptotic_v15-v1/NANOAODSIM"
-DYJetsToLL_M10to50_UL2016.sigma = 15890.
+DYJetsToLL_M10to50_UL2016.sigma = 18610.
 
 DYJetsToLL_M50_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2016")
 DYJetsToLL_M50_UL2016.year = "UL2016"
 DYJetsToLL_M50_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_Pilot_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-DYJetsToLL_M50_UL2016.sigma = 6404.
+DYJetsToLL_M50_UL2016.sigma = 6077.22
 
 DYJetsToLL_UL2016 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2016")
 DYJetsToLL_UL2016.year = "UL2016"
@@ -1562,48 +1562,48 @@ ZZTo4L_UL2017.sigma = 13.74 #pb NLO
 GluGluToContinToZZTo2e2nu_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2nu", "GluGluToContinToZZTo2e2nu_UL2017")
 GluGluToContinToZZTo2e2nu_UL2017.year = "UL2017"
 GluGluToContinToZZTo2e2nu_UL2017.dataset = "/GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2nu_UL2017.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2nu_UL2017.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4e_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4e", "GluGluToContinToZZTo4e_UL2017")
 GluGluToContinToZZTo4e_UL2017.year = "UL2017"
 GluGluToContinToZZTo4e_UL2017.dataset = "/GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo4e_UL2017.sigma = 1.619 # * 0.001 #pb
+GluGluToContinToZZTo4e_UL2017.sigma = 0.001586 # * 0.001 #pb
 
 GluGluToContinToZZTo2e2mu_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2mu", "GluGluToContinToZZTo2e2mu_UL2017")
 GluGluToContinToZZTo2e2mu_UL2017.year = "UL2017"
 GluGluToContinToZZTo2e2mu_UL2017.dataset = "/GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2mu_UL2017.sigma = 3.292 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2mu_UL2017.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2e2tau_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2tau", "GluGluToContinToZZTo2e2tau_UL2017")
 GluGluToContinToZZTo2e2tau_UL2017.year = "UL2017"
 GluGluToContinToZZTo2e2tau_UL2017.dataset = "/GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2tau_UL2017.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2tau_UL2017.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2mu2nu_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2nu", "GluGluToContinToZZTo2mu2nu_UL2017")
 GluGluToContinToZZTo2mu2nu_UL2017.year = "UL2017"
 GluGluToContinToZZTo2mu2nu_UL2017.dataset = "/GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo2mu2nu_UL2017.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2nu_UL2017.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4mu_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4mu", "GluGluToContinToZZTo4mu_UL2017")
 GluGluToContinToZZTo4mu_UL2017.year = "UL2017"
 GluGluToContinToZZTo4mu_UL2017.dataset = "/GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo4mu_UL2017.sigma = 1.608 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4mu_UL2017.sigma = 0.001586 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2mu2tau_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2tau", "GluGluToContinToZZTo2mu2tau_UL2017")
 GluGluToContinToZZTo2mu2tau_UL2017.year = "UL2017"
 GluGluToContinToZZTo2mu2tau_UL2017.dataset = "/GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo2mu2tau_UL2017.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2tau_UL2017.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### to be produced ####
 GluGluToContinToZZTo2tau2nu_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2tau2nu", "GluGluToContinToZZTo2tau2nu_UL2017")
 GluGluToContinToZZTo2tau2nu_UL2017.year = "UL2017"
 GluGluToContinToZZTo2tau2nu_UL2017.dataset = ""
-GluGluToContinToZZTo2tau2nu_UL2017.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2tau2nu_UL2017.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4tau_UL2017 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4tau", "GluGluToContinToZZTo4tau_UL2017")
 GluGluToContinToZZTo4tau_UL2017.year = "UL2017"
 GluGluToContinToZZTo4tau_UL2017.dataset = "/GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-GluGluToContinToZZTo4tau_UL2017.sigma = 1.626 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4tau_UL2017.sigma = 0.001586 # * 0.001 #pb to be checked
 
 ZZtoLep_UL2017 = sample(ZZcolor, 1, 1001, "ZZ", "ZZtoLep_UL2017")
 ZZtoLep_UL2017.year = "UL2017"
@@ -1644,7 +1644,7 @@ TT_UL2017.components = [
 TTTo2L2Nu_UL2017 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2017")
 TTTo2L2Nu_UL2017.year = "UL2017"
 TTTo2L2Nu_UL2017.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TTTo2L2Nu_UL2017.sigma =  88.29 #pb
+TTTo2L2Nu_UL2017.sigma =  87.31 #pb
 
 TT_beff_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2017")
 TT_beff_UL2017.year = "UL2017"
@@ -1659,22 +1659,22 @@ TT_beff_UL2017.components = [
 TTGJets_UL2017 = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTGJets_UL2017")
 TTGJets_UL2017.year = "UL2017"
 TTGJets_UL2017.dataset = "/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TTGJets_UL2017.sigma = 3.757
+TTGJets_UL2017.sigma = 3.697
 
 TTZToQQ_UL2017 = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTZToQQ_UL2017")
 TTZToQQ_UL2017.year = "UL2017"
 TTZToQQ_UL2017.dataset = "/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TTZToQQ_UL2017.sigma = 0.5104
+TTZToQQ_UL2017.sigma = 0.5297
 
 TTZToLLNuNu_UL2017 = sample(TVXcolor, 1, 1001, "t#bar{t}Z --> 2l2#nu", "TTZToLLNuNu_UL2017")
 TTZToLLNuNu_UL2017.year = "UL2017"
 TTZToLLNuNu_UL2017.dataset = "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TTZToLLNuNu_UL2017.sigma = 0.2439
+TTZToLLNuNu_UL2017.sigma = 0.2529
 
 TTWJetsToQQ_UL2017 = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToQQ_UL2017")
 TTWJetsToQQ_UL2017.year = "UL2017"
 TTWJetsToQQ_UL2017.dataset = "/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TTWJetsToQQ_UL2017.sigma = 0.4377
+TTWJetsToQQ_UL2017.sigma = 0.4062
 
 TTWJetsToLNu_UL2017 = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToLNu_UL2017")
 TTWJetsToLNu_UL2017.year = "UL2017"
@@ -1684,7 +1684,7 @@ TTWJetsToLNu_UL2017.sigma = 0.216
 tZq_ll_4f_UL2017 = sample(TVXcolor, 1, 1001, "tZq --> ll", "tZq_ll_4f_UL2017")
 tZq_ll_4f_UL2017.year = "UL2017"
 tZq_ll_4f_UL2017.dataset = "/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-tZq_ll_4f_UL2017.sigma = 0.07561
+tZq_ll_4f_UL2017.sigma = 0.0758
 
 TVX_UL2017 = sample(TVXcolor, 1, 1001, "tVX", "TVX_UL2017")
 TVX_UL2017.year = "UL2017"
@@ -1721,7 +1721,7 @@ VG_UL2017.components = [
 WWto2L2Nu_UL2017 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "WWto2L2Nu_UL2017")
 WWto2L2Nu_UL2017.year = "UL2017"
 WWto2L2Nu_UL2017.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-WWto2L2Nu_UL2017.sigma = 11.09
+WWto2L2Nu_UL2017.sigma = 12.178
 
 GluGluToWWToENEN_UL2017 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2017")
 GluGluToWWToENEN_UL2017.year = "UL2017"
@@ -1772,12 +1772,12 @@ GluGluToWWToTNTN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001
 ST_tW_top_UL2017 = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2017")
 ST_tW_top_UL2017.year = "UL2017"
 ST_tW_top_UL2017.dataset = "/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-ST_tW_top_UL2017.sigma = 34.91
+ST_tW_top_UL2017.sigma = 35.85 
 
 ST_tW_antitop_UL2017 = sample(WScolor, 1, 1001, "Single top", "ST_tW_antitop_UL2017")
 ST_tW_antitop_UL2017.year = "UL2017"
 ST_tW_antitop_UL2017.dataset = "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-ST_tW_antitop_UL2017.sigma =  34.97
+ST_tW_antitop_UL2017.sigma =  35.85 
 
 #### to be replaced with v9 when available ####
 GluGluHToWWTo2L2Nu_UL2017 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2017")
@@ -1819,7 +1819,7 @@ ttHToNonbb_UL2017.sigma = 0.5638 # check nowe
 VHToNonbb_UL2017 = sample(WScolor, 1, 1001, "VH", "VHToNonbb_UL2017")
 VHToNonbb_UL2017.year = "UL2017"
 VHToNonbb_UL2017.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-VHToNonbb_UL2017.sigma = 2.528 # check nowe
+VHToNonbb_UL2017.sigma = 0.952 # check nowe
 
 WrongSign_UL2017 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2017")
 WrongSign_UL2017.year = "UL2017"
@@ -1957,12 +1957,12 @@ WZ_UL2017.sigma = 27.59
 DYJetsToLL_M10to50_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2017")
 DYJetsToLL_M10to50_UL2017.year = "UL2017"
 DYJetsToLL_M10to50_UL2017.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
-DYJetsToLL_M10to50_UL2017.sigma = 15890.
+DYJetsToLL_M10to50_UL2017.sigma = 18610.
 
 DYJetsToLL_M50_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2017")
 DYJetsToLL_M50_UL2017.year = "UL2017"
 DYJetsToLL_M50_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_Pilot_106X_mc2017_realistic_v9-v1/NANOAODSIM"
-DYJetsToLL_M50_UL2017.sigma = 6404.
+DYJetsToLL_M50_UL2017.sigma = 6077.22
 
 DYJetsToLL_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2017")
 DYJetsToLL_UL2017.year = "UL2017"
@@ -2322,49 +2322,49 @@ ZZTo4L_UL2018.sigma = 13.74 #pb NLO
 GluGluToContinToZZTo2e2nu_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2nu", "GluGluToContinToZZTo2e2nu_UL2018")
 GluGluToContinToZZTo2e2nu_UL2018.year = "UL2018"
 GluGluToContinToZZTo2e2nu_UL2018.dataset = "/GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2nu_UL2018.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2nu_UL2018.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4e_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4e", "GluGluToContinToZZTo4e_UL2018")
 GluGluToContinToZZTo4e_UL2018.year = "UL2018"
 GluGluToContinToZZTo4e_UL2018.dataset = "/GluGluToContinToZZTo4e_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToContinToZZTo4e_UL2018.sigma = 1.619 # * 0.001 #pb
+GluGluToContinToZZTo4e_UL2018.sigma = 0.001586 # * 0.001 #pb
 
 GluGluToContinToZZTo2e2mu_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2mu", "GluGluToContinToZZTo2e2mu_UL2018")
 GluGluToContinToZZTo2e2mu_UL2018.year = "UL2018"
 GluGluToContinToZZTo2e2mu_UL2018.dataset = "/GluGluToContinToZZTo2e2mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2mu_UL2018.sigma = 3.292 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2mu_UL2018.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2e2tau_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2tau", "GluGluToContinToZZTo2e2tau_UL2018")
 GluGluToContinToZZTo2e2tau_UL2018.year = "UL2018"
 GluGluToContinToZZTo2e2tau_UL2018.dataset = "/GluGluToContinToZZTo2e2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToContinToZZTo2e2tau_UL2018.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2e2tau_UL2018.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2mu2nu_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2nu", "GluGluToContinToZZTo2mu2nu_UL2018")
 GluGluToContinToZZTo2mu2nu_UL2018.year = "UL2018"
 GluGluToContinToZZTo2mu2nu_UL2018.dataset = "/GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToContinToZZTo2mu2nu_UL2018.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2nu_UL2018.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### to be replaced with v9 when available ####
 GluGluToContinToZZTo4mu_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4mu", "GluGluToContinToZZTo4mu_UL2018")
 GluGluToContinToZZTo4mu_UL2018.year = "UL2018"
 GluGluToContinToZZTo4mu_UL2018.dataset = "/GluGluToContinToZZTo4mu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv2-106X_upgrade2018_realistic_v15_L1v1-v1/NANOAODSIM"
-GluGluToContinToZZTo4mu_UL2018.sigma = 1.608 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4mu_UL2018.sigma = 0.001586 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo2mu2tau_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2tau", "GluGluToContinToZZTo2mu2tau_UL2018")
 GluGluToContinToZZTo2mu2tau_UL2018.year = "UL2018"
 GluGluToContinToZZTo2mu2tau_UL2018.dataset = "/GluGluToContinToZZTo2mu2tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToContinToZZTo2mu2tau_UL2018.sigma = 3.294 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2mu2tau_UL2018.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### to be produced ####
 GluGluToContinToZZTo2tau2nu_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2tau2nu", "GluGluToContinToZZTo2tau2nu_UL2018")
 GluGluToContinToZZTo2tau2nu_UL2018.year = "UL2018"
 GluGluToContinToZZTo2tau2nu_UL2018.dataset = ""
-GluGluToContinToZZTo2tau2nu_UL2018.sigma = 17.73 # * 0.001 #pb to be checked
+GluGluToContinToZZTo2tau2nu_UL2018.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4tau_UL2018 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4tau", "GluGluToContinToZZTo4tau_UL2018")
 GluGluToContinToZZTo4tau_UL2018.year = "UL2018"
 GluGluToContinToZZTo4tau_UL2018.dataset = "/GluGluToContinToZZTo4tau_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-GluGluToContinToZZTo4tau_UL2018.sigma = 1.626 # * 0.001 #pb to be checked
+GluGluToContinToZZTo4tau_UL2018.sigma = 0.001586 # * 0.001 #pb to be checked
 
 ZZtoLep_UL2018 = sample(ZZcolor, 1, 1001, "ZZ", "ZZtoLep_UL2018")
 ZZtoLep_UL2018.year = "UL2018"
@@ -2402,7 +2402,7 @@ TT_UL2018.components = [
 TTTo2L2Nu_UL2018 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2018")
 TTTo2L2Nu_UL2018.year = "UL2018"
 TTTo2L2Nu_UL2018.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TTTo2L2Nu_UL2018.sigma =  88.29 #pb
+TTTo2L2Nu_UL2018.sigma =  87.31 #pb
 
 TT_beff_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2018")
 TT_beff_UL2018.year = "UL2018"
@@ -2418,22 +2418,22 @@ TT_beff_UL2018.components = [
 TTGJets_UL2018 = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTGJets_UL2018")
 TTGJets_UL2018.year = "UL2018"
 TTGJets_UL2018.dataset = "/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TTGJets_UL2018.sigma = 3.757
+TTGJets_UL2018.sigma = 3.697
 
 TTZToQQ_UL2018 = sample(TVXcolor, 1, 1001, "t#bar{t}#gamma + jets", "TTZToQQ_UL2018")
 TTZToQQ_UL2018.year = "UL2018"
 TTZToQQ_UL2018.dataset = "/TTZToQQ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TTZToQQ_UL2018.sigma = 0.5104
+TTZToQQ_UL2018.sigma = 0.5297
 
 TTZToLLNuNu_UL2018 = sample(TVXcolor, 1, 1001, "t#bar{t}Z --> 2l2#nu", "TTZToLLNuNu_UL2018")
 TTZToLLNuNu_UL2018.year = "UL2018"
 TTZToLLNuNu_UL2018.dataset = "/TTZToLLNuNu_M-10_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TTZToLLNuNu_UL2018.sigma = 0.2439
+TTZToLLNuNu_UL2018.sigma = 0.2529
 
 TTWJetsToQQ_UL2018 = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToQQ_UL2018")
 TTWJetsToQQ_UL2018.year = "UL2018"
 TTWJetsToQQ_UL2018.dataset = "/TTWJetsToQQ_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TTWJetsToQQ_UL2018.sigma = 0.4377
+TTWJetsToQQ_UL2018.sigma = 0.4062
 
 #### to be replaced with v9 when available ####
 TTWJetsToLNu_UL2018 = sample(TVXcolor, 1, 1001, "t#bar{t}W+jets --> qq", "TTWJetsToLNu_UL2018")
@@ -2445,7 +2445,7 @@ TTWJetsToLNu_UL2018.sigma = 0.216
 tZq_ll_4f_UL2018 = sample(TVXcolor, 1, 1001, "tZq --> ll", "tZq_ll_4f_UL2018")
 tZq_ll_4f_UL2018.year = "UL2018"
 tZq_ll_4f_UL2018.dataset = "/tZq_ll_4f_ckm_NLO_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv2-106X_upgrade2018_realistic_v15_L1v1-v1/NANOAODSIM"
-tZq_ll_4f_UL2018.sigma = 0.07561
+tZq_ll_4f_UL2018.sigma = 0.0758
 
 TVX_UL2018 = sample(TVXcolor, 1, 1001, "tVX", "TVX_UL2018")
 TVX_UL2018.year = "UL2018"
@@ -2482,7 +2482,7 @@ VG_UL2018.components = [
 WWto2L2Nu_UL2018 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "WWto2L2Nu_UL2018")
 WWto2L2Nu_UL2018.year = "UL2018"
 WWto2L2Nu_UL2018.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-WWto2L2Nu_UL2018.sigma = 11.09
+WWto2L2Nu_UL2018.sigma = 12.178
 
 GluGluToWWToENEN_UL2018 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2018")
 GluGluToWWToENEN_UL2018.year = "UL2018"
@@ -2532,12 +2532,12 @@ GluGluToWWToTNTN_UL2018.sigma = 36.81 * 1./9. * 1.4 * 0.001
 ST_tW_top_UL2018 = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2018")
 ST_tW_top_UL2018.year = "UL2018"
 ST_tW_top_UL2018.dataset = "/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-ST_tW_top_UL2018.sigma = 34.91
+ST_tW_top_UL2018.sigma = 35.85 
 
 ST_tW_antitop_UL2018 = sample(WScolor, 1, 1001, "Single top", "ST_tW_antitop_UL2018")
 ST_tW_antitop_UL2018.year = "UL2018"
 ST_tW_antitop_UL2018.dataset = "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-ST_tW_antitop_UL2018.sigma =  34.97
+ST_tW_antitop_UL2018.sigma =  35.85 
 
 #### to be replaced with v9 when available ####
 GluGluHToWWTo2L2Nu_UL2018 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2018")
@@ -2579,7 +2579,7 @@ ttHToNonbb_UL2018.sigma = 0.5638 # check nowe
 VHToNonbb_UL2018 = sample(WScolor, 1, 1001, "VH", "VHToNonbb_UL2018")
 VHToNonbb_UL2018.year = "UL2018"
 VHToNonbb_UL2018.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-VHToNonbb_UL2018.sigma = 2.528 # check nowe
+VHToNonbb_UL2018.sigma = 0.952 # check nowe
 
 WrongSign_UL2018 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2018")
 WrongSign_UL2018.year = "UL2018"
@@ -2716,12 +2716,12 @@ WZ_UL2018.sigma = 27.59
 DYJetsToLL_M10to50_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2018")
 DYJetsToLL_M10to50_UL2018.year = "UL2018"
 DYJetsToLL_M10to50_UL2018.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-DYJetsToLL_M10to50_UL2018.sigma = 15890.
+DYJetsToLL_M10to50_UL2018.sigma = 18610.
 
 DYJetsToLL_M50_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2018")
 DYJetsToLL_M50_UL2018.year = "UL2018"
 DYJetsToLL_M50_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_Pilot_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-DYJetsToLL_M50_UL2018.sigma = 6404.
+DYJetsToLL_M50_UL2018.sigma = 6077.22
 
 DYJetsToLL_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2018")
 DYJetsToLL_UL2018.year = "UL2018"
