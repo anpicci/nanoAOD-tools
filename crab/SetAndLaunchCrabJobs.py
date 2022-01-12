@@ -105,13 +105,14 @@ for s in complist:
                 elif "FAILED" in outline or "SUBMITFAILED" in outline:# or "failed" in outline:
                     sstatus = "FAILED"
                     break
-                elif "Cannot find .requestcache" in outline:
+                elif "Cannot find .requestcache" in outline or "Cannot retrieve the status_cache" in outline:
                     sstatus = "FAILED"
                     break
                 #else:
                 #sstatus = "PROCESSING"
 
             toPrint = False
+            toSub = ""
             if sstatus == "COMPLETED":
                 print "\t" + s.label + " is COMPLETED!"
                 printpath = "./macros/files/"
@@ -172,7 +173,7 @@ for s in complist:
             else:#if sstatus == "PROCESSING":
                 print "\n\tCrab is processing " + s.label + "..."
 
-            if (toPrint and opt.save) or opt.resave:
+            if (toPrint and opt.save) or (opt.resave and (toSub == "N" or toSub == "")):
                 printcommand = "cd macros; python files_writer_new.py -d " + s.label
                 if opt.forFR:
                     printcommand += " --fake -t HT"

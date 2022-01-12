@@ -18,14 +18,23 @@ import math
 import datetime
 import copy
 from array import array
-from skimtree_utils_ssWW_wFakes import *
+from skimtree_utils_ssWW_wFakes_old import *
 
-if sys.argv[4] == 'remote':
-    from samples import *
-    Debug = False
+if not "_UL" in sys.argv[1]:
+    if sys.argv[4] == 'remote':
+        from samples import *
+        Debug = False
+    else:
+        from samples.samples import *
+        Debug = True
 else:
-    from samples.samples import *
-    Debug = True
+    if sys.argv[4] == 'remote':
+        from samplesUL import *
+        Debug = False
+    else:
+        from samples.samplesUL import *
+        Debug = True
+
 sample = sample_dict[sys.argv[1]]
 part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))
@@ -196,8 +205,10 @@ for i in range(tree.GetEntries()):
     #print "------ ", i
     passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, Flag)
 
-    if noTrigger: continue
+    if noTrigger:
+        continue
 
+    '''
     GoodEle, ele_TightRegion = SelectLepton(electrons, False) 
     GoodMu, mu_TightRegion = SelectLepton(muons, True) 
  
@@ -321,6 +332,7 @@ for i in range(tree.GetEntries()):
         if Debug:
             print("exiting at lepton selection (without saving)")
         continue
+    '''
 
     ######################################
     ## Selecting only jets with pt>30  ##
