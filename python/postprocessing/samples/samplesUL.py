@@ -274,7 +274,7 @@ ST_tW_antitop_UL2016APV.sigma =  35.85
 GluGluHToWWTo2L2Nu_UL2016APV = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2016APV")
 GluGluHToWWTo2L2Nu_UL2016APV.year = "UL2016APV"
 GluGluHToWWTo2L2Nu_UL2016APV.dataset = "/GluGluHToWWTo2L2Nu_M125_TuneCP5_PSw_13TeV-powheg2-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
-GluGluHToWWTo2L2Nu_UL2016APV.sigma = 28.86
+GluGluHToWWTo2L2Nu_UL2016APV.sigma = 21.47
 
 #### to be produced ####
 GluGluHToWWToLNuQQ_UL2016APV = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWToLNuQQ_UL2016APV")
@@ -1060,7 +1060,7 @@ ST_tW_antitop_UL2016.sigma =  35.85
 GluGluHToWWTo2L2Nu_UL2016 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2016")
 GluGluHToWWTo2L2Nu_UL2016.year = "UL2016"
 GluGluHToWWTo2L2Nu_UL2016.dataset = "/GluGluHToWWTo2L2Nu_M125_TuneCP5_PSw_13TeV-powheg2-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-GluGluHToWWTo2L2Nu_UL2016.sigma = 28.86
+GluGluHToWWTo2L2Nu_UL2016.sigma = 21.47
 
 #### to be produced ####
 GluGluHToWWToLNuQQ_UL2016 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWToLNuQQ_UL2016")
@@ -1783,7 +1783,7 @@ ST_tW_antitop_UL2017.sigma =  35.85
 GluGluHToWWTo2L2Nu_UL2017 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2017")
 GluGluHToWWTo2L2Nu_UL2017.year = "UL2017"
 GluGluHToWWTo2L2Nu_UL2017.dataset = "/GluGluHToWWTo2L2Nu_M125_TuneCP5_PSw_13TeV-powheg2-pythia8/RunIISummer20UL17NanoAODv2-106X_mc2017_realistic_v8-v1/NANOAODSIM"
-GluGluHToWWTo2L2Nu_UL2017.sigma = 28.86
+GluGluHToWWTo2L2Nu_UL2017.sigma = 21.47
 
 #### to be produced ####
 GluGluHToWWToLNuQQ_UL2017 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWToLNuQQ_UL2017")
@@ -2543,7 +2543,7 @@ ST_tW_antitop_UL2018.sigma =  35.85
 GluGluHToWWTo2L2Nu_UL2018 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWTo2L2Nu_UL2018")
 GluGluHToWWTo2L2Nu_UL2018.year = "UL2018"
 GluGluHToWWTo2L2Nu_UL2018.dataset = "/GluGluHToWWTo2L2Nu_M125_TuneCP5_PSw_13TeV-powheg2-pythia8/RunIISummer20UL18NanoAODv2-106X_upgrade2018_realistic_v15_L1v1-v1/NANOAODSIM"
-GluGluHToWWTo2L2Nu_UL2018.sigma = 28.86
+GluGluHToWWTo2L2Nu_UL2018.sigma = 21.47
 
 #### to be produced ####
 GluGluHToWWToLNuQQ_UL2018 = sample(WScolor, 1, 1001, "Single top", "GluGluHToWWToLNuQQ_UL2018")
