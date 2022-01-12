@@ -1,4 +1,10 @@
-python submit_condor_old.py -d DataEleA_UL2018  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
-python submit_condor_old.py -d DataEleB_UL2018  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
-python submit_condor_old.py -d DataEleC_UL2018  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
-python submit_condor_old.py -d DataEleD_UL2018  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataMuB_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataMuC_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataMuD_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataMuE_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataMuF_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataEleB_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataEleC_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataEleD_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataEleE_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
+python submit_condor_old.py -d DataEleF_UL2017  -f vUL001/ltau --wpjet VT --wpele VL --wpmu T --reco jl --masscrit --deltaeta
