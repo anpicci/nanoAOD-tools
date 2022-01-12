@@ -40,10 +40,6 @@ class process:
     def addSample(self, s):
         self.components.append(s)
 
-    def print(self):
-        print (self.label)
-        for s in self.components:
-            s.print()
 
     def jOut(self):
         components = []
