@@ -5,11 +5,6 @@ import os
 path = os.path.dirname(os.path.abspath(__file__))
 
 class sample:
-    sigma       = None
-    dataset     = None
-    sigma       = None
-    components  = None
-    year = None
     def __init__(self, color, style, fill, leglabel, label, name=""):
         self.color = color
         self.style = style
@@ -1636,14 +1631,14 @@ TT_SemiLep_UL2017.sigma = 365.3 #pb to check
 #### in production stage ####
 TT_Had_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2017")
 TT_Had_UL2017.year = "UL2017"
-TT_Had_UL2017.dataset = ""
+TT_Had_UL2017.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
 TT_Had_UL2017.sigma = 377.96 #pb to check
 
 TT_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2017")
 TT_UL2017.year = "UL2017"
 TT_UL2017.components = [
     TT_SemiLep_UL2017,
-    #TT_Had_UL2017,
+    TT_Had_UL2017,
 ]
 
 TTTo2L2Nu_UL2017 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2017")
@@ -3164,7 +3159,7 @@ sample_dict={
     "Triboson_UL2018":Triboson_UL2018,
     "WWTo2L2Nu_DoubleScattering_UL2018":WWTo2L2Nu_DoubleScattering_UL2018, "WWW_4F_UL2018":WWW_4F_UL2018, "WWZ_4F_UL2018":WWZ_4F_UL2018, "WZZ_UL2018":WZZ_UL2018, "ZZZ_UL2018":ZZZ_UL2018, "ZZZ_UL2018":ZZZ_UL2018, "WWG_UL2018":WWG_UL2018,
     "WJets_UL2018":WJets_UL2018,
-    "WJetsHT70to100_UL2018":WJetsHT70to100_UL2018, "WJetsHT100to200_UL2018":WJetsHT100to200_UL2018, "WJetsHT200to400_UL2018:":WJetsHT200to400_UL2018, "WJetsHT400to600_UL2018":WJetsHT400to600_UL2018, "WJetsHT600to800_UL2018":WJetsHT600to800_UL2018, "WJetsHT800to1200_UL2018":WJetsHT800to1200_UL2018, "WJetsHT1200to2500_UL2018":WJetsHT1200to2500_UL2018, "WJetsHT2500toInf_UL2018":WJetsHT2500toInf_UL2018,
+    "WJetsHT70to100_UL2018":WJetsHT70to100_UL2018, "WJetsHT100to200_UL2018":WJetsHT100to200_UL2018, "WJetsHT200to400_UL2018":WJetsHT200to400_UL2018, "WJetsHT400to600_UL2018":WJetsHT400to600_UL2018, "WJetsHT600to800_UL2018":WJetsHT600to800_UL2018, "WJetsHT800to1200_UL2018":WJetsHT800to1200_UL2018, "WJetsHT1200to2500_UL2018":WJetsHT1200to2500_UL2018, "WJetsHT2500toInf_UL2018":WJetsHT2500toInf_UL2018,
     "WZ_UL2018":WZ_UL2018,
     "DYJetsToLL_UL2018":DYJetsToLL_UL2018,
     "DYJetsToLL_M10to50_UL2018":DYJetsToLL_M10to50_UL2018, "DYJetsToLL_M50_UL2018":DYJetsToLL_M50_UL2018,

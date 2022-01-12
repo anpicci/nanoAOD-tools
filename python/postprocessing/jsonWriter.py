@@ -65,6 +65,8 @@ if os.path.exists(fileName):
     if a == 'y': 
         os.popen('rm ' + fileName)
 
+allSamples = {}
+allSamples['condor_dict'] = []
 
 for s in condor_dict.items():
     #print(s[0])
@@ -84,7 +86,8 @@ for s in condor_dict.items():
     if components != None:
         for k in components:
             p.addSample(singleSample(k.sigma, k.dataset, k.year))
+    allSamples['condor_dict'].append(p.jOut())
 
-    with open(fileName, 'a') as f:
-        json.dump(p.jOut(), f, indent = 4)
-        f.write('\n')
+
+with open(fileName, 'a') as f:
+    json.dump(allSamples, f, indent = 4)
