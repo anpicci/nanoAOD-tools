@@ -1935,12 +1935,12 @@ WZ_UL2017.sigma = 27.59
 
 DYJetsToLL_M10to50_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2017")
 DYJetsToLL_M10to50_UL2017.year = "UL2017"
-DYJetsToLL_M10to50_UL2017.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
+DYJetsToLL_M10to50_UL2017.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 DYJetsToLL_M10to50_UL2017.sigma = 18610.
 
 DYJetsToLL_M50_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2017")
 DYJetsToLL_M50_UL2017.year = "UL2017"
-DYJetsToLL_M50_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_Pilot_106X_mc2017_realistic_v9-v1/NANOAODSIM"
+DYJetsToLL_M50_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 DYJetsToLL_M50_UL2017.sigma = 6077.22
 
 DYJetsToLL_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2017")
@@ -2687,12 +2687,12 @@ WZ_UL2018.sigma = 27.59
 
 DYJetsToLL_M10to50_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2018")
 DYJetsToLL_M10to50_UL2018.year = "UL2018"
-DYJetsToLL_M10to50_UL2018.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+DYJetsToLL_M10to50_UL2018.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 DYJetsToLL_M10to50_UL2018.sigma = 18610.
 
 DYJetsToLL_M50_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2018")
 DYJetsToLL_M50_UL2018.year = "UL2018"
-DYJetsToLL_M50_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_Pilot_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+DYJetsToLL_M50_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 DYJetsToLL_M50_UL2018.sigma = 6077.22
 
 DYJetsToLL_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2018")
@@ -3202,6 +3202,7 @@ sample_dict={
 crab_dict = {
     ##### UL2016APV #####
     "UL2016APV":[
+        GluGluHToTauTau_UL2016APV,
         ZZtoLep_UL2016APV,
         TT_UL2016APV,
         TTTo2L2Nu_UL2016APV,
