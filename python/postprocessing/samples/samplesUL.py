@@ -1936,7 +1936,7 @@ WZ_UL2017.sigma = 27.59
 DYJetsToLL_M10to50_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2017")
 DYJetsToLL_M10to50_UL2017.year = "UL2017"
 DYJetsToLL_M10to50_UL2017.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-DYJetsToLL_M10to50_UL2017.sigma = 18610.
+DYJetsToLL_M10to50_UL2017.sigma = 15890. # 18610.
 
 DYJetsToLL_M50_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2017")
 DYJetsToLL_M50_UL2017.year = "UL2017"
