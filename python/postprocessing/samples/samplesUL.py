@@ -1946,7 +1946,7 @@ DYJetsToLL_M50_UL2017.sigma = 6077.22
 DYJetsToLL_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2017")
 DYJetsToLL_UL2017.year = "UL2017"
 DYJetsToLL_UL2017.components = [
-    DYJetsToLL_M10to50_UL2017,
+    #DYJetsToLL_M10to50_UL2017,
     DYJetsToLL_M50_UL2017,
 ]
 
@@ -2698,7 +2698,7 @@ DYJetsToLL_M50_UL2018.sigma = 6077.22
 DYJetsToLL_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_UL2018")
 DYJetsToLL_UL2018.year = "UL2018"
 DYJetsToLL_UL2018.components = [
-    DYJetsToLL_M10to50_UL2018,
+    #DYJetsToLL_M10to50_UL2018,
     DYJetsToLL_M50_UL2018,
 ]
 
