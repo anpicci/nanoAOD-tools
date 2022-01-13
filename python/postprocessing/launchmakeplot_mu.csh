@@ -1,5 +1,5 @@
 #set LD_PRELOAD=libtcmalloc.so
-set year1 = UL2017
+set year1 = UL2018
 set year2 = 2018
 set folder0 = vUL001 #_tagger_DataSplit_MCnoSplit
 #set folder1 = v96
