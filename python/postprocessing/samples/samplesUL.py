@@ -3337,46 +3337,46 @@ crab_dict = {
 crab_dict_Fake = {
     ##### UL2016APV #####
     "UL2016APV":[
-        #WJets_UL2016APV,
+        WJets_UL2016APV,
         DYJetsToLL_M10to50_UL2016APV,
         DYJetsToLL_M50_UL2016APV,
         DYJetsToLL_M50_UL2016APV_ext,
-        #ZZtoLep_UL2016APV,
-        #TT_UL2016APV,
-        #DataHT_UL2016APV,
+        ZZtoLep_UL2016APV,
+        TT_UL2016APV,
+        DataHT_UL2016APV,
     ],
 
     ##### UL2016 #####
     "UL2016":[
-        #WJets_UL2016,
+        WJets_UL2016,
         DYJetsToLL_M10to50_UL2016,
         DYJetsToLL_M50_UL2016,
         DYJetsToLL_M50_UL2016_ext,
-        #ZZtoLep_UL2016,
-        #TT_UL2016,
-        #DataHT_UL2016,
+        ZZtoLep_UL2016,
+        TT_UL2016,
+        DataHT_UL2016,
     ],
 
     ##### UL2017 #####
     "UL2017":[
-        #WJets_UL2017,
+        WJets_UL2017,
         DYJetsToLL_M10to50_UL2017,
         DYJetsToLL_M50_UL2017,
         DYJetsToLL_M50_UL2017_ext,
-        #ZZtoLep_UL2017,
-        #TT_UL2017,
-        #DataHT_UL2017,
+        ZZtoLep_UL2017,
+        TT_UL2017,
+        DataHT_UL2017,
     ],
 
     ##### UL2018 #####
     "UL2018":[
-        #WJets_UL2018,
+        WJets_UL2018,
         DYJetsToLL_M10to50_UL2018,
         DYJetsToLL_M50_UL2018,
         DYJetsToLL_M50_UL2018_ext,
-        #ZZtoLep_UL2018,
-        #TT_UL2018,
-        #DataHT_UL2018,
+        ZZtoLep_UL2018,
+        TT_UL2018,
+        DataHT_UL2018,
     ],
 }
 
