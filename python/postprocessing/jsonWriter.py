@@ -11,7 +11,7 @@ class singleSample:
         self.dataset = dataset
         self.year = year
     
-    def print(self):
+    def printt(self):
         print('dataset: ', self.dataset)
         print('sigma:   ', self.sigma)
         print('year:    ', self.year)
@@ -40,6 +40,13 @@ class process:
     def addSample(self, s):
         self.components.append(s)
 
+<<<<<<< HEAD
+=======
+    def printt(self):
+        print (self.label)
+        for s in self.components:
+            s.printt()
+>>>>>>> 96efaaa57577ab7738ac77eae69f69d1bfb83c43
 
     def jOut(self):
         components = []
