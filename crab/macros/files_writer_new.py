@@ -116,5 +116,7 @@ for sample in samples:
             pr += 1
         f.close()
        
-    print pr, "paths saved for", sample.label
+        print pr, "paths saved for", sample.label
+    else:
+        print "No path saved for", sample.label
 

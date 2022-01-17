@@ -55,7 +55,7 @@ print samlist
 if opt.dat != "":
     samlist = list(filter(lambda x : x.label == opt.dat, samlist))
 
-print samlist 
+#print samlist 
 
 if opt.forFR:
     crabc = "python submit_crab_fake.py"
@@ -69,6 +69,8 @@ for samp in samlist:
             complist.append(copy.deepcopy(c))
     else:
         complist.append(copy.deepcopy(samp))
+
+#print(complist)
 
 for s in complist:
     print "\n\nConsidering " + s.label + " sample..."
