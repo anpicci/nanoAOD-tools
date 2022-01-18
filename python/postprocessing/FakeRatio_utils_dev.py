@@ -465,7 +465,7 @@ def Veto_Tau_Leptons(taus, ele, mu, vsJetWP):
     if len(taus)==0: 
         return 1, idxl
     for i, tau in enumerate(taus):
-        if tau.idDeepTau2017v2p1VSjet>=vsJetWP and tau.idDeepTau2017v2p1VSe>=4  and tau.idDeepTau2017v2p1VSmu>=8 and tau.idDecayModeNewDMs: 
+        if tau.idDeepTau2017v2p1VSjet>=vsJetWP and tau.idDeepTau2017v2p1VSe>=4  and tau.idDeepTau2017v2p1VSmu>=8: 
             nTau+=1
             idxl.append(i)
     if nTau!=1:

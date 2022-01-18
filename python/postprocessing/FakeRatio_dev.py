@@ -61,12 +61,21 @@ if sys.argv[5]=="Ele" or sys.argv[5]=="Mu" or sys.argv[5]=="HT":
 
 print("Saving events with trigger: ", chosenTrigger)
 
-if sys.argv[4] == 'remote':
-    from samples import *
-    Debug = False
+if not "UL" in sys.argv[1]:
+    if sys.argv[4] == 'remote':
+        from samples import *
+        Debug = False
+    else:
+        from samples.samples import *
+        Debug = True
 else:
-    from samples.samples import *
-    Debug = True
+    if sys.argv[4] == 'remote':
+        from samplesUL import *
+        Debug = False
+    else:
+        from samples.samplesUL import *
+        Debug = True
+
 sample = sample_dict[sys.argv[1]]
 part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))

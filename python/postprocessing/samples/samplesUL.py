@@ -600,32 +600,32 @@ VBS_SSWW_DIM6_SM_UL2016APV.components = [
 DataMuB1_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuB1_UL2016APV")
 DataMuB1_UL2016APV.runP = 'B-ver1'
 DataMuB1_UL2016APV.year = "UL2016APV"
-DataMuB1_UL2016APV.dataset = "/SingleMuon/Run2016B-ver1_HIPM_UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuB1_UL2016APV.dataset = "/SingleMuon/Run2016B-ver1_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMuB2_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuB2_UL2016APV")
 DataMuB2_UL2016APV.runP = 'B-ver2'
 DataMuB2_UL2016APV.year = "UL2016APV"
-DataMuB2_UL2016APV.dataset = "/SingleMuon/Run2016B-ver2_HIPM_UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuB2_UL2016APV.dataset = "/SingleMuon/Run2016B-ver2_HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMuC_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuC_UL2016APV")
 DataMuC_UL2016APV.runP = 'C'
 DataMuC_UL2016APV.year = "UL2016APV"
-DataMuC_UL2016APV.dataset = "/SingleMuon/Run2016C-HIPM_UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuC_UL2016APV.dataset = "/SingleMuon/Run2016C-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMuD_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuD_UL2016APV")
 DataMuD_UL2016APV.runP = 'D'
 DataMuD_UL2016APV.year = "UL2016APV"
-DataMuD_UL2016APV.dataset = "/SingleMuon/Run2016D-HIPM_UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuD_UL2016APV.dataset = "/SingleMuon/Run2016D-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMuE_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuE_UL2016APV")
 DataMuE_UL2016APV.runP = 'E'
 DataMuE_UL2016APV.year = "UL2016APV"
-DataMuE_UL2016APV.dataset = "/SingleMuon/Run2016E-HIPM_UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuE_UL2016APV.dataset = "/SingleMuon/Run2016E-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMuF_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuF_UL2016APV")
 DataMuF_UL2016APV.runP = 'F'
 DataMuF_UL2016APV.year = "UL2016APV"
-DataMuF_UL2016APV.dataset = "/SingleMuon/Run2016F-HIPM_UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuF_UL2016APV.dataset = "/SingleMuon/Run2016F-HIPM_UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMu_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMu_UL2016APV")
 DataMu_UL2016APV.year = "UL2016APV"
@@ -1376,17 +1376,17 @@ VBS_SSWW_DIM6_SM_UL2016.components = [
 DataMuF_UL2016 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuF_UL2016")
 DataMuF_UL2016.runP = 'F'
 DataMuF_UL2016.year = "UL2016"
-DataMuF_UL2016.dataset = "/SingleMuon/Run2016F-UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuF_UL2016.dataset = "/SingleMuon/Run2016F-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMuG_UL2016 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuG_UL2016")
 DataMuG_UL2016.runP = 'G'
 DataMuG_UL2016.year = "UL2016"
-DataMuG_UL2016.dataset = "/SingleMuon/Run2016G-UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuG_UL2016.dataset = "/SingleMuon/Run2016G-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMuH_UL2016 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuH_UL2016")
 DataMuH_UL2016.runP = 'H'
 DataMuH_UL2016.year = "UL2016"
-DataMuH_UL2016.dataset = "/SingleMuon/Run2016H-UL2016_MiniAODv2_JMENanoAODv9-v1/NANOAOD"
+DataMuH_UL2016.dataset = "/SingleMuon/Run2016H-UL2016_MiniAODv2_NanoAODv9-v1/NANOAOD"
 
 DataMu_UL2016 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMu_UL2016")
 DataMu_UL2016.year = "UL2016"
@@ -3337,46 +3337,46 @@ crab_dict = {
 crab_dict_Fake = {
     ##### UL2016APV #####
     "UL2016APV":[
-        #WJets_UL2016APV,
+        WJets_UL2016APV,
         DYJetsToLL_M10to50_UL2016APV,
         DYJetsToLL_M50_UL2016APV,
         DYJetsToLL_M50_UL2016APV_ext,
-        #ZZtoLep_UL2016APV,
-        #TT_UL2016APV,
-        #DataHT_UL2016APV,
+        ZZtoLep_UL2016APV,
+        TT_UL2016APV,
+        DataHT_UL2016APV,
     ],
 
     ##### UL2016 #####
     "UL2016":[
-        #WJets_UL2016,
+        WJets_UL2016,
         DYJetsToLL_M10to50_UL2016,
         DYJetsToLL_M50_UL2016,
         DYJetsToLL_M50_UL2016_ext,
-        #ZZtoLep_UL2016,
-        #TT_UL2016,
-        #DataHT_UL2016,
+        ZZtoLep_UL2016,
+        TT_UL2016,
+        DataHT_UL2016,
     ],
 
     ##### UL2017 #####
     "UL2017":[
-        #WJets_UL2017,
+        WJets_UL2017,
         DYJetsToLL_M10to50_UL2017,
         DYJetsToLL_M50_UL2017,
         DYJetsToLL_M50_UL2017_ext,
-        #ZZtoLep_UL2017,
-        #TT_UL2017,
-        #DataHT_UL2017,
+        ZZtoLep_UL2017,
+        TT_UL2017,
+        DataHT_UL2017,
     ],
 
     ##### UL2018 #####
     "UL2018":[
-        #WJets_UL2018,
+        WJets_UL2018,
         DYJetsToLL_M10to50_UL2018,
         DYJetsToLL_M50_UL2018,
         DYJetsToLL_M50_UL2018_ext,
-        #ZZtoLep_UL2018,
-        #TT_UL2018,
-        #DataHT_UL2018,
+        ZZtoLep_UL2018,
+        TT_UL2018,
+        DataHT_UL2018,
     ],
 }
 
@@ -3548,7 +3548,7 @@ merge_dict = {
 class_list = [
     #WpWpJJ_EWK_UL2016APV,
     #VBS_SSWW_SM_UL2016APV,
-    VBS_SSWW_DIM6_UL2016APV,
+    #VBS_SSWW_DIM6_UL2016APV,
     VG_UL2016APV,
     #WpWpJJ_QCD_UL2016APV,
     TVX_UL2016APV,

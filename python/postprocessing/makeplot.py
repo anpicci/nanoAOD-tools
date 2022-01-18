@@ -745,8 +745,8 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
           maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
           bincont = str(round(h1.GetBinContent(bidx_l), 3))
           binerrcont = str(round(h1.GetBinError(bidx_l), 3))
-
-          countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
+          if opt.count:
+              countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
 
      print("int:", h1.Integral())
      #print(h1.Integral())
@@ -757,13 +757,13 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
      
      fout = ROOT.TFile.Open(foutput, "UPDATE")
      fout.cd()
-     h1.Write()
+     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
      fout.Close()
      f1.Close()
 
      if opt.count:
           countf.write("\n\n")
-          countf.close()
+          #countf.close()
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
