@@ -30,9 +30,6 @@ class FakeCalculator_manager:
 
         if isData and onlybkg:
             print ('the sample: ', sample, 'is tagged as data sample, while you are running in only bkg mode, jumping the sample')
-        
-        sign = 1    
-        if isMC and not onlybkg: sign = -1
 
         maxEvents = self.nev
         if maxEvents == 'all' or maxEvents>tree.GetEntries():
@@ -56,7 +53,7 @@ class FakeCalculator_manager:
 
             SF = 1
             if isMC:
-                SF = sign*w.nominal*event.PFSF*event.puSF*event.lepSF*event.tau_vsjet_SF*event.tau_vsele_SF*event.tau_vsmu_SF*event.btagSF
+                SF = w.nominal*event.PFSF*event.puSF*event.lepSF*event.tau_vsjet_SF*event.tau_vsele_SF*event.tau_vsmu_SF*event.btagSF
                 
             if met.pt>met_cut or mT.lepMET>mt_lepMET_cut or mT.lepMET<0 or met.pt<0:
                 continue
