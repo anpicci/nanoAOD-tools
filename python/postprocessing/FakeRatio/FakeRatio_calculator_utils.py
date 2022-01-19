@@ -6,6 +6,8 @@ import copy as copy
 from os import path
 import array
 import types
+import sys
+sys.path.insert(1, '..')
 from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 from CutsAndValues import *
 
