@@ -98,7 +98,8 @@ def DoesSampleExist(samplename):
 def AreAllCondored(crabname, condorname):
     storelist = [line for line in open(crabpath+crabname+".txt")]
     condoredlist = CondoredList(condorname)
-
+    print(crabpath, crabname,".txt")
+    #print(len(storelist), (condoredlist))
     if condorname+"_merged.root" in condoredlist:
         condoredlist.remove(condorname+"_merged.root")
     if condorname+".root" in condoredlist:
