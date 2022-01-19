@@ -309,6 +309,7 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataE
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataEleC_UL2016APV/220118_113352/0000/tree_hadd_309.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataEleC_UL2016APV/220118_113352/0000/tree_hadd_310.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataEleC_UL2016APV/220118_113352/0000/tree_hadd_311.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataEleC_UL2016APV/220118_113352/0000/tree_hadd_312.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataEleC_UL2016APV/220118_113352/0000/tree_hadd_313.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataEleC_UL2016APV/220118_113352/0000/tree_hadd_314.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/ULVBS_PG/SingleElectron/DataEleC_UL2016APV/220118_113352/0000/tree_hadd_315.root
