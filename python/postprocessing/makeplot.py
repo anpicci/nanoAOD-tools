@@ -660,6 +660,14 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
           f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
           cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
 
+     if not ("Data" in sample.label):
+         if sample.year == "UL2016APV":
+             cut += "*(0.54)"
+         elif sample.year == "UL2916":
+             cut += "*(0.46)"
+         else:
+             cut += "*(1.)"
+
      if not ('Fake' in str(sample.label) or 'Data' in str(sample.label)):
         if opt.channel == 'ltau':
              cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&" + l2fstr + "_isPrompt==5)"
@@ -1172,7 +1180,7 @@ years = []
 if(opt.year!='all'):
      years = opt.year.strip('[]').split(',')
 else:
-     years = ['2016','2017','2018']
+     years = ['UL2016APV','UL2016','UL2017','UL2018']
 
 for year in years:
     for sample in dataset_dict[year]:
