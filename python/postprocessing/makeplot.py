@@ -594,10 +594,10 @@ def lumi_writer(dataset, lumi):
                
             for event in range(0, tree.GetEntries()):
                 tree.GetEntry(event)
-                perc = (event+1)/(tree.GetEntries())*100
-                if perc == float(int(perc)) or event==(tree.GetEntries()-1):
+                perc = (event+1)/(tree.GetEntries())*100000
+                if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
                     #print("Processing event %s     complete %s percent" %(event, 100*event/tree.GetEntries()))
-                    sys.stdout.write("\rProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
+                    sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(event, 100*event/tree.GetEntries()))
                 w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
                 if isthere_pdf: #not ("WZ" in sample.label):
                     for i in range(0, nbins):
