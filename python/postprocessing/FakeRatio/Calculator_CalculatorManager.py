@@ -29,6 +29,12 @@ class FakeCalculator_manager:
             print('Sample: ', sample, ' does not exists')
             return False
         
+        f = ROOT.TFile.Open(sample, "READ")
+        if (f.IsZombie()):
+            print("Zombie file: ", sample, " skipping")
+            return False
+        f.Close()
+        
         chain = ROOT.TChain('events_all')
         chain.Add(sample)
         tree = InputTree(chain)
@@ -95,5 +101,6 @@ class FakeCalculator_manager:
                     if FakeTau.DeepTauWP>=64:
                         isTight = True
                 hTau.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
+        print("\n")
         return True
                     

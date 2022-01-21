@@ -34,8 +34,10 @@ if __name__ == "__main__" :
     time  = datetime.datetime.now()
     print('Starting @ '+ str(time))
 
+    wp = opt.infolder.split("/FR_UL2017/")
+    wp = wp[1]
     input_folder = opt.infolder
-    outdir = 'FakeRatio_calcs/' + opt.infolder + '/'
+    outdir = 'FakeRatio_calcs/ProvaGPU' + wp + '/'
 
     if not os.path.isdir(input_folder): 
         raise NameError('ERROR: directory ', input_folder, ' not found')
@@ -75,3 +77,5 @@ if __name__ == "__main__" :
     fManager.addEfficiencyHisto(Tauh)
     fManager.saveFile()
     fManager.closeFile()
+
+#running on lxplus702
