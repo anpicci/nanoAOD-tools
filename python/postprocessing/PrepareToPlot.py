@@ -72,13 +72,23 @@ def CondoredList(samplename):
                 if not opt.check:
                     os.system("rm -r "+ path + samplename + "/" + condfile)
             else:
-                tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
                 try:
-                    tempentr = tempf.Get("events_all").GetEntries()
-                except (AttributeError, ReferenceError, RuntimeWarning) as e:
+                    tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
+                except(RuntimeWarning):
                     condlist.remove(condfile)
                     wrongex = True
+                    print("hello!!!")
                     if not opt.check:
+                        print("Removing damaged files...")
+                        os.system("rm "+ path + samplename + "/" + condfile)
+                try:
+                    tempentr = tempf.Get("events_all").GetEntries()
+                except(AttributeError, ReferenceError, RuntimeWarning):# as e:
+                    condlist.remove(condfile)
+                    wrongex = True
+                    print("hello!")
+                    if not opt.check:
+                        print("Removing damaged files...")
                         os.system("rm "+ path + samplename + "/" + condfile)
                     
         if toRel:
@@ -182,7 +192,7 @@ for k, v in merge_dict.items():
                 print(c.label, "not crabbed yet")
                 continue
             cpath = path + c.label + "/"
-            if not AreAllCondored(c.name, c.label):
+            if False:#not AreAllCondored(c.name, c.label):
             #if not os.path.exists(cpath):
                 print(c.label + " not condorly produced yet")
                 continue
@@ -197,7 +207,8 @@ for k, v in merge_dict.items():
                         print("rm -f " + cpath + c.label + "_merged.root")
                     else:
                         os.system("rm -f " + cpath + c.label + "_merged.root")
-
+            else:
+                print("exists")
             if partmerge:
                 print(c.label + " not merged so far")
 

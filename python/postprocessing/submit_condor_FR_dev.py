@@ -43,6 +43,7 @@ def sub_writer(sample, n, files, folder):
     f.write("output                  = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/output/"+ sample.label + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/error/"+ sample.label +  "_part" + str(n) + ".err\n")
     f.write("log                     = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/log/"+ sample.label + "_part" + str(n) + ".log\n")
+    f.write("request_GPUs            = 1\n")
 
     f.write("queue\n")
 
