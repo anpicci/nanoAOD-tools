@@ -795,7 +795,7 @@ FakeMu_UL2016APV.components = [
 SampleHTFake_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016APV")
 SampleHTFake_UL2016APV.year = "UL2016APV"
 SampleHTFake_UL2016APV.components = [
-    DataHTB1_UL2016APV,
+    #DataHTB1_UL2016APV,
     DataHTB2_UL2016APV,
     DataHTC_UL2016APV,
     DataHTD_UL2016APV,
