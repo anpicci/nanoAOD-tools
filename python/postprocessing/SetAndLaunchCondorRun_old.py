@@ -215,6 +215,7 @@ for prname, proc in condor_dict.items():
                     continue
 
             if not DoesSampleExist(sample.name):
+                print("Crab file not found")
                 continue
                 #if sample.label in dirlist:
             if os.path.exists(path+sample.label):
