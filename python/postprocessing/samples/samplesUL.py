@@ -3535,7 +3535,7 @@ merge_dict = {
 
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
     "TT_UL2018":TT_UL2018,
-    "TT_beff_UL2018":TT_beff_UL2018,
+    #"TT_beff_UL2018":TT_beff_UL2018,
     "TTTo2L2Nu_UL2018":TTTo2L2Nu_UL2018,
     "TVX_UL2018":TVX_UL2018,
     "VG_UL2018":VG_UL2018,

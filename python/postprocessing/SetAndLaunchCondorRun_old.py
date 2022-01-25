@@ -203,7 +203,7 @@ for prname, proc in condor_dict.items():
             continue
 
     toLaunch = True
-
+    
     if hasattr(proc, 'components'):
         for sample in proc.components:
             if "Fake" in sample.label:
@@ -213,6 +213,8 @@ for prname, proc in condor_dict.items():
             if opt.dat != 'all':
                 if not (str(sample.label).startswith(opt.dat) or prname.startswith(opt.dat)):
                     continue
+            
+            print("first check passed")
 
             if not DoesSampleExist(sample.name):
                 print("Crab file not found")
@@ -222,7 +224,9 @@ for prname, proc in condor_dict.items():
                 if opt.rw:
                     print('Relaunching all the jobs for', sample.label)
                     os.system("rm -r "+ path + sample.label + "/*")
+            print("second check passed")
             if not AreAllCondored(sample.name, sample.label):
+                print("in AreAllCondored loop")
                 if opt.check:
                     print(sample.label, "not completely condored")
                     print("python " + subpy + " -d " + sample.label+ " " + optstring)
