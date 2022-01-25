@@ -54,7 +54,7 @@ class FakeCalculator_manager:
                 perc +=1
                 now = datetime.datetime.now()
                 ETP = (now-start)/(perc)*100 
-                print ('Processing at: ', perc, '% \t ETA: ', start + ETP, end = '\r')
+                print ('Processing at: ', perc, '% \t ETA: ', start + ETP, '\r')
             event       = Event(tree, i)
             FakeLepton  = Object(event, "FakeLepton")
             FakeTau     = Object(event, "FakeTau")

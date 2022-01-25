@@ -164,7 +164,7 @@ class InTreeHandler:
         print(current_time, " --- STARTING TO LOOP OVER THE TTREE ---")
         self.SetupChain()
         for i in range(self.chain.GetEntries()):
-            print('Processing event: ', i, end = "\r")
+            print('Processing event: ', i, "\r")
             event       = Event(self.chain, i)
             electrons   = Collection(event, "Electron")
             muons       = Collection(event, "Muon")

@@ -13,7 +13,7 @@ set folder = vUL002
 
 #######    2017   #######
 set year = 'UL2017'
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2018   #######

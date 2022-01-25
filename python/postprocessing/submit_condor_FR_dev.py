@@ -12,6 +12,7 @@ parser.add_option('--wpvsJet', dest='wpvsJet', type=str, default = '2', help='Pl
 parser.add_option('--max', dest='maxj', type=int, default = 0, help='Please enter working point!')
 parser.add_option('--trig', dest='trig', type=str, default = 'HT', help='Please enter trigger (electron, muon, HT)')
 parser.add_option('--infold', dest = 'infold', type = str, default= 'Fake', help = 'input folder for the crabbed files')
+parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
 #parser.add_option('-u', '--user', dest='us', type='string', default = 'ade', help="")
 (opt, args) = parser.parse_args()
 #Insert here your uid... you can see it typing echo $uid
@@ -85,9 +86,13 @@ else:
 #Writing the configuration file
 for sample in samples:
     isMC = True
-    opath = "/eos/home-" + inituser + "/" + username+ "/VBS/nosynch/" + folder + "/" + str(opt.wpvsJet)+ "/" + sample.label + "/"
+
     if('Data' in sample.label):
+        if opt.nodata:
+            continue
         isMC = False
+
+    opath = "/eos/home-" + inituser + "/" + username+ "/VBS/nosynch/" + folder + "/" + str(opt.wpvsJet)+ "/" + sample.label + "/"
     if not os.path.exists(opath):
         os.makedirs(opath)
     f = open("../../crab/macros/files/" + infold + "/" + sample.label + ".txt", "r")

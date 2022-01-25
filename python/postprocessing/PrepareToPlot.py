@@ -10,6 +10,7 @@ parser.add_option('-c', dest='check', default = False, action = 'store_true', he
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
+parser.add_option('--or', dest='override', default = False, action = 'store_true', help='Default does not override AreAllCondored')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 
@@ -192,7 +193,7 @@ for k, v in merge_dict.items():
                 print(c.label, "not crabbed yet")
                 continue
             cpath = path + c.label + "/"
-            if False:#not AreAllCondored(c.name, c.label):
+            if (not AreAllCondored(c.name, c.label) and not opt.override) or opt.override:
             #if not os.path.exists(cpath):
                 print(c.label + " not condorly produced yet")
                 continue
@@ -207,8 +208,7 @@ for k, v in merge_dict.items():
                         print("rm -f " + cpath + c.label + "_merged.root")
                     else:
                         os.system("rm -f " + cpath + c.label + "_merged.root")
-            else:
-                print("exists")
+
             if partmerge:
                 print(c.label + " not merged so far")
 

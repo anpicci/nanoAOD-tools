@@ -56,6 +56,8 @@ tauVsJet = int(sys.argv[6])
 
 print("vs jet WP loose: ", tauVsJet)
 
+print(sys.argv)
+
 if sys.argv[5]=="Ele" or sys.argv[5]=="Mu" or sys.argv[5]=="HT":
     chosenTrigger = sys.argv[5]
 
@@ -580,9 +582,9 @@ for i in range(tree.GetEntries()):
     print("chosen trigger ")
     if isMC:
         vTrigEle, vTrigMu, vTrigHT = trig_finder(HLT, sample.year, sample.label)
-        if chosenTrigger == "Ele": HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigEle)
-        if chosenTrigger == "Mu":  HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigMu)
-        if chosenTrigger == "HT":  HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigHT)
+        if chosenTrigger == "Ele": HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigEle, sample.year)
+        if chosenTrigger == "Mu":  HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigMu, sample.year)
+        if chosenTrigger == "HT":  HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigHT, sample.year)
 
         #here
         PF_SF = chain.PrefireWeight
@@ -715,7 +717,6 @@ for i in range(tree.GetEntries()):
                     lepGood_p4 = mu.p4()
                     break
         '''
-
         if lepGood!=None:
             mT_lepMET[0]        =   mTlepMet(met, lepGood_p4)
             mT_leppuppiMET[0]   =   mTlepMet(puppimet, lepGood_p4)
@@ -806,4 +807,5 @@ print("Number of events in output tree " + str(trees[0].GetEntries()))
 
 endTime = datetime.datetime.now()
 print("Ending running at " + str(endTime) + "\n Goodbye and thank you for all the fish")
+
 
