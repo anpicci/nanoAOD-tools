@@ -193,7 +193,7 @@ for k, v in merge_dict.items():
                 print(c.label, "not crabbed yet")
                 continue
             cpath = path + c.label + "/"
-            if (not AreAllCondored(c.name, c.label) and not opt.override) or opt.override:
+            if (not AreAllCondored(c.name, c.label) and not opt.override):
             #if not os.path.exists(cpath):
                 print(c.label + " not condorly produced yet")
                 continue
