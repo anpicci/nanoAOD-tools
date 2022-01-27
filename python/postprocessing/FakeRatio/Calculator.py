@@ -15,11 +15,11 @@ from Calculator_CalculatorManager import *
 #from samples.samples import *
 
 if __name__ == "__main__" :
-    usage = 'python FakeRatio_calculator_v3.py -b --met 50 --mt 50 --inf FR_24Gen_Ele --trig Ele'
+    usage = 'python3 Calculator.py --inf /eos/home-a/apiccine/VBS/nosynch/FR_UL2017/2/ --year 2017'
     parser = optparse.OptionParser(usage)
 
-    parser.add_option('--met',          dest='met_cut',         type=int,   default = '30',                                             help='insert met cut, default 30')
-    parser.add_option('--mt',           dest='mt_lepMET_cut',   type=int,   default = '20',                                             help='insert met cut, default 20')
+    parser.add_option('--met',          dest='met_cut',         type=int,   default = '50',                                             help='insert met cut, default 30')
+    parser.add_option('--mt',           dest='mt_lepMET_cut',   type=int,   default = '50',                                             help='insert met cut, default 20')
     parser.add_option('-b', '--bkg',    dest='bkg',                         default = True,    action='store_true',                    help='Eliminate contribution fromprompt W+Jets && DY+Jets events, default false')
     parser.add_option('--onlybkg',      dest='onlybkg',                     default = False,    action='store_true',                    help='Only MC prompt contribution, default false')
     parser.add_option('-d', '--debug',  dest='debug',                       default = False,    action='store_true',                    help='Debug mode, only runs in a file for 10000 events')
@@ -34,10 +34,13 @@ if __name__ == "__main__" :
     time  = datetime.datetime.now()
     print('Starting @ '+ str(time))
 
-    wp = opt.infolder.split("/FR_UL2017/")
+    wpTagger = "/FR_UL" + str(opt.year) + "/" 
+    wp = opt.infolder.split(wpTagger)
     wp = wp[1]
+    wp = wp[0]
+    print('wp',wp)
     input_folder = opt.infolder
-    outdir = 'FakeRatio_calcs/ProvaGPU' + wp + '/'
+    outdir = 'FakeRatio_calcs/' + wp + '/'
 
     if not os.path.isdir(input_folder): 
         raise NameError('ERROR: directory ', input_folder, ' not found')
@@ -47,8 +50,7 @@ if __name__ == "__main__" :
     print('Processing events with met cut: ' + str(opt.met_cut) + ' and mT(lep, MET) cut: ' + str(opt.mt_lepMET_cut))
 
     makeDir(outdir)
-
-    fManager = fileManager(str(opt.trig), str(opt.met_cut), str(opt.mt_lepMET_cut), outdir, opt.bkg, opt.onlybkg, input_folder, opt.year)
+    fManager = fileManager(str(opt.trig), str(opt.met_cut), str(opt.mt_lepMET_cut), outdir, opt.bkg, opt.onlybkg, input_folder, opt.year, wp)
 
     Eleh = EfficiencyHisto_manager('Electron')
     Muh  = EfficiencyHisto_manager('Muon')
@@ -59,11 +61,17 @@ if __name__ == "__main__" :
 
     if not FakeCalc.Calc(DataFile, isData, opt.onlybkg, opt.met_cut, opt.mt_lepMET_cut, opt.trig, Eleh, Muh, Tauh):
         exit()
+    print("\n")
     bkgFiles, isData = fManager.getBkg()
+    fManager.saveFile()
+
     for pos in bkgFiles:
         if not opt.bkg: break
         if not FakeCalc.Calc(pos, isData, opt.onlybkg, opt.met_cut, opt.mt_lepMET_cut, opt.trig, Eleh, Muh, Tauh):
             exit()
+        print("\n")
+        fManager.saveFile()
+
 
         
     Eleh.SanitizeHisto()
@@ -78,4 +86,4 @@ if __name__ == "__main__" :
     fManager.saveFile()
     fManager.closeFile()
 
-#running on lxplus702
+#running on lxplus7108

@@ -61,6 +61,14 @@ class EfficiencyHisto_manager:
         self.Efficiency.SetName("FakeRatio_"+self.lepton)
         self.Efficiency.SetTitle("FakeRatio_"+self.lepton)
 
+
+    def getHistoFromFile(self, fname, lepton):
+        inf = ROOT.TFile.Open(fname)
+        self.hNLoose_Data   = inf.Get("h2NLoose" + lepton + "_data")
+        self.hNTight_Data   = inf.Get("h2NTight" + lepton + "_data")
+        self.hNLoose_MC     = inf.Get("h2NLoose" + lepton + "_MC")  
+        self.hNTight_MC     = inf.Get("h2NTight" + lepton + "_MC")
+
     def DrawAll(self, fname):
         c = TCanvas("c", "canvas", 800, 800)
         c.Divide(2,3)
