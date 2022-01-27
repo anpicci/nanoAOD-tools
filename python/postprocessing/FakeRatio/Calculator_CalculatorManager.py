@@ -101,6 +101,6 @@ class FakeCalculator_manager:
                     if FakeTau.DeepTauWP>=64:
                         isTight = True
                 hTau.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
-        print("\n")
+        
         return True
                     
