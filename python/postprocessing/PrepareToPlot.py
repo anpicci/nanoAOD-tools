@@ -13,6 +13,7 @@ parser.add_option('--fake', dest='isfake', default = False, action = 'store_true
 parser.add_option('--or', dest='override', default = False, action = 'store_true', help='Default does not override AreAllCondored')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
+parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
 
 (opt, args) = parser.parse_args()
 
@@ -189,6 +190,10 @@ for k, v in merge_dict.items():
                 if not str(c.label).startswith(opt.dat):
                     if not k.startswith(opt.dat):
                         continue
+
+            elif opt.nodata and 'Data' in c.label:
+                continue
+            
             if not DoesSampleExist(c.name):
                 print(c.label, "not crabbed yet")
                 continue

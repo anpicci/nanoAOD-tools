@@ -824,8 +824,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 
     #print(samples_)
     for s in samples_:
-        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_'+str(s.year) in s.label or 'SSWW_cW_'+str(s.year) in s.label or 'SSWW_FS0_'+str(s.year) in s.label or 'SSWW_FM1_'+str(s.year) in s.label or 'SSWW_FT2_'+str(s.year) in s.label):
-            continue
+        #if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_'+str(s.year) in s.label or 'SSWW_cW_'+str(s.year) in s.label or 'SSWW_FS0_'+str(s.year) in s.label or 'SSWW_FM1_'+str(s.year) in s.label or 'SSWW_FT2_'+str(s.year) in s.label):
+            #continue
         if opt.wfake != 'nofake':
             if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('TT_'):#or s.label.startswith('DY')
                 continue

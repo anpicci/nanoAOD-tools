@@ -1,4 +1,4 @@
-#set LD_PRELOAD=libtcmalloc.so
+X#set LD_PRELOAD=libtcmalloc.so
 set year1 = UL2017
 set year2 = UL2016
 set folder0 = vUL002 #_tagger_DataSplit_MCnoSplit
@@ -11,14 +11,14 @@ set channel = 'ltau' #
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder2/plot/electron/ #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder3/plot/electron/ #countings
 
-python3 makeplot.py -y $year1 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
-#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
-python3 makeplot.py -y $year1 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
-#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
-python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
-#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
-python3 makeplot.py -y $year1 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
-python3 makeplot.py -y $year1 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
+python3 makeplot.py -y $year1 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+#python3 makeplot.py -y $year1 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+python3 makeplot.py -y $year1 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+#python3 makeplot.py -y $year1 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+#python3 makeplot.py -y $year1 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+python3 makeplot.py -y $year1 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+python3 makeplot.py -y $year1 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
 
 #python3 makeplot.py -y $year1 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
 #python3 makeplot.py -y $year1 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
