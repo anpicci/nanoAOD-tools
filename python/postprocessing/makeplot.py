@@ -264,7 +264,7 @@ if not (opt.wfake=='nofake' or opt.wfake.startswith('incl') or opt.wfake.startsw
 
 def mergepart(dataset):
     samples = []
-    if dataset.components is not None:#hasattr(dataset, 'components'): # How to check whether this exists or not
+    if hasattr(dataset, 'components'): # How to check whether this exists or not
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
@@ -552,7 +552,7 @@ def mergepart(dataset):
 def mergetree(sample):
     if not os.path.exists(filerepo + sample.label):
         os.makedirs(filerepo + sample.label)
-    if sample.components is not None:#hasattr(sample, 'components'): # How to check whether this exists or not
+    if hasattr(sample, 'components'): # How to check whether this exists or not
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + ".root" 
         for comp in sample.components:
             add+= " " + filerepo + comp.label + "/"  + comp.label + ".root" 
@@ -561,7 +561,7 @@ def mergetree(sample):
 
 def lumi_writer(dataset, lumi):
     samples = []
-    if dataset.components is not None:#hasattr(dataset, 'components'): # How to check whether this exists or not
+    if hasattr(dataset, 'components'): # How to check whether this exists or not
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
