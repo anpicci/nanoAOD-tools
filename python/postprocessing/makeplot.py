@@ -56,6 +56,7 @@ parser.add_option('--qcd', dest='qcd', default = False, action='store_true', hel
 parser.add_option('--blinded', dest='blinded', default = False, action='store_true', help='Activate blinding')
 parser.add_option('--signal', dest='signal', default = False, action='store_true', help='Activate only signal')
 parser.add_option('--horn', dest='horn', default = False, action='store_true', help='eta horns for 2017')
+parser.add_option('--skipML', dest='runML', default = False, action='store_true', help='default runs ML')
 #parser.add_option('--model', dest='model', default = '/eos/user/t/ttedesch/SWAN_projects/VBS_ML/gradBDT.p', type='string', help='Path to ML model')
 #parser.add_option('--model', dest='model', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT.p', type='string', help='Path  to ML model for all events')
 #parser.add_option('--model_ele', dest='model_ele', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_ele.p', type='string', help='Path to ML model for electron events')
@@ -263,7 +264,7 @@ if not (opt.wfake=='nofake' or opt.wfake.startswith('incl') or opt.wfake.startsw
 
 def mergepart(dataset):
     samples = []
-    if hasattr(dataset, 'components'): # How to check whether this exists or not
+    if dataset.components is not None:#hasattr(dataset, 'components'): # How to check whether this exists or not
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
@@ -283,7 +284,7 @@ def mergepart(dataset):
         hasFakeInside = 'Fake' in opt.folder
         ismcreco = 'mcreco' in opt.folder
 
-        if isltau and not("btag" in opt.folder or startWFR or hasFakeInside or ismcreco):
+        if isltau and not("btag" in opt.folder or startWFR or hasFakeInside or ismcreco) and opt.runML:
             print("Processing events with Tommaso's BDT...")
             file_path = filerepo + sample.label + "/"  + sample.label + "_merged.root"
 
@@ -551,7 +552,7 @@ def mergepart(dataset):
 def mergetree(sample):
     if not os.path.exists(filerepo + sample.label):
         os.makedirs(filerepo + sample.label)
-    if hasattr(sample, 'components'): # How to check whether this exists or not
+    if sample.components is not None:#hasattr(sample, 'components'): # How to check whether this exists or not
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + ".root" 
         for comp in sample.components:
             add+= " " + filerepo + comp.label + "/"  + comp.label + ".root" 
@@ -560,7 +561,7 @@ def mergetree(sample):
 
 def lumi_writer(dataset, lumi):
     samples = []
-    if hasattr(dataset, 'components'): # How to check whether this exists or not
+    if dataset.components is not None:#hasattr(dataset, 'components'): # How to check whether this exists or not
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)

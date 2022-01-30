@@ -2999,7 +2999,7 @@ merge_dict={
 
 
 class_list=[
-    #WpWpJJ_EWK_2017,
+    WpWpJJ_EWK_2017,
     #VBS_SSWW_LL_SM_2017,
     #VBS_SSWW_TL_SM_2017,
     #VBS_SSWW_TT_SM_2017,
