@@ -1152,7 +1152,7 @@ if(opt.dat != 'all'):
      [dataset_dict[str(sample.year)].append(sample) for sample in samples]
 else:
      for v in class_list:
-
+          #print(v.label)
           if opt.signal and not ('WpWpJJ_EWK' in v.label or 'VBS_SSWW' in v.label):
                continue
           if opt.channel == 'ltau' and 'EleMu_' in v.label:
@@ -1179,7 +1179,7 @@ else:
                 
 
           dataset_dict[str(v.year)].append(v)
-
+          print(v.label, " added")
 
 years = []
 if(opt.year!='all'):
@@ -1256,6 +1256,28 @@ for year in years:
             variables.append(variabile('DNN_output_SM_opt', 'SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
+
+        if opt.sr:
+            bin_mjj = array("f", [500., 600., 800., 1000., 1200., 2000.])
+        elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
+            bin_mjj = array("f", [0., 150., 300., 500., 700., 1000., 1400., 1800., 3000.])
+        else:
+            bin_mjj = array("f", [0., 150., 300., 500., 700., 1000., 1400., 1800., 2200., 3000.])
+
+        nbin_mjj = len(bin_mjj) - 1
+        variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000)) 
+
+        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
+            bin_m1 = array("f", [0., 50., 100., 150., 200., 300., 500.])
+            nbin_m1 = len(bin_m1) - 1
+        elif opt.sr:
+            bin_m1 = array("f", [0., 100., 150., 200., 300., 500.])
+            nbin_m1 = len(bin_m1) - 1
+        else:
+            bin_m1 = array("f", [0., 50., 100., 150., 200., 300., 400., 500.])
+            nbin_m1 = len(bin_m1) - 1
+        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
+        variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
 
 
         for sample in dataset_new:

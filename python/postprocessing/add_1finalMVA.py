@@ -289,6 +289,7 @@ if opt.dim8 == True:
         scaler_dim8 = pickle.load(file)
     DNN_dim8 = tensorflow.keras.models.load_model(DNN_dim8_path)
 
+print("year", opt.year)
 #for k, v in merge_dict.items():
 for v in class_list:
     #print(v.label)
