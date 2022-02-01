@@ -39,7 +39,7 @@ class lepSFProducer(Module):
             el_h = ["EGamma_SF2D", "EGamma_SF2D"]
 
         if muonSelectionTag == "TightWP_2018":
-            mu_f = ["Muon_RunABCD_SF_ID_2018.root", "Muon_RunBCDEF_SF_ISO_2018.root"]
+            mu_f = ["Mu_RunABCD_SF_ID_2018.root", "Muon_RunBCDEF_SF_ISO_2018.root"]
             mu_h = ["NUM_TightID_DEN_TrackerMuons_pt_abseta", 'NUM_TightRelIso_DEN_TightIDandIPCut_pt_abseta']
 
         if electronSelectionTag == "IsoMVA90_2018":
