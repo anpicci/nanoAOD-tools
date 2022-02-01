@@ -57,6 +57,7 @@ parser.add_option('--blinded', dest='blinded', default = False, action='store_tr
 parser.add_option('--signal', dest='signal', default = False, action='store_true', help='Activate only signal')
 parser.add_option('--horn', dest='horn', default = False, action='store_true', help='eta horns for 2017')
 parser.add_option('--skipML', dest='runML', default = True, action='store_false', help='default runs ML')
+parser.add_option('--rPrompt', dest='removePrompt', default = False, action='store_true', help='default runs ML')
 #parser.add_option('--model', dest='model', default = '/eos/user/t/ttedesch/SWAN_projects/VBS_ML/gradBDT.p', type='string', help='Path to ML model')
 #parser.add_option('--model', dest='model', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT.p', type='string', help='Path  to ML model for all events')
 #parser.add_option('--model_ele', dest='model_ele', default = '/afs/cern.ch/user/t/ttedesch/public/gradBDT_ele.p', type='string', help='Path to ML model for electron events')
@@ -639,8 +640,10 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
      if 'Fake' in str(sample.label):
           if not opt.folder.startswith('CTHT'):
                f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
+          elif opt.removePrompt:
+               f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.components[1].label + ".root")
           else:
-               f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
+               f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[0].label + ".root")
           if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
                if opt.channel == 'ltau':
                    cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-1.)"

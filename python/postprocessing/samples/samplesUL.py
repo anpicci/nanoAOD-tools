@@ -725,7 +725,7 @@ FakeElePromptTau_UL2016APV.year = "UL2016APV"
 FakeElePromptTau_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -734,7 +734,7 @@ PromptEleFakeTau_UL2016APV.year = "UL2016APV"
 PromptEleFakeTau_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -743,7 +743,7 @@ FakeEleFakeTau_UL2016APV.year = "UL2016APV"
 FakeEleFakeTau_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -752,7 +752,7 @@ FakeEle_UL2016APV.year = "UL2016APV"
 FakeEle_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -761,7 +761,7 @@ FakeMuPromptTau_UL2016APV.year = "UL2016APV"
 FakeMuPromptTau_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -770,7 +770,7 @@ PromptMuFakeTau_UL2016APV.year = "UL2016APV"
 PromptMuFakeTau_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -779,7 +779,7 @@ FakeMuFakeTau_UL2016APV.year = "UL2016APV"
 FakeMuFakeTau_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -788,7 +788,7 @@ FakeMu_UL2016APV.year = "UL2016APV"
 FakeMu_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
-    #WJets_UL2016APV,
+    WJets_UL2016APV,
     #DYJetsToLL_UL2016APV
 ]
 
@@ -1450,7 +1450,7 @@ FakeElePromptTau_UL2016.year = "UL2016"
 FakeElePromptTau_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -1459,7 +1459,7 @@ PromptEleFakeTau_UL2016.year = "UL2016"
 PromptEleFakeTau_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -1468,7 +1468,7 @@ FakeEleFakeTau_UL2016.year = "UL2016"
 FakeEleFakeTau_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -1477,7 +1477,7 @@ FakeEle_UL2016.year = "UL2016"
 FakeEle_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -1486,7 +1486,7 @@ FakeMuPromptTau_UL2016.year = "UL2016"
 FakeMuPromptTau_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -1495,7 +1495,7 @@ PromptMuFakeTau_UL2016.year = "UL2016"
 PromptMuFakeTau_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -1504,7 +1504,7 @@ FakeMuFakeTau_UL2016.year = "UL2016"
 FakeMuFakeTau_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -1513,7 +1513,7 @@ FakeMu_UL2016.year = "UL2016"
 FakeMu_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
-    #WJets_UL2016,
+    WJets_UL2016,
     #DYJetsToLL_UL2016
 ]
 
@@ -2210,7 +2210,7 @@ FakeElePromptTau_UL2017.year = "UL2017"
 FakeElePromptTau_UL2017.components = [
     DataEle_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2219,7 +2219,7 @@ PromptEleFakeTau_UL2017.year = "UL2017"
 PromptEleFakeTau_UL2017.components = [
     DataEle_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2228,7 +2228,7 @@ FakeEleFakeTau_UL2017.year = "UL2017"
 FakeEleFakeTau_UL2017.components = [
     DataEle_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2237,7 +2237,7 @@ FakeEle_UL2017.year = "UL2017"
 FakeEle_UL2017.components = [
     DataEle_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2246,7 +2246,7 @@ FakeMuPromptTau_UL2017.year = "UL2017"
 FakeMuPromptTau_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2255,7 +2255,7 @@ PromptMuFakeTau_UL2017.year = "UL2017"
 PromptMuFakeTau_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2264,7 +2264,7 @@ FakeMuFakeTau_UL2017.year = "UL2017"
 FakeMuFakeTau_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2273,7 +2273,7 @@ FakeMu_UL2017.year = "UL2017"
 FakeMu_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
-    #WJets_UL2017,
+    WJets_UL2017,
     #DYJetsToLL_UL2017
 ]
 
@@ -2950,7 +2950,7 @@ FakeElePromptTau_UL2018.year = "UL2018"
 FakeElePromptTau_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -2959,7 +2959,7 @@ PromptEleFakeTau_UL2018.year = "UL2018"
 PromptEleFakeTau_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -2968,7 +2968,7 @@ FakeEleFakeTau_UL2018.year = "UL2018"
 FakeEleFakeTau_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -2977,7 +2977,7 @@ FakeEle_UL2018.year = "UL2018"
 FakeEle_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -2986,7 +2986,7 @@ FakeMuPromptTau_UL2018.year = "UL2018"
 FakeMuPromptTau_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -2995,7 +2995,7 @@ PromptMuFakeTau_UL2018.year = "UL2018"
 PromptMuFakeTau_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -3004,7 +3004,7 @@ FakeMuFakeTau_UL2018.year = "UL2018"
 FakeMuFakeTau_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -3013,7 +3013,7 @@ FakeMu_UL2018.year = "UL2018"
 FakeMu_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
-    #WJets_UL2018,
+    WJets_UL2018,
     #DYJetsToLL_UL2018
 ]
 
@@ -3530,6 +3530,8 @@ merge_dict = {
     "VBS_SSWW_DIM6_UL2017":VBS_SSWW_DIM6_UL2017,
     "VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
     "DataMu_UL2017":DataMu_UL2017,
+    "FakeMu_UL2017":FakeMu_UL2017,
+    "DataEle_UL2017":DataEle_UL2017,
     "DataEle_UL2017":DataEle_UL2017,
     "DataHT_UL2017":DataHT_UL2017,
 

@@ -20,7 +20,7 @@ set channel = 'ltau' #
 ##python3 makeplot.py -y $year1 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1
 #python3 makeplot.py -y $year1 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1
 ##python3 makeplot.py -y $year1 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1
-#python3 makeplot.py -y $year1 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d FakeEle_$year1
+python3 makeplot.py -y $year1 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1
 #python3 makeplot.py -y $year1 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1
 
 #python3 makeplot.py -y $year1 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
@@ -52,7 +52,7 @@ set channel = 'ltau' #
 ##python3 makeplot.py -y $year1bis --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1bis
 #python3 makeplot.py -y $year1bis --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1bis
 ##python3 makeplot.py -y $year1bis --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1bis
-python3 makeplot.py -y $year1bis --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #-d FakeEle_$year1bis
+#python3 makeplot.py -y $year1bis --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d FakeEle_$year1bis
 #python3 makeplot.py -y $year1bis --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeEle_$year1bis
 
 #python3 makeplot.py -y $year1 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
