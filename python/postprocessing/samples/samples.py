@@ -2802,6 +2802,52 @@ condor_dict={
     'DataHT_2018':DataHT_2018,
 }
 
+crab_dict = {
+
+    ##### 2017 #####
+    "2017":[
+        ZZtoLep_2017,
+        TT_2017,
+        TTTo2L2Nu_2017,
+        TVX_2017,
+        VG_2017,
+        WrongSign_2017,
+        Other_2017,
+        WJets_2017,
+        WZ_2017,
+        DYJetsToLL_2017,
+        #WpWpJJ_EWK_2017,
+        #WpWpJJ_QCD_2017,
+        #VBS_SSWW_DIM6_SM_2017,
+        VBS_SSWW_DIM6_2017,
+        DataMu_2017,
+        DataEle_2017,
+        #DataHT_2017,
+    ],
+
+    ##### 2018 #####
+    "2018":[
+        ZZtoLep_2018,
+        TT_2018,
+        TTTo2L2Nu_2018,
+        TVX_2018,
+        VG_2018,
+        WrongSign_2018,
+        Other_2018,
+        WJets_2018,
+        WZ_2018,
+        DYJetsToLL_2018,
+        QCD_2018,
+        #WpWpJJ_EWK_2018,
+        #WpWpJJ_QCD_2018,
+        #VBS_SSWW_DIM6_SM_2018,
+        VBS_SSWW_DIM6_2018,
+        DataMu_2018,
+        DataEle_2018,
+        #DataHT_2018,
+    ],
+}
+
 merge_dict={
     'WpWpJJ_QCD_2017':WpWpJJ_QCD_2017,
     'WpWpJJ_QCD_2018':WpWpJJ_QCD_2018,

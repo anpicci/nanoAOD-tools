@@ -3,7 +3,7 @@ import optparse
 import sys
 import time
 import copy
-from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+
 #from samplesUL import *
 
 """ module to launch and check crab jobs for UL """
@@ -29,13 +29,17 @@ parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action 
 parser.add_option('--fake',  dest = 'forFR', default = False, action = 'store_true', help = 'configuration for FR samples')
 (opt, args) = parser.parse_args()
 
+if "UL" in opt.year:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+else:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
 
 submitflag = " -s"
 if opt.sampleFlag:
     submitflag += " --sampleFlag"
 
-if "UL" not in opt.year:
-    raise ValueError("This macro is intended to be use ONLY with UL samples!")
+#if "UL" not in opt.year:
+    #raise ValueError("This macro is intended to be use ONLY with UL samples!")
 
 year = str(opt.year)
 
@@ -75,6 +79,8 @@ for samp in samlist:
 for s in complist:
     print "\n\nConsidering " + s.label + " sample..."
     crabcommand = crabc + " -d " + str(s.label)
+    if not ("UL" in opt.year or "UL" in s.label):
+        crabcommand += " --notUL"
 
     dirlab = s.label
     if opt.forFR:
