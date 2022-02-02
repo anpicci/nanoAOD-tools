@@ -171,7 +171,7 @@ dataset = sample_dict[opt.dat]
 
 samples = []
 
-if hasattr(dataset, 'components'): # How to check whether this exists or not
+if not dataset.components is None:#hasattr(dataset, 'components'): # How to check whether this exists or not
     samples = [sample for sample in dataset.components]# Method exists and was used.  
 else:
     print("You are launching a single sample and not an entire bunch of samples")
