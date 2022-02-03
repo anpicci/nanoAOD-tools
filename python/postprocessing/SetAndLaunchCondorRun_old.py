@@ -302,18 +302,16 @@ if not opt.check:
     t.write("BTAG_ALGO   =   'DeepFlv'\n")
     t.write("BTAG_WP     =   'M'\n")
     if opt.year == "UL2016APV":
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") ## 8 with vsjet4 may work
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-    elif opt.year == "UL2016":
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") ## 8 with vsjet4 may work
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-    elif "UL2017" in opt.year:
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") ## 8 with vsjet2 may work
-        #t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 4" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") ## 8 with vsjet2 may work
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 4" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") 
         t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 4" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+    elif opt.year == "UL2016":
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 4" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") 
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") 
+    elif "UL2017" in opt.year:
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     elif "UL2018" in opt.year:
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n") ## 8 with vsjet2 may work
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
         t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
 
     t.write("ID_TAU_RECO_DEEPTAU_VSJET = " + vsJet_dict[opt.jetwp] + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
