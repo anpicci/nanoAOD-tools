@@ -638,12 +638,12 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
          l2fstr = "muon"
 
      if 'Fake' in str(sample.label):
-          if not opt.folder.startswith('CTHT'):
+          if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
                f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
           elif opt.removePrompt:
-               f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.components[1].label + ".root")
+               f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
           else:
-               f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[0].label + ".root")
+               f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
           if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
                if opt.channel == 'ltau':
                    cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-1.)"
