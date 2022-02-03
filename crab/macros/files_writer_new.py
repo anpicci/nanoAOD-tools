@@ -1,6 +1,5 @@
 #prende i path da path_writer (crab_paths.txt) e usando gfal-ls scorre su tutti i file e li salva su un file .txt
 #from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
-from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
 import os
 import optparse
 
@@ -16,6 +15,10 @@ print "Is Fake?", opt.fake
 if not (opt.trig == "Lep" or opt.trig == "Tau" or opt.trig == "HT"):
     raise ValueError
 
+if "UL" in opt.dat:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+else:
+    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
 dirtag = "_Fake" + opt.trig# + "/"
 
 if not(opt.dat in sample_dict.keys()):
@@ -23,7 +26,7 @@ if not(opt.dat in sample_dict.keys()):
 dataset = sample_dict[opt.dat]
 samples = []
 
-if hasattr(dataset, 'components'): # How to check whether this exists or not
+if dataset.components is not None:#hasattr(dataset, 'components'): # How to check whether this exists or not
     samples = [sample for sample in dataset.components]# Method exists and was used.
 else:
     print "You are launching a single sample and not an entire bunch of samples"

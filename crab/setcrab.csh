@@ -3,7 +3,7 @@ reset
 
 #Reset-20
 #python SetAndLaunchCrabJobs.py -y UL2016 --fake --resave -d DataHT_UL2016
-python SetAndLaunchCrabJobs.py -y 2018 -d QCD_2018
+python SetAndLaunchCrabJobs.py -y 2018 -d QCD_2018 --resave
 
 #reset
 #python SetAndLaunchCrabJobs.py -y UL2017 --fake --resave
