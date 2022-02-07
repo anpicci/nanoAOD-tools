@@ -70,9 +70,15 @@ complist = []
 for samp in samlist:
     if hasattr(samp, "components"):
         for c in samp.components:
-            complist.append(copy.deepcopy(c))
+            if c.dataset != "":
+                complist.append(copy.deepcopy(c))
+            else:
+                print "Skipping " + c.label + ", its dataset is missing up to now"
     else:
-        complist.append(copy.deepcopy(samp))
+        if c.dataset != "":
+            complist.append(copy.deepcopy(samp))
+        else:
+            print "Skipping " + samp.label + ", its dataset is missing up to now"
 
 #print(complist)
 
