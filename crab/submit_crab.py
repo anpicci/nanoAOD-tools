@@ -171,7 +171,8 @@ dataset = sample_dict[opt.dat]
 
 samples = []
 
-if not dataset.components is None:#hasattr(dataset, 'components'): # How to check whether this exists or not
+#if not dataset.components is None:
+if hasattr(dataset, 'components'): # How to check whether this exists or not
     samples = [sample for sample in dataset.components]# Method exists and was used.  
 else:
     print("You are launching a single sample and not an entire bunch of samples")
@@ -254,9 +255,12 @@ for sample in samples:
         print("Producing crab configuration file")
 
         if "UL" in str(sample.year):
-            cfg_writer(sample, isMC, "ULVBS_PG")
+            #cfg_writer(sample, isMC, "ULVBS_PG")
+            cfg_writer(sample, isMC, "ULVBSPG")
         else:
-            cfg_writer(sample, isMC, "VBS_PG")
+            #cfg_writer(sample, isMC, "VBS_PG")
+            #cfg_writer(sample, isMC, "RRVBS_PG")
+            cfg_writer(sample, isMC, "RRVBSPG")
 
         if isMC:
             modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(sample.year) + "(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
