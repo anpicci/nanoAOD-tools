@@ -75,7 +75,7 @@ for samp in samlist:
             else:
                 print "Skipping " + c.label + ", its dataset is missing up to now"
     else:
-        if c.dataset != "":
+        if samp.dataset != "":
             complist.append(copy.deepcopy(samp))
         else:
             print "Skipping " + samp.label + ", its dataset is missing up to now"
