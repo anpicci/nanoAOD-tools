@@ -260,16 +260,24 @@ for sample in samples:
 
         if "UL" in str(year):
             #cfg_writer(sample, isMC, "ULVBS_PG")
+            #cfg_writer(sample, isMC, "ULVBS")
             cfg_writer(sample, isMC, "ULVBSPG")
         else:
             #cfg_writer(sample, isMC, "VBS_PG")
             #cfg_writer(sample, isMC, "RRVBS_PG")
-            cfg_writer(sample, isMC, "RRVBSPG")
+            #cfg_writer(sample, isMC, "RRVBSPG")
+            cfg_writer(sample, isMC, "RRVBS")
 
-        if isMC:
-            modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(year) + "(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+        if "UL" in str(year):
+            if isMC:
+                modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(year) + "(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            else:
+                modules = sampleFlag_mod + "preselection(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
         else:
-            modules = sampleFlag_mod + "preselection(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            if isMC:
+                modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(year) + "(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            else:
+                modules = sampleFlag_mod + "metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
             
         print("Producing crab script")
         crab_script_writer(sample,'.', isMC, modules, presel)
