@@ -25,7 +25,7 @@ parser.add_option('-k', '--kill', dest = 'kill', default = False, action = 'stor
 #parser.add_option('-p', '--purge', dest = 'purge', default = False, action = 'store_true', help = 'Default do not kill')
 #parser.add_option('-r', '--resub', dest = 'resub', default = False, action = 'store_true', help = 'Default do not resubmit')
 #parser.add_option('-g', '--gout', dest = 'gout', default = False, action = 'store_true', help = 'Default do not do getoutput')
-parser.add_option('--sampleFlag',  dest = 'sampleFlag', default = False, action = 'store_true', help = 'Add sample flag')
+parser.add_option('--nosampleFlag',  dest = 'sampleFlag', default = True, action = 'store_false', help = 'Default add sample flag')
 parser.add_option('--fake',  dest = 'forFR', default = False, action = 'store_true', help = 'configuration for FR samples')
 (opt, args) = parser.parse_args()
 
@@ -54,10 +54,8 @@ if not opt.forFR:
 else:
     samlist = crab_dict_Fake[year]
 
-print samlist
-
-if opt.dat != "":
-    samlist = list(filter(lambda x : x.label == opt.dat, samlist))
+#if opt.dat != "":
+    #samlist = list(filter(lambda x : x.label == opt.dat, samlist))
 
 #print samlist 
 
@@ -67,19 +65,27 @@ else:
     crabc = "python submit_crab.py"
 
 complist = []
+print "wanted:", opt.dat
 for samp in samlist:
-    if hasattr(samp, "components"):
+    if "UL" in opt.year:
+        hascomp = hasattr(samp, "components")
+    else:
+        hascomp = samp.components is not None
+    if hascomp:#hasattr(samp, "components") and samp.components is not None:
+        #print "I'm in components"
         for c in samp.components:
-            if c.dataset != "":
+            if c.dataset != "" and ((opt.dat != "" and opt.dat == c.label) or opt.dat == ""):
                 complist.append(copy.deepcopy(c))
             else:
-                print "Skipping " + c.label + ", its dataset is missing up to now"
+                if not c.dataset != "":
+                    print "Skipping " + c.label + ", its dataset is missing up to now"
     else:
-        if samp.dataset != "":
+        if samp.dataset != "" and ((opt.dat != "" and opt.dat == samp.label) or opt.dat == ""):
             complist.append(copy.deepcopy(samp))
         else:
-            print "Skipping " + samp.label + ", its dataset is missing up to now"
-
+            if not samp.dataset != "":
+                print "Skipping " + samp.label + ", its dataset is missing up to now"
+            
 #print(complist)
 
 for s in complist:

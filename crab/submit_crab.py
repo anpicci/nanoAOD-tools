@@ -172,7 +172,11 @@ dataset = sample_dict[opt.dat]
 samples = []
 
 #if not dataset.components is None:
-if hasattr(dataset, 'components'): # How to check whether this exists or not
+if opt.UL:
+    hascomp = hasattr(dataset, "components")
+else:
+    hascomp = dataset.components is not None
+if hascomp:# hasattr(dataset, 'components') and not dataset.components is None: # How to check whether this exists or not
     samples = [sample for sample in dataset.components]# Method exists and was used.  
 else:
     print("You are launching a single sample and not an entire bunch of samples")
@@ -202,17 +206,17 @@ for sample in samples:
         sampleFlag_mod = ""
         if opt.sampleFlag == True:
             sampleFlag_mod = "sampleFlag"
-            if "UL" in sample.year:
+            if "UL" in year:
                 sampleFlag_mod += "UL"
             sampleFlag_mod += "(\"" + sample.label + "\"), "
         if ('Data' in sample.label):
             isMC = False
-            if not "UL" in sample.year:
+            if not "UL" in year:
                 presel = "(Flag_goodVertices && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter) "
             else:
-                if "2017" in sample.year or "2018" in sample.year:
+                if "2017" in year or "2018" in year:
                     presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilter)"
-                elif "2016" in sample.year:
+                elif "2016" in year:
                     presel = "(Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_BadPFMuonDzFilter && Flag_eeBadScFilter)"
         
             if year == '2016':# and sample.runP != 'H':
@@ -254,7 +258,7 @@ for sample in samples:
 
         print("Producing crab configuration file")
 
-        if "UL" in str(sample.year):
+        if "UL" in str(year):
             #cfg_writer(sample, isMC, "ULVBS_PG")
             cfg_writer(sample, isMC, "ULVBSPG")
         else:
@@ -263,7 +267,7 @@ for sample in samples:
             cfg_writer(sample, isMC, "RRVBSPG")
 
         if isMC:
-            modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(sample.year) + "(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+            modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(year) + "(), metCorrector(), fatJetCorrector(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
         else:
             modules = sampleFlag_mod + "preselection(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
             
