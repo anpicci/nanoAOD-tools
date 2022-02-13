@@ -791,22 +791,31 @@ def SelectAndVetoTaus(taus, sellep, jet1 = None, jet2 = None):
     for i, tau in enumerate(taus):
 
         if abs(sellep.pdgId)==11:
-            cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE
+            #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE
+            cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE
         elif abs(sellep.pdgId)==13:
-            cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU
+            #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU
+            cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU
 
         if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
             nTau+=1
 
+            isAtLeastLoose = False
             if tau.idDeepTau2017v2p1VSjet>=ID_TAU_RECO_DEEPTAU_VSJET:
                 idxl.append([i, "T"])
+                isAtLeastLoose = True
             else:
-                idxl.append([i, "L"])
+                if abs(sellep.pdgId)==13 and tau.idDeepTau2017v2p1VSjet>=ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU:
+                    idxl.append([i, "L"])
+                    isAtLeastLoose = True
+                elif abs(sellep.pdgId)==11 and tau.idDeepTau2017v2p1VSjet>=ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE:
+                    idxl.append([i, "L"])
+                    isAtLeastLoose = True
 
-    if nTau!=1:
-        return 0, idxl                                                                                                       
+    if (nTau==1 and isAtLeastLoose):
+        return 1, idxl                                                                                                       
     else:
-        return 1, idxl
+        return 0, idxl
 
 def BVeto(jetCollection):
     veto = False
