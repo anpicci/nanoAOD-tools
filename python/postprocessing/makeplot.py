@@ -626,7 +626,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
 
      print("count? ", opt.count)
      if opt.count:
-          countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + ".txt", "a")
+          countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".txt", "a")
           countf.write(sample.label)
           countf.write("\nBin\tContent\tError")
 
@@ -744,7 +744,8 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
      h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
      h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
 
-
+     tot = 0.
+     terr = 0.
      for bidx in range(nbins):          
           bidx_l = bidx + 1
           if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
@@ -755,10 +756,17 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
 
           minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
           maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
-          bincont = str(round(h1.GetBinContent(bidx_l), 3))
-          binerrcont = str(round(h1.GetBinError(bidx_l), 3))
+          bincont = round(h1.GetBinContent(bidx_l), 3)
+          tot += bincont
+          bincont = str(bincont)
+          binerrcont = round(h1.GetBinError(bidx_l), 3)
+          terr += binerrcont**2.
+          binerrcont = str(binerrcont)
           if opt.count:
               countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
+
+     terr = terr**0.5
+     countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont)
 
      print("int:", h1.Integral())
      #print(h1.Integral())
@@ -1251,18 +1259,14 @@ for year in years:
 
         #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
-        
-        if opt.channel == 'ltau':
-            variables.append(variabile('BDT_output_SM', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-            variables.append(variabile('BDT_output_dim6', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-            variables.append(variabile('BDT_output_dim8', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        
-        '''        
-        #if opt.channel == 'ltau':
-            #variables.append(variabile('BDT_output_SM_ada', 'AdABoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-            #variables.append(variabile('BDT_output_dim6_ada', 'AdABoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-            #variables.append(variabile('BDT_output_dim8_ada', 'AdABoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
+         if opt.channel == 'ltau':
+            variables.append(variabile('BDT_output_SM_opt', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            variables.append(variabile('BDT_output_dim6_opt', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            variables.append(variabile('BDT_output_dim8_opt', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            variables.append(variabile('DNN_output_SM_opt', 'SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
+            variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
+
         '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
@@ -1322,7 +1326,7 @@ for year in years:
         else:
             variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
 
-
+        '''
         if opt.channel == "ltau":
             #variables.append(variabile(lep2[0] + '_DecayMode', '#tau decay mode',  wzero+'*('+cutbase+')', 12, -0.5, 11.5))
             
@@ -1353,7 +1357,7 @@ for year in years:
             #variables.append(variabile('tau_DeepTauVsEle_WP', '#tau DeepTauVsEle WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsMu_WP', '#tau DeepTauVsMu WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsJet_WP', '#tau DeepTauVsJet WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
-
+        '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_leadjet_pt = array("f", [0., 50., 100., 150., 250., 400.])
             nbin_leadjet_pt = len(bin_leadjet_pt)-1
@@ -1514,7 +1518,7 @@ for year in years:
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
         '''
-
+        '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_ptRel = array("f", [0., 50., 75., 100., 125, 150., 250.])
             bin_ptRel_lep12 = array("f", [0., 50., 100., 150., 250.])
@@ -1531,7 +1535,7 @@ for year in years:
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
 
         variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
-
+        '''
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
@@ -1546,8 +1550,8 @@ for year in years:
                             os.makedirs(pathplot + 'countings/')
                         if not os.path.exists(pathplot + 'countings/' + cut_tag):
                             os.makedirs(pathplot + 'countings/' + cut_tag)
-                        if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + ".txt"):
-                            tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + ".txt", "w")
+                        if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt"):
+                            tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt", "w")
                             tmp_f.close()
                     if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
                         continue
