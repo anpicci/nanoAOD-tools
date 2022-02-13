@@ -1259,7 +1259,7 @@ for year in years:
 
         #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
-         if opt.channel == 'ltau':
+        if opt.channel == 'ltau':
             variables.append(variabile('BDT_output_SM_opt', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim6_opt', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim8_opt', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))

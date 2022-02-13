@@ -95,7 +95,8 @@ def CondoredList(samplename):
                     
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")
-            return CondoredList(samplename)
+            if not opt.check:
+                return CondoredList(samplename)
         elif wrongex:
             print("Something when remapping rootfiles for ", samplename, "fix it and relaunch")
 

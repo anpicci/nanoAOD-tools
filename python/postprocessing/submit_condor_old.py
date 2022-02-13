@@ -71,7 +71,7 @@ def sub_writer(sample, n, files, folder):
     f.write("when_to_transfer_output = ON_EXIT\n")
     tagyear = str(sample.year)#.replace("UL", "").replace("APV", "")
     print(tagyear)
-    f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues.py, FR_vsjet2_" + tagyear + ".root, FR_vsjet4_" + tagyear + ".root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_" + tagyear + ".root, __init__.py, ./data\n")
+    f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues.py, FR_vsjet2_" + tagyear + ".root, FR_vsjet4_" + tagyear + ".root, FR_vsjet8_" + tagyear + ".root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_" + tagyear + ".root, __init__.py, ./data\n")
     f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-a/apiccine/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
