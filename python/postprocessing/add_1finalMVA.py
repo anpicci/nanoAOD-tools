@@ -2,7 +2,6 @@ import os
 import tensorflow
 import optparse
 import sys
-from samples.samples import *
 from array import array
 import pandas as pd
 import uproot
@@ -55,6 +54,10 @@ if opt.ct == 'HT':
 else:
     crabpath = "../../crab/macros/files/"
 
+if "UL" in opt.year:
+    from samples.samplesUL import *
+else:
+    from samples.samples import *
 #username = 'mmagheri'
 #inituser = 'm'
 
@@ -327,15 +330,15 @@ for v in class_list:
         
         if mergable:
             if Debug:
-                print("python3 makeplot_dev.py -y ", opt.year, " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel + " --skipML")
+                print("python3 makeplot.py -y ", opt.year, " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel + " --skipML")
             else:
-                os.system("python3 makeplot_dev.py -y " + opt.year + " --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
+                os.system("python3 makeplot.py -y " + opt.year + " --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
         else:
             print(k, "not mergable")
         continue
     '''
 
-    if v.components is not None:#hasattr(v, 'components'):
+    if hasattr(v, 'components'):
         if opt.dat != 'all':
             if not str(k).startswith(opt.dat):
                 if not k.startswith(opt.dat):
@@ -378,9 +381,9 @@ for v in class_list:
                 print("Merging and luming " + c.label + "...")
                 merging.append(True)
                 if Debug:
-                    print("python3 makeplot_dev.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
+                    print("python3 makeplot.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
                 else:
-                    os.system("python3 makeplot_dev.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
+                    os.system("python3 makeplot.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
                 print("Merged and lumied!")
             else:
                 print(c.label + " already merged and lumied")
@@ -409,9 +412,9 @@ for v in class_list:
                     else:
                         os.system("rm -f "+kpath+k+".root")
                 if Debug:
-                    print("python3 makeplot_dev.py -y ", opt.year, " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel + " --skipML")
+                    print("python3 makeplot.py -y ", opt.year, " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel + " --skipML")
                 else:
-                    os.system("python3 makeplot_dev.py -y " + opt.year + " --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
+                    os.system("python3 makeplot.py -y " + opt.year + " --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
         #else:
             #print k + "not ready to be merged"
             
@@ -446,9 +449,9 @@ for v in class_list:
             print(k + " neither merged nor lumied so far")
             print("Merging and luming " + k + "...")
             if Debug:
-                print("python3 makeplot_dev.py -y ", opt.year, " --merpart --lumi --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel + " --skipML")
+                print("python3 makeplot.py -y ", opt.year, " --merpart --lumi --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel + " --skipML")
             else:
-                os.system("python3 makeplot_dev.py -y " + opt.year + " --merpart --lumi --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
+                os.system("python3 makeplot.py -y " + opt.year + " --merpart --lumi --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel + " --skipML")
             print("Merged and lumied!")
         else:
             print(k + " already merged and lumied")

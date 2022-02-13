@@ -269,7 +269,8 @@ def mergepart(dataset):
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
-
+    
+    for sample in samples:
         # merge files 
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + "_part*.root" 
         print(add)
@@ -646,16 +647,16 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
                f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
           if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
                if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-1.)"
+                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
           elif str(sample.label).startswith('FakeElePromptTau') or str(sample.label).startswith('FakeMuPromptTau'):
                if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-1.)"
+                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
           elif str(sample.label).startswith('PromptEleFakeTau') or str(sample.label).startswith('PromptMuFakeTau'):
                if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-1.)"
+                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
           elif str(sample.label).startswith('FakeEleFakeTau') or str(sample.label).startswith('FakeMuFakeTau'):
                if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-1.)"
+                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
           elif str(sample.label).startswith('FakeEleMu'):
               if opt.channel == 'emu':
                    cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet2" + "))" + ")"

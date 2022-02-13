@@ -268,7 +268,8 @@ def mergepart(dataset):
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
-
+    
+    for sample in samples:
         # merge files 
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + "_part*.root" 
         print(add)

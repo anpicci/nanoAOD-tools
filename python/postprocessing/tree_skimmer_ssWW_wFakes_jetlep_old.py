@@ -1163,7 +1163,7 @@ for i in range(tree.GetEntries()):
         systTree.setWeightName("tau_vsele_Up", copy.deepcopy(GoodTau_vsele_Up))
         systTree.setWeightName("tau_vsele_Down", copy.deepcopy(GoodTau_vsele_Down))
 
-        fes_Down, fes, fes_Up = fesTool.getFES(GoodTau.pt, GoodTau.decayMode, GoodTau.genPartFlav, unc='All')
+        fes_Down, fes, fes_Up = fesTool.getFES(GoodTau.eta, GoodTau.decayMode, GoodTau.genPartFlav, unc='All')
         systTree.setWeightName("FESSF", copy.deepcopy(fes))
         systTree.setWeightName("FESUp", copy.deepcopy(fes_Up))
         systTree.setWeightName("FESDown", copy.deepcopy(fes_Down))
