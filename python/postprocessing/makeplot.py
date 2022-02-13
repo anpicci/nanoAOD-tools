@@ -767,8 +767,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
               countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
 
      terr = terr**0.5
-     countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont)
-
+     countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
      print("int:", h1.Integral())
      #print(h1.Integral())
      for i in range(0, nbins+1):
