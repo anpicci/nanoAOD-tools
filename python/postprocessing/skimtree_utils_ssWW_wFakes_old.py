@@ -830,6 +830,17 @@ def BVeto(jetCollection):
         #if jets[k].pt>30.: return True
     #return False
 
+def BVetoLoose(jetCollection):
+    veto = False
+    jets = get_Jet(jetCollection, PT_CUT_JET)
+    for k in range(len(jets)):
+        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP_LOOSE])*(jets[k].pt>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
+            veto = True
+            break
+        else: 
+            continue
+    return veto
+
 def CountBJets(jetCollection):
     nb=0
     #for k in range(len(jetCollection)):

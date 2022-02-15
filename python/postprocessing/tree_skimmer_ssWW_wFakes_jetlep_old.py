@@ -521,6 +521,7 @@ pass_tau_vsJetWP            =   array.array('i', [0])
 pass_charge_selection       =   array.array('i', [0])
 pass_jet_selection          =   array.array('i', [0])
 pass_b_veto                 =   array.array('i', [0])
+pass_b_veto_loose           =   array.array('i', [0])
 pass_mjj_cut                =   array.array('i', [0])
 pass_MET_cut                =   array.array('i', [0])
 pass_upToBVeto              =   array.array('i', [0])
@@ -536,6 +537,7 @@ var_list.append(pass_tau_vsJetWP)
 var_list.append(pass_charge_selection)
 var_list.append(pass_jet_selection)
 var_list.append(pass_b_veto)
+var_list.append(pass_b_veto_loose)
 var_list.append(pass_mjj_cut)
 var_list.append(pass_MET_cut)
 var_list.append(pass_upToBVeto)
@@ -696,6 +698,7 @@ systTree.branchTreesSysts(trees, "all", "pass_tau_vsJetWP",         outTreeFile,
 systTree.branchTreesSysts(trees, "all", "pass_charge_selection",    outTreeFile, pass_charge_selection)
 systTree.branchTreesSysts(trees, "all", "pass_jet_selection",       outTreeFile, pass_jet_selection)
 systTree.branchTreesSysts(trees, "all", "pass_b_veto",              outTreeFile, pass_b_veto)
+systTree.branchTreesSysts(trees, "all", "pass_b_veto_loose",        outTreeFile, pass_b_veto_loose)
 systTree.branchTreesSysts(trees, "all", "pass_mjj_cut",             outTreeFile, pass_mjj_cut)
 systTree.branchTreesSysts(trees, "all", "pass_MET_cut",             outTreeFile, pass_MET_cut)
 systTree.branchTreesSysts(trees, "all", "pass_upToBVeto",           outTreeFile, pass_upToBVeto)
@@ -760,7 +763,7 @@ taucont = 0
 for i in range(tree.GetEntries()):
     #reinizializza tutte le variabili a 0, per sicurezza
     for j, var in enumerate(var_list):
-        if j<len(var_list)-12:#
+        if j<len(var_list)-13:#
             var_list[j][0] = -999
         else:
             var_list[j][0] = 0
@@ -1351,6 +1354,7 @@ for i in range(tree.GetEntries()):
 
 
     if not BVeto(jets): pass_b_veto[0]=1
+    if not BVetoLoose(jets): pass_b_veto_loose[0]=1
 
     #if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_iso[0]==1 and pass_tau_vsJetWP[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1:
     #Cut_dict[7][1]+=1
