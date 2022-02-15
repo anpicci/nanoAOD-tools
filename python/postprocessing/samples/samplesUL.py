@@ -471,6 +471,17 @@ DYJetsToLL_UL2016APV.components = [
     DYJetsToLL_M50_UL2016APV_ext,
 ]
 
+DYJetsToLL_M50_FxFx_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2016APV")
+DYJetsToLL_M50_FxFx_UL2016APV.year = "UL2016APV"
+DYJetsToLL_M50_FxFx_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+DYJetsToLL_M50_FxFx_UL2016APV.sigma = 6404.0
+
+DYJetsToLL_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016APV")
+DYJetsToLL_FxFx_UL2016APV.year = "UL2016APV"
+DYJetsToLL_FxFx_UL2016APV.components = [
+    DYJetsToLL_M50_FxFx_UL2016APV,
+]
+
 ### WpWp EWK ###
 
 #### to be produced ####
@@ -726,7 +737,7 @@ FakeElePromptTau_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 PromptEleFakeTau_UL2016APV = sample(ROOT.kGray+2, 1, 1001, "Prompt e Fake #tau", "PromptEleFakeTau_UL2016APV")
@@ -735,7 +746,7 @@ PromptEleFakeTau_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 FakeEleFakeTau_UL2016APV = sample(ROOT.kGray+3, 1, 1001, "Fake e Fake #tau", "FakeEleFakeTau_UL2016APV")
@@ -744,7 +755,7 @@ FakeEleFakeTau_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 FakeEle_UL2016APV = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeEle_UL2016APV")
@@ -753,7 +764,7 @@ FakeEle_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 FakeMuPromptTau_UL2016APV = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016APV")
@@ -762,7 +773,7 @@ FakeMuPromptTau_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 PromptMuFakeTau_UL2016APV = sample(ROOT.kGray+2, 1, 1001, "Prompt #mu Fake #tau", "PromptMuFakeTau_UL2016APV")
@@ -771,7 +782,7 @@ PromptMuFakeTau_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 FakeMuFakeTau_UL2016APV = sample(ROOT.kGray+3, 1, 1001, "Fake #mu Fake #tau", "FakeMuFakeTau_UL2016APV")
@@ -780,7 +791,7 @@ FakeMuFakeTau_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 FakeMu_UL2016APV = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeMu_UL2016APV")
@@ -789,7 +800,7 @@ FakeMu_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    #DYJetsToLL_UL2016APV
+    DYJetsToLL_UL2016APV
 ]
 
 SampleHTFake_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016APV")
@@ -1250,6 +1261,17 @@ DYJetsToLL_UL2016.components = [
     DYJetsToLL_M50_UL2016_ext,
 ]
 
+DYJetsToLL_M50_FxFx_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2016")
+DYJetsToLL_M50_FxFx_UL2016.year = "UL2016"
+DYJetsToLL_M50_FxFx_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+DYJetsToLL_M50_FxFx_UL2016.sigma = 6404.0
+
+DYJetsToLL_FxFx_UL2016 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016")
+DYJetsToLL_FxFx_UL2016.year = "UL2016"
+DYJetsToLL_FxFx_UL2016.components = [
+    DYJetsToLL_M50_FxFx_UL2016,
+]
+
 ### WpWp EWK ###
 
 #### to be produced ####
@@ -1451,7 +1473,7 @@ FakeElePromptTau_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 PromptEleFakeTau_UL2016 = sample(ROOT.kGray+2, 1, 1001, "Prompt e Fake #tau", "PromptEleFakeTau_UL2016")
@@ -1460,7 +1482,7 @@ PromptEleFakeTau_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 FakeEleFakeTau_UL2016 = sample(ROOT.kGray+3, 1, 1001, "Fake e Fake #tau", "FakeEleFakeTau_UL2016")
@@ -1469,7 +1491,7 @@ FakeEleFakeTau_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 FakeEle_UL2016 = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeEle_UL2016")
@@ -1478,7 +1500,7 @@ FakeEle_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 FakeMuPromptTau_UL2016 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016")
@@ -1487,7 +1509,7 @@ FakeMuPromptTau_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 PromptMuFakeTau_UL2016 = sample(ROOT.kGray+2, 1, 1001, "Prompt #mu Fake #tau", "PromptMuFakeTau_UL2016")
@@ -1496,7 +1518,7 @@ PromptMuFakeTau_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 FakeMuFakeTau_UL2016 = sample(ROOT.kGray+3, 1, 1001, "Fake #mu Fake #tau", "FakeMuFakeTau_UL2016")
@@ -1505,7 +1527,7 @@ FakeMuFakeTau_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 FakeMu_UL2016 = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeMu_UL2016")
@@ -1514,7 +1536,7 @@ FakeMu_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    #DYJetsToLL_UL2016
+    DYJetsToLL_UL2016
 ]
 
 SampleHTFake_UL2016 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016")
@@ -1974,6 +1996,17 @@ DYJetsToLL_UL2017.components = [
     DYJetsToLL_M50_UL2017_ext,
 ]
 
+DYJetsToLL_M50_FxFx_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2017")
+DYJetsToLL_M50_FxFx_UL2017.year = "UL2017"
+DYJetsToLL_M50_FxFx_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17MiniAODv2-106X_mc2017_realistic_v9-v2/MINIAODSIM"
+DYJetsToLL_M50_FxFx_UL2017.sigma = 6404.0
+
+DYJetsToLL_FxFx_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2017")
+DYJetsToLL_FxFx_UL2017.year = "UL2017"
+DYJetsToLL_FxFx_UL2017.components = [
+    DYJetsToLL_M50_FxFx_UL2017,
+]
+
 ### WpWp EWK ###
 
 #### to be produced ####
@@ -2247,7 +2280,7 @@ FakeMuPromptTau_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    #DYJetsToLL_UL2017
+    DYJetsToLL_UL2017
 ]
 
 PromptMuFakeTau_UL2017 = sample(ROOT.kGray+2, 1, 1001, "Prompt #mu Fake #tau", "PromptMuFakeTau_UL2017")
@@ -2256,7 +2289,7 @@ PromptMuFakeTau_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    #DYJetsToLL_UL2017
+    DYJetsToLL_UL2017
 ]
 
 FakeMuFakeTau_UL2017 = sample(ROOT.kGray+3, 1, 1001, "Fake #mu Fake #tau", "FakeMuFakeTau_UL2017")
@@ -2265,7 +2298,7 @@ FakeMuFakeTau_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    #DYJetsToLL_UL2017
+    DYJetsToLL_UL2017
 ]
 
 FakeMu_UL2017 = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeMu_UL2017")
@@ -2274,7 +2307,7 @@ FakeMu_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    #DYJetsToLL_UL2017
+    DYJetsToLL_UL2017
 ]
 
 SampleHTFake_UL2017 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2017")
@@ -2735,6 +2768,17 @@ DYJetsToLL_UL2018.components = [
     DYJetsToLL_M50_UL2018_ext,
 ]
 
+DYJetsToLL_M50_FxFx_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2018")
+DYJetsToLL_M50_FxFx_UL2018.year = "UL2018"
+DYJetsToLL_M50_FxFx_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18MiniAODv2-106X_upgrade2018_realistic_v16_L1v1-v2/MINIAODSIM"
+DYJetsToLL_M50_FxFx_UL2018.sigma = 6404.0
+
+DYJetsToLL_FxFx_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2018")
+DYJetsToLL_FxFx_UL2018.year = "UL2018"
+DYJetsToLL_FxFx_UL2018.components = [
+    DYJetsToLL_M50_FxFx_UL2018,
+]
+
 ### WpWp EWK ###
 WpWpJJ_EWK_UL2018 = sample(ROOT.kRed, 1, 1001, "EW ssWW", "WpWpJJ_EWK_UL2018")
 WpWpJJ_EWK_UL2018.sigma = 0.02064
@@ -2951,7 +2995,7 @@ FakeElePromptTau_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 PromptEleFakeTau_UL2018 = sample(ROOT.kGray+2, 1, 1001, "Prompt e Fake #tau", "PromptEleFakeTau_UL2018")
@@ -2960,7 +3004,7 @@ PromptEleFakeTau_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 FakeEleFakeTau_UL2018 = sample(ROOT.kGray+3, 1, 1001, "Fake e Fake #tau", "FakeEleFakeTau_UL2018")
@@ -2969,7 +3013,7 @@ FakeEleFakeTau_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 FakeEle_UL2018 = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeEle_UL2018")
@@ -2978,7 +3022,7 @@ FakeEle_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 FakeMuPromptTau_UL2018 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2018")
@@ -2987,7 +3031,7 @@ FakeMuPromptTau_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 PromptMuFakeTau_UL2018 = sample(ROOT.kGray+2, 1, 1001, "Prompt #mu Fake #tau", "PromptMuFakeTau_UL2018")
@@ -2996,7 +3040,7 @@ PromptMuFakeTau_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 FakeMuFakeTau_UL2018 = sample(ROOT.kGray+3, 1, 1001, "Fake #mu Fake #tau", "FakeMuFakeTau_UL2018")
@@ -3005,7 +3049,7 @@ FakeMuFakeTau_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 FakeMu_UL2018 = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeMu_UL2018")
@@ -3014,7 +3058,7 @@ FakeMu_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    #DYJetsToLL_UL2018
+    DYJetsToLL_UL2018
 ]
 
 SampleHTFake_UL2018 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2018")
@@ -3072,6 +3116,8 @@ sample_dict={
     "WZ_UL2016APV":WZ_UL2016APV,
     "DYJetsToLL_UL2016APV":DYJetsToLL_UL2016APV,
     "DYJetsToLL_M10to50_UL2016APV":DYJetsToLL_M10to50_UL2016APV, "DYJetsToLL_M50_UL2016APV":DYJetsToLL_M50_UL2016APV, "DYJetsToLL_M50_UL2016APV_ext":DYJetsToLL_M50_UL2016APV_ext,
+    "DYJetsToLL_FxFx_UL2016APV":DYJetsToLL_FxFx_UL2016APV,
+    "DYJetsToLL_M50_FxFx_UL2016APV":DYJetsToLL_M50_FxFx_UL2016APV,
     "WpWpJJ_EWK_UL2016APV":WpWpJJ_EWK_UL2016APV,
     "WpWpJJ_QCD_UL2016APV":WpWpJJ_QCD_UL2016APV,
     "VBS_SSWW_SM_UL2016APV":VBS_SSWW_SM_UL2016APV,
@@ -3105,6 +3151,8 @@ sample_dict={
     "WZ_UL2016":WZ_UL2016,
     "DYJetsToLL_UL2016":DYJetsToLL_UL2016,
     "DYJetsToLL_M10to50_UL2016":DYJetsToLL_M10to50_UL2016, "DYJetsToLL_M50_UL2016":DYJetsToLL_M50_UL2016, "DYJetsToLL_M50_UL2016_ext":DYJetsToLL_M50_UL2016_ext,
+    "DYJetsToLL_FxFx_UL2016":DYJetsToLL_FxFx_UL2016,
+    "DYJetsToLL_M50_FxFx_UL2016":DYJetsToLL_M50_FxFx_UL2016,
     "WpWpJJ_EWK_UL2016":WpWpJJ_EWK_UL2016,
     "WpWpJJ_QCD_UL2016":WpWpJJ_QCD_UL2016,
     "VBS_SSWW_SM_UL2016":VBS_SSWW_SM_UL2016,
@@ -3138,6 +3186,8 @@ sample_dict={
     "WZ_UL2017":WZ_UL2017,
     "DYJetsToLL_UL2017":DYJetsToLL_UL2017,
     "DYJetsToLL_M10to50_UL2017":DYJetsToLL_M10to50_UL2017, "DYJetsToLL_M50_UL2017":DYJetsToLL_M50_UL2017, "DYJetsToLL_M50_UL2017_ext":DYJetsToLL_M50_UL2017_ext,
+    "DYJetsToLL_FxFx_UL2017":DYJetsToLL_FxFx_UL2017,
+    "DYJetsToLL_M50_FxFx_UL2017":DYJetsToLL_M50_FxFx_UL2017,
     "WpWpJJ_EWK_UL2017":WpWpJJ_EWK_UL2017,
     "WpWpJJ_QCD_UL2017":WpWpJJ_QCD_UL2017,
     "VBS_SSWW_SM_UL2017":VBS_SSWW_SM_UL2017,
@@ -3171,6 +3221,8 @@ sample_dict={
     "WZ_UL2018":WZ_UL2018,
     "DYJetsToLL_UL2018":DYJetsToLL_UL2018,
     "DYJetsToLL_M10to50_UL2018":DYJetsToLL_M10to50_UL2018, "DYJetsToLL_M50_UL2018":DYJetsToLL_M50_UL2018, "DYJetsToLL_M50_UL2018_ext":DYJetsToLL_M50_UL2018_ext,
+    "DYJetsToLL_FxFx_UL2018":DYJetsToLL_FxFx_UL2018,
+    "DYJetsToLL_M50_FxFx_UL2018":DYJetsToLL_M50_FxFx_UL2018,
     "WpWpJJ_EWK_UL2018":WpWpJJ_EWK_UL2018,
     "WpWpJJ_QCD_UL2018":WpWpJJ_QCD_UL2018,
     "VBS_SSWW_SM_UL2018":VBS_SSWW_SM_UL2018,
@@ -3273,6 +3325,7 @@ crab_dict = {
         WJets_UL2016APV,
         WZ_UL2016APV,
         DYJetsToLL_UL2016APV,
+        DYJetsToLL_FxFx_UL2016APV,
         #WpWpJJ_EWK_UL2016APV,
         #WpWpJJ_QCD_UL2016APV,
         #VBS_SSWW_DIM6_SM_UL2016APV,
@@ -3295,6 +3348,7 @@ crab_dict = {
         WJets_UL2016,
         WZ_UL2016,
         DYJetsToLL_UL2016,
+        DYJetsToLL_FxFx_UL2016,
         #WpWpJJ_EWK_UL2016,
         #WpWpJJ_QCD_UL2016,
         #VBS_SSWW_DIM6_SM_UL2016,
@@ -3317,6 +3371,7 @@ crab_dict = {
         WJets_UL2017,
         WZ_UL2017,
         DYJetsToLL_UL2017,
+        DYJetsToLL_FxFx_UL2017,
         #WpWpJJ_EWK_UL2017,
         #WpWpJJ_QCD_UL2017,
         #VBS_SSWW_DIM6_SM_UL2017,
@@ -3339,6 +3394,7 @@ crab_dict = {
         WJets_UL2018,
         WZ_UL2018,
         DYJetsToLL_UL2018,
+        DYJetsToLL_FxFx_UL2018,
         #WpWpJJ_EWK_UL2018,
         #WpWpJJ_QCD_UL2018,
         #VBS_SSWW_DIM6_SM_UL2018,
