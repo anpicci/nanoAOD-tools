@@ -25,10 +25,12 @@ p = PostProcessor('.', [#'root://cms-xrd-global.cern.ch//store/data/Run2017B/Sin
                   modules=[
                       #MCweight_writer('TTTo2L2Nu_2017'), 
                       #MET_HLT_Filter_UL2017(), 
-                      #preselection(), #PrefCorr(), metCorrector(), fatJetCorrector(),
+                      #preselection(),
+                      PrefireCorr_2017(),
+                      #metCorrector(), fatJetCorrector(),
                       #lepSF_UL2018(),#
                       #btagSF2017(),
-                      metCorrector()
+                      #metCorrector()
                       #btagSFUL2016(),
                       #sampleFlagUL('DataMuB_UL2017'),
                       #dummyCol()
