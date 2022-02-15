@@ -629,7 +629,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
      if opt.count:
           countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".txt", "a")
           countf.write(sample.label)
-          countf.write("\nBin\tContent\tError")
+          #countf.write("\nBin\tContent\tError")
 
      if opt.channel=="ltau":
          l1fstr = "lepton"
@@ -659,7 +659,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
                    cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
           elif str(sample.label).startswith('FakeEleMu'):
               if opt.channel == 'emu':
-                   cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet2" + "))" + ")"
+                   cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet4" + "))" + ")"
 
      else:
           f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
@@ -747,6 +747,12 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
 
      tot = 0.
      terr = 0.
+
+     for i in range(0, nbins+1):
+          content = h1.GetBinContent(i)
+          if(content<0.):
+               h1.SetBinContent(i, 0.)
+
      for bidx in range(nbins):          
           bidx_l = bidx + 1
           if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
@@ -754,27 +760,23 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
 
           if not opt.count:
                continue
+          else:
+              #pass
+              minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
+              maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
+              bincont = round(h1.GetBinContent(bidx_l), 6)
+              tot += bincont
+              bincont = str(bincont)
+              binerrcont = round(h1.GetBinError(bidx_l), 6)
+              terr += binerrcont**2.
+              binerrcont = str(binerrcont)
+              #countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
 
-          minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
-          maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
-          bincont = round(h1.GetBinContent(bidx_l), 3)
-          tot += bincont
-          bincont = str(bincont)
-          binerrcont = round(h1.GetBinError(bidx_l), 3)
-          terr += binerrcont**2.
-          binerrcont = str(binerrcont)
-          if opt.count:
-              countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
-
-     terr = terr**0.5
-     countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
+     if opt.count:
+         terr = terr**0.5
+         countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
      print("int:", h1.Integral())
-     #print(h1.Integral())
-     for i in range(0, nbins+1):
-          content = h1.GetBinContent(i)
-          if(content<0.):
-               h1.SetBinContent(i, 0.)
-     
+      
      fout = ROOT.TFile.Open(foutput, "UPDATE")
      fout.cd()
      h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
@@ -1257,7 +1259,8 @@ for year in years:
         cutbase = cut_dict[lep]
 
 
-        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
+        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
+
 
         if opt.channel == 'ltau':
             variables.append(variabile('BDT_output_SM_opt', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
@@ -1273,7 +1276,7 @@ for year in years:
         except:
             pass
         '''
-        
+
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         
@@ -1358,6 +1361,7 @@ for year in years:
             #variables.append(variabile('tau_DeepTauVsMu_WP', '#tau DeepTauVsMu WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsJet_WP', '#tau DeepTauVsJet WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
         '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_leadjet_pt = array("f", [0., 50., 100., 150., 250., 400.])
             nbin_leadjet_pt = len(bin_leadjet_pt)-1
@@ -1517,8 +1521,7 @@ for year in years:
         variables.append(variabile('deltaTheta_' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')',  nbin_deltatheta_jj, bin_deltatheta_jj))
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
-        '''
-        '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_ptRel = array("f", [0., 50., 75., 100., 125, 150., 250.])
             bin_ptRel_lep12 = array("f", [0., 50., 100., 150., 250.])
