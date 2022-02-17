@@ -67,6 +67,7 @@ parser.add_option('--model_dim6', dest='model_dim6', default = '/afs/cern.ch/use
 parser.add_option('--model_dim8', dest='model_dim8', default = '/afs/cern.ch/user/t/ttedesch/public/xgb_aQGC_v100.model', type='string', help='Path to ML model for dim8 analysis')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='Tag to distinguish between different makeplot runs')
+parser.add_option('--bvetoL', dest='bvetoL', default = False, action='store_true', help='apply bveto loose in ws and dy CRs')
 
 (opt, args) = parser.parse_args()
 #print (opt, args)
@@ -81,6 +82,12 @@ else:
 def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
+
+bvetostring = ""
+if opt.bvetoL:
+    bvetostring = "pass_b_veto_loose[0]==1"
+else:
+    bvetostring = "pass_b_veto[0]==1"
 
 folder = opt.folder 
 if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
@@ -132,8 +139,8 @@ if opt.bveto:
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
 
 elif opt.ws:
-    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto_loose==1&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
-                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto_loose==1&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
+                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
                  'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt>50.)*(" + cut + ")", 
     }
     cut_tag = 'wrongsing_CR'
@@ -182,9 +189,9 @@ elif opt.qcd:
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)           
 elif opt.dy:
-    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_b_veto_loose==1&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")", 
-                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_b_veto_loose==1&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_charge_selection==0&&pass_b_veto_loose==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.)*(" + cut + ")",
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&" + bvetostring + "&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&" + bvetostring + "&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.)*(" + cut + ")",
             }
     cut_tag = 'DY_CR'
     if opt.cut != "1.":
