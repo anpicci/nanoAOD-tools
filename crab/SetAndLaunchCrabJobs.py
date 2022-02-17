@@ -57,8 +57,6 @@ else:
 #if opt.dat != "":
     #samlist = list(filter(lambda x : x.label == opt.dat, samlist))
 
-#print samlist 
-
 if opt.forFR:
     crabc = "python submit_crab_fake.py"
 else:
@@ -72,9 +70,9 @@ for samp in samlist:
     else:
         hascomp = samp.components is not None
     if hascomp:#hasattr(samp, "components") and samp.components is not None:
-        #print "I'm in components"
+        print("I'm in components")
         for c in samp.components:
-            if c.dataset != "" and ((opt.dat != "" and opt.dat == c.label) or opt.dat == ""):
+            if c.dataset != "" and ((opt.dat != "" and (opt.dat == c.label or opt.dat == samp.label)) or opt.dat == ""):
                 complist.append(copy.deepcopy(c))
             else:
                 if not c.dataset != "":
@@ -85,8 +83,6 @@ for samp in samlist:
         else:
             if not samp.dataset != "":
                 print "Skipping " + samp.label + ", its dataset is missing up to now"
-            
-#print(complist)
 
 for s in complist:
     print "\n\nConsidering " + s.label + " sample..."
@@ -216,3 +212,4 @@ for s in complist:
         crabout = os.system(crabcommand)
 
 print "\n\n\n...and that's all from crab! Bye!\n\n\n"
+
