@@ -1434,7 +1434,7 @@ for year in years:
             bin_metpt = array("f", [0., 20., 50., 100., 150., 200., 300., 500.])
         nbin_metpt = len(bin_metpt) - 1
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', nbin_metpt, bin_metpt))
-
+        '''
         if opt.sr:
             bin_mjj = array("f", [500., 600., 800., 1000., 1200., 2000.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
@@ -1444,7 +1444,7 @@ for year in years:
             #bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
-
+        '''
         if opt.sr:
             bin_invm = array("f", [500., 600., 800., 1000., 1200., 2000.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
