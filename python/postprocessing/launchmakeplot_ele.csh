@@ -120,14 +120,14 @@ set channel = 'ltau' #
 ####### year3 #######################
 
 #rm /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/*$year3*root #countings
-python3 makeplot.py -y $year3 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "m_o1>120" #--bvetoL
+python3 makeplot.py -y $year3 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "m_o1>100" #--bvetoL
 ##python3 makeplot.py -y $year3 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--cut "m_jj>=500"
 #python3 makeplot.py -y $year3 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--cut "m_jj>=500"
 ##python3 makeplot.py -y $year3 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--cut "m_jj>=500"
 #python3 makeplot.py -y $year3 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count  #--cut "m_jj>=500"
 ##python3 makeplot.py -y $year3 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--cut "m_jj>=500"
 #python3 makeplot.py -y $year3 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--cut "m_jj>=500"
-python3 makeplot.py -y $year3 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "m_o1<120" #--bvetoL
+python3 makeplot.py -y $year3 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "m_o1<100" #--bvetoL
 
 #python3 makeplot.py -y $year3 --lep electron --ws -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
 #python3 makeplot.py -y $year3 --lep electron --bveto -f $folder1 -p --ch $channel --wfake incl_vsjet2 --count
