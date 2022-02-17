@@ -3709,6 +3709,7 @@ class_list = [
     DYJetsToLL_UL2018,
     TTTo2L2Nu_UL2018,
     WrongSign_UL2018,
+    '''
     WWto2L2Nu_UL2018,
     GluGluToWWToENEN_UL2018,
     GluGluToWWToENMN_UL2018,
@@ -3728,7 +3729,7 @@ class_list = [
     VBFHToTauTau_UL2018,
     ttHToNonbb_UL2018,
     VHToNonbb_UL2018,
-
+    '''
     #WJets_UL2018,
     FakeMu_UL2018,
     #FakeMuPromptTau_UL2018,
