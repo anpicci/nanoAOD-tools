@@ -1452,7 +1452,7 @@ for year in years:
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', nbin_metpt, bin_metpt))
         '''
         if opt.sr:
-            bin_mjj = array("f", [500., 600., 800., 1000., 1200., 1600., 2000.])
+            bin_mjj = array("f", [500., 600., 800., 1000., 1400., 1800., 2200., 3000.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_mjj = array("f", [0., 150., 300., 500., 700., 1000., 1400., 1800., 3000.])
         else:
