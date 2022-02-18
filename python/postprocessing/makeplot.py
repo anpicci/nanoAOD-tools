@@ -52,6 +52,7 @@ parser.add_option('--wjets', dest='wjets', default = False, action='store_true',
 parser.add_option('--fakes', dest='fakes', default = False, action='store_true', help='Enable FL CR, default disabled')
 parser.add_option('--ws', dest='ws', default = False, action='store_true', help='Enable WrongSign CR, default disabled')
 parser.add_option('--dy', dest='dy', default = False, action='store_true', help='Enable DY CR, default disabled')
+parser.add_option('--wsdy', dest='wsdy', default = False, action='store_true', help='Enable DY+WS CR, default disabled')
 parser.add_option('--qcd', dest='qcd', default = False, action='store_true', help='Enable QCD CR, default disabled')
 parser.add_option('--blinded', dest='blinded', default = False, action='store_true', help='Activate blinding')
 parser.add_option('--signal', dest='signal', default = False, action='store_true', help='Activate only signal')
@@ -142,6 +143,17 @@ elif opt.ws:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
                  'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
                  'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt>50.)*(" + cut + ")", 
+    }
+    cut_tag = 'wrongsing_CR'
+    if opt.bvetoL:
+        cut_tag += '_bvetoL'
+    if opt.cut != "1.":
+        cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
+
+elif opt.wsdy:
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
+                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
+                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1)*(" + cut + ")", 
     }
     cut_tag = 'wrongsing_CR'
     if opt.bvetoL:
@@ -1272,6 +1284,7 @@ for year in years:
 
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
+        '''
         if opt.channel == 'ltau':
             variables.append(variabile('BDT_output_SM_opt', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim6_opt', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
@@ -1279,7 +1292,7 @@ for year in years:
             variables.append(variabile('DNN_output_SM_opt', 'SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
-
+        '''
         '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
