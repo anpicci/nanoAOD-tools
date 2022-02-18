@@ -411,7 +411,7 @@ STtW_antitop_2017.year = 2017
 STtW_antitop_2017.dataset = "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/"+tag_2017+"-v1/NANOAODSIM"
 
 GluGluHToWWTo2L2Nu_2017 = sample(ROOT.kAzure-9, 1, 1001, "GluGluHToWWTo2L2Nu", "GluGluHToWWTo2L2Nu_2017")
-GluGluHToWWTo2L2Nu_2017.sigma =  28.87#pb
+GluGluHToWWTo2L2Nu_2017.sigma =  1.0315#pb
 GluGluHToWWTo2L2Nu_2017.year = 2017
 GluGluHToWWTo2L2Nu_2017.dataset = "/GluGluHToWWTo2L2Nu_M125_13TeV_powheg2_JHUGenV714_pythia8/"+tag_2017+"-v1/NANOAODSIM"
 
@@ -421,32 +421,32 @@ GluGluHToZZTo2L2Q_2017.year = 2017
 GluGluHToZZTo2L2Q_2017.dataset = "/GluGluHToZZTo2L2Q_M125_13TeV_powheg2_JHUGenV7011_pythia8/"+tag3_2017+"-v1/NANOAODSIM"
 
 GluGluHToZZTo4L_2017 = sample(ROOT.kAzure-9, 1, 1001, "GluGluHToZZTo4L", "GluGluHToZZTo4L_2017")
-GluGluHToZZTo4L_2017.sigma =  28.87#pb
+GluGluHToZZTo4L_2017.sigma =  0.0118#pb
 GluGluHToZZTo4L_2017.year = 2017
 GluGluHToZZTo4L_2017.dataset = "/GluGluHToZZTo4L_M125_13TeV_powheg2_JHUGenV7011_pythia8/"+tag_2017+"_ext3-v1/NANOAODSIM"
 
 GluGluHToTauTau_2017 = sample(ROOT.kAzure-9, 1, 1001, "GluGluHToTauTau", "GluGluHToTauTau_2017")
-GluGluHToTauTau_2017.sigma =  30.52#pb
+GluGluHToTauTau_2017.sigma =  2.7757#pb
 GluGluHToTauTau_2017.year = 2017
 GluGluHToTauTau_2017.dataset = "/GluGluHToTauTau_M125_13TeV_powheg_pythia8/"+tag2_2017+"-v1/NANOAODSIM"
 
 VBFHToWWTo2L2Nu_2017 = sample(ROOT.kAzure-9, 1, 1001, "VBFHToWWTo2L2Nu", "VBFHToWWTo2L2Nu_2017")
-VBFHToWWTo2L2Nu_2017.sigma =  3.879#pb
+VBFHToWWTo2L2Nu_2017.sigma =  0.0896#pb
 VBFHToWWTo2L2Nu_2017.year = 2017
 VBFHToWWTo2L2Nu_2017.dataset = "/VBFHToWWTo2L2Nu_M125_13TeV_powheg2_JHUGenV714_pythia8/"+tag_2017+"-v1/NANOAODSIM"
 
 VBFHToTauTau_2017 = sample(ROOT.kAzure-9, 1, 1001, "VBFHToTauTau", "VBFHToTauTau_2017")
-VBFHToTauTau_2017.sigma =  3.879#pb
+VBFHToTauTau_2017.sigma =  0.237#pb
 VBFHToTauTau_2017.year = 2017
 VBFHToTauTau_2017.dataset = "/VBFHToTauTau_M125_13TeV_amcatnloFXFX_pythia8/"+tag_2017+"-v1/NANOAODSIM"
 
 ttHToNonbb_2017 = sample(ROOT.kAzure-9, 1, 1001, "ttHToNonbb", "ttHToNonbb_2017")
-ttHToNonbb_2017.sigma =  0.5269#pb
+ttHToNonbb_2017.sigma =  0.2120 #pb
 ttHToNonbb_2017.year = 2017
 ttHToNonbb_2017.dataset = "/ttHToNonbb_M125_TuneCP5_PSweights_13TeV-powheg-pythia8/"+tag_2017+"-v1/NANOAODSIM"
 
 VHToNonbb_2017 = sample(ROOT.kAzure-9, 1, 1001, "VHToNonbb", "VHToNonbb_2017")
-VHToNonbb_2017.sigma =  2.127#pb
+VHToNonbb_2017.sigma =  0.952#pb
 VHToNonbb_2017.year = 2017
 VHToNonbb_2017.dataset = "/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/"+tag_2017+"-v1/NANOAODSIM"
 
@@ -1408,7 +1408,7 @@ STtW_antitop_2018.year = 2018
 STtW_antitop_2018.dataset = "/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"_ext1-v1/NANOAODSIM"
 
 GluGluHToWWTo2L2Nu_2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluHToWWTo2L2Nu", "GluGluHToWWTo2L2Nu_2018")
-GluGluHToWWTo2L2Nu_2018.sigma =  28.87#pb
+GluGluHToWWTo2L2Nu_2018.sigma =  1.0315#pb
 GluGluHToWWTo2L2Nu_2018.year = 2018
 GluGluHToWWTo2L2Nu_2018.dataset = "/GluGluHToWWTo2L2Nu_M125_13TeV_powheg2_JHUGenV714_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
@@ -1418,32 +1418,32 @@ GluGluHToZZTo2L2Q_2018.year = 2018
 GluGluHToZZTo2L2Q_2018.dataset = "/GluGluHToZZTo2L2Q_M125_13TeV_powheg2_JHUGenV7011_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluHToZZTo4L_2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluHToZZTo4L", "GluGluHToZZTo4L_2018")
-GluGluHToZZTo4L_2018.sigma =  28.87#pb
+GluGluHToZZTo4L_2018.sigma =  0.0118#pb
 GluGluHToZZTo4L_2018.year = 2018
 GluGluHToZZTo4L_2018.dataset = "/GluGluHToZZTo4L_M125_13TeV_powheg2_JHUGenV7011_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 GluGluHToTauTau_2018 = sample(ROOT.kAzure-9, 1, 1001, "GluGluHToTauTau", "GluGluHToTauTau_2018")
-GluGluHToTauTau_2018.sigma =  30.52#pb
+GluGluHToTauTau_2018.sigma =  2.7757#pb
 GluGluHToTauTau_2018.year = 2018
 GluGluHToTauTau_2018.dataset = "/GluGluHToTauTau_M125_13TeV_powheg_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 VBFHToWWTo2L2Nu_2018 = sample(ROOT.kAzure-9, 1, 1001, "VBFHToWWTo2L2Nu", "VBFHToWWTo2L2Nu_2018")
-VBFHToWWTo2L2Nu_2018.sigma =  3.879#pb
+VBFHToWWTo2L2Nu_2018.sigma =  0.0896#pb
 VBFHToWWTo2L2Nu_2018.year = 2018
 VBFHToWWTo2L2Nu_2018.dataset = "/VBFHToWWTo2L2Nu_M125_13TeV_powheg2_JHUGenV714_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 VBFHToTauTau_2018 = sample(ROOT.kAzure-9, 1, 1001, "VBFHToTauTau", "VBFHToTauTau_2018")
-VBFHToTauTau_2018.sigma =  3.879#pb
+VBFHToTauTau_2018.sigma =  0.237#pb
 VBFHToTauTau_2018.year = 2018
 VBFHToTauTau_2018.dataset = "/VBFHToTauTau_M125_13TeV_powheg_pythia8/"+tag_2018+"_ext1-v1/NANOAODSIM"
 
 ttHToNonbb_2018 = sample(ROOT.kAzure-9, 1, 1001, "ttHToNonbb", "ttHToNonbb_2018")
-ttHToNonbb_2018.sigma =  0.5269#pb
+ttHToNonbb_2018.sigma =  0.2120 #pb
 ttHToNonbb_2018.year = 2018
 ttHToNonbb_2018.dataset = "/ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
 VHToNonbb_2018 = sample(ROOT.kAzure-9, 1, 1001, "VHToNonbb", "VHToNonbb_2018")
-VHToNonbb_2018.sigma =  2.127#pb
+VHToNonbb_2018.sigma =  0.952#pb
 VHToNonbb_2018.year = 2018
 VHToNonbb_2018.dataset = "/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/"+tag_2018+"-v1/NANOAODSIM"
 
