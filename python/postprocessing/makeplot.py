@@ -155,7 +155,7 @@ elif opt.wsdy:
                  'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
                  'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1)*(" + cut + ")", 
     }
-    cut_tag = 'wrongsing_CR'
+    cut_tag = 'OS_CR'
     if opt.bvetoL:
         cut_tag += '_bvetoL'
     if opt.cut != "1.":

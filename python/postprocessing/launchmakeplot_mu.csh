@@ -7,7 +7,8 @@ set folder0 = vUL002 #_tagger_DataSplit_MCnoSplit
 set channel = "ltau" 
 
 #################### year1 #################
-#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/* #countings
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year1*root #countings
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*
 #python3 makeplot.py -y $year1 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #-d FakeMu_$year1
 #python3 makeplot.py -y $year1 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #-d FakeMu_$year1
 #python3 makeplot.py -y $year1 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #-d FakeMu_$year1
@@ -19,7 +20,8 @@ set channel = "ltau"
 ##python3 makeplot.py -y $year1 --lep muon --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2  --count #-d FakeMu_$year1
 
 #################### year1bis #################
-rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/* #countings
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year1bis*root #countings
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*
 python3 makeplot.py -y $year1bis --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeMu_$year1bis
 python3 makeplot.py -y $year1bis --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeMu_$year1bis
 python3 makeplot.py -y $year1bis --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count #-d FakeMu_$year1bis
@@ -33,7 +35,8 @@ python3 makeplot.py -y $year1bis --lep muon --wsdy -f $folder0 -p --ch $channel 
 ##python3 makeplot.py -y $year1bis --lep muon --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count  --bvetoL #-d FakeMu_$year1bis
 
 #################### year2 #################
-#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/* #countings
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year2*root #countings
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*
 #python3 makeplot.py -y $year2 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeMu_$year2
 #python3 makeplot.py -y $year2 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeMu_$year2
 #python3 makeplot.py -y $year2 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d FakeMu_$year2
@@ -46,7 +49,8 @@ python3 makeplot.py -y $year1bis --lep muon --wsdy -f $folder0 -p --ch $channel 
 ##python3 makeplot.py -y $year2 --lep muon --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count --bvetoL #-d FakeMu_$year2
 
 #################### year3 #################
-rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/* #countings
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year3*root #countings
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*
 python3 makeplot.py -y $year3 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
 python3 makeplot.py -y $year3 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
 python3 makeplot.py -y $year3 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count
