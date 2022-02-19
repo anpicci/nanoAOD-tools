@@ -1300,15 +1300,13 @@ for year in years:
 
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
-        '''
-        if opt.channel == 'ltau':
+        if opt.channel == 'ltau' and not "UL" in opt.folder:
             variables.append(variabile('BDT_output_SM_opt', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim6_opt', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim8_opt', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_SM_opt', 'SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
 
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
@@ -1318,10 +1316,9 @@ for year in years:
         '''
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
-        
-
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         '''
+
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 12, -3., 3.))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
 
