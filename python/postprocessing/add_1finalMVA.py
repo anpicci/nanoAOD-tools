@@ -156,7 +156,7 @@ def MLRun(k, kpath):
         #check if there is at least one event in the tree
         print(os.path.exists(file_path))
         tmpfile = ROOT.TFile.Open(file_path)
-        tmpfile.ls()
+        #tmpfile.ls()
         tmptree = tmpfile.Get("events_all")
         tmpentr = tmptree.GetEntries()
         tmptree.Delete()
@@ -337,8 +337,12 @@ for v in class_list:
             print(k, "not mergable")
         continue
     '''
-
-    if hasattr(v, 'components'):
+    hascomp = False
+    if "UL" in opt.year:
+        hascomp = hasattr(v, "components")
+    else:
+        hascomp = v.components is not None
+    if hascomp:#hasattr(v, 'components'):
         if opt.dat != 'all':
             if not str(k).startswith(opt.dat):
                 if not k.startswith(opt.dat):
@@ -368,7 +372,7 @@ for v in class_list:
                         print("rm -f " + cpath + k + "_merged.root")
                     else:
                         os.system("rm -f " + cpath + k + "_merged.root")
-
+            print(partmerge)
             if partmerge:
                 print(c.label + " not merged so far")
 
