@@ -1287,6 +1287,7 @@ for year in years:
         elif opt.channel == 'emu':
             wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
         
+        '''
         try:
             vfold = int(opt.folder.split("v")[-1])
         except:
@@ -1294,7 +1295,7 @@ for year in years:
         else:
             if vfold > 86:
                 wzero += "*btagSF"
-        
+        '''
         cutbase = cut_dict[lep]
 
 
