@@ -31,8 +31,8 @@ BTAG_ETA_CUT=   5
 BTAG_ALGO   =   'DeepFlv'
 BTAG_WP     =   'M'
 BTAG_WP_LOOSE     =   'L'
-ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16 #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
-ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE = 16 #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
+ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 8 #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
+ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE = 8 #Bydeeptau2017v2p1vsjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
 ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 8 #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
 ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU = 8 #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight
 ID_TAU_RECO_DEEPTAU_VSJET = 64 #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight

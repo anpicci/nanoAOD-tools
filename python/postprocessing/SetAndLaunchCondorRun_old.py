@@ -326,9 +326,9 @@ if not opt.check:
             t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     else:
         t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE = 8" + " #Bydeeptau2017v2p1vsjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE = 2" + " #Bydeeptau2017v2p1vsjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
         t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-        t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+        t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU = 2" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     
     t.write("ID_TAU_RECO_DEEPTAU_VSJET = " + vsJet_dict[opt.jetwp] + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     t.write("ID_TAU_RECO_DEEPTAU_VSELE = " + vsEle_dict[opt.elewp] + "  #byDeepTau2017v2p1VSe ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
