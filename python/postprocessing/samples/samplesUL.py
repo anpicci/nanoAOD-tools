@@ -499,13 +499,13 @@ WpWpJJ_QCD_UL2016APV.dataset = ""
 VBS_SSWW_LL_SM_UL2016APV = sample(VBSLLcolor, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_UL2016APV")
 VBS_SSWW_LL_SM_UL2016APV.sigma = 0.002014
 VBS_SSWW_LL_SM_UL2016APV.year = "UL2016APV"
-VBS_SSWW_LL_SM_UL2016APV.dataset = ""
+VBS_SSWW_LL_SM_UL2016APV.dataset = "/VBS_SSWW_LL_polarization_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
 
 #### in production stage ####
 VBS_SSWW_TL_SM_UL2016APV = sample(VBSTLcolor, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_UL2016APV")
 VBS_SSWW_TL_SM_UL2016APV.sigma = 0.01036
 VBS_SSWW_TL_SM_UL2016APV.year = "UL2016APV"
-VBS_SSWW_TL_SM_UL2016APV.dataset = ""
+VBS_SSWW_TL_SM_UL2016APV.dataset = "/VBS_SSWW_TL_polarization_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 
 #### in production stage #### v2 available
 VBS_SSWW_TT_SM_UL2016APV = sample(VBSTTcolor, 1, 1001, "VBS ssWW TT", "VBS_SSWW_TT_SM_UL2016APV")
@@ -2024,7 +2024,7 @@ WpWpJJ_QCD_UL2017.dataset = ""
 VBS_SSWW_LL_SM_UL2017 = sample(VBSLLcolor, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_UL2017")
 VBS_SSWW_LL_SM_UL2017.sigma = 0.002014
 VBS_SSWW_LL_SM_UL2017.year = "UL2017"
-VBS_SSWW_LL_SM_UL2017.dataset = ""
+VBS_SSWW_LL_SM_UL2017.dataset = "/VBS_SSWW_LL_polarization_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
 
 #### in production stage ####
 VBS_SSWW_TL_SM_UL2017 = sample(VBSTLcolor, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_UL2017")

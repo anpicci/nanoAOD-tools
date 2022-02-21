@@ -42,30 +42,30 @@ set channel = 'ltau' #
 
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/*$year2*root #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*$year2*
-python3 makeplot.py -y $year2 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
-python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
-python3 makeplot.py -y $year2 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
-#python3 makeplot.py -y $year2 --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL -d VBS_SSWW_FT1_1_SM_$year2
-##python3 makeplot.py -y $year2 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL -d VBS_SSWW_FT1_1_SM_$year2
-python3 makeplot.py -y $year2 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
-##python3 makeplot.py -y $year2 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
-##python3 makeplot.py -y $year2 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
-##python3 makeplot.py -y $year2 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
-##python3 makeplot.py -y $year2 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL -d VBS_SSWW_FT1_1_SM_$year2
-python3 makeplot.py -y $year2 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year2
+python3 makeplot.py -y $year2 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
+python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
+python3 makeplot.py -y $year2 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
+#python3 makeplot.py -y $year2 --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL -d VBS_SSWW_FT1_0_$year2
+##python3 makeplot.py -y $year2 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL -d VBS_SSWW_FT1_0_$year2
+python3 makeplot.py -y $year2 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
+##python3 makeplot.py -y $year2 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
+##python3 makeplot.py -y $year2 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
+##python3 makeplot.py -y $year2 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
+##python3 makeplot.py -y $year2 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL -d VBS_SSWW_FT1_0_$year2
+python3 makeplot.py -y $year2 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year2
 
 ####### year3 #######################
 
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/*$year3*root #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*$year3*
-python3 makeplot.py -y $year3 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year3
-python3 makeplot.py -y $year3 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year3
-python3 makeplot.py -y $year3 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year3
-#python3 makeplot.py -y $year3 --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL -d VBS_SSWW_FT1_1_SM_$year3
-python3 makeplot.py -y $year3 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year3
-##python3 makeplot.py -y $year3 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL -d VBS_SSWW_FT1_1_SM_$year3
-##python3 makeplot.py -y $year3 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_FT1_1_SM_$year3
-##python3 makeplot.py -y $year3 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_FT1_1_SM_$year3
-##python3 makeplot.py -y $year3 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_FT1_1_SM_$year3
-python3 makeplot.py -y $year3 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_1_SM_$year3
-##python3 makeplot.py -y $year3 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL -d VBS_SSWW_FT1_1_SM_$year3
+python3 makeplot.py -y $year3 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year3
+python3 makeplot.py -y $year3 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year3
+python3 makeplot.py -y $year3 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year3
+#python3 makeplot.py -y $year3 --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL -d VBS_SSWW_FT1_0_$year3
+python3 makeplot.py -y $year3 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year3
+##python3 makeplot.py -y $year3 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL -d VBS_SSWW_FT1_0_$year3
+##python3 makeplot.py -y $year3 --lep electron --bveto -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_FT1_0_$year3
+##python3 makeplot.py -y $year3 --lep electron --wjets -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_FT1_0_$year3
+##python3 makeplot.py -y $year3 --lep electron --qcd -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_FT1_0_$year3
+python3 makeplot.py -y $year3 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_FT1_0_$year3
+##python3 makeplot.py -y $year3 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL -d VBS_SSWW_FT1_0_$year3
