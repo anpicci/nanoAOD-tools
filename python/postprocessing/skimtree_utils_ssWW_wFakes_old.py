@@ -1038,7 +1038,7 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
             #passHT = True
 
     elif(year == "UL2018"):
-        if(HLT.IsoMu27):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
+        if(HLT.IsoMu24):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if(HLT.Ele32_WPTight_Gsf):# or HLT.Photon200)
             passEle = True
