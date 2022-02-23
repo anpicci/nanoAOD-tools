@@ -135,6 +135,9 @@ for sample in samples:
         isMC = False
     if not os.path.exists(opath):#"/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label):
         os.makedirs(opath)#"/eos/home-" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label)
+        print(opath, "created")
+    else:
+        print(opath, "already exists")
     print(sample.label, sample.name)
     f = open("../../crab/macros/files/" + sample.name + ".txt", "r")
     files_list = f.read().splitlines()

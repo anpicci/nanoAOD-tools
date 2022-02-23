@@ -2792,7 +2792,7 @@ WpWpJJ_QCD_UL2018.dataset = ""
 VBS_SSWW_LL_SM_UL2018 = sample(VBSLLcolor, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_UL2018")
 VBS_SSWW_LL_SM_UL2018.sigma = 0.002014
 VBS_SSWW_LL_SM_UL2018.year = "UL2018"
-VBS_SSWW_LL_SM_UL2018.dataset = ""
+VBS_SSWW_LL_SM_UL2018.dataset = "/VBS_SSWW_LL_polarization_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 
 #### in production stage ####
 VBS_SSWW_TL_SM_UL2018 = sample(VBSTLcolor, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_UL2018")
