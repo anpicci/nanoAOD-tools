@@ -97,10 +97,10 @@ class FakeCalculator_manager:
                     if isMC and (FakeTau.isPrompt!=5): 
                         SF = 0
                     isTight = False
-
                     if FakeTau.DeepTauWP>=64:
                         isTight = True
-                hTau.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
+                    
+                    hTau.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
         
         return True
                     
