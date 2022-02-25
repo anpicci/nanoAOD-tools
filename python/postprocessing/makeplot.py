@@ -38,7 +38,7 @@ parser.add_option('-p', '--plot', dest='plot', default = False, action='store_tr
 parser.add_option('-s', '--stack', dest='stack', default = False, action='store_true', help='Default make no stacks')
 parser.add_option('-N', '--notstacked', dest='tostack', default = True, action='store_false', help='Default make plots stacked')
 parser.add_option('-L', '--lep', dest='lep', type='string', default = 'incl', help='Default make incl analysis')
-parser.add_option('-S', '--syst', dest='syst', type='string', default = 'all', help='Default all systematics added')
+parser.add_option('-S', '--syst', dest='syst', type='string', default = '', help='Default all systematics added')
 parser.add_option('-C', '--cut', dest='cut', type='string', default = '1.', help='Default no cut')
 parser.add_option('-y', '--year', dest='year', type='string', default = '2017', help='Default 2016, 2017 and 2018 are included')
 parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v7', help='Default folder is v0')
@@ -264,6 +264,38 @@ if opt.bdt or opt.ebdt or opt.mubdt:
 
 
 lumi = {'2016': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83}
+
+systematics = []
+if opt.syst!="all" and opt.syst!="noSyst":
+     for syst in (opt.syst).split(","):
+          systematics.append(syst)
+elif opt.syst!="all" and opt.syst=="noSyst":
+    systematics.append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
+else:
+     systematics = [
+         "",
+         #"jesUp",
+         #"jesDown",
+         #"jerUp",
+         #"jerDown",
+         #"PFUp",
+         #"PFDown",
+         #"puUp",
+         #"puDown",
+         "btagUp", 
+         #"btagDown",
+         #"mistagUp",
+         #"mistagDown",
+         #"lepUp", 
+         #"lepDown",
+         #"trigUp",
+         #"trigDown",
+         #"pdf_totalUp",
+         #"pdf_totalDown",
+         #"q2Up",
+         #"q2Down"
+     ]
+
 
 print(cut_tag)
 
@@ -653,178 +685,181 @@ def lumi_writer(dataset, lumi):
 
 
 def plot(lep, reg, variable, sample, cut_tag, syst=""):
-     print("in plotf")
-     IsDim8 = False
-     if sample.label.startswith("VBS_SSWW_F"):
-         IsDim8 = True
-     print("IsDim8?:", IsDim8)
-     print("in plot function")
-     print("plotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, "with FR", FRtag)#, " ", syst,
-     ROOT.TH1.SetDefaultSumw2()
-     cutbase = variable._taglio
-     cut = ''
+    print("in plotf")
+    treename = "events_"
+    IsDim8 = False
+    if sample.label.startswith("VBS_SSWW_F"):
+        IsDim8 = True
+   
+    print("IsDim8?:", IsDim8)
+    print("in plot function")
+    print("plotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, "with FR", FRtag, "syst applied", syst)
+    ROOT.TH1.SetDefaultSumw2()
+    cutbase = variable._taglio
+    histoname = "h_" + variable._name + "_" + cut_tag
 
-     print("count? ", opt.count)
-     if opt.count:
-          countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".txt", "a")
-          countf.write(sample.label)
-          #countf.write("\nBin\tContent\tError")
+    if(syst.startswith("jer") or syst.startswith("jes")):
+        treename += syst
+    else:
+        treename += "_all"
+    if syst != "":
+        nominal = syst.replace("Up", "SF").replace("Down", "SF")
+        histoname += "_" + syst
+        if not(syst.startswith("jer") or syst.startswith("jes")):
+        #if syst.startswith("btag"):
+            cutbase += '*(1.*' + syst + '/' + nominal + ')'
+            print('*(1.*' + syst + '/' + nominal + ')')
 
-     if opt.channel=="ltau":
-         l1fstr = "lepton"
-         l2fstr = "tau"
-     elif opt.channel=="emu":
-         l1fstr = "electron"
-         l2fstr = "muon"
+    cut = ''
 
-     if 'Fake' in str(sample.label):
-          if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
-               f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
-          elif opt.removePrompt:
-               f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
-          else:
-               f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
-          if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('FakeElePromptTau') or str(sample.label).startswith('FakeMuPromptTau'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('PromptEleFakeTau') or str(sample.label).startswith('PromptMuFakeTau'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('FakeEleFakeTau') or str(sample.label).startswith('FakeMuFakeTau'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('FakeEleMu'):
-              if opt.channel == 'emu':
-                   cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet4" + "))" + ")"
+    print("count? ", opt.count)
+    if opt.count:
+        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".txt", "a")
+        countf.write(sample.label)
+        #countf.write("\nBin\tContent\tError")
 
-     else:
-          f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
-          cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
+    if opt.channel=="ltau":
+        l1fstr = "lepton"
+        l2fstr = "tau"
+    elif opt.channel=="emu":
+        l1fstr = "electron"
+        l2fstr = "muon"
 
-     if not ("Data" in sample.label):
-         if sample.year == "UL2016APV":
-             cut += "*(0.54)"
-         elif sample.year == "UL2016":
-             cut += "*(0.46)"
-         else:
-             cut += "*(1.)"
+    if 'Fake' in str(sample.label):
+        if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
+            f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
+        elif opt.removePrompt:
+            f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+        else:
+            f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
+        if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('FakeElePromptTau') or str(sample.label).startswith('FakeMuPromptTau'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('PromptEleFakeTau') or str(sample.label).startswith('PromptMuFakeTau'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('FakeEleFakeTau') or str(sample.label).startswith('FakeMuFakeTau'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('FakeEleMu'):
+            if opt.channel == 'emu':
+                cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet4" + "))" + ")"
 
-     if not ('Fake' in str(sample.label) or 'Data' in str(sample.label)):
+    else:
+        f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+        cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
+
+    if not ("Data" in sample.label):
+        if sample.year == "UL2016APV":
+            cut += "*(0.54)"
+        elif sample.year == "UL2016":
+            cut += "*(0.46)"
+        else:
+            cut += "*(1.)"
+
+    if not ('Fake' in str(sample.label) or 'Data' in str(sample.label)):
         if opt.channel == 'ltau':
-             cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&" + l2fstr + "_isPrompt==5)"
+            cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&" + l2fstr + "_isPrompt==5)"
         #elif opt.channel == 'emu':
              #cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&(" + l2fstr + "_isPrompt==1||" + l2fstr + "_isPrompt==15))"
 
-     nbins = variable._nbins
-     histoname = "h_" + variable._name + "_" + cut_tag
+    nbins = variable._nbins
 
-     #print(variable._iscustom)
-     if not variable._iscustom:
-          h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin, variable._xmax)
-     else:
-          h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin)
+    #print(variable._iscustom)
+    if not variable._iscustom:
+        h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin, variable._xmax)
+    else:
+        h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin)
 
-     h1.Sumw2()
+    h1.Sumw2()
 
-     if IsDim8:
-         cut = "(w_dim8[0])*" + cut
+    if IsDim8:
+        cut = "(w_dim8[0])*" + cut
 
-     '''
-     else:
-          if(syst==""):
-            taglio = variable._taglio+"*w_nominal"
-            foutput = "Plot/"+lep+"/"+channel+"_"+lep+".root"
-        elif(syst.startswith("jer") or syst.startswith("jes")):
-            taglio = variable._taglio+"*w_nominal"
-            treename = "events_"+reg+"_"+syst
-            foutput = "Plot/"+lep+"/"+channel+"_"+lep+"_"+syst+".root"
-            if(channel == "WJets_ext" and lep.startswith("electron")):
-                taglio = variable._taglio+"*w_nominal*(abs(w)<10)"
-     '''
-     vartoproject = ''
-     if variable._name == 'countings':
-         print("name", variable._name, "histname:", h1.GetName())
-         vartoproject = 'm_jj'
-         #f1.Get("events_all").Project(histoname,"m_jj",cut)
-     elif variable._name.startswith("lepBDT_"):
-         vartoproject = "BDT_output_"
-         if lep == 'muon':
-             vartoproject = vartoproject + "mu"
-         elif lep == 'electron':
-             vartoproject = vartoproject + "ele"
-         elif lep == 'incl':
-             vartoproject = "BDT_output_ele*(abs(lepton_pdgid)==11)+BDT_output_mu*(abs(lepton_pdgid)==13)"
-     else:
-         vartoproject = variable._name
+    vartoproject = ''
+    if variable._name == 'countings':
+        print("name", variable._name, "histname:", h1.GetName())
+        vartoproject = 'm_jj'
+        #f1.Get("events_all").Project(histoname,"m_jj",cut)
+    elif variable._name.startswith("lepBDT_"):
+        vartoproject = "BDT_output_"
+        if lep == 'muon':
+            vartoproject = vartoproject + "mu"
+        elif lep == 'electron':
+            vartoproject = vartoproject + "ele"
+        elif lep == 'incl':
+            vartoproject = "BDT_output_ele*(abs(lepton_pdgid)==11)+BDT_output_mu*(abs(lepton_pdgid)==13)"
+    else:
+        vartoproject = variable._name
 
-     #if not variable._name == 'countings':
-     if 'MC' in variable._name:
-         cut = cut + "*(" + str(vartoproject) + "!-100.)"
-     else:
-         cut = cut + "*(" + str(vartoproject) + ">-10.)"
-     #else:
-         #cut = cut + '*(1.)'
-     #if "WpWpJJ_EWK" in sample.label or 'VBS_SSWW' in sample.label:
-          #cut = cut + "*10."
+    #if not variable._name == 'countings':
+    if 'MC' in variable._name:
+        cut = cut + "*(" + str(vartoproject) + "!-100.)"
+    else:
+        cut = cut + "*(" + str(vartoproject) + ">-10.)"
+    #else:
+        #cut = cut + '*(1.)'
+    #if "WpWpJJ_EWK" in sample.label or 'VBS_SSWW' in sample.label:
+        #cut = cut + "*10."
 
-     if opt.horn:
-         cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
+    if opt.horn:
+        cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
 
-     print('cut:', str(cut))
-     foutput = pathplot + sample.label + "_" + lep + ".root"
+    print('cut:', str(cut))
+    foutput = pathplot + sample.label + "_" + lep + ".root"
 
-     f1.Get("events_all").Project(histoname,vartoproject,cut)
+    f1.Get("events_all").Project(histoname,vartoproject,cut)
 
-     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
-     h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
-     #if not (opt.blinded and (variable._name == 'MET_pt' or variable._name == 'm_jj')):
-     h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
-     h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
+    h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
+    h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
+    #if not (opt.blinded and (variable._name == 'MET_pt' or variable._name == 'm_jj')):
+    h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
+    h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
 
-     tot = 0.
-     terr = 0.
+    tot = 0.
+    terr = 0.
 
-     for i in range(0, nbins+1):
-          content = h1.GetBinContent(i)
-          if(content<0.):
-               h1.SetBinContent(i, 0.)
+    for i in range(0, nbins+1):
+        content = h1.GetBinContent(i)
+        if(content<0.):
+            h1.SetBinContent(i, 0.)
 
-     for bidx in range(nbins):          
-          bidx_l = bidx + 1
-          if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
-               h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
+    for bidx in range(nbins):          
+        bidx_l = bidx + 1
+        if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
+            h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
 
-          if not opt.count:
-               continue
-          else:
-              #pass
-              minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
-              maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
-              bincont = round(h1.GetBinContent(bidx_l), 6)
-              tot += bincont
-              bincont = str(bincont)
-              binerrcont = round(h1.GetBinError(bidx_l), 6)
-              terr += binerrcont**2.
-              binerrcont = str(binerrcont)
-              #countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
+        if not opt.count:
+            continue
+        else:
+            #pass
+            minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
+            maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
+            bincont = round(h1.GetBinContent(bidx_l), 6)
+            tot += bincont
+            bincont = str(bincont)
+            binerrcont = round(h1.GetBinError(bidx_l), 6)
+            terr += binerrcont**2.
+            binerrcont = str(binerrcont)
+            #countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
 
-     if opt.count:
-         terr = terr**0.5
-         countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
-     print("int:", h1.Integral())
+    if opt.count:
+        terr = terr**0.5
+        countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
+    print("int:", h1.Integral())
       
-     fout = ROOT.TFile.Open(foutput, "UPDATE")
-     fout.cd()
-     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
-     fout.Close()
-     f1.Close()
-
-     if opt.count:
-          countf.write("\n\n")
-          #countf.close()
+    fout = ROOT.TFile.Open(foutput, "UPDATE")
+    fout.cd()
+    h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
+    fout.Close()
+    f1.Close()
+    
+    if opt.count:
+        countf.write("\n\n")
+        #countf.close()
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
@@ -869,6 +904,11 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     if opt.wfake != 'nofake':
         stackname += "_wFakes_" + str(opt.wfake.split('_')[0])
         canvasname += "_wFakes_" + str(opt.wfake.split('_')[0])
+    if syst_ != "":
+        histoname += "_" + syst
+        stackname += "_" + syst
+        canvasname += "_" + syst
+
     if opt.sr:
         blind = True
     stack = ROOT.THStack(stackname, variabile_._name)
@@ -894,13 +934,6 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         if('WpWpJJ_EWK' in s.label or 'VBS_SSWW' in s.label) and not opt.signal:
             signal = True
             #print(s.label)
-        if(syst_ == ""):
-            #outfile = plotrepo + "stack_" + str(lep_).strip('[]') + ".root"
-            infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + ".root")
-
-        else:
-            #outfile = plotrepo + "stack_"+syst_+"_"+str(lep_).strip('[]')+".root"
-            infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + "_" + syst_ + ".root")
     i = 0
 
     print(infile)
@@ -1584,18 +1617,19 @@ for year in years:
                 continue
                     
             if(opt.plot):
-                for var in variables:
-                    if opt.count:
-                        if not os.path.exists(pathplot + 'countings/'):
-                            os.makedirs(pathplot + 'countings/')
-                        if not os.path.exists(pathplot + 'countings/' + cut_tag):
-                            os.makedirs(pathplot + 'countings/' + cut_tag)
-                        if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt"):
-                            tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt", "w")
-                            tmp_f.close()
-                    if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
-                        continue
-                    plot(lep, opt.channel, var, sample, cut_tag, "")
+                for syst in systematics:
+                    for var in variables:
+                        if opt.count:
+                            if not os.path.exists(pathplot + 'countings/'):
+                                os.makedirs(pathplot + 'countings/')
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag):
+                                os.makedirs(pathplot + 'countings/' + cut_tag)
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt"):
+                                tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt", "w")
+                                tmp_f.close()
+                        if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
+                            continue
+                        plot(lep, opt.channel, var, sample, cut_tag, syst)
 
         if(opt.stack):
             for var in variables:

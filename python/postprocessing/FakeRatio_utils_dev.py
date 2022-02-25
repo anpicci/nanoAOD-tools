@@ -468,7 +468,7 @@ def Veto_Tau_Leptons(taus, ele, mu, vsJetWP):
     if len(taus)==0: 
         return 1, idxl
     for i, tau in enumerate(taus):
-        if tau.idDeepTau2017v2p1VSjet>=vsJetWP and tau.idDeepTau2017v2p1VSe>=4  and tau.idDeepTau2017v2p1VSmu>=8: 
+        if tau.pt > 20. and abs(tau.eta) < 2.3 and tau.idDeepTau2017v2p1VSjet>=vsJetWP and tau.idDeepTau2017v2p1VSe>=4  and tau.idDeepTau2017v2p1VSmu>=8: 
             nTau+=1
             idxl.append(i)
     if nTau!=1:
@@ -477,11 +477,11 @@ def Veto_Tau_Leptons(taus, ele, mu, vsJetWP):
 
     for i in idxl:
         for electron in ele:
-            if deltaR(taus[i].eta, taus[i].phi, electron.eta, electron.pt)>0.5 and electron.jetRelIso<1 and electron.mvaFall17V2Iso_WPL:
+            if electron.pt > 20. and abs(electron.eta) < 2.4 and not (abs(electron.eta)>1.4442 and abs(electron.eta)<1.566) and (deltaR(taus[i].eta, taus[i].phi, electron.eta, electron.pt)>0.2 and electron.jetRelIso<1 and electron.mvaFall17V2Iso_WPL):
                 #print len(taus), idxl
                 return 1, idxl
         for muon in mu:
-            if deltaR(taus[0].eta, taus[0].phi, muon.eta, muon.phi)>0.5 and muon.pfRelIso04_all<1 and muon.looseId:
+            if muon.pt > 20. and abs(muon.eta) < 2.4 and deltaR(taus[0].eta, taus[0].phi, muon.eta, muon.phi)>0.2 and muon.pfRelIso04_all<1 and muon.looseId:
                 #print len(taus), idxl
                 return 1, idxl
     #print len(taus), idxl
@@ -586,21 +586,22 @@ def Veto_Light_Leptons_VL(ele, mu):
     return nLeps, idxl_e, idxl_m
 
 def Veto_Light_Leptons(ele, mu):
-    isEle=0
-    isMu=0
     nEle=0
     nMu=0
     idxl_e = []
     idxl_m = []
     for i, electron in enumerate(ele):
-        if electron.jetRelIso<1 and electron.mvaFall17V2Iso_WPL:
+        if electron.pt > 20. and abs(electron.eta)<2.4 and not not (abs(electron.eta)>1.4442 and abs(electron.eta)<1.566) and electron.jetRelIso<1 and electron.mvaFall17V2Iso_WPL:
             nEle+=1
             idxl_e.append(i)
     for i, muon in enumerate(mu):
-        if muon.pfRelIso04_all<1 and muon.looseId:
+        if muon.pt > 20. and abs(muon.eta)<2.4 and  muon.pfRelIso04_all<1 and muon.looseId:
             nMu=+1
             idxl_m.append(i)
+
     nLeps=nEle+nMu
+    if not (nEle<2 and nMu<2):
+        nLeps = -1
     return nLeps, idxl_e, idxl_m
 
 def Veto_Light_Leptons_tight(ele, mu):
@@ -618,7 +619,8 @@ def Veto_Light_Leptons_tight(ele, mu):
         if muon.pfRelIso04_all<1  and muon.tightId:
             nMu=+1
             idxl_m.append(i)
-    nLeps=nEle+nMu
+    if nEle == 1 and nMu == 1:
+        nLeps=nEle+nMu
     #print("number of leptons is: ", nLeps, '                                   ele ', nEle, ' nMu ', nMu)                       
     return nLeps, idxl_e, idxl_m
 

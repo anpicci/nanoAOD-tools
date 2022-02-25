@@ -27,6 +27,7 @@ elif username == 'ttedesch':
     uid = 103343
 
 def sub_writer(sample, n, files, folder):
+    outputpath = "/eos/home-" + inituser + "/" + username+ "/VBS/nosynch/" + folder + "/" + str(opt.wpvsJet)+ "/" + sample.label + "/"
     f = open("condor.sub", "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
@@ -36,10 +37,12 @@ def sub_writer(sample, n, files, folder):
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
     f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, FakeRatio_utils_dev.py, TauIDSFTool.py, CutsAndValues.py, Btag_eff_" + str(sample.year) + ".root, __init__.py, ./data\n")
-    f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + str(opt.wpvsJet)+ "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
+    #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + str(opt.wpvsJet)+ "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     f.write("executable              = FakeRatio_dev.py\n")
-    f.write("arguments               = " + sample.label + " " + str(n) + " " + str(files) + " remote " + str(opt.trig) + " " + str(opt.wpvsJet) + "\n")
+    args = sample.label + " " + str(n) + " " + str(files) + " remote " + str(opt.trig) + " " + str(opt.wpvsJet) + " " + outputpath + "\n"
+    #f.write("arguments               = " + sample.label + " " + str(n) + " " + str(files) + " remote " + str(opt.trig) + " " + str(opt.wpvsJet) + "\n")
+    f.write("arguments               = " + args)
     #f.write("input                   = input.txt\n")
     f.write("output                  = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/output/"+ sample.label + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/error/"+ sample.label +  "_part" + str(n) + ".err\n")

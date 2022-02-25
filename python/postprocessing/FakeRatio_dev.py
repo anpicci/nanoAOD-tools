@@ -123,12 +123,15 @@ if isMC:
     tesTool = TauESTool(act_camp, 'DeepTau2017v2p1VSjet')
     fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
     
+outpath = str(sys.argv[7])
+if not outpath.endswith("/"):
+    outpath += "/"
 
 #++++++++++++++++++++++++++++++++++
 #++   branching the new trees    ++
 #++++++++++++++++++++++++++++++++++
-outTreeFile = ROOT.TFile(sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
-
+#outTreeFile = ROOT.TFile(sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
+outTreeFile = ROOT.TFile(outpath + sample.label+"_part"+str(part_idx)+".root", "RECREATE")
 
 trees = []
 for i in range(10):
@@ -290,14 +293,16 @@ FatJet_tau21                 =   array.array('f', [-999.]*lenfatjet)
 FatJet_tau32                 =   array.array('f', [-999.]*lenfatjet)
 FatJet_tau43                 =   array.array('f', [-999.]*lenfatjet)
 Jet_number              =   array.array('f', [-999.])
-Jet_numberSeparate      =   array.array('f', [-999.])
+Jet_numberSeparateLep      =   array.array('f', [-999.])
+Jet_numberSeparateTau      =   array.array('f', [-999.])
 FatJet_number              =   array.array('f', [-999.])
 FatJet_numberSeparate      =   array.array('f', [-999.])
 var_list.append(Jet_pt)
 var_list.append(Jet_phi)
 var_list.append(Jet_eta)
 var_list.append(Jet_number)
-var_list.append(Jet_numberSeparate)
+var_list.append(Jet_numberSeparateLep)
+var_list.append(Jet_numberSeparateTau)
 var_list.append(FatJet_pt)
 var_list.append(FatJet_phi)
 var_list.append(FatJet_eta)
@@ -405,7 +410,8 @@ systTree.branchTreesSysts(trees, "all", "Jet_pt",                outTreeFile, Je
 systTree.branchTreesSysts(trees, "all", "Jet_eta",               outTreeFile, Jet_eta)
 systTree.branchTreesSysts(trees, "all", "Jet_phi",               outTreeFile, Jet_phi)
 systTree.branchTreesSysts(trees, "all", "Jet_number",            outTreeFile, Jet_number)
-systTree.branchTreesSysts(trees, "all", "Jet_numberSeparate",    outTreeFile, Jet_numberSeparate)
+systTree.branchTreesSysts(trees, "all", "Jet_numberSeparateLep",    outTreeFile, Jet_numberSeparateLep)
+systTree.branchTreesSysts(trees, "all", "Jet_numberSeparateTau",    outTreeFile, Jet_numberSeparateTau)
 
 #jet ak8
 systTree.branchTreesSysts(trees, "all", "FatJet_pt",                outTreeFile, FatJet_pt)
@@ -579,7 +585,8 @@ for i in range(tree.GetEntries()):
         systTree.fillTreesSysts(trees, "all")
         continue
 
-    print("chosen trigger ")
+    if Debug:
+        print("chosen trigger ")
     if isMC:
         vTrigEle, vTrigMu, vTrigHT = trig_finder(HLT, sample.year, sample.label)
         if chosenTrigger == "Ele": HLT_effLumi[0] = lumiFinder(chosenTrigger, vTrigEle, sample.year)
@@ -612,7 +619,8 @@ for i in range(tree.GetEntries()):
     #Taus
 
     Veto_TauLeptons[0], idx_list_tau  =   Veto_Tau_Leptons(taus, electrons, muons, tauVsJet)    #1 if there's another lepton, 0 if not
-    print("tau chosen")
+    if Debug:
+        print("tau chosen")
     if len(list(taus)) > 0 and len(idx_list_tau)>0:
         idx_tau = idx_list_tau[0]
         #Veto_TauZMass[0]    =   Veto_Tau_ZMass(idx_tau, taus, electrons, muons)      #1 if there's another lepton in the Z mass range, 0 if not
@@ -625,6 +633,13 @@ for i in range(tree.GetEntries()):
         FakeTau_DeepTauWP[0]            =   taus[idx_tau].idDeepTau2017v2p1VSjet
         
         FakeTau = taus[idx_tau]
+
+        countjt = 0
+        while countjt < min(lenjet, len(jets)):
+            j = jets[countjt]
+            if j.pt>30 and abs(j.eta)<5 and deltaR(j.eta, j.phi, FakeTau_eta[0], FakeTau_phi[0])>0.4:
+                Jet_numberSeparateTau[0]+=1
+            countjt += 1
         
         if isMC: 
             FakeTau_isPrompt[0]         =   taus[idx_tau].genPartFlav
@@ -737,13 +752,13 @@ for i in range(tree.GetEntries()):
 
             #Jet_tmp_pt = [-999.] * len(jets)
             Jet_number[0] = 0
-            Jet_numberSeparate[0] = 0
+            Jet_numberSeparateLep[0] = 0
             countj = 0
 
             while countj < min(lenjet, len(jets)):
                 j = jets[countj]
-                if j.pt>30 and deltaR(j.eta, j.phi, FakeLepton_eta[0], FakeLepton_phi[0])>0.4:
-                    Jet_numberSeparate[0]+=1
+                if j.pt>30 and abs(j.eta)<5 and deltaR(j.eta, j.phi, FakeLepton_eta[0], FakeLepton_phi[0])>0.4:
+                    Jet_numberSeparateLep[0]+=1
                 Jet_number[0]+=1
                 Jet_pt[countj] = copy.deepcopy(j.pt)
                 Jet_eta[countj] = copy.deepcopy(j.eta)

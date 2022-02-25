@@ -72,7 +72,7 @@ class FakeCalculator_manager:
             if met.pt>met_cut or mT.lepMET>mt_lepMET_cut or mT.lepMET<0 or met.pt<0:
                 continue
 
-            if trig == 'Ele' or trig == 'all' and abs(FakeLepton.pdgid) == 11 and nleps.LightLeptons < 2 and jets.numberSeparate >0 and  abs(FakeLepton.eta)<2.4 and not(abs(FakeLepton.eta)>1.4442 and abs(FakeLepton.eta)<1.566) and FakeLepton.pt>0 and FakeLepton.jetRelIso>=0:
+            if trig == 'Ele' or trig == 'all' and abs(FakeLepton.pdgid) == 11 and nleps.LightLeptons > 0 and nleps.LightLeptons <= 2 and jets.numberSeparate > 0 and abs(FakeLepton.eta)<2.4 and not(abs(FakeLepton.eta)>1.4442 and abs(FakeLepton.eta)<1.566) and FakeLepton.pt>0 and FakeLepton.jetRelIso>=0:
                 if isMC and (FakeLepton.isPrompt!=1): 
                     SF = 0
                 if not (FakeLepton.eta<-2.4 or FakeLepton.eta>2.4):
@@ -81,7 +81,7 @@ class FakeCalculator_manager:
                         isTight = True
                     hEle.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
             
-            elif trig == 'Mu' or trig == 'all' and abs(FakeLepton.pdgid) == 13 and nleps.LightLeptons < 2 and jets.numberSeparate > 0 and  abs(FakeLepton.eta)<2.4 and FakeLepton.pt>0 and FakeLepton.pfRelIso04>=0:
+            elif trig == 'Mu' or trig == 'all' and abs(FakeLepton.pdgid) == 13 and nleps.LightLeptons > 0 and nleps.LightLeptons <= 2 and jets.numberSeparate > 0 and abs(FakeLepton.eta)<2.4 and FakeLepton.pt>0 and FakeLepton.pfRelIso04>=0:
                 if isMC and (FakeLepton.isPrompt!=1):
                     SF = 0
                 
@@ -93,6 +93,13 @@ class FakeCalculator_manager:
             if trig == 'HT' or trig == 'all':
                 if veto.TauLeptons==1:
                     continue
+                #isolatedJet = True
+                #for jet in jets:
+                    #if (FakeTau.jetIdx>=0 and jet != jets[FakeTau.jetIdx]) and (jet.pt>20 and abs(jet.eta) < 5.) and deltaR(jet.eta, jet.phi, FakeTau.eta, FakeLepton.phi)<0.4:
+                        #isolatedJet = False
+                #if not isolatedJet:
+                    #continue
+
                 if abs(FakeTau.eta)<2.4 and FakeTau.pt>0:
                     if isMC and (FakeTau.isPrompt!=5): 
                         SF = 0

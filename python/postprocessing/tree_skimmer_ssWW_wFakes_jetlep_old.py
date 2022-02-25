@@ -104,6 +104,11 @@ fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
 MassCrit = bool(int(sys.argv[8])==1)
 DeltaEtaCutBeforeSel = bool(int(sys.argv[9])==1)
 print("MassCrit:", MassCrit, "DeltaEtaCut:", DeltaEtaCutBeforeSel)
+
+outpath = str(sys.argv[10])
+if not outpath.endswith("/"):
+    outpath += "/"
+
 MCReco = True
 startTime = datetime.datetime.now()
 print("Starting running at " + str(startTime))
@@ -115,7 +120,6 @@ chain = ROOT.TChain('Events')
 for infile in file_list: 
     print("Adding %s to the chain" %(infile))
     chain.Add(infile)
-
 
 print(chain)
 
@@ -157,7 +161,8 @@ if 'DataEle' in sample.name:
 #++++++++++++++++++++++++++++++++++
 #++   branching the new trees    ++
 #++++++++++++++++++++++++++++++++++
-outTreeFile = ROOT.TFile(sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
+#outTreeFile = ROOT.TFile(sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
+outTreeFile = ROOT.TFile(outpath + sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
 
 trees = []
 for i in range(10):
