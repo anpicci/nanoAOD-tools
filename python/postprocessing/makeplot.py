@@ -934,9 +934,12 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         if('WpWpJJ_EWK' in s.label or 'VBS_SSWW' in s.label) and not opt.signal:
             signal = True
             #print(s.label)
+        
+        infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + ".root")
+
     i = 0
 
-    print(infile)
+    print("infile:", infile)
 
     for s in samples_:
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or 'SSWW_FS0_' in s.label or 'SSWW_FM1_' in s.label or 'SSWW_FT2_' in s.label) and not str(s.year) in s.label:
