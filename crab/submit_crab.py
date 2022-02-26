@@ -124,15 +124,15 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     if isMC:
         f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='All', applyHEMfix=True)\n")
         f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
-        f.write("metCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='Total', applyHEMfix=True)\n")
-        f.write("fatJetCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='Total', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
+        #f.write("metCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='Total', applyHEMfix=True)\n")
+        #f.write("fatJetCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='Total', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
         #f.write("jmeCorrections = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", jesUncert='All', jetType = 'AK8PFchs')\n")
         f.write("p=PostProcessor('.', inputFiles(), '', modules=["+modules+"], provenance=True, fwkJobReport=True, histFileName='hist.root', histDirName='plots', outputbranchsel='keep_and_drop.txt')\n")# haddFileName='"+sample.label+".root'
     else: 
-        f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', applyHEMfix=True, jesUncert='All')\n")
-        f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', jesUncert='All', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
-        f.write("metCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', applyHEMfix=True, jesUncert='Total')\n")
-        f.write("fatJetCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', jesUncert='Total', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
+        f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', applyHEMfix=True, jesUncert=All')\n")
+        f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', jesUncert=All', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
+        #f.write("metCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', applyHEMfix=True, jesUncert='Total')\n")
+        #f.write("fatJetCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', jesUncert='Total', applyHEMfix=True, jetType = 'AK8PFPuppi')\n")
         #f.write("jmeCorrections = createJMECorrector(isMC="+str(isMC)+", dataYear=\""+str(sample.year)+"\", runPeriod='"+str(sample.runP)+"', jesUncert='All', redojec=True, jetType = 'AK8PFchs')\n")
         f.write("p=PostProcessor('.', inputFiles(), '"+presel+"', modules=["+modules+"], provenance=True, fwkJobReport=True, jsonInput=runsAndLumis(), haddFileName='tree_hadd.root', outputbranchsel='keep_and_drop.txt')\n")#
     f.write("p.run()\n")
@@ -264,8 +264,8 @@ for sample in samples:
 
         if "UL" in str(year):
             #cfg_writer(sample, isMC, "ULVBS_PG")
-            #cfg_writer(sample, isMC, "ULVBS")
-            cfg_writer(sample, isMC, "ULVBSPG")
+            cfg_writer(sample, isMC, "ULVBS")
+            #cfg_writer(sample, isMC, "ULVBSPG")
         else:
             #cfg_writer(sample, isMC, "VBS_PG")
             #cfg_writer(sample, isMC, "RRVBS_PG")
@@ -276,12 +276,12 @@ for sample in samples:
             if isMC:
                 modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(year) + "(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
             else:
-                modules = sampleFlag_mod + "preselection(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+                modules = sampleFlag_mod + "preselection(), metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
         else:
             if isMC:
                 modules = sampleFlag_mod + "MCweight_writer('" + sample.label + "'), " + met_hlt_mod + ", " + lep_mod + ", " + pu_mod + ", " + btag_mod + ", PrefireCorr_" + str(year) + "(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
             else:
-                modules = sampleFlag_mod + "metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
+                modules = sampleFlag_mod + "metCorrector(), fatJetCorrector(), dummyColumns(), " + muon_pt_corr + ", " + ht_producer + ", " + mht_producer # Put here all the modules you want to be runned by crab
             
         print("Producing crab script")
         crab_script_writer(sample,'.', isMC, modules, presel)

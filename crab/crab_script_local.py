@@ -26,11 +26,11 @@ p = PostProcessor('.', [#'root://cms-xrd-global.cern.ch//store/data/Run2017B/Sin
                       #MCweight_writer('TTTo2L2Nu_2017'), 
                       #MET_HLT_Filter_UL2017(), 
                       #preselection(),
-                      PrefireCorr_2017(),
+                      #PrefireCorr_2017(),
                       #metCorrector(), fatJetCorrector(),
                       #lepSF_UL2018(),#
                       #btagSF2017(),
-                      #metCorrector()
+                      metCorrector(),
                       #btagSFUL2016(),
                       #sampleFlagUL('DataMuB_UL2017'),
                       #dummyCol()
@@ -39,7 +39,7 @@ p = PostProcessor('.', [#'root://cms-xrd-global.cern.ch//store/data/Run2017B/Sin
                       fwkJobReport=True,
                       histFileName='hist.root', 
                       histDirName='plots',
-                outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), maxEntries=40000)
+                outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), maxEntries=100)
 p.run()
 print('DONE')
 #, PrefCorr(), metCorrector(), fatJetCorrector()
