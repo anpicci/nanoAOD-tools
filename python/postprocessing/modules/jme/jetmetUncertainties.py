@@ -37,7 +37,7 @@ class jetmetUncertaintiesProducer(Module):
         # of the nanoAOD files
         self.era = era
         self.isData = isData
-        # if set to true, Jet_pt_nom will have JER applied. not to be
+        # if set to false, Jet_pt_nom will have JER applied. not to be
         # switched on for data.
         self.applySmearing = applySmearing if not isData else False
         self.splitJER = splitJER

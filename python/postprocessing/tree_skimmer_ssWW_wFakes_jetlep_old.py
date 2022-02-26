@@ -803,7 +803,11 @@ for i in range(tree.GetEntries()):
     PV          = Object(event, "PV")
     HLT         = Object(event, "HLT")
     Flag        = Object(event, 'Flag')
-    met         = Object(event, "PuppiMET")
+    #met         = Object(event, "PuppiMET")
+    if isMC:
+        met         = Object(event, "MET_T1Smear")
+    else:
+        met         = Object(event, "MET_T1")
     
     genpart = None
     
@@ -1011,6 +1015,11 @@ for i in range(tree.GetEntries()):
         pass_lepton_selection[0] = 0
         pass_lepton_veto[0] = 0
 
+    GoodLep_p4 = ROOT.TLorentzVector()
+    if abs(GoodLep.pdgId)==13:
+        GoodLep_p4.SetPtEtaPhiM(GoodLep.corrected_pt, GoodLep.eta, GoodLep.phi, GoodLep.mass)
+    elif abs(GoodLep.pdgId)==11:
+        GoodLep_p4.SetPtEtaPhiM(GoodLep.pt, GoodLep.eta, GoodLep.phi, GoodLep.mass)
 
     #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodEle:", indexGoodEle, "indexGoodMu:", indexGoodMu, "GoodLep_pdgid:", GoodLep.pdgId)
     #if Debug:
@@ -1045,9 +1054,9 @@ for i in range(tree.GetEntries()):
     if isMC:
         lepton_isPrompt[0] = GoodLep.genPartFlav
     
-    mT_lep_MET[0]=mTlepMet(met, GoodLep.p4())
+    mT_lep_MET[0]=mTlepMet(met, GoodLep_p4)
 
-    ThereIsOneTau, ltau_list = SelectAndVetoTaus(list(taus), GoodLep, leadjet, subleadjet)
+    ThereIsOneTau, ltau_list = SelectAndVetoTaus(str(sample.year), list(taus), GoodLep, leadjet, subleadjet)
 
     if ThereIsOneTau:
         taucont = taucont + 1
@@ -1112,7 +1121,7 @@ for i in range(tree.GetEntries()):
 
 
     deltaEta_taulep[0] = GoodTau.eta - GoodLep.eta
-    deltaTheta_taulep[0] = (GoodTau.p4() - GoodLep.p4()).CosTheta()
+    deltaTheta_taulep[0] = (GoodTau.p4() - GoodLep_p4).CosTheta()
 
     tauleadTk_ptOverTau[0]  =   GoodTau.leadTkPtOverTauPt#
     tauleadTk_deltaPhi[0]   =   GoodTau.leadTkDeltaPhi#
@@ -1224,10 +1233,10 @@ for i in range(tree.GetEntries()):
     else:
         GoodTau_p4.SetPtEtaPhiM(GoodTau.pt, GoodTau.eta, GoodTau.phi, GoodTau.mass)
 
-    m_taulep[0]=(GoodTau_p4 + GoodLep.p4()).M()
+    m_taulep[0]=(GoodTau_p4 + GoodLep_p4).M()
 
     mT_tau_MET[0]=mTlepMet(met, GoodTau_p4)
-    mT_leptau_MET[0]=mTlepMet(met, GoodTau_p4+GoodLep.p4())
+    mT_leptau_MET[0]=mTlepMet(met, GoodTau_p4+GoodLep_p4)
     if isMC:
         m_1T[0] = M1T(GoodLep, GoodTau, met, fes*tes)
         m_o1[0] = Mo1(GoodLep, GoodTau, met, fes*tes)
@@ -1275,19 +1284,24 @@ for i in range(tree.GetEntries()):
     if GoodTau.charge==GoodLep.charge:
         pass_charge_selection[0]=1
     
+    leadJet=ROOT.TLorentzVector()
+    subleadJet=ROOT.TLorentzVector()
+    leadJet.SetPtEtaPhiM(leadjet.pt_nom, leadjet.eta, leadjet.phi, leadjet.mass_nom)
+    subleadJet.SetPtEtaPhiM(subleadjet.pt_nom, subleadjet.eta, subleadjet.phi, subleadjet.mass_nom) 
+
     #print("leadjet", leadjet, "subleadjet", subleadjet)
 
-    leadjet_pt[0]               =   leadjet.pt
+    leadjet_pt[0]               =   leadjet.pt_nom
     leadjet_eta[0]              =   leadjet.eta
     leadjet_phi[0]              =   leadjet.phi
-    leadjet_mass[0]             =   leadjet.mass
+    leadjet_mass[0]             =   leadjet.mass_nom
     leadjet_DeepFlv_b[0]        =   leadjet.btagDeepFlavB
     leadjet_DeepCSVv2_b[0]      =   leadjet.btagDeepB
     leadjet_CSVv2_b[0]          =   leadjet.btagCSVV2
-    subleadjet_pt[0]            =   subleadjet.pt
+    subleadjet_pt[0]            =   subleadjet.pt_nom
     subleadjet_eta[0]           =   subleadjet.eta
     subleadjet_phi[0]           =   subleadjet.phi
-    subleadjet_mass[0]          =   subleadjet.mass
+    subleadjet_mass[0]          =   subleadjet.mass_nom
     subleadjet_DeepFlv_b[0]     =   subleadjet.btagDeepFlavB
     subleadjet_DeepCSVv2_b[0]   =   subleadjet.btagDeepB
     subleadjet_CSVv2_b[0]       =   subleadjet.btagCSVV2
@@ -1309,12 +1323,12 @@ for i in range(tree.GetEntries()):
     deltaEta_lepj2[0]   =   GoodLep.eta - subleadjet.eta#
 
     #calculating deltaTheta                                                                                                      
-    deltaTheta_jj[0]      =   (leadjet.p4() - subleadjet.p4()).CosTheta()
-    deltaTheta_taulep[0]  =   (GoodTau_p4 - GoodLep.p4()).CosTheta()
-    deltaTheta_tauj1[0]   =   (GoodTau_p4 - leadjet.p4()).CosTheta()
-    deltaTheta_tauj2[0]   =   (GoodTau_p4 - subleadjet.p4()).CosTheta()
-    deltaTheta_lepj1[0]   =   (GoodLep.p4() - leadjet.p4()).CosTheta()
-    deltaTheta_lepj2[0]   =   (GoodLep.p4() - subleadjet.p4()).CosTheta()
+    deltaTheta_jj[0]      =   (leadJet - subleadJet).CosTheta()
+    deltaTheta_taulep[0]  =   (GoodTau_p4 - GoodLep_p4).CosTheta()
+    deltaTheta_tauj1[0]   =   (GoodTau_p4 - leadJet).CosTheta()
+    deltaTheta_tauj2[0]   =   (GoodTau_p4 - subleadJet).CosTheta()
+    deltaTheta_lepj1[0]   =   (GoodLep_p4 - leadJet).CosTheta()
+    deltaTheta_lepj2[0]   =   (GoodLep_p4 - subleadJet).CosTheta()
 
 
     #calculating ptRel                                                                                                      
@@ -1336,7 +1350,7 @@ for i in range(tree.GetEntries()):
     AK8subleadjet, dR_subleadjetAK48 = closest(leadjet, fatjets)
     
     if dR_leadjetAK48 < 0.8:
-        AK8leadjet_pt[0]               =   AK8leadjet.pt
+        AK8leadjet_pt[0]               =   AK8leadjet.pt_nom
         AK8leadjet_eta[0]              =   AK8leadjet.eta
         AK8leadjet_phi[0]              =   AK8leadjet.phi
         AK8leadjet_mass[0]             =   AK8leadjet.msoftdrop
@@ -1347,7 +1361,7 @@ for i in range(tree.GetEntries()):
         leadjet_dRAK48[0] = copy.deepcopy(dR_leadjetAK48)
 
     if dR_subleadjetAK48 < 0.8:
-        AK8subleadjet_pt[0]               =   AK8subleadjet.pt
+        AK8subleadjet_pt[0]               =   AK8subleadjet.pt_nom
         AK8subleadjet_eta[0]              =   AK8subleadjet.eta
         AK8subleadjet_phi[0]              =   AK8subleadjet.phi
         AK8subleadjet_mass[0]             =   AK8subleadjet.msoftdrop
@@ -1367,17 +1381,12 @@ for i in range(tree.GetEntries()):
     #if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection_ML[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1:  pass_upToBVeto_ML[0]=1#
 
     if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1: pass_upToBVeto[0]=1#
-
-    leadJet=ROOT.TLorentzVector()
-    subleadJet=ROOT.TLorentzVector()
-    leadJet.SetPtEtaPhiM(leadjet.pt, leadjet.eta, leadjet.phi, leadjet.mass)
-    subleadJet.SetPtEtaPhiM(subleadjet.pt, subleadjet.eta, subleadjet.phi, subleadjet.mass) 
     
     if not JetCut(leadJet, subleadJet): pass_mjj_cut[0]=1
 
     m_jj[0]=(leadJet + subleadJet).M()
     m_jjtau[0]=(leadJet + subleadJet + GoodTau_p4).M()
-    m_jjtaulep[0]=(leadJet + subleadJet + GoodTau_p4 + GoodLep.p4()).M()
+    m_jjtaulep[0]=(leadJet + subleadJet + GoodTau_p4 + GoodLep_p4).M()
 
     if deltaEta_jj[0] != 0.:
         lepton_Zeppenfeld_over_deltaEta_jj[0] = lepton_Zeppenfeld[0]/deltaEta_jj[0]
@@ -1385,9 +1394,9 @@ for i in range(tree.GetEntries()):
         event_Zeppenfeld_over_deltaEta_jj[0] = event_Zeppenfeld[0]/deltaEta_jj[0]
 
     if isMC:
-        event_RT[0] = (GoodLep.pt * GoodTau.pt*(fes*tes)) / (leadjet.pt * subleadjet.pt)
+        event_RT[0] = (GoodLep.pt * GoodTau.pt*(fes*tes)) / (leadjet.pt_nom * subleadjet.pt_nom)
     else:
-        event_RT[0] = (GoodLep.pt * GoodTau.pt) / (leadjet.pt * subleadjet.pt)
+        event_RT[0] = (GoodLep.pt * GoodTau.pt) / (leadjet.pt_nom * subleadjet.pt_nom)
 
     #if (SingleEle or SingleMu) and pass_lepton_iso[0]==1 and pass_tau_vsJetWP[0]==1 and  pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1 and pass_mjj_cut[0]==1: Cut_dict[8][1]+=1
 

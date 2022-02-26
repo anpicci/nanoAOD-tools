@@ -17,6 +17,7 @@ from CutsAndValues import *
 #from samples.samples import *
 import numpy as np
 import pickle
+from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 
 #with open('/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p', 'rb') as file:
 #with open('VBSTagger_XGB.p', 'rb') as file:
@@ -327,7 +328,7 @@ def btagcalc(JetsC, year):
     return p_data/p_MC, p_data_btagUp/p_MC, p_data_btagDown/p_MC, p_data_mistagUp/p_MC, p_data_mistagDown/p_MC
 
 def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
-    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
+    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt_nom > pt and (x.pt_nom > 50. or (x.pt_nom <= 50. and x.puId >= 7)), jets))
 
 def SelectVBSQGenJet(genparts, genjets):
     fs_genparts = list(filter(lambda x : x.genPartIdxMother==0 and abs(x.pdgId)>0 and abs(x.pdgId)<10, genparts))
@@ -453,7 +454,12 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
                 #print("idxc:", idxc, "cjet:", cjet)
                 if jets.index(cjet) <= jets.index(jet):
                     continue
-                invmass = (cjet.p4() + jet.p4()).M()
+                cjet_p4 = ROOT.TLorentzVector()
+                cjet_p4.SetPtEtaPhiM(cjet.pt_nom, cjet.eta, cjet.phi, cjet.mass_nom)
+                jet_p4 = ROOT.TLorentzVector()
+                jet_p4.SetPtEtaPhiM(jet.pt_nom, jet.eta, jet.phi, jet.mass_nom)
+                #invmass = (cjet.p4() + jet.p4()).M()
+                invmass = (cjet_p4 + jet_p4).M()
                 if invmass > maxInvMass:
                     idxjet1 = jets.index(jet)
                     idxjet2 = jets.index(cjet)
@@ -676,7 +682,13 @@ def SelectGenMatchedLep(leptons, genlepton, genparticles):
 
 def get_ptrel(lepton, jet, taucorr=1.):
     jet_p4 = ROOT.TLorentzVector()
-    jet_p4.SetPtEtaPhiM(jet.pt*taucorr, jet.eta, jet.phi, jet.mass*taucorr)
+    if taucorr != 1.:
+        jet_p4.SetPtEtaPhiM(jet.pt*taucorr, jet.eta, jet.phi, jet.mass*taucorr)
+    else:
+        try:
+            jet_p4.SetPtEtaPhiM(jet.pt_nom, jet.eta, jet.phi, jet.mass_nom)
+        except:
+            jet_p4.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, jet.mass)
     lepjet_tv = (jet_p4+lepton.p4()).Vect()
     lep_tv = lepton.p4().Vect()
     ptrel = (lepjet_tv.Cross(lep_tv)).Mag()/(lepjet_tv.Mag())
@@ -722,7 +734,7 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
             IsTightIso = bool(lep.pfRelIso04_all<ISO_CUT_MU and lep.pfRelIso04_all>=0.)
             IsLooseIso = bool(lep.pfRelIso04_all<1. and lep.pfRelIso04_all>=0.)
             IsInEtaRegion = abs(lep.eta) < ETA_CUT_MU
-            IsInPtRegion = lep.pt > PT_CUT_MU
+            IsInPtRegion = lep.corrected_pt > PT_CUT_MU
 
         #find tight and loose-not-tight leptons
         if IsInEtaRegion and IsInPtRegion:
@@ -759,7 +771,7 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
 
 def LepVeto(sellep, electrons, muons):
     VetoEles = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.mvaFall17V2Iso_WPL and x.pt > PT_CUT_LEP_VETO_ELE and abs(x.eta) < ETA_CUT_LEP_VETO_ELE and not (abs(x.eta)>1.4442 and abs(x.eta)<1.566) and x.jetRelIso < REL_ISO_CUT_LEP_VETO_ELE, electrons))
-    VetoMus = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.looseId and x.pt > PT_CUT_LEP_VETO_MU and abs(x.eta) < ETA_CUT_LEP_VETO_MU and x.pfRelIso04_all < REL_ISO_CUT_LEP_VETO_MU, muons))
+    VetoMus = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.looseId and x.corrected_pt > PT_CUT_LEP_VETO_MU and abs(x.eta) < ETA_CUT_LEP_VETO_MU and x.pfRelIso04_all < REL_ISO_CUT_LEP_VETO_MU, muons))
 
     IsEleVetoPassed = (len(VetoEles) == 0)
     IsMuVetoPassed = (len(VetoMus) == 0)
@@ -768,7 +780,16 @@ def LepVeto(sellep, electrons, muons):
 
 #new
 
-def SelectAndVetoTaus(taus, sellep, jet1 = None, jet2 = None):
+def SelectAndVetoTaus(year, taus, sellep, jet1 = None, jet2 = None):
+    act_camp = ''
+    for cam in campaigns:
+        if str(year) in cam:
+            act_camp = copy.deepcopy(cam)
+            break
+
+    tesTool = TauESTool(act_camp, 'DeepTau2017v2p1VSjet')
+    fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
+
     #default values are setted with the same rationale used for SelectVBSJets
     jet1eta = 0.
     jet2eta = 0.
@@ -789,7 +810,9 @@ def SelectAndVetoTaus(taus, sellep, jet1 = None, jet2 = None):
     if len(taus)==0:
         return 0, idxl
     for i, tau in enumerate(taus):
-
+        tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
+        fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
+        es = tes*fes
         if abs(sellep.pdgId)==11:
             #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE
@@ -797,7 +820,7 @@ def SelectAndVetoTaus(taus, sellep, jet1 = None, jet2 = None):
             #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU
 
-        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
+        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt*es>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
             nTau+=1
 
             isAtLeastLoose = False
@@ -821,7 +844,7 @@ def BVeto(jetCollection):
     veto = False
     jets = get_Jet(jetCollection, PT_CUT_JET)
     for k in range(len(jets)):
-        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP])*(jets[k].pt>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
+        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP])*(jets[k].pt_nom>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
             veto = True
             break
         else: continue
@@ -834,7 +857,7 @@ def BVetoLoose(jetCollection):
     veto = False
     jets = get_Jet(jetCollection, PT_CUT_JET)
     for k in range(len(jets)):
-        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP_LOOSE])*(jets[k].pt>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
+        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP_LOOSE])*(jets[k].pt_nom>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
             veto = True
             break
         else: 
@@ -845,7 +868,7 @@ def CountBJets(jetCollection):
     nb=0
     #for k in range(len(jetCollection)):
     for jet in jetCollection:
-        if jet.btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP] and jet.pt>BTAG_PT_CUT and abs(jet.eta)<BTAG_ETA_CUT: 
+        if jet.btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP] and jet.pt_nom>BTAG_PT_CUT and abs(jet.eta)<BTAG_ETA_CUT: 
           nb+=1
     return nb
 
