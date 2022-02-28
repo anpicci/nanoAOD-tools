@@ -759,7 +759,7 @@ FakeEle_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    DYJetsToLL_UL2016APV
+    DYJetsToLL_FxFx_UL2016APV
 ]
 
 FakeMuPromptTau_UL2016APV = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016APV")
@@ -795,7 +795,7 @@ FakeMu_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    DYJetsToLL_UL2016APV
+    DYJetsToLL_FxFx_UL2016APV
 ]
 
 SampleHTFake_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016APV")
@@ -1495,7 +1495,7 @@ FakeEle_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    DYJetsToLL_UL2016
+    DYJetsToLL_FxFx_UL2016
 ]
 
 FakeMuPromptTau_UL2016 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016")
@@ -1531,7 +1531,7 @@ FakeMu_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    DYJetsToLL_UL2016
+    DYJetsToLL_FxFx_UL2016
 ]
 
 SampleHTFake_UL2016 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016")
@@ -2266,7 +2266,7 @@ FakeEle_UL2017.components = [
     DataEle_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    #DYJetsToLL_UL2017
+    DYJetsToLL_FxFx_UL2017
 ]
 
 FakeMuPromptTau_UL2017 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2017")
@@ -2302,7 +2302,7 @@ FakeMu_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    DYJetsToLL_UL2017
+    DYJetsToLL_FxFx_UL2017
 ]
 
 SampleHTFake_UL2017 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2017")
@@ -3017,7 +3017,7 @@ FakeEle_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    DYJetsToLL_UL2018
+    DYJetsToLL_FxFx_UL2018
 ]
 
 FakeMuPromptTau_UL2018 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2018")
@@ -3053,7 +3053,7 @@ FakeMu_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    DYJetsToLL_UL2018
+    DYJetsToLL_FxFx_UL2018
 ]
 
 SampleHTFake_UL2018 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2018")
