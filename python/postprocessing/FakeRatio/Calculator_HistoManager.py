@@ -14,15 +14,16 @@ from ROOT import TCanvas, TColor, TGaxis, TH1F, TPad
 
 class EfficiencyHisto_manager:
     def __init__(self, lepton):
+        print(array.array('d', lower_pt), array.array('d', lower_eta_ele))
         print('Creating histo for lepton: ', lepton)
         self.lepton = lepton
-        self.hNLoose_Data   = ROOT.TH2F("h2NLoose" + lepton + "_data", lepton + "#loose events",    5, array.array('d', lower_pt), 8, array.array('d', lower_eta_ele))
-        self.hNTight_Data   = ROOT.TH2F("h2NTight" + lepton + "_data", lepton + "#loose events",    5, array.array('d', lower_pt), 8, array.array('d', lower_eta_ele))
-        self.hNLoose_MC     = ROOT.TH2F("h2NLoose" + lepton + "_MC",   lepton + "#loose events_MC", 5, array.array('d', lower_pt), 8, array.array('d', lower_eta_ele))
-        self.hNTight_MC     = ROOT.TH2F("h2NTight" + lepton + "_MC",   lepton + "#loose events_MC", 5, array.array('d', lower_pt), 8, array.array('d', lower_eta_ele))
-        self.Efficiency     = ROOT.TH2F("FakeRatio" + lepton + "",     lepton + "Fake Ratio",       5, array.array('d', lower_pt), 8, array.array('d', lower_eta_ele))
-        self.Numerator      = ROOT.TH2F("Numerator" + lepton + "",     lepton + " Numerator",       5, array.array('d', lower_pt), 8, array.array('d', lower_eta_ele))
-        self.Denumerator    = ROOT.TH2F("Denumerator" + lepton + "",   lepton + " Denumerator",     5, array.array('d', lower_pt), 8, array.array('d', lower_eta_ele))
+        self.hNLoose_Data   = ROOT.TH2F("h2NLoose" + lepton + "_data", lepton + "#loose events",    (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+        self.hNTight_Data   = ROOT.TH2F("h2NTight" + lepton + "_data", lepton + "#loose events",    (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+        self.hNLoose_MC     = ROOT.TH2F("h2NLoose" + lepton + "_MC",   lepton + "#loose events_MC", (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+        self.hNTight_MC     = ROOT.TH2F("h2NTight" + lepton + "_MC",   lepton + "#loose events_MC", (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+        self.Efficiency     = ROOT.TH2F("FakeRatio" + lepton + "",     lepton + "Fake Ratio",       (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+        self.Numerator      = ROOT.TH2F("Numerator" + lepton + "",     lepton + " Numerator",       (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+        self.Denumerator    = ROOT.TH2F("Denumerator" + lepton + "",   lepton + " Denumerator",     (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
 
     def addEvent(self, isTight, isData, pt, eta, SF):
         if(isData):
@@ -45,8 +46,8 @@ class EfficiencyHisto_manager:
             for j in range(nBinsY):
                 if(self.hNLoose_Data.GetBinContent(i,j) == 0):
                     self.hNLoose_Data.SetBinContent(i, j, 3.0)
-                if(self.hNTight_Data.GetBinContent(i,j) == 0):
-                    self.hNTight_Data.SetBinContent(i, j, 3.0)
+                #if(self.hNTight_Data.GetBinContent(i,j) == 0):
+                    #self.hNTight_Data.SetBinContent(i, j, 3.0)
 
 
     def CalculateEfficiency(self):
