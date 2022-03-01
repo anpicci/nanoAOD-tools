@@ -14,13 +14,13 @@ set year = 'UL2016APV'
 set year = 'UL2016'
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #--rw
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
-python3 PrepareToPlot.py -f $folder -y $year -d DYJetsToLL_FxFx
+#python3 PrepareToPlot.py -f $folder -y $year -d DYJetsToLL_FxFx
 
 #######    2017   #######
 set year = 'UL2017'
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #--rw #-d DataMu
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
-#python3 PrepareToPlot.py -f $folder -y $year # -d Data
+python3 PrepareToPlot.py -f $folder -y $year -d DYJetsToLL_FxFx
 
 #######    2018   #######
 set year = 'UL2018'
