@@ -59,15 +59,15 @@ effLumi_2016 = {
             "PFHT350"                       : 0.0779,
             },
         "Ele" : {
-            "Ele27_WPTight_Gsf"                     : 36.33,
-            "Ele32_WPTight_Gsf"                     : 8.76,
-            "Photon175"                             : 36.33,
+            "Ele27_WPTight_Gsf"                     : 36.47,
+            #"Ele32_WPTight_Gsf"                     : 8.76,
+            #"Photon175"                             : 36.33,
             },
         "Mu" : {
-            "IsoMu24"                       : 36.33,
-            "IsoTkMu24"                     : 36.33,
-            "Mu50"                          : 36.33,
-            "TkMu50"                        : 33.64,
+            "IsoMu24"                       : 36.47,
+            "IsoTkMu24"                     : 36.47,
+            #"Mu50"                          : 36.47,
+            #"TkMu50"                        : 33.64,
             },
         }
 
@@ -84,18 +84,18 @@ effLumi_2017 = {
             "PFHT350"                       : 0.17,
             },
         "Ele" : {
-            "Ele35_WPTight_Gsf"                     : 41.48,
+            "Ele35_WPTight_Gsf"                     : 41.54,
             #"Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
-            "Photon200"                             : 41.48,
+            #"Photon200"                             : 41.48,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
             #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
             },
         "Mu" : {
-            "IsoMu27"                       : 41.48,
-            "Mu50"                          : 41.48,
-            "OldMu100"                      : 36.75,
-            "TkMu100"                       : 36.75,
+            "IsoMu27"                       : 41.54,
+            #"Mu50"                          : 41.54,
+            #"OldMu100"                      : 36.75,
+            #"TkMu100"                       : 36.75,
             #"Mu8_TrkIsoVVL"                 : 0.0027,
             #"Mu17_TrkIsoVVL"                : 0.0658,
             },
@@ -114,19 +114,20 @@ effLumi_2018 = {
             "PFHT350"                       : 0.23,
             },
         "Ele" : {
-            "Ele35_WPTight_Gsf"                     : 59.83,
-            "Ele32_WPTight_Gsf"                     : 59.83,
-            "Photon200"                             : 59.83,
+            #"Ele35_WPTight_Gsf"                     : 59.83,
+            "Ele32_WPTight_Gsf"                     : 59.96,
+            #"Photon200"                             : 59.83,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
             #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
             },
         "Mu" : {
-            "IsoMu27"                       : 59.83,
-            "IsoMu30"                       : 59.83,
-            "Mu50"                          : 59.83,
-            "OldMu100"                      : 59.83,
-            "TkMu100"                       : 59.83,
+            "IsoMu24"                       : 59.96,
+            #"IsoMu27"                       : 59.96,
+            #"IsoMu30"                       : 59.96,
+            #"Mu50"                          : 59.83,
+            #"OldMu100"                      : 59.83,
+            #"TkMu100"                       : 59.83,
             #"Mu8_TrkIsoVVL"                 : 0.0027,
             #"Mu17_TrkIsoVVL"                : 0.0658,
             },
@@ -190,15 +191,16 @@ def trig_finder(HLT, yearr, samplename):
         #if HLT.Photon200:                               vTrigEle.append("Photon200")
         
     elif ("2018" in year):
-        if HLT.IsoMu27:                                 vTrigMu.append("IsoMu27")
-        if HLT.IsoMu30:                                 vTrigMu.append("IsoMu30")
+        if HLT.IsoMu24:                                 vTrigMu.append("IsoMu24")
+        #if HLT.IsoMu27:                                 vTrigMu.append("IsoMu27")
+        #if HLT.IsoMu30:                                 vTrigMu.append("IsoMu30")
         #if HLT.Mu50:                                    vTrigMu.append("Mu50")
         #if HLT.OldMu100:                                vTrigMu.append("OldMu100")
         #if HLT.TkMu100:                                 vTrigMu.append("TkMu100")
 
         #if HLT.Mu8_TrkIsoVVL:                           vTrigMu.append("Mu8_TrkIsoVVL")
         #if HLT.Mu17_TrkIsoVVL:                          vTrigMu.append("Mu17_TrkIsoVVL")
-        if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
+        #if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
         if HLT.Ele32_WPTight_Gsf:            vTrigEle.append("Ele32_WPTight_Gsf")
         #if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
         #if not ('DataMuB' in samplename or 'DataEleB' in samplename or 'DataHTB' in samplename):
