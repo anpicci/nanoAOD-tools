@@ -58,8 +58,8 @@ python3 makeplot.py -y $year2 --lep muon --wsdy -f $folder0 -p --ch $channel --w
 ##python3 makeplot.py -y $year2 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d WrongSign_$year2 # prova per systs
 
 #################### year3 #################
-#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year3*root #countings
-#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*$year3*
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year3*root #countings
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*$year3*
 python3 makeplot.py -y $year3 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d VBS_SSWW_FT1_0_$year3
 python3 makeplot.py -y $year3 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #-d VBS_SSWW_FT1_0_$year3
 python3 makeplot.py -y $year3 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4  --count #-d VBS_SSWW_FT1_0_$year3
