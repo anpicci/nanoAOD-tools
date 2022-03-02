@@ -591,7 +591,7 @@ def Veto_Light_Leptons(ele, mu):
     idxl_e = []
     idxl_m = []
     for i, electron in enumerate(ele):
-        if electron.pt > 20. and abs(electron.eta)<2.4 and not not (abs(electron.eta)>1.4442 and abs(electron.eta)<1.566) and electron.jetRelIso<1 and electron.mvaFall17V2Iso_WPL:
+        if electron.pt > 20. and abs(electron.eta)<2.4 and not (abs(electron.eta)>1.4442 and abs(electron.eta)<1.566) and electron.jetRelIso<1 and electron.mvaFall17V2Iso_WPL:
             nEle+=1
             idxl_e.append(i)
     for i, muon in enumerate(mu):

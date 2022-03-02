@@ -3630,7 +3630,7 @@ merge_dict = {
 
 class_list = [
     #WpWpJJ_EWK_UL2016APV,
-    #VBS_SSWW_SM_UL2016APV,
+    VBS_SSWW_SM_UL2016APV,
     #VBS_SSWW_DIM6_UL2016APV,
     #WpWpJJ_QCD_UL2016APV,
     ZZtoLep_UL2016APV,
@@ -3656,7 +3656,7 @@ class_list = [
     DataEle_UL2016APV,
 
     #WpWpJJ_EWK_UL2016,
-    #VBS_SSWW_SM_UL2016,
+    VBS_SSWW_SM_UL2016,
     #VBS_SSWW_DIM6_UL2016,
     #WpWpJJ_QCD_UL2016,
     ZZtoLep_UL2016,
@@ -3682,7 +3682,7 @@ class_list = [
     DataEle_UL2016,
 
     #WpWpJJ_EWK_UL2017,
-    #VBS_SSWW_SM_UL2017,
+    VBS_SSWW_SM_UL2017,
     #VBS_SSWW_DIM6_UL2017,
     #WpWpJJ_QCD_UL2017,
     ZZtoLep_UL2017,
@@ -3708,7 +3708,7 @@ class_list = [
     DataEle_UL2017,
 
     ##WpWpJJ_EWK_UL2018,
-    ##VBS_SSWW_SM_UL2018,
+    VBS_SSWW_SM_UL2018,
     ##VBS_SSWW_DIM6_UL2018,
     ##WpWpJJ_QCD_UL2018,
     ZZtoLep_UL2018,

@@ -20,7 +20,7 @@ if __name__ == "__main__" :
 
     parser.add_option('--met',          dest='met_cut',         type=int,   default = '50',                                             help='insert met cut, default 30')
     parser.add_option('--mt',           dest='mt_lepMET_cut',   type=int,   default = '50',                                             help='insert met cut, default 20')
-    parser.add_option('-b', '--bkg',    dest='bkg',                         default = True,    action='store_true',                    help='Eliminate contribution fromprompt W+Jets && DY+Jets events, default false')
+    parser.add_option('-b', '--bkg',    dest='bkg',                         default = True,    action='store_false',                    help='Do not eliminate contribution fromprompt W+Jets && DY+Jets events, default True')
     parser.add_option('--onlybkg',      dest='onlybkg',                     default = False,    action='store_true',                    help='Only MC prompt contribution, default false')
     parser.add_option('-d', '--debug',  dest='debug',                       default = False,    action='store_true',                    help='Debug mode, only runs in a file for 10000 events')
     parser.add_option('--trig',         dest='trig',            type=str,   default = 'all',                                            help='trigger used, default all')
@@ -52,9 +52,9 @@ if __name__ == "__main__" :
     makeDir(outdir)
     fManager = fileManager(str(opt.trig), str(opt.met_cut), str(opt.mt_lepMET_cut), outdir, opt.bkg, opt.onlybkg, input_folder, opt.year, wp)
 
-    Eleh = EfficiencyHisto_manager('Electron')
-    Muh  = EfficiencyHisto_manager('Muon')
-    Tauh = EfficiencyHisto_manager('Tau')
+    Eleh = EfficiencyHisto_manager('Electron', 1)
+    Muh  = EfficiencyHisto_manager('Muon', 1)
+    Tauh = EfficiencyHisto_manager('Tau', 5)
 
     FakeCalc = FakeCalculator_manager('all')
     DataFile, isData = fManager.getData()
@@ -66,14 +66,13 @@ if __name__ == "__main__" :
     fManager.saveFile()
 
     for pos in bkgFiles:
-        if not opt.bkg: break
+        if not opt.bkg:
+            break
         if not FakeCalc.Calc(pos, isData, opt.onlybkg, opt.met_cut, opt.mt_lepMET_cut, opt.trig, Eleh, Muh, Tauh):
             exit()
         print("\n")
         fManager.saveFile()
 
-
-        
     Eleh.SanitizeHisto()
     Muh.SanitizeHisto()
     Tauh.SanitizeHisto()
@@ -83,6 +82,7 @@ if __name__ == "__main__" :
     fManager.addEfficiencyHisto(Eleh)
     fManager.addEfficiencyHisto(Muh)
     fManager.addEfficiencyHisto(Tauh)
+
     fManager.saveFile()
     fManager.closeFile()
 

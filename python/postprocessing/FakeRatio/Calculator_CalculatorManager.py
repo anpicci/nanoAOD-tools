@@ -43,74 +43,17 @@ class FakeCalculator_manager:
         if isData and onlybkg:
             print ('the sample: ', sample, 'is tagged as data sample, while you are running in only bkg mode, jumping the sample')
 
-        maxEvents = self.nev
-        if maxEvents == 'all' or maxEvents>tree.GetEntries():
-            maxEvents = tree.GetEntries()
-    
-        perc = 0
-        for i in range(maxEvents):
-                
-            if i*1.0/maxEvents*100 > perc: 
-                perc +=1
-                now = datetime.datetime.now()
-                ETP = (now-start)/(perc)*100 
-                print ('Processing at: ', perc, '% \t ETA: ', start + ETP, '\r')
-            event       = Event(tree, i)
-            FakeLepton  = Object(event, "FakeLepton")
-            FakeTau     = Object(event, "FakeTau")
-            met         = Object(event, "MET")
-            mT          = Object(event, "mT")
-            w           = Object(event, "w")
-            nleps       = Object(event, "nLeps")
-            jets        = Object(event, "Jet")
-            veto        = Object(event, "Veto")
+        cut_ele_l = "abs(FakeLepton_pdgid)==11&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&Jet_numberSeparateLep>0&&abs(FakeLepton_eta)<2.4&&(abs(FakeLepton_eta)<1.4442||abs(FakeLepton_eta)>1.566)&&FakeLepton_pt>=0&&FakeLepton_jetRelIso>=0"
+        cut_ele_t = "FakeLepton_jetRelIso<0.08&&FakeLepton_isTight"
+        cut_mu_l =  "abs(FakeLepton_pdgid)==13&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&Jet_numberSeparateLep>0&&abs(FakeLepton_eta)<2.4&&FakeLepton_pt>=0&&FakeLepton_pfRelIso04>=0"
+        cut_mu_t = "FakeLepton_pfRelIso04<0.15&&FakeLepton_isTight"
+        cut_tau_l = "FakeTau_pt>=0&&abs(FakeTau_eta)<=2.4"#&&Veto_TauLeptons!=1"
+        cut_tau_t = "FakeTau_DeepTauWP>=64"
+        region = "(MET_pt>=0.&&MET_pt<=" + str(met_cut) + ")&&(mT_lepMET>=0.&&mT_lepMET<="+ str(mt_lepMET_cut) + ")"
 
-            SF = 1
-            if isMC:
-                SF = w.nominal*event.PFSF*event.puSF*event.lepSF*event.tau_vsjet_SF*event.tau_vsele_SF*event.tau_vsmu_SF*event.btagSF
-                
-            if met.pt>met_cut or mT.lepMET>mt_lepMET_cut or mT.lepMET<0 or met.pt<0:
-                continue
+        hEle.ProjectTree(tree, isData, cut_ele_l, cut_ele_t, region)
+        hMu.ProjectTree(tree, isData, cut_mu_l, cut_mu_t, region)
+        hTau.ProjectTree(tree, isData, cut_tau_l, cut_tau_t, region)
 
-            if trig == 'Ele' or trig == 'all' and abs(FakeLepton.pdgid) == 11 and nleps.LightLeptons > 0 and nleps.LightLeptons <= 2 and jets.numberSeparate > 0 and abs(FakeLepton.eta)<2.4 and not(abs(FakeLepton.eta)>1.4442 and abs(FakeLepton.eta)<1.566) and FakeLepton.pt>0 and FakeLepton.jetRelIso>=0:
-                if isMC and (FakeLepton.isPrompt!=1): 
-                    SF = 0
-                if not (FakeLepton.eta<-2.4 or FakeLepton.eta>2.4):
-                    isTight = False
-                    if FakeLepton.pfRelIso04<0.08 and FakeLepton.isTight:
-                        isTight = True
-                    hEle.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
-            
-            elif trig == 'Mu' or trig == 'all' and abs(FakeLepton.pdgid) == 13 and nleps.LightLeptons > 0 and nleps.LightLeptons <= 2 and jets.numberSeparate > 0 and abs(FakeLepton.eta)<2.4 and FakeLepton.pt>0 and FakeLepton.pfRelIso04>=0:
-                if isMC and (FakeLepton.isPrompt!=1):
-                    SF = 0
-                
-                isTight = False
-                if abs(FakeLepton.pfRelIso04)<0.15 and FakeLepton.isTight:
-                    isTight = True
-                hMu.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
-            
-            if trig == 'HT' or trig == 'all':
-                if veto.TauLeptons==1:
-                    continue
-                #isolatedJet = True
-                #for jet in jets:
-                    #if (FakeTau.jetIdx>=0 and jet != jets[FakeTau.jetIdx]) and (jet.pt>20 and abs(jet.eta) < 5.) and deltaR(jet.eta, jet.phi, FakeTau.eta, FakeLepton.phi)<0.4:
-                        #isolatedJet = False
-                #if not isolatedJet:
-                    #continue
-
-                #if jets.numberSeparate == 0:
-                    #continue
-
-                if abs(FakeTau.eta)<2.4 and FakeTau.pt>0:
-                    if isMC and (FakeTau.isPrompt!=5): 
-                        SF = 0
-                    isTight = False
-                    if FakeTau.DeepTauWP>=64:
-                        isTight = True
-                    
-                    hTau.addEvent(isTight, isData, FakeLepton.pt, FakeLepton.eta, SF)
-        
         return True
                     

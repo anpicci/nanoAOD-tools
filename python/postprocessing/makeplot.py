@@ -701,7 +701,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
     if(syst.startswith("jer") or syst.startswith("jes")):
         treename += syst
     else:
-        treename += "_all"
+        treename += "all"
     if syst != "":
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
         histoname += "_" + syst

@@ -510,7 +510,7 @@ for i in range(tree.GetEntries()):
     
     if Debug:
         print("\nevento n. " + str(i))
-        if i > 50:
+        if i > 1000:
             break
     
     if not Debug and i%500 == 0:#
@@ -635,6 +635,7 @@ for i in range(tree.GetEntries()):
         FakeTau = taus[idx_tau]
 
         countjt = 0
+        Jet_numberSeparateTau[0]=0
         while countjt < min(lenjet, len(jets)):
             j = jets[countjt]
             if j.pt>30 and abs(j.eta)<5 and deltaR(j.eta, j.phi, FakeTau_eta[0], FakeTau_phi[0])>0.4:
