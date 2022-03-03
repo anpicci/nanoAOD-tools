@@ -306,13 +306,13 @@ pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 
 
 if opt.plot:
-    if not os.path.exists(pathplot):
+    if not os.path.exists(pathplot) and cut_tag != "1p":
         os.makedirs(pathplot)
 
 if opt.stack:
-    if not os.path.exists(plotrepo + 'stack'):
+    if not os.path.exists(plotrepo + 'stack') and cut_tag != "1p":
         os.makedirs(plotrepo + 'stack')
-    if not os.path.exists(pathstack):
+    if not os.path.exists(pathstack) and cut_tag != "1p":
         os.makedirs(pathstack)
 
 if not (opt.wfake=='nofake' or opt.wfake.startswith('incl') or opt.wfake.startswith('sep')):
