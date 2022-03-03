@@ -117,12 +117,12 @@ ZZtoLep_UL2016APV.components = [
 TT_SemiLep_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_SemiLep_UL2016APV")
 TT_SemiLep_UL2016APV.year = "UL2016APV"
 TT_SemiLep_UL2016APV.dataset = "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-TT_SemiLep_UL2016APV.sigma = 365.3 #pb to check
+TT_SemiLep_UL2016APV.sigma = 831.76 * 0.438
 
 TT_Had_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2016APV")
 TT_Had_UL2016APV.year = "UL2016APV"
 TT_Had_UL2016APV.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-TT_Had_UL2016APV.sigma = 377.96 #pb to check
+TT_Had_UL2016APV.sigma = 831.76 * 0.457
 
 TT_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2016APV")
 TT_UL2016APV.year = "UL2016APV"
@@ -134,7 +134,7 @@ TT_UL2016APV.components = [
 TTTo2L2Nu_UL2016APV = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016APV")
 TTTo2L2Nu_UL2016APV.year = "UL2016APV"
 TTTo2L2Nu_UL2016APV.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-TTTo2L2Nu_UL2016APV.sigma = 87.31 #pb
+TTTo2L2Nu_UL2016APV.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016APV")
 TT_beff_UL2016APV.year = "UL2016APV"
@@ -759,7 +759,8 @@ FakeEle_UL2016APV.components = [
     DataEle_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    DYJetsToLL_FxFx_UL2016APV
+    DYJetsToLL_FxFx_UL2016APV,
+    TT_UL2016APV,
 ]
 
 FakeMuPromptTau_UL2016APV = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016APV")
@@ -795,7 +796,8 @@ FakeMu_UL2016APV.components = [
     DataMu_UL2016APV,
     #DataHT_UL2016APV,
     WJets_UL2016APV,
-    DYJetsToLL_FxFx_UL2016APV
+    DYJetsToLL_FxFx_UL2016APV,
+    TT_UL2016APV,
 ]
 
 SampleHTFake_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016APV")
@@ -914,12 +916,12 @@ ZZtoLep_UL2016.components = [
 TT_SemiLep_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_SemiLep_UL2016")
 TT_SemiLep_UL2016.year = "UL2016"
 TT_SemiLep_UL2016.dataset = "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TT_SemiLep_UL2016.sigma = 365.3 #pb to check
+TT_SemiLep_UL2016.sigma = 831.76 * 0.438 #pb to check
 
 TT_Had_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2016")
 TT_Had_UL2016.year = "UL2016"
 TT_Had_UL2016.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TT_Had_UL2016.sigma = 377.96 #pb to check
+TT_Had_UL2016.sigma = 831.76 * 0.457 #pb to check
 
 TT_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2016")
 TT_UL2016.year = "UL2016"
@@ -931,7 +933,7 @@ TT_UL2016.components = [
 TTTo2L2Nu_UL2016 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016")
 TTTo2L2Nu_UL2016.year = "UL2016"
 TTTo2L2Nu_UL2016.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TTTo2L2Nu_UL2016.sigma =  87.31 #pb
+TTTo2L2Nu_UL2016.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016")
 TT_beff_UL2016.year = "UL2016"
@@ -1495,7 +1497,8 @@ FakeEle_UL2016.components = [
     DataEle_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    DYJetsToLL_FxFx_UL2016
+    DYJetsToLL_FxFx_UL2016,
+    TT_UL2016,
 ]
 
 FakeMuPromptTau_UL2016 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016")
@@ -1531,7 +1534,8 @@ FakeMu_UL2016.components = [
     DataMu_UL2016,
     #DataHT_UL2016,
     WJets_UL2016,
-    DYJetsToLL_FxFx_UL2016
+    DYJetsToLL_FxFx_UL2016,
+    TT_UL2016,
 ]
 
 SampleHTFake_UL2016 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016")
@@ -1647,13 +1651,13 @@ ZZtoLep_UL2017.components = [
 TT_SemiLep_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_SemiLep_UL2017")
 TT_SemiLep_UL2017.year = "UL2017"
 TT_SemiLep_UL2017.dataset = "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TT_SemiLep_UL2017.sigma = 365.3 #pb to check
+TT_SemiLep_UL2017.sigma = 831.76 * 0.438 #pb to check
 
 #### in production stage ####
 TT_Had_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2017")
 TT_Had_UL2017.year = "UL2017"
 TT_Had_UL2017.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TT_Had_UL2017.sigma = 377.96 #pb to check
+TT_Had_UL2017.sigma = 831.76 * 0.457 #pb to check
 
 TT_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2017")
 TT_UL2017.year = "UL2017"
@@ -1665,7 +1669,7 @@ TT_UL2017.components = [
 TTTo2L2Nu_UL2017 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2017")
 TTTo2L2Nu_UL2017.year = "UL2017"
 TTTo2L2Nu_UL2017.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TTTo2L2Nu_UL2017.sigma =  87.31 #pb
+TTTo2L2Nu_UL2017.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2017")
 TT_beff_UL2017.year = "UL2017"
@@ -2266,7 +2270,8 @@ FakeEle_UL2017.components = [
     DataEle_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    DYJetsToLL_FxFx_UL2017
+    DYJetsToLL_FxFx_UL2017,
+    TT_UL2017,
 ]
 
 FakeMuPromptTau_UL2017 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2017")
@@ -2302,7 +2307,8 @@ FakeMu_UL2017.components = [
     DataMu_UL2017,
     #DataHT_UL2017,
     WJets_UL2017,
-    DYJetsToLL_FxFx_UL2017
+    DYJetsToLL_FxFx_UL2017,
+    TT_UL2017,
 ]
 
 SampleHTFake_UL2017 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2017")
@@ -2419,12 +2425,12 @@ ZZtoLep_UL2018.components = [
 TT_SemiLep_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_SemiLep_UL2018")
 TT_SemiLep_UL2018.year = "UL2018"
 TT_SemiLep_UL2018.dataset = "/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TT_SemiLep_UL2018.sigma = 687.1 #pb to check
+TT_SemiLep_UL2018.sigma = 831.76 * 0.438 #pb to check
 
 TT_Had_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2018")
 TT_Had_UL2018.year = "UL2018"
 TT_Had_UL2018.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TT_Had_UL2018.sigma = 687.1 #pb to check
+TT_Had_UL2018.sigma = 831.76 * 0.457 #pb to check
 
 TT_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2018")
 TT_UL2018.year = "UL2018"
@@ -2436,7 +2442,7 @@ TT_UL2018.components = [
 TTTo2L2Nu_UL2018 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2018")
 TTTo2L2Nu_UL2018.year = "UL2018"
 TTTo2L2Nu_UL2018.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TTTo2L2Nu_UL2018.sigma =  87.31 #pb
+TTTo2L2Nu_UL2018.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2018")
 TT_beff_UL2018.year = "UL2018"
@@ -3017,7 +3023,8 @@ FakeEle_UL2018.components = [
     DataEle_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    DYJetsToLL_FxFx_UL2018
+    DYJetsToLL_FxFx_UL2018,
+    TT_UL2018,
 ]
 
 FakeMuPromptTau_UL2018 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2018")
@@ -3053,7 +3060,8 @@ FakeMu_UL2018.components = [
     DataMu_UL2018,
     #DataHT_UL2018,
     WJets_UL2018,
-    DYJetsToLL_FxFx_UL2018
+    DYJetsToLL_FxFx_UL2018,
+    TT_UL2018,
 ]
 
 SampleHTFake_UL2018 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2018")
