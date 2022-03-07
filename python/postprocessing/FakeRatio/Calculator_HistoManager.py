@@ -120,7 +120,7 @@ class EfficiencyHisto_manager:
 
     def CalculateEfficiency(self):
         Numerator = self.hNTight_Data.Clone()
-        Numerator.Add(self.hNTight_MC)
+        Numerator.Add(self.hNTight_MC, -1)
         Denumerator = self.hNLoose_Data.Clone()
         Denumerator.Add(self.hNLoose_MC, -1)
         Numerator.Sumw2()

@@ -20,7 +20,7 @@ if __name__ == "__main__" :
 
     parser.add_option('--met',          dest='met_cut',         type=int,   default = '50',                                             help='insert met cut, default 30')
     parser.add_option('--mt',           dest='mt_lepMET_cut',   type=int,   default = '50',                                             help='insert met cut, default 20')
-    parser.add_option('-b', '--bkg',    dest='bkg',                         default = True,    action='store_false',                    help='Do not eliminate contribution fromprompt W+Jets && DY+Jets events, default True')
+    parser.add_option('-b', '--nobkg',  dest='bkg',                         default = True,    action='store_false',                    help='Do not eliminate contribution fromprompt W+Jets && DY+Jets events, default True')
     parser.add_option('--onlybkg',      dest='onlybkg',                     default = False,    action='store_true',                    help='Only MC prompt contribution, default false')
     parser.add_option('-d', '--debug',  dest='debug',                       default = False,    action='store_true',                    help='Debug mode, only runs in a file for 10000 events')
     parser.add_option('--trig',         dest='trig',            type=str,   default = 'all',                                            help='trigger used, default all')

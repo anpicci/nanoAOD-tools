@@ -40,10 +40,10 @@ set channel = "ltau"
 #################### year2 #################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year2*root #countings
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*$year2*
-python3 makeplot.py -y $year2 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst btagUp,btagDown # -d TTTo2L2Nu_$year2
-python3 makeplot.py -y $year2 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst btagDown #-d TTTo2L2Nu_$year2
-python3 makeplot.py -y $year2 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst btagUp,btagDown # -d TTTo2L2Nu_$year2
-python3 makeplot.py -y $year2 --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL --syst btagUp,btagDown # -d TTTo2L2Nu_$year2
+python3 makeplot.py -y $year2 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst all # -d TTTo2L2Nu_$year2
+python3 makeplot.py -y $year2 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst all #-d TTTo2L2Nu_$year2
+python3 makeplot.py -y $year2 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst all # -d TTTo2L2Nu_$year2
+python3 makeplot.py -y $year2 --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL --syst all # -d TTTo2L2Nu_$year2
 ##python3 makeplot.py -y $year2 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet8 --rPrompt --count #-d VBS_SSWW_FT1_0_$year2
 ##python3 makeplot.py -y $year2 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet8 --rPrompt --count #-d VBS_SSWW_FT1_0_$year2
 ##python3 makeplot.py -y $year2 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet8 --rPrompt --count #-d VBS_SSWW_FT1_0_$year2

@@ -273,21 +273,28 @@ elif opt.syst!="all" and opt.syst=="noSyst":
     systematics.append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
 else:
      systematics = [
-         "",
+         #"",
+         #"PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
          #"jesUp",
          #"jesDown",
          #"jerUp",
          #"jerDown",
-         #"PFUp",
-         #"PFDown",
-         #"puUp",
-         #"puDown",
+         "PFUp",
+         "PFDown",
+         "puUp",
+         "puDown",
          "btagUp", 
          "btagDown",
          #"mistagUp",
          #"mistagDown",
-         #"lepUp", 
-         #"lepDown",
+         "lepUp", 
+         "lepDown",
+         "tau_vsjet_Up",
+         "tau_vsjet_Down",
+         "tau_vsele_Up",
+         "tau_vsele_Down",
+         "tau_vsmu_Up",
+         "tau_vsmu_Down",
          #"trigUp",
          #"trigDown",
          #"pdf_totalUp",
@@ -1344,7 +1351,8 @@ for year in years:
             variables.append(variabile('DNN_output_SM_opt', 'SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
-
+        '''
+        '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
         except:
