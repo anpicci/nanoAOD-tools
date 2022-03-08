@@ -70,7 +70,7 @@ for samp in samlist:
     else:
         hascomp = samp.components is not None
     if hascomp:#hasattr(samp, "components") and samp.components is not None:
-        print("I'm in components")
+        #print("I'm in components")
         for c in samp.components:
             if c.dataset != "" and ((opt.dat != "" and (opt.dat == c.label or opt.dat == samp.label)) or opt.dat == ""):
                 complist.append(copy.deepcopy(c))
