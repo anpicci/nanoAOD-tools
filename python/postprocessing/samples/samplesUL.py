@@ -39,7 +39,7 @@ CHWcolor = ROOT.kMagenta+2
 
 ZZTo2L2Nu_UL2016APV = sample(ZZcolor, 1, 1001, "ZZ --> 2l2\nu", "ZZTo2L2Nu_UL2016APV")
 ZZTo2L2Nu_UL2016APV.year = "UL2016APV"
-ZZTo2L2Nu_UL2016APV.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+ZZTo2L2Nu_UL2016APV.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 ZZTo2L2Nu_UL2016APV.sigma = 0.564 #pb NLO
 
 ZZTo4L_UL2016APV = sample(ZZcolor, 1, 1001, "ZZ --> 4l", "ZZTo4L_UL2016APV") ### not sure is the right background
@@ -121,7 +121,7 @@ TT_SemiLep_UL2016APV.sigma = 831.76 * 0.438
 
 TT_Had_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2016APV")
 TT_Had_UL2016APV.year = "UL2016APV"
-TT_Had_UL2016APV.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+TT_Had_UL2016APV.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 TT_Had_UL2016APV.sigma = 831.76 * 0.457
 
 TT_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2016APV")
@@ -133,7 +133,7 @@ TT_UL2016APV.components = [
 
 TTTo2L2Nu_UL2016APV = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016APV")
 TTTo2L2Nu_UL2016APV.year = "UL2016APV"
-TTTo2L2Nu_UL2016APV.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+TTTo2L2Nu_UL2016APV.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 TTTo2L2Nu_UL2016APV.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016APV")
@@ -213,7 +213,7 @@ VG_UL2016APV.components = [
 
 WWto2L2Nu_UL2016APV = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "WWto2L2Nu_UL2016APV")
 WWto2L2Nu_UL2016APV.year = "UL2016APV"
-WWto2L2Nu_UL2016APV.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WWto2L2Nu_UL2016APV.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 WWto2L2Nu_UL2016APV.sigma = 12.178
 
 GluGluToWWToENEN_UL2016APV = sample(WScolor, 1, 1001, "gg --> WW --> 2e2#nu", "GluGluToWWToENEN_UL2016APV")
@@ -343,22 +343,22 @@ WWTo2L2Nu_DoubleScattering_UL2016APV.sigma =  0.1703#pb
 
 WWW_4F_UL2016APV = sample(TBcolor, 1, 1001, "WWW_4F", "WWW_4F_UL2016APV")
 WWW_4F_UL2016APV.year = "UL2016APV"
-WWW_4F_UL2016APV.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+WWW_4F_UL2016APV.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
 WWW_4F_UL2016APV.sigma = 0.2086#pb
 
 WWZ_4F_UL2016APV = sample(TBcolor, 1, 1001, "WWZ_4F", "WWZ_4F_UL2016APV")
 WWZ_4F_UL2016APV.year = "UL2016APV"
-WWZ_4F_UL2016APV.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+WWZ_4F_UL2016APV.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
 WWZ_4F_UL2016APV.sigma = 0.1651#pb
 
 WZZ_UL2016APV = sample(TBcolor, 1, 1001, "WZZ", "WZZ_UL2016APV")
 WZZ_UL2016APV.year = "UL2016APV"
-WZZ_UL2016APV.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+WZZ_UL2016APV.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
 WZZ_UL2016APV.sigma = 0.05565#pb
 
 ZZZ_UL2016APV = sample(TBcolor, 1, 1001, "ZZZ", "ZZZ_UL2016APV")
 ZZZ_UL2016APV.year = "UL2016APV"
-ZZZ_UL2016APV.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
+ZZZ_UL2016APV.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11_ext1-v1/NANOAODSIM"
 ZZZ_UL2016APV.sigma = 0.01398#pb
 
 WWG_UL2016APV = sample(TBcolor, 1, 1001, "WWG", "WWG_UL2016APV")
@@ -437,7 +437,7 @@ WJets_UL2016APV.components = [
 
 WZ_UL2016APV = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2016APV")
 WZ_UL2016APV.year = "UL2016APV"
-WZ_UL2016APV.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+WZ_UL2016APV.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 WZ_UL2016APV.sigma = 27.59
 
 ### DY ###
@@ -445,7 +445,7 @@ WZ_UL2016APV.sigma = 27.59
 #### to be replaced with v9 when available ####
 DYJetsToLL_M10to50_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2016APV")
 DYJetsToLL_M10to50_UL2016APV.year = "UL2016APV"
-DYJetsToLL_M10to50_UL2016APV.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv2-106X_mcRun2_asymptotic_preVFP_v9-v1/NANOAODSIM"
+DYJetsToLL_M10to50_UL2016APV.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 DYJetsToLL_M10to50_UL2016APV.sigma = 18610.
 
 DYJetsToLL_M50_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2016APV")
@@ -463,7 +463,7 @@ DYJetsToLL_UL2016APV.year = "UL2016APV"
 DYJetsToLL_UL2016APV.components = [
     #DYJetsToLL_M10to50_UL2016APV,
     DYJetsToLL_M50_UL2016APV,
-    DYJetsToLL_M50_UL2016APV_ext,
+    #DYJetsToLL_M50_UL2016APV_ext,
 ]
 
 DYJetsToLL_M50_FxFx_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
@@ -819,7 +819,7 @@ SampleHTFake_UL2016APV.components = [
     WJetsHT2500toInf_UL2016APV,
     DYJetsToLL_M10to50_UL2016APV,
     DYJetsToLL_M50_UL2016APV,
-    DYJetsToLL_M50_UL2016APV_ext,
+    #DYJetsToLL_M50_UL2016APV_ext,
     TT_Had_UL2016APV,
     TT_SemiLep_UL2016APV,
     ZZTo2L2Nu_UL2016APV,
@@ -841,7 +841,7 @@ SampleHTFake_UL2016APV.components = [
 
 ZZTo2L2Nu_UL2016 = sample(ZZcolor, 1, 1001, "ZZ --> 2l2\nu", "ZZTo2L2Nu_UL2016")
 ZZTo2L2Nu_UL2016.year = "UL2016"
-ZZTo2L2Nu_UL2016.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODAPVv9-20UL16APVJMENano_106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+ZZTo2L2Nu_UL2016.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 ZZTo2L2Nu_UL2016.sigma = 0.9738 #pb NLO
 
 ZZTo4L_UL2016 = sample(ZZcolor, 1, 1001, "ZZ --> 4l", "ZZTo4L_UL2016") ### not sure is the right background
@@ -920,7 +920,7 @@ TT_SemiLep_UL2016.sigma = 831.76 * 0.438 #pb to check
 
 TT_Had_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2016")
 TT_Had_UL2016.year = "UL2016"
-TT_Had_UL2016.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+TT_Had_UL2016.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 TT_Had_UL2016.sigma = 831.76 * 0.457 #pb to check
 
 TT_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2016")
@@ -932,7 +932,7 @@ TT_UL2016.components = [
 
 TTTo2L2Nu_UL2016 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016")
 TTTo2L2Nu_UL2016.year = "UL2016"
-TTTo2L2Nu_UL2016.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+TTTo2L2Nu_UL2016.dataset = " /TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 TTTo2L2Nu_UL2016.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016")
@@ -1009,7 +1009,7 @@ VG_UL2016.components = [
 
 WWto2L2Nu_UL2016 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "WWto2L2Nu_UL2016")
 WWto2L2Nu_UL2016.year = "UL2016"
-WWto2L2Nu_UL2016.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WWto2L2Nu_UL2016.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 WWto2L2Nu_UL2016.sigma = 12.178
 
 GluGluToWWToENEN_UL2016 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2016")
@@ -1136,22 +1136,22 @@ WWTo2L2Nu_DoubleScattering_UL2016.sigma =  0.1703#pb
 
 WWW_4F_UL2016 = sample(TBcolor, 1, 1001, "WWW_4F", "WWW_4F_UL2016")
 WWW_4F_UL2016.year = "UL2016"
-WWW_4F_UL2016.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+WWW_4F_UL2016.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
 WWW_4F_UL2016.sigma = 0.2086#pb
 
 WWZ_4F_UL2016 = sample(TBcolor, 1, 1001, "WWZ_4F", "WWZ_4F_UL2016")
 WWZ_4F_UL2016.year = "UL2016"
-WWZ_4F_UL2016.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+WWZ_4F_UL2016.dataset = "/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
 WWZ_4F_UL2016.sigma = 0.1651#pb
 
 WZZ_UL2016 = sample(TBcolor, 1, 1001, "WZZ", "WZZ_UL2016")
 WZZ_UL2016.year = "UL2016"
-WZZ_UL2016.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+WZZ_UL2016.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
 WZZ_UL2016.sigma = 0.05565#pb
 
 ZZZ_UL2016 = sample(TBcolor, 1, 1001, "ZZZ", "ZZZ_UL2016")
 ZZZ_UL2016.year = "UL2016"
-ZZZ_UL2016.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
+ZZZ_UL2016.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17_ext1-v1/NANOAODSIM"
 ZZZ_UL2016.sigma = 0.01398#pb
 
 WWG_UL2016 = sample(TBcolor, 1, 1001, "WWG", "WWG_UL2016")
@@ -1229,7 +1229,7 @@ WJets_UL2016.components = [
 
 WZ_UL2016 = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2016")
 WZ_UL2016.year = "UL2016"
-WZ_UL2016.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+WZ_UL2016.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 WZ_UL2016.sigma = 27.59
 
 ### DYJets ###
@@ -1237,7 +1237,7 @@ WZ_UL2016.sigma = 27.59
 ### to be replaced with v9 when available ####
 DYJetsToLL_M10to50_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M10to50", "DYJetsToLL_M10to50_UL2016")
 DYJetsToLL_M10to50_UL2016.year = "UL2016"
-DYJetsToLL_M10to50_UL2016.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv2-106X_mcRun2_asymptotic_v15-v1/NANOAODSIM"
+DYJetsToLL_M10to50_UL2016.dataset = "/DYJetsToLL_M-10to50_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 DYJetsToLL_M10to50_UL2016.sigma = 18610.
 
 DYJetsToLL_M50_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_UL2016")
@@ -1255,7 +1255,7 @@ DYJetsToLL_UL2016.year = "UL2016"
 DYJetsToLL_UL2016.components = [
     #DYJetsToLL_M10to50_UL2016,
     DYJetsToLL_M50_UL2016,
-    DYJetsToLL_M50_UL2016_ext,
+    #DYJetsToLL_M50_UL2016_ext,
 ]
 
 DYJetsToLL_M50_FxFx_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016")
@@ -1554,7 +1554,7 @@ SampleHTFake_UL2016.components = [
     WJetsHT2500toInf_UL2016,
     DYJetsToLL_M10to50_UL2016,
     DYJetsToLL_M50_UL2016,
-    DYJetsToLL_M50_UL2016_ext,
+    #DYJetsToLL_M50_UL2016_ext,
     TT_Had_UL2016,
     TT_SemiLep_UL2016,
     ZZTo2L2Nu_UL2016,
@@ -1576,7 +1576,7 @@ SampleHTFake_UL2016.components = [
 
 ZZTo2L2Nu_UL2017 = sample(ZZcolor, 1, 1001, "ZZ --> 2l2\nu", "ZZTo2L2Nu_UL2017")
 ZZTo2L2Nu_UL2017.year = "UL2017"
-ZZTo2L2Nu_UL2017.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
+ZZTo2L2Nu_UL2017.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 ZZTo2L2Nu_UL2017.sigma = 0.9738 #pb NLO
 
 ZZTo4L_UL2017 = sample(ZZcolor, 1, 1001, "ZZ --> 4l", "ZZTo4L_UL2017") ### not sure is the right background
@@ -1656,7 +1656,7 @@ TT_SemiLep_UL2017.sigma = 831.76 * 0.438 #pb to check
 #### in production stage ####
 TT_Had_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2017")
 TT_Had_UL2017.year = "UL2017"
-TT_Had_UL2017.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
+TT_Had_UL2017.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 TT_Had_UL2017.sigma = 831.76 * 0.457 #pb to check
 
 TT_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2017")
@@ -1668,7 +1668,7 @@ TT_UL2017.components = [
 
 TTTo2L2Nu_UL2017 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2017")
 TTTo2L2Nu_UL2017.year = "UL2017"
-TTTo2L2Nu_UL2017.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
+TTTo2L2Nu_UL2017.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 TTTo2L2Nu_UL2017.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2017")
@@ -1873,7 +1873,7 @@ WWTo2L2Nu_DoubleScattering_UL2017.sigma =  0.1703#pb
 
 WWW_4F_UL2017 = sample(TBcolor, 1, 1001, "WWW_4F", "WWW_4F_UL2017")
 WWW_4F_UL2017.year = "UL2017"
-WWW_4F_UL2017.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9_ext1-v1/NANOAODSIM"
+WWW_4F_UL2017.dataset = "/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9_ext1-v2/NANOAODSIM"
 WWW_4F_UL2017.sigma = 0.2086#pb
 
 WWZ_4F_UL2017 = sample(TBcolor, 1, 1001, "WWZ_4F", "WWZ_4F_UL2017")
@@ -1883,12 +1883,12 @@ WWZ_4F_UL2017.sigma = 0.1651#pb
 
 WZZ_UL2017 = sample(TBcolor, 1, 1001, "WZZ", "WZZ_UL2017")
 WZZ_UL2017.year = "UL2017"
-WZZ_UL2017.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9_ext1-v1/NANOAODSIM"
+WZZ_UL2017.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9_ext1-v2/NANOAODSIM"
 WZZ_UL2017.sigma = 0.05565#pb
 
 ZZZ_UL2017 = sample(TBcolor, 1, 1001, "ZZZ", "ZZZ_UL2017")
 ZZZ_UL2017.year = "UL2017"
-ZZZ_UL2017.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9_ext1-v1/NANOAODSIM"
+ZZZ_UL2017.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9_ext1-v2/NANOAODSIM"
 ZZZ_UL2017.sigma = 0.01398#pb
 
 WWG_UL2017 = sample(TBcolor, 1, 1001, "WWG", "WWG_UL2017")
@@ -1967,7 +1967,7 @@ WJets_UL2017.components = [
 
 WZ_UL2017 = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2017")
 WZ_UL2017.year = "UL2017"
-WZ_UL2017.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-20UL17JMENano_106X_mc2017_realistic_v9-v1/NANOAODSIM"
+WZ_UL2017.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 WZ_UL2017.sigma = 27.59
 
 ### DYJets ###
@@ -1992,7 +1992,7 @@ DYJetsToLL_UL2017.year = "UL2017"
 DYJetsToLL_UL2017.components = [
     #DYJetsToLL_M10to50_UL2017,
     DYJetsToLL_M50_UL2017,
-    DYJetsToLL_M50_UL2017_ext,
+    #DYJetsToLL_M50_UL2017_ext,
 ]
 
 DYJetsToLL_M50_FxFx_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2017")
@@ -2329,7 +2329,7 @@ SampleHTFake_UL2017.components = [
     WJetsHT2500toInf_UL2017,
     DYJetsToLL_M10to50_UL2017,
     DYJetsToLL_M50_UL2017,
-    DYJetsToLL_M50_UL2017_ext,
+    #DYJetsToLL_M50_UL2017_ext,
     TT_Had_UL2017,
     TT_SemiLep_UL2017,
     ZZTo2L2Nu_UL2017,
@@ -2351,7 +2351,7 @@ SampleHTFake_UL2017.components = [
 
 ZZTo2L2Nu_UL2018 = sample(ZZcolor, 1, 1001, "ZZ --> 2l2\nu", "ZZTo2L2Nu_UL2018")
 ZZTo2L2Nu_UL2018.year = "UL2018"
-ZZTo2L2Nu_UL2018.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+ZZTo2L2Nu_UL2018.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 ZZTo2L2Nu_UL2018.sigma = 0.9738 #pb NLO
 
 ZZTo4L_UL2018 = sample(ZZcolor, 1, 1001, "ZZ --> 4l", "ZZTo4L_UL2018") ### not sure is the right background
@@ -2429,7 +2429,7 @@ TT_SemiLep_UL2018.sigma = 831.76 * 0.438 #pb to check
 
 TT_Had_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} semileptonic", "TT_Had_UL2018")
 TT_Had_UL2018.year = "UL2018"
-TT_Had_UL2018.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+TT_Had_UL2018.dataset = "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 TT_Had_UL2018.sigma = 831.76 * 0.457 #pb to check
 
 TT_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} hadronic + semileptonic", "TT_UL2018")
@@ -2441,7 +2441,7 @@ TT_UL2018.components = [
 
 TTTo2L2Nu_UL2018 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2018")
 TTTo2L2Nu_UL2018.year = "UL2018"
-TTTo2L2Nu_UL2018.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+TTTo2L2Nu_UL2018.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 TTTo2L2Nu_UL2018.sigma = 831.76 * 0.105 #pb
 
 TT_beff_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2018")
@@ -2521,7 +2521,7 @@ VG_UL2018.components = [
 
 WWto2L2Nu_UL2018 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "WWto2L2Nu_UL2018")
 WWto2L2Nu_UL2018.year = "UL2018"
-WWto2L2Nu_UL2018.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WWto2L2Nu_UL2018.dataset = "/WWTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
 WWto2L2Nu_UL2018.sigma = 12.178
 
 GluGluToWWToENEN_UL2018 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2018")
@@ -2658,12 +2658,12 @@ WWZ_4F_UL2018.sigma = 0.1651#pb
 
 WZZ_UL2018 = sample(TBcolor, 1, 1001, "WZZ", "WZZ_UL2018")
 WZZ_UL2018.year = "UL2018"
-WZZ_UL2018.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1_ext1-v1/NANOAODSIM"
+WZZ_UL2018.dataset = "/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"
 WZZ_UL2018.sigma = 0.05565#pb
 
 ZZZ_UL2018 = sample(TBcolor, 1, 1001, "ZZZ", "ZZZ_UL2018")
 ZZZ_UL2018.year = "UL2018"
-ZZZ_UL2018.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1_ext1-v1/NANOAODSIM"
+ZZZ_UL2018.dataset = "/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1_ext1-v2/NANOAODSIM"
 ZZZ_UL2018.sigma = 0.01398#pb
 
 WWG_UL2018 = sample(TBcolor, 1, 1001, "WWG", "WWG_UL2018")
@@ -2741,7 +2741,7 @@ WJets_UL2018.components = [
 
 WZ_UL2018 = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2018")
 WZ_UL2018.year = "UL2018"
-WZ_UL2018.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-20UL18JMENano_106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
+WZ_UL2018.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 WZ_UL2018.sigma = 27.59
 
 ### DYJets ###
