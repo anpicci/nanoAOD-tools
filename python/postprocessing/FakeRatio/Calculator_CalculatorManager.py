@@ -51,8 +51,8 @@ class FakeCalculator_manager:
         cut_tau_t = "FakeTau_DeepTauWP>=64"
         region = "(MET_pt>=0.&&MET_pt<=" + str(met_cut) + ")&&(mT_lepMET>=0.&&mT_lepMET<="+ str(mt_lepMET_cut) + ")"
 
-        hEle.ProjectTree(tree, isData, cut_ele_l, cut_ele_t, region)
-        hMu.ProjectTree(tree, isData, cut_mu_l, cut_mu_t, region)
+        #hEle.ProjectTree(tree, isData, cut_ele_l, cut_ele_t, region)
+        #hMu.ProjectTree(tree, isData, cut_mu_l, cut_mu_t, region)
         hTau.ProjectTree(tree, isData, cut_tau_l, cut_tau_t, region)
 
         return True

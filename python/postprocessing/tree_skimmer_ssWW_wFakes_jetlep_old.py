@@ -56,7 +56,7 @@ vsEle = {"VVVL": 'VVVLoose',
 
 usage = "python tree_skimmer_ssWW_wFakes.py [nome_del_sample_in_samples.py] 0 [file_in_input] local wpvsjet wpvsele wpvsmu"
 
-if sys.argv[4] == 'remote':
+if sys.argv[4] == 'remote' or sys.argv[4] == 'test':
     if "UL" in sys.argv[1]:
         from samplesUL import *
     else:
@@ -1043,13 +1043,13 @@ for i in range(tree.GetEntries()):
 
     #if not isMC:
     if abs(GoodLep.pdgId)==11:
-        lepton_SFFake_vsjet4[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', sample.year)
-        lepton_SFFake_vsjet2[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', sample.year)
-        lepton_SFFake_vsjet8[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet8', sample.year)
+        lepton_SFFake_vsjet4[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', sample.year, sys.argv[4])
+        lepton_SFFake_vsjet2[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', sample.year, sys.argv[4])
+        lepton_SFFake_vsjet8[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet8', sample.year, sys.argv[4])
     elif abs(GoodLep.pdgId)==13:
-        lepton_SFFake_vsjet4[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', sample.year)
-        lepton_SFFake_vsjet2[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', sample.year)
-        lepton_SFFake_vsjet8[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet8', sample.year)
+        lepton_SFFake_vsjet4[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', sample.year, sys.argv[4])
+        lepton_SFFake_vsjet2[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', sample.year, sys.argv[4])
+        lepton_SFFake_vsjet8[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet8', sample.year, sys.argv[4])
     #else:
     if isMC:
         lepton_isPrompt[0] = GoodLep.genPartFlav
@@ -1090,9 +1090,9 @@ for i in range(tree.GetEntries()):
     tau_DecayMode[0]        =   GoodTau.decayMode
 
     #if not isMC:
-    tau_SFFake_vsjet4[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet4', sample.year)
-    tau_SFFake_vsjet2[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet2', sample.year)
-    tau_SFFake_vsjet8[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet8', sample.year)
+    tau_SFFake_vsjet4[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet4', sample.year, sys.argv[4])
+    tau_SFFake_vsjet2[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet2', sample.year, sys.argv[4])
+    tau_SFFake_vsjet8[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet8', sample.year, sys.argv[4])
     #else:
     if isMC:
         tau_isPrompt[0] = GoodTau.genPartFlav

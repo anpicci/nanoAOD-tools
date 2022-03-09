@@ -2496,11 +2496,17 @@ def Lepton_IDIso_SF(lepton):
         print("I dunno what to do with this particle :/")
         return -1.
 
-def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017'):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
+def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
     #inFile = ROOT.TFile.Open("FR_vsjet2.root")
     #year = year.replace("UL", "").replace("APV", "")
     histo = ROOT.TH2F()
-    frvsjet = 'FR_' + wp + "_" + str(year) + ".root"
+
+    frvsjet = 'FR_' + wp + "_" + str(year)
+    if (folder == "test" or folder == "local") and wp == 'vsjet8':
+        frvsjet += "_test"
+
+    frvsjet += ".root"
+    print(frvsjet)
     inFile = ROOT.TFile.Open(frvsjet)
 
     if not year.startswith("UL"):
@@ -2526,9 +2532,16 @@ def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017'):#, frvsjet2 = 'FR_
 
     return FR/(1-FR)
 
-def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017'):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
+def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017', folder = "remote"):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
     histo = ROOT.TH2F()
-    frvsjet = 'FR_' + wp + "_" + str(year) + ".root"
+    frvsjet = 'FR_' + wp + "_" + str(year)
+
+    if (folder == "test" or folder == "local") and wp == 'vsjet8':
+        frvsjet += "_test"
+
+    frvsjet += ".root"
+
+    print(frvsjet)
     inFile = ROOT.TFile.Open(frvsjet)
 
     if not year.startswith("UL"):
@@ -2555,9 +2568,16 @@ def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017'):#, frvsjet2 = 'FR_v
 
     return FR/(1-FR)
 
-def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017'):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
+def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
     histo = ROOT.TH2F()
-    frvsjet = 'FR_' + wp + "_" + str(year) + ".root"
+    frvsjet = 'FR_' + wp + "_" + str(year)
+
+    if (folder == "test" or folder == "local") and wp == 'vsjet8':
+        frvsjet += "_test"
+
+    frvsjet += ".root"
+    print(frvsjet)
+
     inFile = ROOT.TFile.Open(frvsjet)
 
 

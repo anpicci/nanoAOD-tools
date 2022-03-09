@@ -72,7 +72,12 @@ def sub_writer(sample, n, files, folder):
     f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"testmatch\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     #args += "\n"
-    args = sample.label + " " + str(n) + " " + str(files) + " remote " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu
+    runtype = ""
+    if fsplitted[0] == "vUL001":
+        runtype = "test"
+    else:
+        runtype = "remote"
+    args = sample.label + " " + str(n) + " " + str(files) + " " + runtype + " " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu
     if opt.masscr:
         args += " 1"
     else:
