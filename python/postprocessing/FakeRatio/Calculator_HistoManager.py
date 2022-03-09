@@ -48,7 +48,12 @@ class EfficiencyHisto_manager:
             hNTight_MC     = ROOT.TH2F("h2NTight" + self.lepton + "_MC_temp",   self.lepton + "#tight events_MC", (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
 
         print("hello, i'm projecting", tree.GetName(), "in", self.lepton)
-        variables = "Fake" + self.lepton + "_eta:Fake" + self.lepton + "_pt"
+        leptag = ""
+        if not self.lepton == "Tau":
+            leptag = "Lepton"
+        else:
+            leptag = self.lepton
+        variables = "Fake" + leptag + "_eta:Fake" + leptag + "_pt"
         cut_loose = "(" + cut_l + ")*(" + region + ")"
         cut_tight = "(" + cut_l + ")*(" + cut_t + ")*(" + region + ")"
         if isData:
@@ -62,15 +67,14 @@ class EfficiencyHisto_manager:
         if isData:
             print(tree.Project(hNLoose_Data.GetName(), variables, cutstring_loose))
             print(tree.Project(hNTight_Data.GetName(), variables, cutstring_tight))
-            print("hl name:", hNLoose_Data.GetName(), "ht name:", hNTight_Data.GetName())
-            print("hl entries", hNLoose_Data.GetEntries(), "ht entries", hNTight_Data.GetEntries())
             self.hNLoose_Data.Add(hNLoose_Data)#.Clone()
             self.hNTight_Data.Add(hNTight_Data)#.Clone()
+            self.hNTight_Data.Draw("colz text")#.Clone()
+            #time.sleep(60)
 
         else:
             print(tree.Project(hNLoose_MC.GetName(), variables, cutstring_loose))
             print(tree.Project(hNTight_MC.GetName(), variables, cutstring_tight))
-            print("hl entries", hNLoose_MC.GetEntries(), "ht entries", hNTight_MC.GetEntries())
             self.hNLoose_MC.Add(hNLoose_MC)#.Clone()
             self.hNTight_MC.Add(hNTight_MC)#.Clone()
 
@@ -116,7 +120,8 @@ class EfficiencyHisto_manager:
             self.hNTight_MC.SetBinContent(j, ynbins, self.hNTight_MC.GetBinContent(j,ynbins)+self.hNTight_MC.GetBinContent(j,ynbins+1))
             self.hNTight_MC.SetBinError(j, ynbins, math.sqrt(pow(self.hNTight_MC.GetBinError(j,ynbins),2) + pow(self.hNTight_MC.GetBinError(j,ynbins+1),2)))
             j+=1
-
+        print("data\thl entries", self.hNLoose_Data.GetEntries(), "ht entries", self.hNTight_Data.GetEntries())
+        print("MC\thl entries", self.hNLoose_MC.GetEntries(), "ht entries", self.hNTight_MC.GetEntries())
 
     def CalculateEfficiency(self):
         Numerator = self.hNTight_Data.Clone()
