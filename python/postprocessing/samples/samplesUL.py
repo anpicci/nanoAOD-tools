@@ -2766,7 +2766,7 @@ DYJetsToLL_UL2018.year = "UL2018"
 DYJetsToLL_UL2018.components = [
     #DYJetsToLL_M10to50_UL2018,
     DYJetsToLL_M50_UL2018,
-    DYJetsToLL_M50_UL2018_ext,
+    #DYJetsToLL_M50_UL2018_ext,
 ]
 
 DYJetsToLL_M50_FxFx_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2018")
