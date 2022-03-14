@@ -2271,7 +2271,7 @@ FakeEle_UL2017.components = [
     #DataHT_UL2017,
     WJets_UL2017,
     #DYJetsToLL_FxFx_UL2017,
-    #TT_UL2017,
+    TT_UL2017,
 ]
 
 FakeMuPromptTau_UL2017 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2017")
@@ -2308,7 +2308,7 @@ FakeMu_UL2017.components = [
     #DataHT_UL2017,
     WJets_UL2017,
     #DYJetsToLL_FxFx_UL2017,
-    #TT_UL2017,
+    TT_UL2017,
 ]
 
 SampleHTFake_UL2017 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2017")
