@@ -131,7 +131,7 @@ for s in complist:
             toSub = ""
             if sstatus == "COMPLETED":
                 print "\t" + s.label + " is COMPLETED!"
-                printpath = "./macros/files/"
+                printpath = "./macros/files_new/"
                 if opt.forFR:
                     printpath += "Fake/HT/"
 

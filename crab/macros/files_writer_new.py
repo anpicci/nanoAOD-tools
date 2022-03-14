@@ -40,7 +40,7 @@ else:
 path = ".."
 
 for sample in samples:
-    dirpath = "./files/"
+    dirpath = "./files_new/"
     crabdir = "/crab_" + str(sample.label)
     if opt.fake:
         if "DataEleB" in sample.label or "DataMuB" in sample.label:
