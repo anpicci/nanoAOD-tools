@@ -2271,6 +2271,7 @@ FakeEle_UL2017.components = [
     #DataHT_UL2017,
     WJets_UL2017,
     #DYJetsToLL_FxFx_UL2017,
+    ZZtoLep_UL2017,
     TT_UL2017,
 ]
 
@@ -2308,6 +2309,7 @@ FakeMu_UL2017.components = [
     #DataHT_UL2017,
     WJets_UL2017,
     #DYJetsToLL_FxFx_UL2017,
+    ZZtoLep_UL2017,
     TT_UL2017,
 ]
 
