@@ -17,8 +17,10 @@ parser.add_option('--nodata', dest='nodata', default = False, action='store_true
 (opt, args) = parser.parse_args()
 #Insert here your uid... you can see it typing echo $uid
 
-username = str(os.environ.get('USER'))
-inituser = str(os.environ.get('USER')[0])
+#username = str(os.environ.get('USER'))
+username = "apiccine"
+#inituser = str(os.environ.get('USER')[0])
+inituser = "a"
 if username == 'mmagheri':
     uid = 102889
 elif username == 'apiccine':
