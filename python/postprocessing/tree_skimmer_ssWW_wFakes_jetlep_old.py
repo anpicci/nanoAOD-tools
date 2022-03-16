@@ -1413,7 +1413,8 @@ for i in range(tree.GetEntries()):
     ## Removing events with HEM problem  ##
     #######################################
     passesMETHEMVeto = HEMveto(jets, electrons)
-    if(sample.year == 2018 and not passesMETHEMVeto):
+    #if(("2018" in str(sample.year) and not "UL" in str(sample.year)) and not passesMETHEMVeto):
+    if(("2018" in str(sample.year) and not "UL" in str(sample.year)) and not passesMETHEMVeto):
         if(not isMC and chain.run > 319077.):
             continue
         elif(isMC):
