@@ -263,7 +263,7 @@ for prname, proc in condor_dict.items():
 f.close()
 
 if not opt.check:
-    t = open("CutsAndValues.py", "w")
+    t = open("CutsAndValues_" + str(opt.year) + ".py", "w")
     t.write("# In this file values for cuts and constant will be stored and then recalled from the whole analysis function\n")
     t.write("#Using nanoAOD version 102X\n")
     t.write("ONLYELE=1\n")

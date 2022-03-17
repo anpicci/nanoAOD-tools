@@ -38,7 +38,7 @@ parser.add_option('-p', '--plot', dest='plot', default = False, action='store_tr
 parser.add_option('-s', '--stack', dest='stack', default = False, action='store_true', help='Default make no stacks')
 parser.add_option('-N', '--notstacked', dest='tostack', default = True, action='store_false', help='Default make plots stacked')
 parser.add_option('-L', '--lep', dest='lep', type='string', default = 'incl', help='Default make incl analysis')
-parser.add_option('-S', '--syst', dest='syst', type='string', default = 'all', help='Default all systematics added')
+parser.add_option('-S', '--syst', dest='syst', type='string', default = '', help='Default all systematics added')
 parser.add_option('-C', '--cut', dest='cut', type='string', default = '1.', help='Default no cut')
 parser.add_option('-y', '--year', dest='year', type='string', default = '2017', help='Default 2016, 2017 and 2018 are included')
 parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v7', help='Default folder is v0')
@@ -52,6 +52,7 @@ parser.add_option('--wjets', dest='wjets', default = False, action='store_true',
 parser.add_option('--fakes', dest='fakes', default = False, action='store_true', help='Enable FL CR, default disabled')
 parser.add_option('--ws', dest='ws', default = False, action='store_true', help='Enable WrongSign CR, default disabled')
 parser.add_option('--dy', dest='dy', default = False, action='store_true', help='Enable DY CR, default disabled')
+parser.add_option('--wsdy', dest='wsdy', default = False, action='store_true', help='Enable DY+WS CR, default disabled')
 parser.add_option('--qcd', dest='qcd', default = False, action='store_true', help='Enable QCD CR, default disabled')
 parser.add_option('--blinded', dest='blinded', default = False, action='store_true', help='Activate blinding')
 parser.add_option('--signal', dest='signal', default = False, action='store_true', help='Activate only signal')
@@ -67,6 +68,7 @@ parser.add_option('--model_dim6', dest='model_dim6', default = '/afs/cern.ch/use
 parser.add_option('--model_dim8', dest='model_dim8', default = '/afs/cern.ch/user/t/ttedesch/public/xgb_aQGC_v100.model', type='string', help='Path to ML model for dim8 analysis')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='Tag to distinguish between different makeplot runs')
+parser.add_option('--bvetoL', dest='bvetoL', default = False, action='store_true', help='apply bveto loose in ws and dy CRs')
 
 (opt, args) = parser.parse_args()
 #print (opt, args)
@@ -81,6 +83,12 @@ else:
 def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
+
+bvetostring = ""
+if opt.bvetoL:
+    bvetostring = "pass_b_veto_loose[0]==1"
+else:
+    bvetostring = "pass_b_veto[0]==1"
 
 folder = opt.folder 
 if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
@@ -132,11 +140,24 @@ if opt.bveto:
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
 
 elif opt.ws:
-    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
-                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
+                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
                  'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt>50.)*(" + cut + ")", 
     }
     cut_tag = 'wrongsing_CR'
+    if opt.bvetoL:
+        cut_tag += '_bvetoL'
+    if opt.cut != "1.":
+        cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
+
+elif opt.wsdy:
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
+                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
+                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1)*(" + cut + ")", 
+    }
+    cut_tag = 'OS_CR'
+    if opt.bvetoL:
+        cut_tag += '_bvetoL'
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
 
@@ -151,7 +172,7 @@ elif opt.sr:
 
 elif opt.ttbar:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
-                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&MET_pt>50.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_jet_selection==1&&pass_b_veto==0&&pass_tau_veto==1&&MET_pt>50.)*(" + cut + ")", 
             }
     cut_tag = 'ttbar_CR'
@@ -182,11 +203,13 @@ elif opt.qcd:
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)           
 elif opt.dy:
-    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")", 
-                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_charge_selection==0&&pass_b_veto==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.)*(" + cut + ")",
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&" + bvetostring + "&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&" + bvetostring + "&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.)*(" + cut + ")",
             }
     cut_tag = 'DY_CR'
+    if opt.bvetoL:
+        cut_tag += '_bvetoL'
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)           
 elif opt.sel:
@@ -242,6 +265,45 @@ if opt.bdt or opt.ebdt or opt.mubdt:
 
 lumi = {'2016': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83}
 
+systematics = []
+if opt.syst!="all" and opt.syst!="noSyst":
+     for syst in (opt.syst).split(","):
+          systematics.append(syst)
+elif opt.syst!="all" and opt.syst=="noSyst":
+    systematics.append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
+else:
+     systematics = [
+         #"",
+         #"PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
+         #"jesUp",
+         #"jesDown",
+         #"jerUp",
+         #"jerDown",
+         "PFUp",
+         "PFDown",
+         "puUp",
+         "puDown",
+         "btagUp", 
+         "btagDown",
+         #"mistagUp",
+         #"mistagDown",
+         "lepUp", 
+         "lepDown",
+         "tau_vsjet_Up",
+         "tau_vsjet_Down",
+         "tau_vsele_Up",
+         "tau_vsele_Down",
+         "tau_vsmu_Up",
+         "tau_vsmu_Down",
+         #"trigUp",
+         #"trigDown",
+         #"pdf_totalUp",
+         #"pdf_totalDown",
+         #"q2Up",
+         #"q2Down"
+     ]
+
+
 print(cut_tag)
 
 pathplot = plotrepo + lepstr  + "/" # + "_" + str(FRtag) + "/"
@@ -251,13 +313,13 @@ pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 
 
 if opt.plot:
-    if not os.path.exists(pathplot):
+    if not os.path.exists(pathplot) and cut_tag != "1p":
         os.makedirs(pathplot)
 
 if opt.stack:
-    if not os.path.exists(plotrepo + 'stack'):
+    if not os.path.exists(plotrepo + 'stack') and cut_tag != "1p":
         os.makedirs(plotrepo + 'stack')
-    if not os.path.exists(pathstack):
+    if not os.path.exists(pathstack) and cut_tag != "1p":
         os.makedirs(pathstack)
 
 if not (opt.wfake=='nofake' or opt.wfake.startswith('incl') or opt.wfake.startswith('sep')):
@@ -265,7 +327,12 @@ if not (opt.wfake=='nofake' or opt.wfake.startswith('incl') or opt.wfake.startsw
 
 def mergepart(dataset):
     samples = []
-    if hasattr(dataset, 'components'): # How to check whether this exists or not
+    hascomp = False
+    if "UL" in opt.year:
+        hascomp = hasattr(dataset, "components")
+    else:
+        hascomp = dataset.components is not None
+    if hascomp:#hasattr(dataset, 'components'): # How to check whether this exists or not
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
@@ -554,7 +621,12 @@ def mergepart(dataset):
 def mergetree(sample):
     if not os.path.exists(filerepo + sample.label):
         os.makedirs(filerepo + sample.label)
-    if hasattr(sample, 'components'): # How to check whether this exists or not
+    hascomp = False
+    if "UL" in opt.year:
+        hascomp = hasattr(sample, "components")
+    else:
+        hascomp = sample.components is not None
+    if hascomp:#hasattr(sample, 'components'): # How to check whether this exists or not
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + ".root" 
         for comp in sample.components:
             add+= " " + filerepo + comp.label + "/"  + comp.label + ".root" 
@@ -563,7 +635,12 @@ def mergetree(sample):
 
 def lumi_writer(dataset, lumi):
     samples = []
-    if hasattr(dataset, 'components'): # How to check whether this exists or not
+    hascomp = False
+    if "UL" in opt.year:
+        hascomp = hasattr(dataset, "components")
+    else:
+        hascomp = dataset.components is not None
+    if hascomp:#hasattr(dataset, 'components'): # How to check whether this exists or not
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
@@ -611,181 +688,185 @@ def lumi_writer(dataset, lumi):
             print('\n')
         else:
             os.popen("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
+            print("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
 
 
 def plot(lep, reg, variable, sample, cut_tag, syst=""):
-     print("in plotf")
-     IsDim8 = False
-     if sample.label.startswith("VBS_SSWW_F"):
-         IsDim8 = True
-     print("IsDim8?:", IsDim8)
-     print("in plot function")
-     print("plotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, "with FR", FRtag)#, " ", syst,
-     ROOT.TH1.SetDefaultSumw2()
-     cutbase = variable._taglio
-     cut = ''
+    print("in plotf")
+    treename = "events_"
+    IsDim8 = False
+    if sample.label.startswith("VBS_SSWW_F"):
+        IsDim8 = True
+   
+    print("IsDim8?:", IsDim8)
+    print("in plot function")
+    print("plotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, "with FR", FRtag, "syst applied", syst)
+    ROOT.TH1.SetDefaultSumw2()
+    cutbase = variable._taglio
+    histoname = "h_" + variable._name + "_" + cut_tag
 
-     print("count? ", opt.count)
-     if opt.count:
-          countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".txt", "a")
-          countf.write(sample.label)
-          #countf.write("\nBin\tContent\tError")
+    if(syst.startswith("jer") or syst.startswith("jes")):
+        treename += syst
+    else:
+        treename += "all"
+    if syst != "":
+        nominal = syst.replace("Up", "SF").replace("Down", "SF")
+        histoname += "_" + syst
+        if not(syst.startswith("jer") or syst.startswith("jes")):
+        #if syst.startswith("btag"):
+            cutbase += '*(1.*' + syst + '/' + nominal + ')'
+            print('*(1.*' + syst + '/' + nominal + ')')
 
-     if opt.channel=="ltau":
-         l1fstr = "lepton"
-         l2fstr = "tau"
-     elif opt.channel=="emu":
-         l1fstr = "electron"
-         l2fstr = "muon"
+    cut = ''
 
-     if 'Fake' in str(sample.label):
-          if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
-               f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
-          elif opt.removePrompt:
-               f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
-          else:
-               f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
-          if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('FakeElePromptTau') or str(sample.label).startswith('FakeMuPromptTau'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('PromptEleFakeTau') or str(sample.label).startswith('PromptMuFakeTau'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('FakeEleFakeTau') or str(sample.label).startswith('FakeMuFakeTau'):
-               if opt.channel == 'ltau':
-                   cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
-          elif str(sample.label).startswith('FakeEleMu'):
-              if opt.channel == 'emu':
-                   cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet4" + "))" + ")"
+    print("count? ", opt.count)
+    if opt.count:
+        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".txt", "a")
+        countf.write(sample.label)
+        #countf.write("\nBin\tContent\tError")
 
-     else:
-          f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
-          cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
+    if opt.channel=="ltau":
+        l1fstr = "lepton"
+        l2fstr = "tau"
+    elif opt.channel=="emu":
+        l1fstr = "electron"
+        l2fstr = "muon"
 
-     if not ("Data" in sample.label):
-         if sample.year == "UL2016APV":
-             cut += "*(0.54)"
-         elif sample.year == "UL2016":
-             cut += "*(0.46)"
-         else:
-             cut += "*(1.)"
+    if 'Fake' in str(sample.label):
+        if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
+            f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
+        elif opt.removePrompt:
+            f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+        else:
+            f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
+        if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('FakeElePromptTau') or str(sample.label).startswith('FakeMuPromptTau'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('PromptEleFakeTau') or str(sample.label).startswith('PromptMuFakeTau'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('FakeEleFakeTau') or str(sample.label).startswith('FakeMuFakeTau'):
+            if opt.channel == 'ltau':
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+        elif str(sample.label).startswith('FakeEleMu'):
+            if opt.channel == 'emu':
+                cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet4" + "))" + ")"
 
-     if not ('Fake' in str(sample.label) or 'Data' in str(sample.label)):
+    else:
+        f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+        cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
+
+    if not ("Data" in sample.label):
+        if sample.year == "UL2016APV":
+            cut += "*(0.54)"
+        elif sample.year == "UL2016":
+            cut += "*(0.46)"
+        else:
+            cut += "*(1.)"
+
+    if not ('Fake' in str(sample.label) or 'Data' in str(sample.label)):
         if opt.channel == 'ltau':
-             cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&" + l2fstr + "_isPrompt==5)"
+            cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&" + l2fstr + "_isPrompt==5)"
         #elif opt.channel == 'emu':
              #cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&(" + l2fstr + "_isPrompt==1||" + l2fstr + "_isPrompt==15))"
 
-     nbins = variable._nbins
-     histoname = "h_" + variable._name + "_" + cut_tag
+    nbins = variable._nbins
 
-     #print(variable._iscustom)
-     if not variable._iscustom:
-          h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin, variable._xmax)
-     else:
-          h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin)
+    #print(variable._iscustom)
+    if not variable._iscustom:
+        h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin, variable._xmax)
+    else:
+        h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin)
 
-     h1.Sumw2()
+    h1.Sumw2()
 
-     if IsDim8:
-         cut = "(w_dim8[0])*" + cut
+    if IsDim8:
+        cut = "(w_dim8[0])*" + cut
 
-     '''
-     else:
-          if(syst==""):
-            taglio = variable._taglio+"*w_nominal"
-            foutput = "Plot/"+lep+"/"+channel+"_"+lep+".root"
-        elif(syst.startswith("jer") or syst.startswith("jes")):
-            taglio = variable._taglio+"*w_nominal"
-            treename = "events_"+reg+"_"+syst
-            foutput = "Plot/"+lep+"/"+channel+"_"+lep+"_"+syst+".root"
-            if(channel == "WJets_ext" and lep.startswith("electron")):
-                taglio = variable._taglio+"*w_nominal*(abs(w)<10)"
-     '''
-     vartoproject = ''
-     if variable._name == 'countings':
-         print("name", variable._name, "histname:", h1.GetName())
-         vartoproject = 'm_jj'
-         #f1.Get("events_all").Project(histoname,"m_jj",cut)
-     elif variable._name.startswith("lepBDT_"):
-         vartoproject = "BDT_output_"
-         if lep == 'muon':
-             vartoproject = vartoproject + "mu"
-         elif lep == 'electron':
-             vartoproject = vartoproject + "ele"
-         elif lep == 'incl':
-             vartoproject = "BDT_output_ele*(abs(lepton_pdgid)==11)+BDT_output_mu*(abs(lepton_pdgid)==13)"
-     else:
-         vartoproject = variable._name
+    vartoproject = ''
+    if variable._name == 'countings':
+        print("name", variable._name, "histname:", h1.GetName())
+        vartoproject = 'm_jj'
+        #f1.Get("events_all").Project(histoname,"m_jj",cut)
+    elif variable._name.startswith("lepBDT_"):
+        vartoproject = "BDT_output_"
+        if lep == 'muon':
+            vartoproject = vartoproject + "mu"
+        elif lep == 'electron':
+            vartoproject = vartoproject + "ele"
+        elif lep == 'incl':
+            vartoproject = "BDT_output_ele*(abs(lepton_pdgid)==11)+BDT_output_mu*(abs(lepton_pdgid)==13)"
+    else:
+        vartoproject = variable._name
 
-     #if not variable._name == 'countings':
-     if 'MC' in variable._name:
-         cut = cut + "*(" + str(vartoproject) + "!-100.)"
-     else:
-         cut = cut + "*(" + str(vartoproject) + ">-10.)"
-     #else:
-         #cut = cut + '*(1.)'
-     #if "WpWpJJ_EWK" in sample.label or 'VBS_SSWW' in sample.label:
-          #cut = cut + "*10."
+    #if not variable._name == 'countings':
+    if 'MC' in variable._name:
+        cut = cut + "*(" + str(vartoproject) + "!-100.)"
+    else:
+        cut = cut + "*(" + str(vartoproject) + ">-10.)"
+    #else:
+        #cut = cut + '*(1.)'
+    #if "WpWpJJ_EWK" in sample.label or 'VBS_SSWW' in sample.label:
+        #cut = cut + "*10."
 
-     if opt.horn:
-         cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
+    if opt.horn:
+        cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
 
-     print('cut:', str(cut))
-     foutput = pathplot + sample.label + "_" + lep + ".root"
+    print('cut:', str(cut))
+    foutput = pathplot + sample.label + "_" + lep + ".root"
 
-     f1.Get("events_all").Project(histoname,vartoproject,cut)
+    f1.Get("events_all").Project(histoname,vartoproject,cut)
 
-     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
-     h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
-     #if not (opt.blinded and (variable._name == 'MET_pt' or variable._name == 'm_jj')):
-     h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
-     h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
+    h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
+    h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
+    #if not (opt.blinded and (variable._name == 'MET_pt' or variable._name == 'm_jj')):
+    h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
+    h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
 
-     tot = 0.
-     terr = 0.
+    tot = 0.
+    terr = 0.
 
-     for i in range(0, nbins+1):
-          content = h1.GetBinContent(i)
-          if(content<0.):
-               h1.SetBinContent(i, 0.)
+    for i in range(0, nbins+1):
+        content = h1.GetBinContent(i)
+        if(content<0.):
+            h1.SetBinContent(i, 0.)
 
-     for bidx in range(nbins):          
-          bidx_l = bidx + 1
-          if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
-               h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
+    for bidx in range(nbins):          
+        bidx_l = bidx + 1
+        if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
+            h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
 
-          if not opt.count:
-               continue
-          else:
-              #pass
-              minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
-              maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
-              bincont = round(h1.GetBinContent(bidx_l), 6)
-              tot += bincont
-              bincont = str(bincont)
-              binerrcont = round(h1.GetBinError(bidx_l), 6)
-              terr += binerrcont**2.
-              binerrcont = str(binerrcont)
-              #countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
+        if not opt.count:
+            continue
+        else:
+            #pass
+            minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
+            maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
+            bincont = round(h1.GetBinContent(bidx_l), 6)
+            tot += bincont
+            bincont = str(bincont)
+            binerrcont = round(h1.GetBinError(bidx_l), 6)
+            terr += binerrcont**2.
+            binerrcont = str(binerrcont)
+            #countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
 
-     if opt.count:
-         terr = terr**0.5
-         countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
-     print("int:", h1.Integral())
+    if opt.count:
+        terr = terr**0.5
+        countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
+    print("int:", h1.Integral())
       
-     fout = ROOT.TFile.Open(foutput, "UPDATE")
-     fout.cd()
-     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
-     fout.Close()
-     f1.Close()
-
-     if opt.count:
-          countf.write("\n\n")
-          #countf.close()
+    fout = ROOT.TFile.Open(foutput, "UPDATE")
+    fout.cd()
+    h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
+    fout.Close()
+    f1.Close()
+    
+    if opt.count:
+        countf.write("\n\n")
+        #countf.close()
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
@@ -830,6 +911,11 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     if opt.wfake != 'nofake':
         stackname += "_wFakes_" + str(opt.wfake.split('_')[0])
         canvasname += "_wFakes_" + str(opt.wfake.split('_')[0])
+    if syst_ != "":
+        histoname += "_" + syst
+        stackname += "_" + syst
+        canvasname += "_" + syst
+
     if opt.sr:
         blind = True
     stack = ROOT.THStack(stackname, variabile_._name)
@@ -855,16 +941,12 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         if('WpWpJJ_EWK' in s.label or 'VBS_SSWW' in s.label) and not opt.signal:
             signal = True
             #print(s.label)
-        if(syst_ == ""):
-            #outfile = plotrepo + "stack_" + str(lep_).strip('[]') + ".root"
-            infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + ".root")
+        
+        infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + ".root")
 
-        else:
-            #outfile = plotrepo + "stack_"+syst_+"_"+str(lep_).strip('[]')+".root"
-            infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + "_" + syst_ + ".root")
     i = 0
 
-    print(infile)
+    print("infile:", infile)
 
     for s in samples_:
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or 'SSWW_FS0_' in s.label or 'SSWW_FM1_' in s.label or 'SSWW_FT2_' in s.label) and not str(s.year) in s.label:
@@ -1248,6 +1330,7 @@ for year in years:
         elif opt.channel == 'emu':
             wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
         
+        '''
         try:
             vfold = int(opt.folder.split("v")[-1])
         except:
@@ -1255,37 +1338,34 @@ for year in years:
         else:
             if vfold > 86:
                 wzero += "*btagSF"
-        
+        '''
         cutbase = cut_dict[lep]
 
-
+        
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
 
-        '''
-        if opt.channel == 'ltau':
+        if opt.channel == 'ltau' and not "UL" in opt.folder:
             variables.append(variabile('BDT_output_SM_opt', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim6_opt', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('BDT_output_dim8_opt', 'XGBoost dim8 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_SM_opt', 'SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
+
         '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
         except:
             pass
         '''
-        '''
+
         #variables.append(variabile('BDT_output_ele', 'eleBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
-        
-        
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
 
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 12, -3., 3.))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
-        '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 150, 250.])#, 300.])#, 500.])
             nbin_lepton_pt = len(bin_lepton_pt)-1
@@ -1293,12 +1373,11 @@ for year in years:
             bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 125., 150, 200., 250.])#, 300.])#, 500.])
             nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
-        
 
         #variables.append(variabile(lep1[0] + '_pdgid', lep1[1] + ' pdgid',  wzero+'*('+cutbase+')', 31, -15.5, 15.5))
         #variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' rel iso',  wzero+'*('+cutbase+')', 15, 0, 0.15))
         #variables.append(variabile(lep1[0] + '_Zeppenfeld', lep1[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', 24, -6, 6))
-        '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_zepp = array("f", [-1.5, -0.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.5])#, 300.])#, 500.])
             nbin_zepp = len(bin_zepp)-1
@@ -1328,7 +1407,7 @@ for year in years:
             variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  7, -3.50, 3.50))
         else:
             variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-        '''
+
         '''
         if opt.channel == "ltau":
             #variables.append(variabile(lep2[0] + '_DecayMode', '#tau decay mode',  wzero+'*('+cutbase+')', 12, -0.5, 11.5))
@@ -1369,10 +1448,10 @@ for year in years:
             bin_leadjet_pt = array("f", [0., 50., 100., 150., 200., 250., 300., 400., 500., 600.])
             nbin_leadjet_pt = len(bin_leadjet_pt)-1
         variables.append(variabile('leadjet_pt',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_leadjet_pt, bin_leadjet_pt))#30, 1500))
-        '''
+
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 10, -5., 5.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-        '''
+
         '''
         bin_ak8leadjet_pt = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
@@ -1402,7 +1481,7 @@ for year in years:
         variables.append(variabile('AK8subleadjet_tau32', 'AK8 Sublead jet #tau_{32}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         variables.append(variabile('AK8subleadjet_tau43', 'AK8 Sublead jet #tau_{43}',  wzero+'*('+cutbase+')',  10, 0., 1.))
         '''
-        '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_subleadjet_pt = array("f", [0., 50., 100., 200.])
         else:
@@ -1418,7 +1497,7 @@ for year in years:
         
         variables.append(variabile('nJets', 'n jets',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
         variables.append(variabile('nBJets', 'n bjets (DeepJet M)',  wzero+'*('+cutbase+')',  6, -0.5, 5.5))
-        '''
+
         if opt.sr:
             bin_metpt = array("f", [0., 10., 20., 30., 40.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
@@ -1429,7 +1508,7 @@ for year in years:
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', nbin_metpt, bin_metpt))
 
         if opt.sr:
-            bin_mjj = array("f", [500., 600., 800., 1000., 1200., 2000.])
+            bin_mjj = array("f", [500., 600., 800., 1000., 1400., 1800., 2200., 3000.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_mjj = array("f", [0., 150., 300., 500., 700., 1000., 1400., 1800., 3000.])
         else:
@@ -1470,7 +1549,6 @@ for year in years:
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
 
-        '''
         if opt.sr:
             bin_mTs = array("f", [0., 50., 100., 150., 300.])
             nbin_mTs = len(bin_mTs) - 1
@@ -1511,7 +1589,7 @@ for year in years:
         variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', nbin_deltaeta_lj, bin_deltaeta_lj))#
         variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', nbin_deltaeta_lj, bin_deltaeta_lj))#
         variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', nbin_deltaeta_lj, bin_deltaeta_lj))#
-        '''
+
         '''
         bin_deltatheta_jj = array("f", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
         nbin_deltatheta_jj = len(bin_deltatheta_jj) - 1
@@ -1521,7 +1599,8 @@ for year in years:
         variables.append(variabile('deltaTheta_' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')',  nbin_deltatheta_jj, bin_deltatheta_jj))
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
         variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
-
+        '''
+        '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_ptRel = array("f", [0., 50., 75., 100., 125, 150., 250.])
             bin_ptRel_lep12 = array("f", [0., 50., 100., 150., 250.])
@@ -1536,9 +1615,9 @@ for year in years:
         variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
         variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
-
-        variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
         '''
+        #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
+
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
@@ -1547,18 +1626,19 @@ for year in years:
                 continue
                     
             if(opt.plot):
-                for var in variables:
-                    if opt.count:
-                        if not os.path.exists(pathplot + 'countings/'):
-                            os.makedirs(pathplot + 'countings/')
-                        if not os.path.exists(pathplot + 'countings/' + cut_tag):
-                            os.makedirs(pathplot + 'countings/' + cut_tag)
-                        if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt"):
-                            tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt", "w")
-                            tmp_f.close()
-                    if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
-                        continue
-                    plot(lep, opt.channel, var, sample, cut_tag, "")
+                for syst in systematics:
+                    for var in variables:
+                        if opt.count:
+                            if not os.path.exists(pathplot + 'countings/'):
+                                os.makedirs(pathplot + 'countings/')
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag):
+                                os.makedirs(pathplot + 'countings/' + cut_tag)
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt"):
+                                tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt", "w")
+                                tmp_f.close()
+                        if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
+                            continue
+                        plot(lep, opt.channel, var, sample, cut_tag, syst)
 
         if(opt.stack):
             for var in variables:

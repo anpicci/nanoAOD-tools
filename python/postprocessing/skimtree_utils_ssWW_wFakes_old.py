@@ -6,7 +6,55 @@ import copy as copy
 from os import path
 import array
 import types
-from CutsAndValues import *
+try:
+    from CutsAndValues_UL2016APV import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2016APV imported!")
+
+try:
+    from CutsAndValues_UL2016 import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2016 imported!")
+
+try:
+    from CutsAndValues_UL2017 import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2017 imported!")
+
+try:
+    from CutsAndValues_UL2018 import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2018 imported!")
+
+try:
+    from CutsAndValues_2016 import *
+except:
+    pass
+else:
+    print("CutsAndValues_2016 imported!")
+
+try:
+    from CutsAndValues_2017 import *
+except:
+    pass
+else:
+    print("CutsAndValues_2017 imported!")
+
+try:
+    from CutsAndValues_2018 import *
+except:
+    pass
+else:
+    print("CutsAndValues_2018 imported!")
+
 #from xgboost import XGBClassifier
 #from tensorflow.keras.models import Sequential, load_model
 #from tensorflow.keras.layers import Input, Dense, Activation, Flatten, BatchNormalization, Dropout
@@ -2502,11 +2550,11 @@ def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote")
     histo = ROOT.TH2F()
 
     frvsjet = 'FR_' + wp + "_" + str(year)
-    if (folder == "test" or folder == "local") and wp == 'vsjet8':
+    if (folder == "test") and wp == 'vsjet8':
         frvsjet += "_test"
 
     frvsjet += ".root"
-    print(frvsjet)
+    #print(frvsjet)
     inFile = ROOT.TFile.Open(frvsjet)
 
     if not year.startswith("UL"):
@@ -2536,12 +2584,12 @@ def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017', folder = "remote"):
     histo = ROOT.TH2F()
     frvsjet = 'FR_' + wp + "_" + str(year)
 
-    if (folder == "test" or folder == "local") and wp == 'vsjet8':
+    if (folder == "test") and wp == 'vsjet8':
         frvsjet += "_test"
 
     frvsjet += ".root"
 
-    print(frvsjet)
+    #print(frvsjet)
     inFile = ROOT.TFile.Open(frvsjet)
 
     if not year.startswith("UL"):
@@ -2572,11 +2620,11 @@ def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):
     histo = ROOT.TH2F()
     frvsjet = 'FR_' + wp + "_" + str(year)
 
-    if (folder == "test" or folder == "local") and wp == 'vsjet8':
+    if (folder == "test") and wp == 'vsjet8':
         frvsjet += "_test"
 
     frvsjet += ".root"
-    print(frvsjet)
+    #print(frvsjet)
 
     inFile = ROOT.TFile.Open(frvsjet)
 

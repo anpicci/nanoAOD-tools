@@ -90,7 +90,7 @@ class TauIDSFTool:
         year = str(year)
 
         if "UL" in year and "VSmu" in id:
-            print(">>> TauIDSFTool: Warning! Using pre-UL (%r) SFs for %s..."%(year,id))
+            #print(">>> TauIDSFTool: Warning! Using pre-UL (%r) SFs for %s..."%(year,id))
             year = '2016Legacy' if '2016' in year else '2017ReReco' if '2017' in year else '2018ReReco'
             print("now:", year)
         assert year in campaigns, "You must choose a year from %s."%(', '.join(campaigns))
@@ -227,7 +227,7 @@ class TauESTool:
     def __init__(self, year, id='DeepTau2017v2p1VSjet', path=datapath):
         """Choose the IDs and WPs for SFs."""
         if "UL" in year:
-          print(">>> TauESTool: Warning! Using pre-UL (%r) TESs at high pT (for uncertainties only)..."%(year))
+          #print(">>> TauESTool: Warning! Using pre-UL (%r) TESs at high pT (for uncertainties only)..."%(year))
           year_highpt = '2016Legacy' if '2016' in year else '2017ReReco' if '2017' in year else '2018ReReco'
         else:
           year_highpt = year
@@ -302,7 +302,7 @@ class TauFESTool:
     def __init__(self, year, id='DeepTau2017v2p1VSe', path=datapath):
         """Choose the IDs and WPs for SFs."""
         if "UL" in year:
-          print(">>> TauFESTool: Warning! Using pre-UL (%r) energy scales for e -> tau fakes..."%(year))
+          #print(">>> TauFESTool: Warning! Using pre-UL (%r) energy scales for e -> tau fakes..."%(year))
           year = '2016Legacy' if '2016' in year else '2017ReReco' if '2017' in year else '2018ReReco'
         assert year in campaigns, "You must choose a year from %s! Got %r."%(', '.join(campaigns),year)
 
