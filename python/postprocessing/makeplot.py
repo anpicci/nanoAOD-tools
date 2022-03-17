@@ -721,8 +721,9 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
 
     print("count? ", opt.count)
     if opt.count:
-        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".txt", "a")
+        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".csv", "a")
         countf.write(sample.label)
+        countf.write(',')
         #countf.write("\nBin\tContent\tError")
 
     if opt.channel=="ltau":
@@ -855,7 +856,8 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
 
     if opt.count:
         terr = terr**0.5
-        countf.write("\nTotal:\t" + str(bincont) + " +- " + str(binerrcont))
+        countf.write(str(bincont) + "," + str(binerrcont))
+        countf.write("\n")
     print("int:", h1.Integral())
       
     fout = ROOT.TFile.Open(foutput, "UPDATE")
@@ -864,10 +866,6 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
     fout.Close()
     f1.Close()
     
-    if opt.count:
-        countf.write("\n\n")
-        #countf.close()
-
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
 
@@ -1618,6 +1616,7 @@ for year in years:
         '''
         #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
 
+
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
@@ -1633,8 +1632,9 @@ for year in years:
                                 os.makedirs(pathplot + 'countings/')
                             if not os.path.exists(pathplot + 'countings/' + cut_tag):
                                 os.makedirs(pathplot + 'countings/' + cut_tag)
-                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt"):
-                                tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".txt", "w")
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv"):
+                                tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
+                                tmp_f.write("Process,yields,error\n")
                                 tmp_f.close()
                         if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
                             continue
