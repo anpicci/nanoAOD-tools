@@ -1,4 +1,4 @@
-from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+from samples.samplesUL import *
 import os
 import optparse
 import sys
@@ -18,9 +18,9 @@ parser.add_option('--nodata', dest='nodata', default = False, action='store_true
 #Insert here your uid... you can see it typing echo $uid
 
 #username = str(os.environ.get('USER'))
-username = "apiccine"
+username = "mmagheri"
 #inituser = str(os.environ.get('USER')[0])
-inituser = "a"
+inituser = "m"
 if username == 'mmagheri':
     uid = 102889
 elif username == 'apiccine':
