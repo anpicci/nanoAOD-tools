@@ -48,7 +48,7 @@ wopstring = ''
 #else:
 #    wopstring = 'noprompt'
 
-print(opt.dat)
+print opt.dat
 
 executpy = "tree_skimmer_ssWW_wFakes"
 if opt.reco == "":
@@ -61,7 +61,7 @@ elif opt.reco == "jl":
 def sub_writer(sample, n, files, folder):
     condorsubb = condorsub + "_" + str(sample.year) + ".sub"
     outputpath = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/" + sample.label +"/"
-    print(condorsub, condorsubb)
+    #print(condorsub, condorsubb)
     runtype = ""
     if fsplitted[0] == "vUL001":
         runtype = "test"
@@ -76,7 +76,7 @@ def sub_writer(sample, n, files, folder):
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
     tagyear = str(sample.year)#.replace("UL", "").replace("APV", "")
-    print(tagyear)
+    #print(tagyear)
     inputfiles = "transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues_" + tagyear + ".py, FR_vsjet2_" + tagyear + ".root, FR_vsjet4_" + tagyear + ".root, FR_vsjet8_" + tagyear
     if runtype == "test":
         inputfiles += "_test"
@@ -97,7 +97,7 @@ def sub_writer(sample, n, files, folder):
     else:
         args += " 0"
     args += " " + outputpath
-    print(executpy, args)
+    print executpy, args
 
     f.write("executable              = " + executpy + "\n")
     f.write("arguments               = " + args + "\n")#sample.label + " " + str(n) + " " + str(files) + " remote " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu + "\n")# + str(wopstring) + "\n")
@@ -109,7 +109,7 @@ def sub_writer(sample, n, files, folder):
     f.write("queue\n")
 
 if not(opt.dat in sample_dict.keys()):
-    print(sample_dict.keys())
+    print sample_dict.keys()
 dataset = sample_dict[opt.dat]
 samples = []
 
@@ -117,7 +117,7 @@ samples = []
 if hasattr(dataset, 'components'): # How to check whether this exists or not
     samples = [sample for sample in dataset.components]# Method exists and was used.
 else:
-    print("You are launching a single sample and not an entire bunch of samples")
+    print "You are launching a single sample and not an entire bunch of samples"
     samples.append(dataset)
 
 folder = opt.folder
@@ -130,7 +130,7 @@ if not os.path.exists("condor_" + folder + "/log"):
     os.makedirs("condor_" + folder + "/log")
 
 if(uid == 0):
-    print("Please insert your uid")
+    print "Please insert your uid" 
     exit()
 if not os.path.exists("/tmp/x509up_u" + str(uid)):
     os.system('voms-proxy-init --rfc --voms cms -valid 192:00')
@@ -147,13 +147,13 @@ for sample in samples:
         isMC = False
     if not os.path.exists(opath):#"/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label):
         os.makedirs(opath)#"/eos/home-" + inituser + "/" + username +"/VBS/nosynch/" + folder + "/" + sample.label)
-        print(opath, "created")
+        print opath, "created"
     else:
-        print(opath, "already exists")
-    print(sample.label, sample.name)
+        print opath, "already exists"
+    print sample.label, sample.name
     f = open("../../crab/macros/files/" + sample.name + ".txt", "r")
     files_list = f.read().splitlines()
-    print(str(len(files_list)))
+    print str(len(files_list))
     if(isMC):
         for i, files in enumerate(files_list):
             if opt.maxj > 0:
@@ -163,16 +163,16 @@ for sample in samples:
                 continue
             sub_writer(sample, idx, files, folder)
             os.popen('condor_submit ' + condorsubb)
-            print('condor_submit ' + condorsubb)
+            print 'condor_submit ' + condorsubb
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + str(files))
-            print("python " + executpy + " " + sample.label + " " + str(idx) + " " + str(files) + " remote")
+            #print "python " + executpy + " " + sample.label + " " + str(idx) + " " + str(files) + " remote"
     else:
         for i in range(len(files_list)/split+1):
             if os.path.exists(opath + sample.label + "_part" + str(i) + ".root"):
                 continue
             extmax = int(min([split*(i+1), len(files_list)]))
             sub_writer(sample, i,  ",".join( e for e in files_list[split*i:extmax]), folder)
-            print('condor_submit ' + condorsubb)
+            print 'condor_submit ' + condorsubb
             os.popen('condor_submit ' + condorsubb)
             #os.popen("python tree_skimmer_ssWW.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]))
-            print("python " + executpy + " " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote")
+            #print "python " + executpy + " " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:extmax]) + " remote"
