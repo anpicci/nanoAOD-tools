@@ -54,7 +54,6 @@ except:
     pass
 else:
     print("CutsAndValues_2018 imported!")
-
 #from xgboost import XGBClassifier
 #from tensorflow.keras.models import Sequential, load_model
 #from tensorflow.keras.layers import Input, Dense, Activation, Flatten, BatchNormalization, Dropout
@@ -378,7 +377,7 @@ def btagcalc(JetsC, year):
     return p_data/p_MC, p_data_btagUp/p_MC, p_data_btagDown/p_MC, p_data_mistagUp/p_MC, p_data_mistagDown/p_MC
 
 def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
-    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt_nom > pt and (x.pt_nom > 50. or (x.pt_nom <= 50. and x.puId >= 7)), jets))
+    return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
 
 def SelectVBSQGenJet(genparts, genjets):
     fs_genparts = list(filter(lambda x : x.genPartIdxMother==0 and abs(x.pdgId)>0 and abs(x.pdgId)<10, genparts))
@@ -505,9 +504,9 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
                 if jets.index(cjet) <= jets.index(jet):
                     continue
                 cjet_p4 = ROOT.TLorentzVector()
-                cjet_p4.SetPtEtaPhiM(cjet.pt_nom, cjet.eta, cjet.phi, cjet.mass_nom)
+                cjet_p4.SetPtEtaPhiM(cjet.pt, cjet.eta, cjet.phi, cjet.mass_nom)
                 jet_p4 = ROOT.TLorentzVector()
-                jet_p4.SetPtEtaPhiM(jet.pt_nom, jet.eta, jet.phi, jet.mass_nom)
+                jet_p4.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, jet.mass_nom)
                 #invmass = (cjet.p4() + jet.p4()).M()
                 invmass = (cjet_p4 + jet_p4).M()
                 if invmass > maxInvMass:
@@ -736,7 +735,7 @@ def get_ptrel(lepton, jet, taucorr=1.):
         jet_p4.SetPtEtaPhiM(jet.pt*taucorr, jet.eta, jet.phi, jet.mass*taucorr)
     else:
         try:
-            jet_p4.SetPtEtaPhiM(jet.pt_nom, jet.eta, jet.phi, jet.mass_nom)
+            jet_p4.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, jet.mass_nom)
         except:
             jet_p4.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, jet.mass)
     lepjet_tv = (jet_p4+lepton.p4()).Vect()
@@ -894,7 +893,7 @@ def BVeto(jetCollection):
     veto = False
     jets = get_Jet(jetCollection, PT_CUT_JET)
     for k in range(len(jets)):
-        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP])*(jets[k].pt_nom>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
+        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP])*(jets[k].pt>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
             veto = True
             break
         else: continue
@@ -907,7 +906,7 @@ def BVetoLoose(jetCollection):
     veto = False
     jets = get_Jet(jetCollection, PT_CUT_JET)
     for k in range(len(jets)):
-        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP_LOOSE])*(jets[k].pt_nom>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
+        if (jets[k].btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP_LOOSE])*(jets[k].pt>BTAG_PT_CUT)*(abs(jets[k].eta)<BTAG_ETA_CUT):
             veto = True
             break
         else: 
@@ -918,7 +917,7 @@ def CountBJets(jetCollection):
     nb=0
     #for k in range(len(jetCollection)):
     for jet in jetCollection:
-        if jet.btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP] and jet.pt_nom>BTAG_PT_CUT and abs(jet.eta)<BTAG_ETA_CUT: 
+        if jet.btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP] and jet.pt>BTAG_PT_CUT and abs(jet.eta)<BTAG_ETA_CUT: 
           nb+=1
     return nb
 
@@ -1855,6 +1854,7 @@ class systWeights(object):
         self.onlyNominal = True
         self.addPDF = False
         self.addQ2 = False
+        self.addPS = False
         self.addTopPt = False
         self.addVHF = False
         self.addTTSplit = False
@@ -1963,9 +1963,11 @@ class systWeights(object):
             if isinstance(trees[s], ROOT.TTree):
                 trees[s].Write()
 
-    def prepareDefault(self, addDefault, addPDF, addQ2, addTopPt, addVHF, addTTSplit, numPDF=102):
+    def prepareDefault(self, addDefault, addPDF, addQ2, addPS, addTopPt, addVHF, addTTSplit, addAllPDFs, numPDF=102):
+        print(addDefault, addPDF, addQ2, addTopPt, addVHF, addTTSplit)
         self.addPDF = copy.deepcopy(addPDF)
         self.addQ2 = copy.deepcopy(addQ2)
+        self.addPS = copy.deepcopy(addPS)
         self.addTopPt = copy.deepcopy(addTopPt)
         self.addVHF = copy.deepcopy(addVHF)
         self.addTTSplit = copy.deepcopy(addTTSplit)
@@ -2046,10 +2048,22 @@ class systWeights(object):
             self.weightedNames[self.maxSysts] = ""
 
         if addQ2: 
-            self.weightedNames[self.maxSysts] = "q2Up"
-            self.weightedNames[self.maxSysts+1] = "q2Down"
-            self.setMax(self.maxSysts+2)
-            self.setMaxNonPDF(self.maxSystsNonPDF+2) 
+            self.weightedNames[self.maxSysts] = "QCDScaleUp"
+            self.weightedNames[self.maxSysts+1] = "QCDScaleDown"
+            self.weightedNames[self.maxSysts+2] = "QCDScaleSF"
+            self.setMax(self.maxSysts+3)
+            self.setMaxNonPDF(self.maxSystsNonPDF+3) 
+            self.weightedNames[self.maxSysts] = ""
+
+        if addPS: 
+            self.weightedNames[self.maxSysts] = "ISRUp"
+            self.weightedNames[self.maxSysts+1] = "ISRDown"
+            self.weightedNames[self.maxSysts+2] = "ISRSF"
+            self.weightedNames[self.maxSysts+3] = "FSRUp"
+            self.weightedNames[self.maxSysts+4] = "FSRDown"
+            self.weightedNames[self.maxSysts+5] = "FSRSF"
+            self.setMax(self.maxSysts+6)
+            self.setMaxNonPDF(self.maxSystsNonPDF+6) 
             self.weightedNames[self.maxSysts] = ""
 
         if addTopPt:
@@ -2078,19 +2092,23 @@ class systWeights(object):
         if addPDF:
             self.weightedNames[self.maxSysts] = "pdf_totalUp"
             self.weightedNames[self.maxSysts+1] = "pdf_totalDown"
-            self.weightedNames[self.maxSysts+2] = "pdf_asUp"
-            self.weightedNames[self.maxSysts+3] = "pdf_asDown"
-            self.weightedNames[self.maxSysts+4] = "pdf_zmUp"
-            self.weightedNames[self.maxSysts+5] = "pdf_zmDown"
-            self.setMax(self.maxSysts+6)
-            self.setMaxNonPDF(self.maxSystsNonPDF+6)
-            nPDF = self.nPDF
-            for i in range(nPDF):
-                ss = str(i+1)
-                self.weightedNames[i+self.maxSysts] = "pdf" + str(ss)
+            self.weightedNames[self.maxSysts+2] = "pdf_totalSF"
+            #self.weightedNames[self.maxSysts+3] = "pdf_asUp"
+            #self.weightedNames[self.maxSysts+4] = "pdf_asDown"
+            #self.weightedNames[self.maxSysts+5] = "pdf_zmUp"
+            #self.weightedNames[self.maxSysts+6] = "pdf_zmDown"
+            self.setMax(self.maxSysts+3)
+            self.setMaxNonPDF(self.maxSystsNonPDF+3)
+            if addAllPDFs:
+                nPDF = self.nPDF
+                for i in range(nPDF):
+                    ss = str(i+1)
+                    self.weightedNames[i+self.maxSysts] = "pdf" + str(ss)
 
-            self.setMax(maxSysts+nPDF)
-            self.weightedNames[self.maxSysts] = ""
+                self.setMax(self.maxSysts+nPDF)
+                self.weightedNames[self.maxSysts] = ""
+
+        #print(self.weightedNames)
 
     def addSyst(self, name):
         self.weightedNames[self.maxSysts] = copy.deepcopy(name)
