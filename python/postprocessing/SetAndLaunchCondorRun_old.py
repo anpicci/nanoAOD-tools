@@ -65,7 +65,10 @@ def CondoredList(samplename):
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
                     except(AttributeError, ReferenceError, RuntimeWarning):
-                        condlist.remove(condfile)
+                        try:
+                            condlist.remove(condfile)
+                        except:
+                            pass
                         wrongex = True
                         if not opt.check:
                             print("Removing files with damaged " + scenario + " tree...")

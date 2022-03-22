@@ -162,9 +162,9 @@ elif opt.wsdy:
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
 
 elif opt.sr:
-    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>40.)*(" + cut + ")", 
-                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>40.)*(" + cut + ")", 
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>40.)*(" + cut + ")", 
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(" + cut + ")", 
             }
     cut_tag = 'SR'
     if opt.cut != "1.":
@@ -267,45 +267,48 @@ lumi = {'2016': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017'
 
 systematiclist = [
     "",
-    #"PFUp",
-    #"PFDown",
-    #"puUp",
-    #"puDown",
-    #"btagUp", 
-    #"btagDown",
+    "PFUp",
+    "PFDown",
+    "puUp",
+    "puDown",
+    "btagUp", 
+    "btagDown",
     ##"mistagUp",
     ##"mistagDown",
-    #"lepUp", 
-    #"lepDown",
-    #"tau_vsjet_Up",
-    #"tau_vsjet_Down",
-    #"tau_vsele_Up",
-    #"tau_vsele_Down",
-    #"tau_vsmu_Up",
-    #"tau_vsmu_Down",
+    "lepUp", 
+    "lepDown",
+    "tau_vsjet_Up",
+    "tau_vsjet_Down",
+    "tau_vsele_Up",
+    "tau_vsele_Down",
+    "tau_vsmu_Up",
+    "tau_vsmu_Down",
     #"trigUp",
     #"trigDown",
     #"pdf_totalUp",
     #"pdf_totalDown",
     #"q2Up",
     #"q2Down"
-    "jesUp",
+    #"jesUp",
     #"jesDown",
     #"jerUp",
     #"jerDown",
 ]
 
-scenarios = [
-    "nominal",
-    "jesUp",
-    "jesDown",
-    "jerUp",
-    "jerDown",
-    "TESUp", 
-    "TESDown",
-    "FESUp", 
-    "FESDown"
-]
+if ("UL" in opt.folder and int(opt.folder.split("UL")[-1]) < 10) or (not "UL" in opt.folder):
+    scenarios = ["all"]
+else:
+    scenarios = [
+        "nominal",
+        "jesUp",
+        "jesDown",
+        "jerUp",
+        "jerDown",
+        "TESUp", 
+        "TESDown",
+        "FESUp", 
+        "FESDown"
+    ]
 print("scenarios:", scenarios)
 
 systematics = {scenario: [] for scenario in scenarios}
@@ -862,7 +865,6 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ""]):
     if variable._name == 'countings':
         print("name", variable._name, "histname:", h1.GetName())
         vartoproject = 'm_jj'
-        #f1.Get("events_all").Project(histoname,"m_jj",cut)
     elif variable._name.startswith("lepBDT_"):
         vartoproject = "BDT_output_"
         if lep == 'muon':
@@ -890,7 +892,7 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ""]):
     print('cut:', str(cut))
     foutput = pathplot + sample.label + "_" + lep + ".root"
 
-    f1.Get("events_all").Project(histoname,vartoproject,cut)
+    f1.Get(treename).Project(histoname,vartoproject,cut)
 
     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
     h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
