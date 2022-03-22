@@ -327,7 +327,7 @@ if opt.syst!="all" and opt.syst!="noSyst":
 elif opt.syst!="all" and opt.syst=="noSyst":
     systematics[nomtag].append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
 else:
-    systematics[nomtag]: [
+    systematics[nomtag] = [
         "",
         "PFUp",
         "PFDown",
