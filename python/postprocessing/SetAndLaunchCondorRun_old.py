@@ -27,6 +27,13 @@ parser.add_option('--reco', dest='reco', type=str, default = "not", help='Launch
 
 (opt, args) = parser.parse_args()
 
+isWithSysts = False
+if "UL" in opt.fold and int(opt.fold.split("UL")[-1]) > 9:
+    isWithSysts = True
+    scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+else:
+    scenarios = ["all"]
+
 def CondoredList(samplename):
     try:
         condlist = os.listdir(path+samplename)
@@ -37,20 +44,37 @@ def CondoredList(samplename):
         toRel = False
         wrongex = False
         for condfile in condlist:
-            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')                                                                                                                                                                 
+            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:
                 toRel = True
                 condlist.remove(condfile)
                 if not opt.check:
                     os.system("rm -r "+ path + samplename + "/" + condfile)
             else:
-                tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
                 try:
-                    tempentr = tempf.Get("events_all").GetEntries()
-                except (AttributeError, ReferenceError, RuntimeWarning) as e:
+                    tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
+                except(RuntimeWarning):
                     condlist.remove(condfile)
                     wrongex = True
                     if not opt.check:
+                        print("Removing damaged files...")
                         os.system("rm "+ path + samplename + "/" + condfile)
+                else:
+                    pass
+
+                for ids, scenario in enumerate(scenarios):
+                    try:
+                        tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
+                    except(AttributeError, ReferenceError, RuntimeWarning):
+                        condlist.remove(condfile)
+                        wrongex = True
+                        if not opt.check:
+                            print("Removing files with damaged " + scenario + " tree...")
+                            os.system("rm "+ path + samplename + "/" + condfile)
+                    else:
+                        pass
+
+                    if ids == 0 and (not isWithSysts or "Data" in samplename):
+                        break
 
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")

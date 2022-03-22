@@ -265,43 +265,91 @@ if opt.bdt or opt.ebdt or opt.mubdt:
 
 lumi = {'2016': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83}
 
-systematics = []
+systematiclist = [
+    "",
+    #"PFUp",
+    #"PFDown",
+    #"puUp",
+    #"puDown",
+    #"btagUp", 
+    #"btagDown",
+    ##"mistagUp",
+    ##"mistagDown",
+    #"lepUp", 
+    #"lepDown",
+    #"tau_vsjet_Up",
+    #"tau_vsjet_Down",
+    #"tau_vsele_Up",
+    #"tau_vsele_Down",
+    #"tau_vsmu_Up",
+    #"tau_vsmu_Down",
+    #"trigUp",
+    #"trigDown",
+    #"pdf_totalUp",
+    #"pdf_totalDown",
+    #"q2Up",
+    #"q2Down"
+    "jesUp",
+    #"jesDown",
+    #"jerUp",
+    #"jerDown",
+]
+
+scenarios = [
+    "nominal",
+    "jesUp",
+    "jesDown",
+    "jerUp",
+    "jerDown",
+    "TESUp", 
+    "TESDown",
+    "FESUp", 
+    "FESDown"
+]
+print("scenarios:", scenarios)
+
+systematics = {scenario: [] for scenario in scenarios}
 if opt.syst!="all" and opt.syst!="noSyst":
      for syst in (opt.syst).split(","):
-          systematics.append(syst)
+         if not syst in scenarios:
+             try:
+                 systematics["nominal"].append(syst)
+             except:
+                 pass
+         else:
+             systematics[syst].append(syst)
 elif opt.syst!="all" and opt.syst=="noSyst":
-    systematics.append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
+    systematics["nominal"].append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
 else:
-     systematics = [
-         "",
-         #"PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
-         #"jesUp",
-         #"jesDown",
-         #"jerUp",
-         #"jerDown",
-         "PFUp",
-         "PFDown",
-         "puUp",
-         "puDown",
-         "btagUp", 
-         "btagDown",
-         #"mistagUp",
-         #"mistagDown",
-         "lepUp", 
-         "lepDown",
-         "tau_vsjet_Up",
-         "tau_vsjet_Down",
-         "tau_vsele_Up",
-         "tau_vsele_Down",
-         "tau_vsmu_Up",
-         "tau_vsmu_Down",
-         #"trigUp",
-         #"trigDown",
-         #"pdf_totalUp",
-         #"pdf_totalDown",
-         #"q2Up",
-         #"q2Down"
-     ]
+    systematics["nominal"]: [
+        "",
+        "PFUp",
+        "PFDown",
+        "puUp",
+        "puDown",
+        "btagUp", 
+        "btagDown",
+        #"mistagUp",
+        #"mistagDown",
+        "lepUp", 
+        "lepDown",
+        "tau_vsjet_Up",
+        "tau_vsjet_Down",
+        "tau_vsele_Up",
+        "tau_vsele_Down",
+        "tau_vsmu_Up",
+        "tau_vsmu_Down",
+        #"trigUp",
+        #"trigDown",
+        "pdf_totalUp",
+        "pdf_totalDown",
+        "q2Up",
+        "q2Down"
+    ]
+    #systematics["jesUp"]: ["jesUp"]
+    #systematics["jesDown"]:["jesDown"]
+    #systematics["jerUp"]: ["jerUp"]
+    #systematics["jerDown"]: ["jerDown"]
 
 print("systematics to plot:", systematics)
 print(cut_tag)
@@ -335,121 +383,125 @@ def mergepart(dataset):
     if hascomp:#hasattr(dataset, 'components'): # How to check whether this exists or not
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
-        samples.append(dataset)
+        samples.append(dataset) 
     
     for sample in samples:
         # merge files 
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + "_part*.root" 
         print(add)
         os.system(str(add))
-        check = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root ")
-        print("Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_all")).GetEntries()))
+
+        #check = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root ")
+        for key in systematics.keys():
+            evtree = "events_" + key
+            #print("-------- ", opt.folder, " --------")
+            #print("so scem? ", not 'Fake' in opt.folder)
         
-        print("-------- ", opt.folder, " --------")
-        #print("so scem? ", not 'Fake' in opt.folder)
-        
-        startWFR = folder.startswith('FR')
-        isltau = opt.channel=='ltau'
-        hasFakeInside = 'Fake' in opt.folder
-        ismcreco = 'mcreco' in opt.folder
-
-        if isltau and not("btag" in opt.folder or startWFR or hasFakeInside or ismcreco) and opt.runML:
-            print("Processing events with Tommaso's BDT...")
-            file_path = filerepo + sample.label + "/"  + sample.label + "_merged.root"
-
-            #check if there is at least one event in the tree
-            tmpfile = ROOT.TFile.Open(file_path)
-            tmptree = tmpfile.Get("events_all")
-            tmpentr = tmptree.GetEntries()
-            tmptree.Delete()
-            tmpfile.Close()
-            tmpfile.Delete()
-            print("entries:", tmpentr)
-
-            if tmpentr > 0:
-                # insert BDT output value into merged file
-                file_path_cp = filerepo + sample.label + "/"  + sample.label + "_merged_bu.root"
-                os.system("cp " + file_path + " " + file_path_cp)
-                #print(file_path)
-
-                model_SM_path = opt.model_SM
-                model_dim6_path = opt.model_dim6
-                model_dim8_path = opt.model_dim8
-                #model_mu_path = opt.model_mu
-                #model_ele_path = opt.model_ele
-                #model_mu_path = opt.model_mu
-                #print(model_path)
-                #print(model_ele_path)
-                #print(model_mu_path)
-
-                # load sklearn models 
-                #file = open(model_SM_path,'rb')
-                #clf_SM = pickle.load(file)
-                #file.close()
-                #file = open(model_dim6_path,'rb')
-                #clf_dim6 = pickle.load(file)
-                #file.close()
-                #file = open(model_dim8_path,'rb')
-                #clf_dim8 = pickle.load(file)
-                #file.close()
-               
-                #load xgboost model
-                clf_SM = xgboost.XGBClassifier()
-                clf_SM.load_model(model_SM_path)
-
-                clf_dim6 = xgboost.XGBClassifier()
-                clf_dim6.load_model(model_dim6_path)
-
-                clf_dim8 = xgboost.XGBClassifier()
-                clf_dim8.load_model(model_dim8_path)
-                
-                # load model 
-                #file = open(model_path,'rb')
-                #clf = pickle.load(file)
-                #file.close()
+            startWFR = folder.startswith('FR')
+            isltau = opt.channel=='ltau'
+            hasFakeInside = 'Fake' in opt.folder
+            ismcreco = 'mcreco' in opt.folder
+            #check.Close()
             
-                #file = open(model_ele_path,'rb')
-                #clf_ele = pickle.load(file)
-                #file.close()
-               
-                #file = open(model_mu_path,'rb')
-                #clf_mu = pickle.load(file)
-                #file.close()
+            if isltau and not("btag" in opt.folder or startWFR or hasFakeInside or ismcreco) and opt.runML:
+                print("Processing events with Tommaso's BDT...")
+                file_path = filerepo + sample.label + "/"  + sample.label + "_merged.root"
 
+                #check if there is at least one event in the tree
+                tmpfile = ROOT.TFile.Open(file_path)
+                tmptree = tmpfile.Get(evtree)
+                print("tmptree:", tmptree)
+                print("Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", tmptree.GetEntries()))
+                tmpentr = tmptree.GetEntries()
+                tmptree.Delete()
+                tmpfile.Close()
+                tmpfile.Delete()
+                print("entries:", tmpentr)
+
+                if tmpentr > 0:
+                    # insert BDT output value into merged file
+                    file_path_cp = filerepo + sample.label + "/"  + sample.label + "_merged_bu.root"
+                    os.system("cp " + file_path + " " + file_path_cp)
+                    #print(file_path)
+
+                    model_SM_path = opt.model_SM
+                    model_dim6_path = opt.model_dim6
+                    model_dim8_path = opt.model_dim8
+                    #model_mu_path = opt.model_mu
+                    #model_ele_path = opt.model_ele
+                    #model_mu_path = opt.model_mu
+                    #print(model_path)
+                    #print(model_ele_path)
+                    #print(model_mu_path)
+                    
+                    # load sklearn models 
+                    #file = open(model_SM_path,'rb')
+                    #clf_SM = pickle.load(file)
+                    #file.close()
+                    #file = open(model_dim6_path,'rb')
+                    #clf_dim6 = pickle.load(file)
+                    #file.close()
+                    #file = open(model_dim8_path,'rb')
+                    #clf_dim8 = pickle.load(file)
+                    #file.close()
+                    
+                    #load xgboost model
+                    clf_SM = xgboost.XGBClassifier()
+                    clf_SM.load_model(model_SM_path)
+                    
+                    clf_dim6 = xgboost.XGBClassifier()
+                    clf_dim6.load_model(model_dim6_path)
+                    
+                    clf_dim8 = xgboost.XGBClassifier()
+                    clf_dim8.load_model(model_dim8_path)
+                    
+                    # load model 
+                    #file = open(model_path,'rb')
+                    #clf = pickle.load(file)
+                    #file.close()
+                    
+                    #file = open(model_ele_path,'rb')
+                    #clf_ele = pickle.load(file)
+                    #file.close()
+                    
+                    #file = open(model_mu_path,'rb')
+                    #clf_mu = pickle.load(file)
+                    #file.close()
+                    
                 
 
-                # open root file
-                file = uproot.open(file_path_cp)
-                tree = file["events_all"]
-                df = tree.arrays(library="pd")
-                df = df.fillna(0)
-               
-                '''
-                to_drop = ['w_nominal','lepSF[0]', 'lepUp[0]', 'lepDown[0]', 'puSF[0]', 'puUp[0]',
-                'puDown[0]', 'PFSF[0]', 'PFUp[0]', 'PFDown[0]', 'q2Up[0]', 'q2Down[0]','w_PDF[0]',
-                'SF_Fake[0]', 'tau_vsjet_SF[0]', 'tau_vsele_SF[0]', 'tau_vsmu_SF[0]', 'tau_vsjet_Up[0]', 'tau_vsjet_Down[0]', 'tau_vsele_Up[0]', 'tau_vsele_Down[0]', 'tau_vsmu_Up[0]', 'tau_vsmu_Down[0]',
-                'tauSF[0]','tauUp[0]','tauDown[0]','TESSF[0]','TESUp[0]','TESDown[0]','FESSF[0]','FESUp[0]','FESDown[0]',
-                'event_SFFake_vsjet2[0]', 'event_SFFake_vsjet4[0]','lepton_SFFake_vsjet2[0]', 'lepton_SFFake_vsjet4[0]', 'tau_SFFake_vsjet2[0]', 'tau_SFFake_vsjet4[0]',
-                'tau_DeepTau_WP[0]','tau_DeepTauVsJet_WP[0]', 'tau_DeepTauVsMu_WP[0]','tau_DeepTauVsEle_WP[0]', 
-                'HLT_effLumi[0]', 'pass_lepton_selection[0]','pass_tau_selection[0]', 'pass_tau_vsJetWP[0]','pass_jet_selection[0]', 'pass_upToBVeto[0]', 'pass_lepton_iso[0]','pass_lepton_veto[0]', 
-                'pass_charge_selection[0]', 'pass_b_veto[0]', 'pass_mjj_cut[0]','pass_MET_cut[0]', 'pass_everyCut[0]', 'nBJets[0]',
-                'event_Zeppenfeld[0]','tau_Zeppenfeld[0]','lepton_Zeppenfeld[0]', 
-                'lepton_LnTRegion[0]', 'tau_LnTRegion[0]',  'tau_isolation[0]', 'lepton_TightRegion[0]','tau_TightRegion[0]','tau_isPrompt[0]','lepton_isPrompt[0]', 
-                'tau_GenMatch[0]',
-                'leadjet_CSVv2_b[0]', 'subleadjet_CSVv2_b[0]',] 
-                '''
+                    # open root file
+                    file = uproot.open(file_path_cp)
+                    tree = file["events_all"]
+                    df = tree.arrays(library="pd")
+                    df = df.fillna(0)
+                    
+                    '''
+                    to_drop = ['w_nominal','lepSF[0]', 'lepUp[0]', 'lepDown[0]', 'puSF[0]', 'puUp[0]',
+                    'puDown[0]', 'PFSF[0]', 'PFUp[0]', 'PFDown[0]', 'q2Up[0]', 'q2Down[0]','w_PDF[0]',
+                    'SF_Fake[0]', 'tau_vsjet_SF[0]', 'tau_vsele_SF[0]', 'tau_vsmu_SF[0]', 'tau_vsjet_Up[0]', 'tau_vsjet_Down[0]', 'tau_vsele_Up[0]', 'tau_vsele_Down[0]', 'tau_vsmu_Up[0]', 'tau_vsmu_Down[0]',
+                    'tauSF[0]','tauUp[0]','tauDown[0]','TESSF[0]','TESUp[0]','TESDown[0]','FESSF[0]','FESUp[0]','FESDown[0]',
+                    'event_SFFake_vsjet2[0]', 'event_SFFake_vsjet4[0]','lepton_SFFake_vsjet2[0]', 'lepton_SFFake_vsjet4[0]', 'tau_SFFake_vsjet2[0]', 'tau_SFFake_vsjet4[0]',
+                    'tau_DeepTau_WP[0]','tau_DeepTauVsJet_WP[0]', 'tau_DeepTauVsMu_WP[0]','tau_DeepTauVsEle_WP[0]', 
+                    'HLT_effLumi[0]', 'pass_lepton_selection[0]','pass_tau_selection[0]', 'pass_tau_vsJetWP[0]','pass_jet_selection[0]', 'pass_upToBVeto[0]', 'pass_lepton_iso[0]','pass_lepton_veto[0]', 
+                    'pass_charge_selection[0]', 'pass_b_veto[0]', 'pass_mjj_cut[0]','pass_MET_cut[0]', 'pass_everyCut[0]', 'nBJets[0]',
+                    'event_Zeppenfeld[0]','tau_Zeppenfeld[0]','lepton_Zeppenfeld[0]', 
+                    'lepton_LnTRegion[0]', 'tau_LnTRegion[0]',  'tau_isolation[0]', 'lepton_TightRegion[0]','tau_TightRegion[0]','tau_isPrompt[0]','lepton_isPrompt[0]', 
+                    'tau_GenMatch[0]',
+                    'leadjet_CSVv2_b[0]', 'subleadjet_CSVv2_b[0]',] 
+                    '''
+                    
+                    
+                    
+                    #X = df.drop(columns=to_drop)
+                    
+                    new_columns = []
+                    for i in df.columns:
+                        new_columns.append(i.split('[')[0])
+                    df.columns = new_columns
 
-
-
-                #X = df.drop(columns=to_drop)
-            
-                new_columns = []
-                for i in df.columns:
-                    new_columns.append(i.split('[')[0])
-                df.columns = new_columns
-
-                '''            
-                to_keep = ['lepton_pt',
+                    '''            
+                    to_keep = ['lepton_pt',
                            'lepton_eta',
                            'lepton_phi',
                            'lepton_mass',
@@ -539,84 +591,84 @@ def mergepart(dataset):
                            'event_Zeppenfeld_over_deltaEta_jj',
                            'event_RT',
                        ]
-                '''
+                    '''
      
-                to_keep = ['m_jj', 'm_jjtaulep', 'm_taulep', 'mT_lep_MET', 'leadjet_pt', 'subleadjet_pt', 'tau_mass', 'MET_pt']
+                    to_keep = ['m_jj', 'm_jjtaulep', 'm_taulep', 'mT_lep_MET', 'leadjet_pt', 'subleadjet_pt', 'tau_mass', 'MET_pt']
             
-                X = df[to_keep].to_numpy()
+                    X = df[to_keep].to_numpy()
                 
-                '''
-                X = df[['lepton_pt', 'lepton_eta', 'lepton_phi', 'lepton_mass', 'lepton_pdgid',
-                'lepton_pfRelIso04', 'tau_pt', 'tau_eta', 'tau_phi', 'tau_mass',
-                'tau_DeepTauVsEle_raw', 'tau_DeepTauVsMu_raw', 'leadjet_pt',
-                'leadjet_eta', 'leadjet_phi', 'leadjet_mass', 'leadjet_CSVv2_b',
-                'leadjet_DeepFlv_b', 'leadjet_DeepCSVv2_b', 'AK8leadjet_pt',
-                'AK8leadjet_eta', 'AK8leadjet_phi', 'AK8leadjet_mass',
-                'AK8leadjet_tau21', 'AK8leadjet_tau32', 'AK8leadjet_tau43',
-                'leadjet_dRAK48', 'subleadjet_pt', 'subleadjet_eta', 'subleadjet_phi',
-                'subleadjet_mass', 'subleadjet_CSVv2_b', 'subleadjet_DeepFlv_b',
-                'subleadjet_DeepCSVv2_b', 'AK8subleadjet_pt', 'AK8subleadjet_eta',
-                'AK8subleadjet_phi', 'AK8subleadjet_mass', 'AK8subleadjet_tau21',
-                'AK8subleadjet_tau32', 'AK8subleadjet_tau43', 'subleadjet_dRAK48',
-                'nJets', 'MET_pt', 'MET_phi', 'm_jj', 'mT_lep_MET', 'mT_tau_MET',
-                'mT_leptau_MET', 'deltaPhi_jj', 'deltaPhi_taulep', 'deltaPhi_tauj1',
-                'deltaPhi_tauj2', 'deltaPhi_lepj1', 'deltaPhi_lepj2', 'deltaEta_jj',
-                'lepton_Zeppenfeld', 'tau_Zeppenfeld', 'event_Zeppenfeld',
-                'pass_mjj_cut', 'pass_MET_cut', 'pass_everyCut']].to_numpy() 
-                '''
+                    '''
+                    X = df[['lepton_pt', 'lepton_eta', 'lepton_phi', 'lepton_mass', 'lepton_pdgid',
+                    'lepton_pfRelIso04', 'tau_pt', 'tau_eta', 'tau_phi', 'tau_mass',
+                    'tau_DeepTauVsEle_raw', 'tau_DeepTauVsMu_raw', 'leadjet_pt',
+                    'leadjet_eta', 'leadjet_phi', 'leadjet_mass', 'leadjet_CSVv2_b',
+                    'leadjet_DeepFlv_b', 'leadjet_DeepCSVv2_b', 'AK8leadjet_pt',
+                    'AK8leadjet_eta', 'AK8leadjet_phi', 'AK8leadjet_mass',
+                    'AK8leadjet_tau21', 'AK8leadjet_tau32', 'AK8leadjet_tau43',
+                    'leadjet_dRAK48', 'subleadjet_pt', 'subleadjet_eta', 'subleadjet_phi',
+                    'subleadjet_mass', 'subleadjet_CSVv2_b', 'subleadjet_DeepFlv_b',
+                    'subleadjet_DeepCSVv2_b', 'AK8subleadjet_pt', 'AK8subleadjet_eta',
+                    'AK8subleadjet_phi', 'AK8subleadjet_mass', 'AK8subleadjet_tau21',
+                    'AK8subleadjet_tau32', 'AK8subleadjet_tau43', 'subleadjet_dRAK48',
+                    'nJets', 'MET_pt', 'MET_phi', 'm_jj', 'mT_lep_MET', 'mT_tau_MET',
+                    'mT_leptau_MET', 'deltaPhi_jj', 'deltaPhi_taulep', 'deltaPhi_tauj1',
+                    'deltaPhi_tauj2', 'deltaPhi_lepj1', 'deltaPhi_lepj2', 'deltaEta_jj',
+                    'lepton_Zeppenfeld', 'tau_Zeppenfeld', 'event_Zeppenfeld',
+                    'pass_mjj_cut', 'pass_MET_cut', 'pass_everyCut']].to_numpy() 
+                    '''
 
-                # update root file with BDT branch
-                BDT_output_SM_array = clf_SM.predict_proba(X)[:,1]
-                BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
-                BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
+                    # update root file with BDT branch
+                    BDT_output_SM_array = clf_SM.predict_proba(X)[:,1]
+                    BDT_output_dim6_array = clf_dim6.predict_proba(X)[:,1]
+                    BDT_output_dim8_array = clf_dim8.predict_proba(X)[:,1]
                 
-                #print(BDT_output_SM_array)
-                #print(BDT_output_dim6_array)
-                #print(BDT_output_dim8_array)
-                #print()
-                #BDT_output_SM_array = clf_SM.decision_function(X)
-                #BDT_output_dim6_array = clf_dim6.decision_function(X)
-                #BDT_output_dim8_array = clf_dim8.decision_function(X)
-
-                myfile = ROOT.TFile(file_path_cp, 'update')
-                mytree = myfile.Get("events_all")
-                listOfNewBranches = []
-                BDT_output_SM   = array('d', [0.5] )
-                BDT_output_dim6   = array('d', [0.5] )
-                BDT_output_dim8   = array('d', [0.5] )
-                #BDT_output   = array('d', [0.5] )
-                #BDT_output_ele   = array('d', [0.5] )
-                #BDT_output_mu   = array('d', [0.5] )
-                listOfNewBranches.append(mytree.Branch("BDT_output_SM", BDT_output_SM, "BDT_output_SM/D") )
-                listOfNewBranches.append(mytree.Branch("BDT_output_dim6", BDT_output_dim6, "BDT_output_dim6/D") )
-                listOfNewBranches.append(mytree.Branch("BDT_output_dim8", BDT_output_dim8, "BDT_output_dim8/D") )
-                #listOfNewBranches.append(mytree.Branch("BDT_output", BDT_output, "BDT_output/D") )
-                #listOfNewBranches.append(mytree.Branch("BDT_output_ele", BDT_output_ele, "BDT_output_ele/D") )
-                #listOfNewBranches.append(mytree.Branch("BDT_output_mu", BDT_output_mu, "BDT_output_mu/D") )
-                numOfEvents = mytree.GetEntries()
-                for n in range(numOfEvents):
-                    BDT_output_SM[0] = BDT_output_SM_array[n]
-                    #BDT_output_dim6[0] = 1.
-                    #BDT_output_dim8[0] = 1.
-                    BDT_output_dim6[0] = BDT_output_dim6_array[n]
-                    BDT_output_dim8[0] = BDT_output_dim8_array[n]
-                    
-                    #BDT_output[0] = BDT_output_array[n]
-                    #BDT_output_ele[0] = BDT_output_ele_array[n]
-                    #BDT_output_mu[0] = BDT_output_mu_array[n]
-                    #if n%1000 == 0:
+                    #print(BDT_output_SM_array)
+                    #print(BDT_output_dim6_array)
+                    #print(BDT_output_dim8_array)
+                    #print()
+                    #BDT_output_SM_array = clf_SM.decision_function(X)
+                    #BDT_output_dim6_array = clf_dim6.decision_function(X)
+                    #BDT_output_dim8_array = clf_dim8.decision_function(X)
+                
+                    myfile = ROOT.TFile(file_path_cp, 'update')
+                    mytree = myfile.Get("events_all")
+                    listOfNewBranches = []
+                    BDT_output_SM   = array('d', [0.5] )
+                    BDT_output_dim6   = array('d', [0.5] )
+                    BDT_output_dim8   = array('d', [0.5] )
+                    #BDT_output   = array('d', [0.5] )
+                    #BDT_output_ele   = array('d', [0.5] )
+                    #BDT_output_mu   = array('d', [0.5] )
+                    listOfNewBranches.append(mytree.Branch("BDT_output_SM", BDT_output_SM, "BDT_output_SM/D") )
+                    listOfNewBranches.append(mytree.Branch("BDT_output_dim6", BDT_output_dim6, "BDT_output_dim6/D") )
+                    listOfNewBranches.append(mytree.Branch("BDT_output_dim8", BDT_output_dim8, "BDT_output_dim8/D") )
+                    #listOfNewBranches.append(mytree.Branch("BDT_output", BDT_output, "BDT_output/D") )
+                    #listOfNewBranches.append(mytree.Branch("BDT_output_ele", BDT_output_ele, "BDT_output_ele/D") )
+                    #listOfNewBranches.append(mytree.Branch("BDT_output_mu", BDT_output_mu, "BDT_output_mu/D") )
+                    numOfEvents = mytree.GetEntries()
+                    for n in range(numOfEvents):
+                        BDT_output_SM[0] = BDT_output_SM_array[n]
+                        #BDT_output_dim6[0] = 1.
+                        #BDT_output_dim8[0] = 1.
+                        BDT_output_dim6[0] = BDT_output_dim6_array[n]
+                        BDT_output_dim8[0] = BDT_output_dim8_array[n]
+                        
+                        #BDT_output[0] = BDT_output_array[n]
+                        #BDT_output_ele[0] = BDT_output_ele_array[n]
+                        #BDT_output_mu[0] = BDT_output_mu_array[n]
+                        #if n%1000 == 0:
                         #print(BDT_output[0])
-                    mytree.GetEntry(n)
-                    for newBranch in sorted(listOfNewBranches):
-                        newBranch.Fill()
+                        mytree.GetEntry(n)
+                        for newBranch in sorted(listOfNewBranches):
+                            newBranch.Fill()
 
-                mytree.Write("", ROOT.TFile.kOverwrite)
-                myfile.Close()       
-                os.system("mv " + file_path_cp + " " + file_path)
-            
-            else:
-                print("No events found in condored file, let's skip to another sample...")
-                pass
+                    mytree.Write("", ROOT.TFile.kOverwrite)
+                    myfile.Close()       
+                    os.system("mv " + file_path_cp + " " + file_path)
+                ### end
+                else:
+                    print("No events found in condored file, let's skip to another sample...")
+                    pass
 
 def mergetree(sample):
     if not os.path.exists(filerepo + sample.label):
@@ -649,49 +701,67 @@ def lumi_writer(dataset, lumi):
         if not ('Data' in sample.label):# or 'TT_dilep' in sample.label):
             infile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root")
             isthere_gen = bool(infile.GetListOfKeys().Contains("h_genweight"))
-            isthere_pdf = bool(infile.GetListOfKeys().Contains("h_PDFweight"))
-            tree = infile.Get('events_all')
-            tree.SetBranchStatus('w_nominal', 0)
-            tree.SetBranchStatus('w_PDF', 0)
+            #isthere_pdf = bool(infile.GetListOfKeys().Contains("h_PDFweight"))
+            
+            ik = 0
             outfile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE")
-            tree_new = tree.CloneTree(0)
-            print("Getting the histos from %s" %(infile))
-            h_genw_tmp = ROOT.TH1F(infile.Get("h_genweight"))
-            #print("h_genweight first bin content is %f and h_PDFweight has %f bins" %(h_genw_tmp.GetBinContent(1), nbins))
-            w_nom = array('f', [0.]) 
-            tree_new.Branch('w_nominal', w_nom, 'w_nominal/F')
-            tree.SetBranchStatus('w_nominal', 1)
-            if isthere_pdf:# ("WZ" in sample.label):
-                h_pdfw_tmp = ROOT.TH1F(infile.Get("h_PDFweight"))
-                nbins = h_pdfw_tmp.GetXaxis().GetNbins()
-                #print(nbins)
-                w_PDF = array('f', [0.]*nbins)
-            else:
-                w_PDF = array('f', [1.])
-                    
-            print('len w_PDF:', len(w_PDF))
-            tree_new.Branch('w_PDF', w_PDF, 'w_PDF[' + str(int(len(w_PDF))) + ']/F')
-               
-            for event in range(0, tree.GetEntries()):
-                tree.GetEntry(event)
-                perc = (event+1)/(tree.GetEntries())*100000
-                if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
-                    #print("Processing event %s     complete %s percent" %(event, 100*event/tree.GetEntries()))
-                    sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(event, 100*event/tree.GetEntries()))
-                w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
-                if isthere_pdf: #not ("WZ" in sample.label):
-                    for i in range(0, nbins):
-                        w_PDF[i] = h_pdfw_tmp.GetBinContent(i+1)/h_genw_tmp.GetBinContent(2) 
-                tree_new.Fill()
-            tree_new.Write()
+            for key in systematics.keys():
+                evtree = "events_" + key
+                try:
+                    tree = infile.Get(evtree)
+                except:
+                    continue
+                else:
+                    pass
+                
+                tree.SetBranchStatus('w_nominal', 0)
+                #tree.SetBranchStatus('w_PDF', 0)
+                tree_new = tree.CloneTree(0)
+                #print("Getting the histos from %s" %(infile))
+                h_genw_tmp = ROOT.TH1F(infile.Get("h_genweight"))
+
+                w_nom = array('f', [0.]) 
+                tree_new.Branch('w_nominal', w_nom, 'w_nominal/F')
+                tree.SetBranchStatus('w_nominal', 1)
+                
+                '''
+                if isthere_pdf:# ("WZ" in sample.label):
+                    h_pdfw_tmp = ROOT.TH1F(infile.Get("h_PDFweight"))
+                    nbins = h_pdfw_tmp.GetXaxis().GetNbins()
+                    #print(nbins)
+                    w_PDF = array('f', [0.]*nbins)
+                else:
+                    w_PDF = array('f', [1.])
+                print('len w_PDF:', len(w_PDF))
+                tree_new.Branch('w_PDF', w_PDF, 'w_PDF[' + str(int(len(w_PDF))) + ']/F')
+                '''
+                print("Calculating renormalization weights for scenario", key)
+                for event in range(0, tree.GetEntries()):
+                    tree.GetEntry(event)
+                    perc = (event+1)/(tree.GetEntries())*100000
+                    if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
+                        #print("Processing event %s     complete %s percent" %(event, 100*event/tree.GetEntries()))
+                        sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(event, 100*event/tree.GetEntries()))
+
+                    w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
+                    #if isthere_pdf: #not ("WZ" in sample.label):
+                        #for i in range(0, nbins):
+                            #w_PDF[i] = h_pdfw_tmp.GetBinContent(i+1)/h_genw_tmp.GetBinContent(2) 
+                    tree_new.Fill()
+                tree_new.Write()
+                print("\n")
             outfile.Close()
             print('\n')
+
+            #end
         else:
             os.popen("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
             print("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
 
 
-def plot(lep, reg, variable, sample, cut_tag, syst=""):
+def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ""]):
+    systtree = systlist[0]
+    syst = systlist[1]
     print("in plotf")
     treename = "events_"
     IsDim8 = False
@@ -705,12 +775,13 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
     cutbase = variable._taglio
     histoname = "h_" + variable._name + "_" + cut_tag
 
-    if(syst.startswith("jer") or syst.startswith("jes")):
-        treename += syst
-    else:
-        treename += "all"
+    #if(syst.startswith("jer") or syst.startswith("jes")):
+    treename += syst
+
     if syst != "":
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
+        if syst.startswith("pdf_total"):
+            nominal = "abs(" + str(nominal) + ")" 
         histoname += "_" + syst
         if not(syst.startswith("jer") or syst.startswith("jes")):
         #if syst.startswith("btag"):
@@ -721,7 +792,7 @@ def plot(lep, reg, variable, sample, cut_tag, syst=""):
 
     print("count? ", opt.count)
     if opt.count:
-        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + ".csv", "a")
+        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst + ".csv", "a")
         countf.write(sample.label)
         countf.write(',')
         #countf.write("\nBin\tContent\tError")
@@ -1625,14 +1696,19 @@ for year in years:
                 continue
                     
             if(opt.plot):
-                for syst in systematics:
+                plotsysts = []
+                for ksyst, vsysts in systematics.items():
+                    for vsyst in vsysts:
+                        plotsysts.append([copy.deepcopy(ksyst), copy.deepcopy(vsyst)])
+
+                for syst in plotsysts:#systematics:
                     for var in variables:
                         if opt.count:
                             if not os.path.exists(pathplot + 'countings/'):
                                 os.makedirs(pathplot + 'countings/')
                             if not os.path.exists(pathplot + 'countings/' + cut_tag):
                                 os.makedirs(pathplot + 'countings/' + cut_tag)
-                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv"):
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[1] + ".csv"):
                                 tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
                                 tmp_f.write("Process,yields,error\n")
                                 tmp_f.close()

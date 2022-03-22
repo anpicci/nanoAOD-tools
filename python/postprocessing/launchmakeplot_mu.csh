@@ -12,7 +12,7 @@ set channel = "ltau"
 
 #################### year1 #################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/*$year1*root 
-rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*/*$year1bis*
+rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*/*$year1*
 python3 makeplot.py -y $year1 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst noSyst
 python3 makeplot.py -y $year1 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst noSyst
 python3 makeplot.py -y $year1 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --syst noSyst

@@ -852,7 +852,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             if addPDF:
                 PdfWeight = Collection(event, 'LHEPdfWeight')
             if addQCD:
-                ScaleWeight = Collection(event, 'LHEScaleWeight')
+                try:
+                    ScaleWeight = Collection(event, 'LHEScaleWeight')
+                except(RuntimeError):
+                    ScaleWeight = None
             if addPS:
                 PSWeight = Collection(event, 'PSWeight')
         chain.GetEntry(i)
@@ -895,7 +898,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         lheUp = 1.
         lheDown = 1.
         if isMC and addQCD:
-            if len(ScaleWeight) > 1:
+            if ScaleWeight is not None and len(ScaleWeight) > 1:
                 lhemin = min([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
                 lhemax = max([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
                 lheSF = LHEitem(ScaleWeight[4])*1.
@@ -1708,9 +1711,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         trees[4].Write()
     '''
     print("events with one only at-least-loose tau:", taucont) 
-    if isMC and len(scenarios)>1:
+    if idxs == 0 or (isMC and idxs>0):
         #for scen in scenarios:
-        print("Number of events in output tree " + str(scenario) + ": " + str(trees[1].GetEntries()))
+        print("Number of events in output tree " + str(scenario) + ": " + str(trees[idxs].GetEntries()))
 
 for ids, scenario in enumerate(scenarios):
     print("starting reco events for scenario", scenario)

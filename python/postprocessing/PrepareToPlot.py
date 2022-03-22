@@ -59,6 +59,13 @@ if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and 
 Debug = opt.check # True # False #
 split = 50
 
+isWithSysts = False
+if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
+    isWithSysts = True
+    scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+else:
+    scenarios = ["all"]
+
 def CondoredList(samplename):
     try:
         condlist = os.listdir(path+samplename)
@@ -80,19 +87,27 @@ def CondoredList(samplename):
                 except(RuntimeWarning):
                     condlist.remove(condfile)
                     wrongex = True
-                    print("hello!!!")
                     if not opt.check:
                         print("Removing damaged files...")
                         os.system("rm "+ path + samplename + "/" + condfile)
-                try:
-                    tempentr = tempf.Get("events_all").GetEntries()
-                except(AttributeError, ReferenceError, RuntimeWarning):# as e:
-                    condlist.remove(condfile)
-                    wrongex = True
-                    print("hello!")
-                    if not opt.check:
-                        print("Removing damaged files...")
-                        os.system("rm "+ path + samplename + "/" + condfile)
+                else:
+                    pass
+
+                for ids, scenario in enumerate(scenarios):
+                    try:
+                        tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
+                    except(AttributeError, ReferenceError, RuntimeWarning):
+                        condlist.remove(condfile)
+                        wrongex = True
+                        if not opt.check:
+                            print("Removing files with damaged " + scenario + " tree...")
+                            os.system("rm "+ path + samplename + "/" + condfile)
+                            break
+                    else:
+                        pass
+                    
+                    if ids == 0 and (not isWithSysts or "Data" in samplename):
+                        break
                     
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")
