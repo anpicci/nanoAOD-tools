@@ -297,6 +297,7 @@ systematiclist = [
 
 if ("UL" in opt.folder and int(opt.folder.split("UL")[-1]) < 10) or (not "UL" in opt.folder):
     scenarios = ["all"]
+    nomtag = "all"
 else:
     scenarios = [
         "nominal",
@@ -309,6 +310,8 @@ else:
         "FESUp", 
         "FESDown"
     ]
+    nomtag = "nominal"
+
 print("scenarios:", scenarios)
 
 systematics = {scenario: [] for scenario in scenarios}
@@ -322,9 +325,9 @@ if opt.syst!="all" and opt.syst!="noSyst":
          else:
              systematics[syst].append(syst)
 elif opt.syst!="all" and opt.syst=="noSyst":
-    systematics["nominal"].append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
+    systematics[nomtag].append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
 else:
-    systematics["nominal"]: [
+    systematics[nomtag]: [
         "",
         "PFUp",
         "PFDown",
@@ -779,7 +782,7 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ""]):
     histoname = "h_" + variable._name + "_" + cut_tag
 
     #if(syst.startswith("jer") or syst.startswith("jes")):
-    treename += syst
+    treename += systtree
 
     if syst != "":
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
@@ -891,7 +894,7 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ""]):
 
     print('cut:', str(cut))
     foutput = pathplot + sample.label + "_" + lep + ".root"
-
+    print(treename)
     f1.Get(treename).Project(histoname,vartoproject,cut)
 
     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
@@ -1400,18 +1403,8 @@ for year in years:
             wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
         elif opt.channel == 'emu':
             wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
-        
-        '''
-        try:
-            vfold = int(opt.folder.split("v")[-1])
-        except:
-            wzero += "*btagSF"
-        else:
-            if vfold > 86:
-                wzero += "*btagSF"
-        '''
-        cutbase = cut_dict[lep]
 
+        cutbase = cut_dict[lep]
         
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
         '''
@@ -1434,6 +1427,7 @@ for year in years:
         #variables.append(variabile('BDT_output_mu', '#muBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         '''
+
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', 12, -3., 3.))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', 14, -3.50, 3.50))
 
@@ -1522,8 +1516,8 @@ for year in years:
 
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', 10, -5., 5.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
-        '''
 
+        '''
         bin_ak8leadjet_pt = array("f", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
         variables.append(variabile('AK8leadjet_pt',  'AK8 Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_ak8leadjet_pt, bin_ak8leadjet_pt))#30, 1500))
