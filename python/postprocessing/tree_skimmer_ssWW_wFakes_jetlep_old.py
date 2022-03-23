@@ -239,6 +239,40 @@ systTree.setWeightName("FSRSF", 1.)
 systTree.setWeightName("FSRUp", 1.)
 systTree.setWeightName("FSRDown", 1.)
 
+#++++++++++++++++++++++++++++++++++
+#++      taking MC weights       ++
+#++++++++++++++++++++++++++++++++++
+print("isMC: ", isMC)
+if(isMC):
+    for filee in file_list:
+        newfile = ROOT.TFile.Open(filee)
+        dirc = ROOT.TDirectory()
+        dirc = newfile.Get("plots")
+        isthere_gen = bool(dirc.GetListOfKeys().Contains("h_genweight"))
+        isthere_pdf = bool(dirc.GetListOfKeys().Contains("h_PDFweight"))
+        print("gen?: ", isthere_gen, " pdf?: ", isthere_pdf)
+
+        if isthere_gen or isthere_pdf:
+            if isthere_gen:
+                h_genweight = ROOT.TH1F()
+                h_genweight.SetNameTitle('h_genweight', 'h_genweight')
+                h_genw_tmp = ROOT.TH1F(dirc.Get("h_genweight"))
+                if(ROOT.TH1F(h_genweight).Integral() < 1.):
+                    h_genweight.SetBins(h_genw_tmp.GetXaxis().GetNbins(), h_genw_tmp.GetXaxis().GetXmin(), h_genw_tmp.GetXaxis().GetXmax())
+                h_genweight.Add(h_genw_tmp)
+    
+            if isthere_pdf:
+                h_PDFweight = ROOT.TH1F()
+                h_PDFweight.SetNameTitle("h_PDFweight","h_PDFweight")
+                h_pdfw_tmp = ROOT.TH1F(dirc.Get("h_PDFweight"))
+                if(ROOT.TH1F(h_PDFweight).Integral() < 1.):
+                    h_PDFweight.SetBins(h_pdfw_tmp.GetXaxis().GetNbins(), h_pdfw_tmp.GetXaxis().GetXmin(), h_pdfw_tmp.GetXaxis().GetXmax())
+                h_PDFweight.Add(h_pdfw_tmp)
+            else:
+                addPDF = False
+        newfile.Close()
+
+
 def reco(idxs, scenario, isMC, addPDF, MCReco):
     #++++++++++++++++++++++++++++++++++
     #++     variables to branch      ++
@@ -738,39 +772,6 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     if(isMC and addPDF):
         systTree.branchTreesSysts(trees, scenario, "w_PDF", outTreeFile, w_PDF_all)
     ####################################################################################################################################################################################################################################
-
-    #++++++++++++++++++++++++++++++++++
-    #++      taking MC weights       ++
-    #++++++++++++++++++++++++++++++++++
-    print("isMC: ", isMC)
-    if(isMC):
-        for filee in file_list:
-            newfile = ROOT.TFile.Open(file_list[0])
-            dirc = ROOT.TDirectory()
-            dirc = newfile.Get("plots")
-            isthere_gen = bool(dirc.GetListOfKeys().Contains("h_genweight"))
-            isthere_pdf = bool(dirc.GetListOfKeys().Contains("h_PDFweight"))
-            print("gen?: ", isthere_gen, " pdf?: ", isthere_pdf)
-
-            if isthere_gen or isthere_pdf:
-                if isthere_gen:
-                    h_genweight = ROOT.TH1F()
-                    h_genweight.SetNameTitle('h_genweight', 'h_genweight')
-                    h_genw_tmp = ROOT.TH1F(dirc.Get("h_genweight"))
-                    if(ROOT.TH1F(h_genweight).Integral() < 1.):
-                        h_genweight.SetBins(h_genw_tmp.GetXaxis().GetNbins(), h_genw_tmp.GetXaxis().GetXmin(), h_genw_tmp.GetXaxis().GetXmax())
-                    h_genweight.Add(h_genw_tmp)
-    
-                if isthere_pdf:
-                    h_PDFweight = ROOT.TH1F()
-                    h_PDFweight.SetNameTitle("h_PDFweight","h_PDFweight")
-                    h_pdfw_tmp = ROOT.TH1F(dirc.Get("h_PDFweight"))
-                    if(ROOT.TH1F(h_PDFweight).Integral() < 1.):
-                        h_PDFweight.SetBins(h_pdfw_tmp.GetXaxis().GetNbins(), h_pdfw_tmp.GetXaxis().GetXmin(), h_pdfw_tmp.GetXaxis().GetXmax())
-                    h_PDFweight.Add(h_pdfw_tmp)
-                else:
-                    addPDF = False
-            newfile.Close()
 
     '''
     #++++++++++++++++++++++++++++++++++

@@ -209,11 +209,12 @@ def MLRun(k, kpath):
             # insert BDT output value into merged file
             file_path_cp = kpath+k+"_cp.root"
             os.system("cp " + file_path + " " + file_path_cp)
+
             #print(file_path)
 
             # open root file
             file = uproot.open(file_path_cp)
-            tree = file["events_all"]
+            tree = file["events_" + scenario]
             df = tree.arrays(library="pd", filter_branch=lambda b: b.name != "w_PDF")
             df = df.fillna(0)
         
@@ -294,7 +295,7 @@ def MLRun(k, kpath):
                 DNN_output_dim8_array = DNN_dim8.predict(scaler_dim8.transform(X_dim8))
 
             myfile = ROOT.TFile(file_path_cp, 'update')
-            mytree = myfile.Get("events_all")
+            mytree = myfile.Get("events_"+scenario)
             listOfNewBranches = []
             if opt.smbdt == True:
                 BDT_output_SM   = array('d', [0.5] )
@@ -400,7 +401,7 @@ for k, v in merge_dict.items():
     #print(v.label)
     #k = v.label
     #print("hello", k)
-    if opt.year not in k:
+    if not k.endswith(str(opt.year)):
         continue
 
     if k.startswith("Fake"):
@@ -439,6 +440,7 @@ for k, v in merge_dict.items():
             print(k, "not mergable")
         continue
     '''
+
     hascomp = False
     if "UL" in opt.year:
         hascomp = hasattr(v, "components")
@@ -500,6 +502,7 @@ for k, v in merge_dict.items():
 
         #print len(doesexist), len(v.components)
         if len(doesexist) == len(v.components):
+
             '''
             if len(merging) == 0:
                 if os.path.exists(kpath+k+".root") and not opt.rw:
@@ -509,6 +512,7 @@ for k, v in merge_dict.items():
                     samplemerge = True
             else:
             '''
+
             samplemerge = True
 
             if samplemerge:
@@ -562,4 +566,3 @@ for k, v in merge_dict.items():
         else:
             print(k + " already merged and lumied")
         MLRun(k, kpath)
-

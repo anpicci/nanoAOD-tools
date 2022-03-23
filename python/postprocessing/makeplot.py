@@ -325,32 +325,32 @@ if opt.syst!="all" and opt.syst!="noSyst":
          else:
              systematics[syst].append(syst)
 elif opt.syst!="all" and opt.syst=="noSyst":
-    systematics[nomtag].append("") #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
+    systematics[nomtag].append(("", True)) #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
 else:
     systematics[nomtag] = [
-        "",
-        "PFUp",
-        "PFDown",
-        "puUp",
-        "puDown",
-        "btagUp", 
-        "btagDown",
-        #"mistagUp",
-        #"mistagDown",
-        "lepUp", 
-        "lepDown",
-        "tau_vsjet_Up",
-        "tau_vsjet_Down",
-        "tau_vsele_Up",
-        "tau_vsele_Down",
-        "tau_vsmu_Up",
-        "tau_vsmu_Down",
-        #"trigUp",
-        #"trigDown",
-        "pdf_totalUp",
-        "pdf_totalDown",
-        "q2Up",
-        "q2Down"
+        ("", True),
+        ("PFUp", False),
+        ("PFDown", False),
+        ("puUp", False),
+        ("puDown", False),
+        ("btagUp", False),
+        ("btagDown", False),
+        #("mistagUp", False),
+        #("mistagDown", False),
+        ("lepUp", False),
+        ("lepDown", False),
+        ("tau_vsjet_Up", False),
+        ("tau_vsjet_Down", False),
+        ("tau_vsele_Up", False),
+        ("tau_vsele_Down", False),
+        ("tau_vsmu_Up", False),
+        ("tau_vsmu_Down", False),
+        #("trigUp", False),
+        #("trigDown", False),
+        #("pdf_totalUp", False),
+        #("pdf_totalDown", False),
+        #("q2Up", False),
+        #("q2Down, False),
     ]
     #systematics["jesUp"]: ["jesUp"]
     #systematics["jesDown"]:["jesDown"]
@@ -765,9 +765,11 @@ def lumi_writer(dataset, lumi):
             print("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
 
 
-def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ""]):
+def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)]):
+    print("systlist", systlist)
     systtree = systlist[0]
-    syst = systlist[1]
+    syst = systlist[1][0]
+    isSystCorr = systlist[1][1]
     print("in plotf")
     treename = "events_"
     IsDim8 = False
@@ -789,6 +791,8 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ""]):
         if syst.startswith("pdf_total"):
             nominal = "abs(" + str(nominal) + ")" 
         histoname += "_" + syst
+        if not isSystCorr:
+            histoname += "_" + str(opt.year).replace("UL", "")
         if not(syst.startswith("jer") or syst.startswith("jes")):
         #if syst.startswith("btag"):
             cutbase += '*(1.*' + syst + '/' + nominal + ')'
@@ -1416,6 +1420,9 @@ for year in years:
             variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         '''
+        variables.append(variabile('BDT_SM_xgb_vUL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_dim6_xgb_UL008_no', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+
         '''
         try:
             variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
@@ -1438,11 +1445,11 @@ for year in years:
             bin_lepton_pt = array("f", [0., 30., 45., 60., 80., 100., 125., 150, 200., 250.])#, 300.])#, 500.])
             nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
-
+        '''
         #variables.append(variabile(lep1[0] + '_pdgid', lep1[1] + ' pdgid',  wzero+'*('+cutbase+')', 31, -15.5, 15.5))
         #variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' rel iso',  wzero+'*('+cutbase+')', 15, 0, 0.15))
         #variables.append(variabile(lep1[0] + '_Zeppenfeld', lep1[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', 24, -6, 6))
-
+        '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_zepp = array("f", [-1.5, -0.75, -0.5, -0.25, 0., 0.25, 0.5, 0.75, 1.5])#, 300.])#, 500.])
             nbin_zepp = len(bin_zepp)-1
@@ -1703,7 +1710,7 @@ for year in years:
                                 os.makedirs(pathplot + 'countings/')
                             if not os.path.exists(pathplot + 'countings/' + cut_tag):
                                 os.makedirs(pathplot + 'countings/' + cut_tag)
-                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[1] + ".csv"):
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[1][0] + ".csv"):
                                 tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
                                 tmp_f.write("Process,yields,error\n")
                                 tmp_f.close()
