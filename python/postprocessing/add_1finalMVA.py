@@ -84,6 +84,13 @@ if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and 
 Debug = opt.check # True # False #
 split = 50
 
+if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
+    isWithSysts = True
+    scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+else:
+    isWithSysts = False
+    scenarios = ["all"]
+
 def CondoredList(samplename):
     try:
         condlist = os.listdir(path+samplename)
@@ -94,11 +101,16 @@ def CondoredList(samplename):
         toRel = False
         wrongex = False
         for condfile in condlist:
-            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:
+            if os.stat(path+samplename+"/"+condfile).st_size == 0.:
+                print("Condoring still not ended so far")
+                condlist.remove(condfile)
+            elif os.stat(path+samplename+"/"+condfile).st_size < 1024.:
                 toRel = True
                 condlist.remove(condfile)
                 if not opt.check:
                     os.system("rm -r "+ path + samplename + "/" + condfile)
+                else:
+                    print("rm -r "+ path + samplename + "/" + condfile)
             else:
                 try:
                     tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
@@ -108,6 +120,9 @@ def CondoredList(samplename):
                     if not opt.check:
                         print("Removing damaged files...")
                         os.system("rm "+ path + samplename + "/" + condfile)
+                    else:
+                        print("rm "+ path + samplename + "/" + condfile)
+                    
                 else:
                     pass
 
@@ -123,6 +138,8 @@ def CondoredList(samplename):
                         if not opt.check:
                             print("Removing files with damaged " + scenario + " tree...")
                             os.system("rm "+ path + samplename + "/" + condfile)
+                        else:
+                            print("rm "+ path + samplename + "/" + condfile)
                     else:
                         pass
 
@@ -170,17 +187,18 @@ def AreAllCondored(crabname, condorname):
         return True
 
 def MLRun(k, kpath):
-    if True:#not partmerge:
-        if Debug:
-            return("ML run...")
-        print(k + " already merged and lumied")
-        file_path = kpath+k
-        file_path += ".root"
-        #check if there is at least one event in the tree
-        print(os.path.exists(file_path))
-        tmpfile = ROOT.TFile.Open(file_path)
-        #tmpfile.ls()
-        tmptree = tmpfile.Get("events_all")
+    if Debug:
+        return("ML run...")
+    print(k + " already merged and lumied")
+    file_path = kpath+k
+    file_path += ".root"
+    #check if there is at least one event in the tree
+    print(os.path.exists(file_path))
+    tmpfile = ROOT.TFile.Open(file_path)
+    #tmpfile.ls()
+
+    for ids, scenario in enumerate(scenarios):
+        tmptree = tmpfile.Get("events_"+scenario)
         tmpentr = tmptree.GetEntries()
         tmptree.Delete()
         tmpfile.Close()
@@ -319,7 +337,7 @@ def MLRun(k, kpath):
             mytree.Write("", ROOT.TFile.kOverwrite)
             myfile.Close()   
             os.system("mv " + file_path_cp + " " + file_path)
-
+            #### if ends here
 
 #print dirlist
 
@@ -377,10 +395,10 @@ if opt.dim8dnn == True:
     DNN_dim8 = tensorflow.keras.models.load_model(DNN_dim8_path)
 
 print("year", opt.year)
-#for k, v in merge_dict.items():
-for v in class_list:
+for k, v in merge_dict.items():
+#for v in class_list:
     #print(v.label)
-    k = v.label
+    #k = v.label
     #print("hello", k)
     if opt.year not in k:
         continue
@@ -448,15 +466,15 @@ for v in class_list:
             #print(cpath)
             partmerge = False
             #print(cpath+k+".root")
-            if not os.path.exists(cpath+c+".root") or opt.rw:
+            if not os.path.exists(cpath+c.label+".root") or opt.rw:
                 partmerge = True
                 #if (hasattr(v, "components") and os.path.exists(cpath+k+"_merged.root")) or opt.rw:
-                if os.path.exists(cpath+c+"_merged.root") or opt.rw:
+                if os.path.exists(cpath+c.label+"_merged.root") or opt.rw:
                     if Debug:
                         print("rm -f " + cpath + c + "_merged.root")
                     else:
                         os.system("rm -f " + cpath + c + "_merged.root")
-            print(partmerge)
+            print("Merging parts?", partmerge)
             if partmerge:
                 print(c.label + " not merged so far")
 
