@@ -939,7 +939,6 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         if scenario == 'nominal':
-            print("hello", scenario)
             #met.pt = met.pt
             for jet in jets:
                 jet.pt = jet.pt_nom

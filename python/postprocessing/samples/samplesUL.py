@@ -3697,6 +3697,7 @@ class_list = [
 
     #WpWpJJ_EWK_UL2017,
     VBS_SSWW_SM_UL2017,
+    #VBS_SSWW_cW_BSM_UL2017,
     #VBS_SSWW_DIM6_UL2017,
     #WpWpJJ_QCD_UL2017,
     ZZtoLep_UL2017,

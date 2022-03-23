@@ -21,9 +21,12 @@ parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is 
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
-parser.add_option('--SM', dest='sm', default = False, action = 'store_true', help='Add sm MVA')
-parser.add_option('--DIM6', dest='dim6', default = False, action = 'store_true', help='Add dim6 MVA')
-parser.add_option('--DIM8', dest='dim8', default = False, action = 'store_true', help='Add dim8 MVA')
+parser.add_option('--SMbdt', dest='smbdt', default = False, action = 'store_true', help='Add sm MVA')
+parser.add_option('--DIM6bdt', dest='dim6bdt', default = False, action = 'store_true', help='Add dim6 MVA')
+parser.add_option('--DIM8bdt', dest='dim8bdt', default = False, action = 'store_true', help='Add dim8 MVA')
+parser.add_option('--SMdnn', dest='smdnn', default = False, action = 'store_true', help='Add sm MVA')
+parser.add_option('--DIM6dnn', dest='dim6dnn', default = False, action = 'store_true', help='Add dim6 MVA')
+parser.add_option('--DIM8dnn', dest='dim8dnn', default = False, action = 'store_true', help='Add dim8 MVA')
 parser.add_option('--smBDTpath', dest='BDT_SM_path', type=str, help='sm BDT path')
 parser.add_option('--dim6BDTpath', dest='BDT_dim6_path', type=str, help='dim6 BDT path')
 parser.add_option('--dim8BDTpath', dest='BDT_dim8_path', type=str, help='dim8 BDT path')
@@ -181,8 +184,57 @@ def MLRun(k, kpath):
                 new_columns.append(i.split('[')[0])
             df.columns = new_columns
 
-            to_keep_SM = ['leadjet_DeepFlv_b', 'subleadjet_DeepFlv_b', 'event_Zeppenfeld_over_deltaEta_jj', 'taujet_relpt', 'm_o1', 'event_RT', 'taujet_deltaPhi', 'nJets', 'mT_lep_MET', 'm_jjtau', 'm_1T', 'nBJets', 'subleadjet_pt', 'm_jjtaulep', 'm_jj', 'leadjet_pt']
-            to_keep_dim6 = ['subleadjet_DeepFlv_b', 'leadjet_DeepFlv_b', 'event_Zeppenfeld', 'event_RT', 'm_jjtau', 'm_taulep', 'm_jj', 'nJets', 'mT_lep_MET', 'nBJets', 'm_o1', 'MET_pt', 'subleadjet_pt', 'm_1T', 'leadjet_pt', 'm_jjtaulep']
+            to_keep_SM = [
+                'm_jj',
+                'subleadjet_pt',
+                'leadjet_pt',
+                'nBJets',
+                'm_jjtaulep',
+                'm_o1',
+                'nJets',
+                'event_Zeppenfeld_over_deltaEta_jj',
+                'taujet_deltaEta',
+                'mT_lep_MET',
+                'tau_DecayMode',
+                'm_1T',
+                'taujet_EmGamma',
+                'leadjet_DeepFlv_b',
+                'MET_pt',
+                'subleadjet_DeepFlv_b',
+                'taujet_relpt',
+                'm_taulep',
+                'taujet_deltaPhi',
+                'taujet_HadGamma',
+                'taujet_HEGamma',  
+                'm_jjtau', #new
+                'tau_pt',
+                'tau_mass',
+                'event_RT',
+                'mT_leptau_MET',
+                'ptRel_lepj1',
+                'ptRel_lepj2',
+                'tau_isolation',
+                'mT_tau_MET',
+            ]
+            
+            #to_keep_SM = ['leadjet_DeepFlv_b', 'subleadjet_DeepFlv_b', 'event_Zeppenfeld_over_deltaEta_jj', 'taujet_relpt', 'm_o1', 'event_RT', 'taujet_deltaPhi', 'nJets', 'mT_lep_MET', 'm_jjtau', 'm_1T', 'nBJets', 'subleadjet_pt', 'm_jjtaulep', 'm_jj', 'leadjet_pt'] ###ReReco
+            
+            to_keep_dim6 = [
+                'm_1T',
+                'MET_pt',
+                'm_jjtaulep',
+                'm_o1',
+                'leadjet_pt',
+                'tau_pt',
+                'lepton_pt',
+                'm_taulep',
+                'nJets',
+                'deltaEta_taulep',
+                'subleadjet_pt',
+                'nBJets'
+            ]
+
+            #to_keep_dim6 = ['subleadjet_DeepFlv_b', 'leadjet_DeepFlv_b', 'event_Zeppenfeld', 'event_RT', 'm_jjtau', 'm_taulep', 'm_jj', 'nJets', 'mT_lep_MET', 'nBJets', 'm_o1', 'MET_pt', 'subleadjet_pt', 'm_1T', 'leadjet_pt', 'm_jjtaulep']###ReReco
             to_keep_dim8 = ['subleadjet_DeepCSVv2_b', 'leadjet_DeepCSVv2_b', 'm_taulep', 'event_RT', 'nBJets', 'mT_lep_MET', 'leadjet_pt', 'MET_pt', 'subleadjet_pt', 'm_jjtaulep', 'm_1T', 'm_o1']
         
             X_SM = df[to_keep_SM].to_numpy()
@@ -190,45 +242,54 @@ def MLRun(k, kpath):
             X_dim8 = df[to_keep_dim8].to_numpy()
 
             # update root file with BDT branch
-            if opt.sm == True:
+            if opt.smbdt == True:
                 BDT_output_SM_array = BDT_SM.predict_proba(X_SM)[:,1]
+            if opt.smdnn == True:
                 DNN_output_SM_array = DNN_SM.predict(scaler_SM.transform(X_SM))
-            if opt.dim6 == True:
+            if opt.dim6bdt == True:
                 BDT_output_dim6_array = BDT_dim6.predict_proba(X_dim6)[:,1]
+            if opt.dim6dnn == True:
                 DNN_output_dim6_array = DNN_dim6.predict(scaler_dim6.transform(X_dim6))
-            if opt.dim8 == True:
+            if opt.dim8bdt == True:
                 BDT_output_dim8_array = BDT_dim8.predict_proba(X_dim8)[:,1]
+            if opt.dim8dnn == True:
                 DNN_output_dim8_array = DNN_dim8.predict(scaler_dim8.transform(X_dim8))
 
             myfile = ROOT.TFile(file_path_cp, 'update')
             mytree = myfile.Get("events_all")
             listOfNewBranches = []
-            if opt.sm == True:
+            if opt.smbdt == True:
                 BDT_output_SM   = array('d', [0.5] )
-                DNN_output_SM   = array('d', [0.5] )
                 listOfNewBranches.append(mytree.Branch(name_bdtbranch_SM, BDT_output_SM, name_bdtbranch_SM+"/D") )
+            if opt.smdnn == True:
+                DNN_output_SM   = array('d', [0.5] )
                 listOfNewBranches.append(mytree.Branch(name_dnnbranch_SM, DNN_output_SM, name_dnnbranch_SM+"/D") )
-            if opt.dim6 == True:
+            if opt.dim6bdt == True:
                 BDT_output_dim6   = array('d', [0.5] )
-                DNN_output_dim6   = array('d', [0.5] )
                 listOfNewBranches.append(mytree.Branch(name_bdtbranch_dim6, BDT_output_dim6, name_bdtbranch_dim6+"/D") )
+            if opt.dim6dnn == True:
+                DNN_output_dim6   = array('d', [0.5] )
                 listOfNewBranches.append(mytree.Branch(name_dnnbranch_dim6, DNN_output_dim6, name_dnnbranch_dim6+"/D") )
-            if opt.dim8 == True:
+            if opt.dim8bdt == True:
                 BDT_output_dim8   = array('d', [0.5] )
-                DNN_output_dim8   = array('d', [0.5] )
                 listOfNewBranches.append(mytree.Branch(name_bdtbranch_dim8, BDT_output_dim8, name_bdtbranch_dim8+"/D") )
+            if opt.dim8dnn == True:
+                DNN_output_dim8   = array('d', [0.5] )
                 listOfNewBranches.append(mytree.Branch(name_dnnbranch_dim8, DNN_output_dim8, name_dnnbranch_dim8+"/D") )
             
             numOfEvents = mytree.GetEntries()
             for n in range(numOfEvents):
-                if opt.sm == True:
+                if opt.smbdt == True:
                     BDT_output_SM[0] = BDT_output_SM_array[n]
+                if opt.smdnn == True:
                     DNN_output_SM[0] = DNN_output_SM_array[n]
-                if opt.dim6 == True:
+                if opt.dim6bdt == True:
                     BDT_output_dim6[0] = BDT_output_dim6_array[n]
+                if opt.dim6dnn == True:
                     DNN_output_dim6[0] = DNN_output_dim6_array[n]
-                if opt.dim8 == True:
+                if opt.dim8bdt == True:
                     BDT_output_dim8[0] = BDT_output_dim8_array[n]
+                if opt.dim8dnn == True:
                     DNN_output_dim8[0] = DNN_output_dim8_array[n]
                     
                 mytree.GetEntry(n)
@@ -273,21 +334,24 @@ scaler_dim8_path = opt.scaler_dim8_path
 
 
 # load models
-if opt.sm == True:
+if opt.smbdt == True:
     BDT_SM = XGBClassifier()
     BDT_SM.load_model(BDT_SM_path)
+if opt.smdnn == True:
     with open(scaler_SM_path, 'rb') as file:
         scaler_SM = pickle.load(file)
     DNN_SM = tensorflow.keras.models.load_model(DNN_SM_path)
-if opt.dim6 == True:
+if opt.dim6bdt == True:
     BDT_dim6 = XGBClassifier()
     BDT_dim6.load_model(BDT_dim6_path)
+if opt.dim6dnn == True:
     with open(scaler_dim6_path, 'rb') as file:
         scaler_dim6 = pickle.load(file)
     DNN_dim6 = tensorflow.keras.models.load_model(DNN_dim6_path)
-if opt.dim8 == True:
+if opt.dim8bdt == True:
     BDT_dim8 = XGBClassifier()
     BDT_dim8.load_model(BDT_dim8_path)
+if opt.dim8dnn == True:
     with open(scaler_dim8_path, 'rb') as file:
         scaler_dim8 = pickle.load(file)
     DNN_dim8 = tensorflow.keras.models.load_model(DNN_dim8_path)
