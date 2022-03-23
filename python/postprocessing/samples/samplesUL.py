@@ -469,7 +469,7 @@ DYJetsToLL_UL2016APV.components = [
 DYJetsToLL_M50_FxFx_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
 DYJetsToLL_M50_FxFx_UL2016APV.year = "UL2016APV"
 DYJetsToLL_M50_FxFx_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016APV.sigma = 6077.2
+DYJetsToLL_M50_FxFx_UL2016APV.sigma = 6529.0
 
 DYJetsToLL_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016APV")
 DYJetsToLL_FxFx_UL2016APV.year = "UL2016APV"
@@ -1261,7 +1261,7 @@ DYJetsToLL_UL2016.components = [
 DYJetsToLL_M50_FxFx_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016")
 DYJetsToLL_M50_FxFx_UL2016.year = "UL2016"
 DYJetsToLL_M50_FxFx_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016.sigma = 6077.22
+DYJetsToLL_M50_FxFx_UL2016.sigma = 6529.0
 
 DYJetsToLL_FxFx_UL2016 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016")
 DYJetsToLL_FxFx_UL2016.year = "UL2016"
@@ -1998,7 +1998,7 @@ DYJetsToLL_UL2017.components = [
 DYJetsToLL_M50_FxFx_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2017")
 DYJetsToLL_M50_FxFx_UL2017.year = "UL2017"
 DYJetsToLL_M50_FxFx_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2017.sigma = 6077.22
+DYJetsToLL_M50_FxFx_UL2017.sigma = 6529.0
 
 DYJetsToLL_FxFx_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2017")
 DYJetsToLL_FxFx_UL2017.year = "UL2017"
@@ -2774,7 +2774,7 @@ DYJetsToLL_UL2018.components = [
 DYJetsToLL_M50_FxFx_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2018")
 DYJetsToLL_M50_FxFx_UL2018.year = "UL2018"
 DYJetsToLL_M50_FxFx_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2018.sigma = 6077.22
+DYJetsToLL_M50_FxFx_UL2018.sigma = 6529.0
 
 DYJetsToLL_FxFx_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2018")
 DYJetsToLL_FxFx_UL2018.year = "UL2018"
