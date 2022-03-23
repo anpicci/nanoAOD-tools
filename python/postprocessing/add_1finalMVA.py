@@ -94,26 +94,46 @@ def CondoredList(samplename):
         toRel = False
         wrongex = False
         for condfile in condlist:
-            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')
-                toRel =True
+            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:
+                toRel = True
                 condlist.remove(condfile)
                 if not opt.check:
                     os.system("rm -r "+ path + samplename + "/" + condfile)
             else:
-                tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
                 try:
-                    tempentr = tempf.Get("events_all").GetEntries()
-                except (AttributeError, ReferenceError, RuntimeWarning) as e:
+                    tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
+                except(RuntimeWarning):
                     condlist.remove(condfile)
                     wrongex = True
                     if not opt.check:
+                        print("Removing damaged files...")
                         os.system("rm "+ path + samplename + "/" + condfile)
-                    
+                else:
+                    pass
+
+                for ids, scenario in enumerate(scenarios):
+                    try:
+                        tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
+                    except(AttributeError, ReferenceError, RuntimeWarning):
+                        try:
+                            condlist.remove(condfile)
+                        except:
+                            pass
+                        wrongex = True
+                        if not opt.check:
+                            print("Removing files with damaged " + scenario + " tree...")
+                            os.system("rm "+ path + samplename + "/" + condfile)
+                    else:
+                        pass
+
+                    if ids == 0 and (not isWithSysts or "Data" in samplename):
+                        break
+
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")
             return CondoredList(samplename)
         elif wrongex:
-            print("Something when remapping rootfiles for ", samplename, "fix it and relaunch")
+            print("Something went wrong when remapping rootfiles for", samplename, "fix it and relaunch")
 
     return condlist
 
@@ -420,7 +440,7 @@ for v in class_list:
                 continue
             cpath = path + c.label +"/"
             if not AreAllCondored(c.name, c.label):
-                print(k + " not condorly produced yet")
+                print(c + " not condorly produced yet")
                 continue
             
             doesexist.append(True)
@@ -428,14 +448,14 @@ for v in class_list:
             #print(cpath)
             partmerge = False
             #print(cpath+k+".root")
-            if not os.path.exists(cpath+k+".root") or opt.rw:
+            if not os.path.exists(cpath+c+".root") or opt.rw:
                 partmerge = True
                 #if (hasattr(v, "components") and os.path.exists(cpath+k+"_merged.root")) or opt.rw:
-                if os.path.exists(cpath+k+"_merged.root") or opt.rw:
+                if os.path.exists(cpath+c+"_merged.root") or opt.rw:
                     if Debug:
-                        print("rm -f " + cpath + k + "_merged.root")
+                        print("rm -f " + cpath + c + "_merged.root")
                     else:
-                        os.system("rm -f " + cpath + k + "_merged.root")
+                        os.system("rm -f " + cpath + c + "_merged.root")
             print(partmerge)
             if partmerge:
                 print(c.label + " not merged so far")
