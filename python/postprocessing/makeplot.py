@@ -38,7 +38,7 @@ parser.add_option('-p', '--plot', dest='plot', default = False, action='store_tr
 parser.add_option('-s', '--stack', dest='stack', default = False, action='store_true', help='Default make no stacks')
 parser.add_option('-N', '--notstacked', dest='tostack', default = True, action='store_false', help='Default make plots stacked')
 parser.add_option('-L', '--lep', dest='lep', type='string', default = 'incl', help='Default make incl analysis')
-parser.add_option('-S', '--syst', dest='syst', type='string', default = '', help='Default all systematics added')
+parser.add_option('-S', '--syst', dest='syst', type='string', default = 'all', help='Default all systematics added')
 parser.add_option('-C', '--cut', dest='cut', type='string', default = '1.', help='Default no cut')
 parser.add_option('-y', '--year', dest='year', type='string', default = '2017', help='Default 2016, 2017 and 2018 are included')
 parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v7', help='Default folder is v0')
@@ -319,7 +319,7 @@ if opt.syst!="all" and opt.syst!="noSyst":
      for syst in (opt.syst).split(","):
          if not syst in scenarios:
              try:
-                 systematics[nomtag].append(syst)
+                 systematics[nomtag].append([syst, True])
              except:
                  pass
          else:
@@ -1420,7 +1420,7 @@ for year in years:
             variables.append(variabile('DNN_output_dim6_opt', 'dim6 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
             variables.append(variabile('DNN_output_dim8_opt', 'dim8 DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         '''
-        variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_SM_xgb_vUL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_dim6_xgb_UL008_no', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
 
         '''
@@ -1701,7 +1701,6 @@ for year in years:
                 for ksyst, vsysts in systematics.items():
                     for vsyst in vsysts:
                         plotsysts.append([copy.deepcopy(ksyst), copy.deepcopy(vsyst)])
-
                 for syst in plotsysts:#systematics:
                     for var in variables:
                         if opt.count:
