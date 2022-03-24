@@ -118,6 +118,9 @@ def CondoredList(samplename):
                 return CondoredList(samplename)
         elif wrongex:
             print("Something when remapping rootfiles for ", samplename, "fix it and relaunch")
+            if not opt.check:
+                return CondoredList(samplename)
+       
 
     return condlist
 

@@ -84,9 +84,12 @@ def CondoredList(samplename):
 
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")
-            return CondoredList(samplename)
+            if not opt.check:
+                return CondoredList(samplename)
         elif wrongex:
             print("Something went wrong when remapping rootfiles for", samplename, "fix it and relaunch")
+            if not opt.check:
+                return CondoredList(samplename)
 
     return condlist
 
@@ -265,13 +268,16 @@ for prname, proc in condor_dict.items():
                 print(sample.label, " completely condored")
 
     else:
-
         if opt.dat != 'all':
             if not prname.startswith(opt.dat):
                 continue
 
+        if "DY" in prname:
+            print("hello", prname, proc.label)
+
         if not DoesSampleExist(proc.name):
             continue
+
         if os.path.exists(path+proc.label):
             if opt.rw:
                 print('Relaunching all the jobs for', proc.label)

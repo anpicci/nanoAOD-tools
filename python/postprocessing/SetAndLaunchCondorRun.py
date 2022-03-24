@@ -16,7 +16,7 @@ def CondoredList(samplename):
         toRel = False
         wrongex = False
         for condfile in condlist:
-            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')                                                                                                                                                                 
+            if os.stat(path+samplename+"/"+condfile).st_size < 1024.:                                        
                 toRel =True
                 condlist.remove(condfile)
                 if not opt.check:
