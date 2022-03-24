@@ -469,7 +469,7 @@ DYJetsToLL_UL2016APV.components = [
 DYJetsToLL_M50_FxFx_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
 DYJetsToLL_M50_FxFx_UL2016APV.year = "UL2016APV"
 DYJetsToLL_M50_FxFx_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016APV.sigma = 6529.0
+DYJetsToLL_M50_FxFx_UL2016APV.sigma = 6077.22 #6529.0
 
 DYJetsToLL_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016APV")
 DYJetsToLL_FxFx_UL2016APV.year = "UL2016APV"
@@ -602,6 +602,11 @@ VBS_SSWW_DIM6_SM_UL2016APV.components = [
     VBS_SSWW_TL_SM_UL2016APV,
     VBS_SSWW_TT_SM_UL2016APV,
 ]
+
+VBS_SSWW_aQGC_UL2016APV = sample(ROOT.kGreen, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2016APV")
+VBS_SSWW_aQGC_UL2016APV.sigma = 0.1056
+VBS_SSWW_aQGC_UL2016APV.year = 2017
+VBS_SSWW_aQGC_UL2016APV.dataset = "/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 
 DataMuB1_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuB1_UL2016APV")
 DataMuB1_UL2016APV.runP = 'B-ver1'
@@ -1261,7 +1266,7 @@ DYJetsToLL_UL2016.components = [
 DYJetsToLL_M50_FxFx_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016")
 DYJetsToLL_M50_FxFx_UL2016.year = "UL2016"
 DYJetsToLL_M50_FxFx_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016.sigma = 6529.0
+DYJetsToLL_M50_FxFx_UL2016.sigma = 6077.22 #6529.0
 
 DYJetsToLL_FxFx_UL2016 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016")
 DYJetsToLL_FxFx_UL2016.year = "UL2016"
@@ -1394,6 +1399,11 @@ VBS_SSWW_DIM6_SM_UL2016.components = [
     VBS_SSWW_TL_SM_UL2016,
     VBS_SSWW_TT_SM_UL2016,
 ]
+
+VBS_SSWW_aQGC_UL2016 = sample(ROOT.kGreen, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2016")
+VBS_SSWW_aQGC_UL2016.sigma = 0.1056
+VBS_SSWW_aQGC_UL2016.year = 2017
+VBS_SSWW_aQGC_UL2016.dataset = "/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 
 DataMuF_UL2016 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuF_UL2016")
 DataMuF_UL2016.runP = 'F'
@@ -1998,7 +2008,7 @@ DYJetsToLL_UL2017.components = [
 DYJetsToLL_M50_FxFx_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2017")
 DYJetsToLL_M50_FxFx_UL2017.year = "UL2017"
 DYJetsToLL_M50_FxFx_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2017.sigma = 6529.0
+DYJetsToLL_M50_FxFx_UL2017.sigma = 6077.22 #6529.0
 
 DYJetsToLL_FxFx_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2017")
 DYJetsToLL_FxFx_UL2017.year = "UL2017"
@@ -2131,6 +2141,11 @@ VBS_SSWW_DIM6_SM_UL2017.components = [
     VBS_SSWW_TL_SM_UL2017,
     VBS_SSWW_TT_SM_UL2017,
 ]
+
+VBS_SSWW_aQGC_UL2017 = sample(ROOT.kGreen, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2017")
+VBS_SSWW_aQGC_UL2017.sigma = 0.1056
+VBS_SSWW_aQGC_UL2017.year = 2017
+VBS_SSWW_aQGC_UL2017.dataset = ""
 
 DataMuB_UL2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuB_UL2017")
 DataMuB_UL2017.runP = 'B'
@@ -2774,7 +2789,7 @@ DYJetsToLL_UL2018.components = [
 DYJetsToLL_M50_FxFx_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2018")
 DYJetsToLL_M50_FxFx_UL2018.year = "UL2018"
 DYJetsToLL_M50_FxFx_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2018.sigma = 6529.0
+DYJetsToLL_M50_FxFx_UL2018.sigma = 6077.22 #6529.0
 
 DYJetsToLL_FxFx_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2018")
 DYJetsToLL_FxFx_UL2018.year = "UL2018"
@@ -2903,6 +2918,11 @@ VBS_SSWW_DIM6_SM_UL2018.components = [
     VBS_SSWW_TL_SM_UL2018,
     VBS_SSWW_TT_SM_UL2018,
 ]
+
+VBS_SSWW_aQGC_UL2018 = sample(ROOT.kGreen, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2018")
+VBS_SSWW_aQGC_UL2018.sigma = 0.1056
+VBS_SSWW_aQGC_UL2018.year = 2017
+VBS_SSWW_aQGC_UL2018.dataset = "/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 
 DataMuA_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuA_UL2018")
 DataMuA_UL2018.runP = 'A'
@@ -3136,6 +3156,7 @@ sample_dict={
     "VBS_SSWW_cW_cHW_UL2016APV":VBS_SSWW_cW_cHW_UL2016APV,
     "VBS_SSWW_DIM6_UL2016APV":VBS_SSWW_DIM6_UL2016APV,
     "VBS_SSWW_DIM6_SM_UL2016APV":VBS_SSWW_DIM6_SM_UL2016APV,
+    "VBS_SSWW_aQGC_UL2016APV":VBS_SSWW_aQGC_UL2016APV,
 
     "ZZtoLep_UL2016":ZZtoLep_UL2016,
     "ZZTo2L2Nu_UL2016":ZZTo2L2Nu_UL2016, "ZZTo4L_UL2016":ZZTo4L_UL2016, "GluGluToContinToZZTo4e_UL2016":GluGluToContinToZZTo4e_UL2016, "GluGluToContinToZZTo2e2mu_UL2016":GluGluToContinToZZTo2e2mu_UL2016, "GluGluToContinToZZTo2e2tau_UL2016":GluGluToContinToZZTo2e2tau_UL2016, "GluGluToContinToZZTo2mu2nu_UL2016":GluGluToContinToZZTo2mu2nu_UL2016, "GluGluToContinToZZTo4mu_UL2016":GluGluToContinToZZTo4mu_UL2016, "GluGluToContinToZZTo2mu2tau_UL2016":GluGluToContinToZZTo2mu2tau_UL2016, "GluGluToContinToZZTo2tau2nu_UL2016":GluGluToContinToZZTo2tau2nu_UL2016, "GluGluToContinToZZTo4tau_UL2016":GluGluToContinToZZTo4tau_UL2016, "GluGluToContinToZZTo2e2nu_UL2016":GluGluToContinToZZTo2e2nu_UL2016,
@@ -3171,6 +3192,7 @@ sample_dict={
     "VBS_SSWW_cW_cHW_UL2016":VBS_SSWW_cW_cHW_UL2016,
     "VBS_SSWW_DIM6_UL2016":VBS_SSWW_DIM6_UL2016,
     "VBS_SSWW_DIM6_SM_UL2016":VBS_SSWW_DIM6_SM_UL2016,
+    "VBS_SSWW_aQGC_UL2016":VBS_SSWW_aQGC_UL2016,
 
     "ZZtoLep_UL2017":ZZtoLep_UL2017,
     "ZZTo2L2Nu_UL2017":ZZTo2L2Nu_UL2017, "ZZTo4L_UL2017":ZZTo4L_UL2017, "GluGluToContinToZZTo4e_UL2017":GluGluToContinToZZTo4e_UL2017, "GluGluToContinToZZTo2e2mu_UL2017":GluGluToContinToZZTo2e2mu_UL2017, "GluGluToContinToZZTo2e2tau_UL2017":GluGluToContinToZZTo2e2tau_UL2017, "GluGluToContinToZZTo2mu2nu_UL2017":GluGluToContinToZZTo2mu2nu_UL2017, "GluGluToContinToZZTo4mu_UL2017":GluGluToContinToZZTo4mu_UL2017, "GluGluToContinToZZTo2mu2tau_UL2017":GluGluToContinToZZTo2mu2tau_UL2017, "GluGluToContinToZZTo2tau2nu_UL2017":GluGluToContinToZZTo2tau2nu_UL2017, "GluGluToContinToZZTo4tau_UL2017":GluGluToContinToZZTo4tau_UL2017, "GluGluToContinToZZTo2e2nu_UL2017":GluGluToContinToZZTo2e2nu_UL2017,
@@ -3206,6 +3228,7 @@ sample_dict={
     "VBS_SSWW_cW_cHW_UL2017":VBS_SSWW_cW_cHW_UL2017,
     "VBS_SSWW_DIM6_UL2017":VBS_SSWW_DIM6_UL2017,
     "VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
+    "VBS_SSWW_aQGC_UL2017":VBS_SSWW_aQGC_UL2017,
 
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
     "ZZTo2L2Nu_UL2018":ZZTo2L2Nu_UL2018, "ZZTo4L_UL2018":ZZTo4L_UL2018, "GluGluToContinToZZTo4e_UL2018":GluGluToContinToZZTo4e_UL2018, "GluGluToContinToZZTo2e2mu_UL2018":GluGluToContinToZZTo2e2mu_UL2018, "GluGluToContinToZZTo2e2tau_UL2018":GluGluToContinToZZTo2e2tau_UL2018, "GluGluToContinToZZTo2mu2nu_UL2018":GluGluToContinToZZTo2mu2nu_UL2018, "GluGluToContinToZZTo4mu_UL2018":GluGluToContinToZZTo4mu_UL2018, "GluGluToContinToZZTo2mu2tau_UL2018":GluGluToContinToZZTo2mu2tau_UL2018, "GluGluToContinToZZTo2tau2nu_UL2018":GluGluToContinToZZTo2tau2nu_UL2018, "GluGluToContinToZZTo4tau_UL2018":GluGluToContinToZZTo4tau_UL2018, "GluGluToContinToZZTo2e2nu_UL2018":GluGluToContinToZZTo2e2nu_UL2018,
@@ -3241,6 +3264,7 @@ sample_dict={
     "VBS_SSWW_cW_cHW_UL2018":VBS_SSWW_cW_cHW_UL2018,
     "VBS_SSWW_DIM6_UL2018":VBS_SSWW_DIM6_UL2018,
     "VBS_SSWW_DIM6_SM_UL2018":VBS_SSWW_DIM6_SM_UL2018,
+    "VBS_SSWW_aQGC_UL2018":VBS_SSWW_aQGC_UL2018,
 
     ################### DataMu ###################
     "DataMu_UL2016APV":DataMu_UL2016APV,
@@ -3337,6 +3361,7 @@ crab_dict = {
         #VBS_SSWW_DIM6_SM_UL2016APV,
         VBS_SSWW_SM_UL2016APV,
         VBS_SSWW_DIM6_UL2016APV,
+        VBS_SSWW_aQGC_UL2016APV,
         DataMu_UL2016APV,
         DataEle_UL2016APV,
         #DataHT_UL2016APV,
@@ -3361,6 +3386,7 @@ crab_dict = {
         #VBS_SSWW_DIM6_SM_UL2016,
         VBS_SSWW_SM_UL2016,
         VBS_SSWW_DIM6_UL2016,
+        VBS_SSWW_aQGC_UL2016,
         DataMu_UL2016,
         DataEle_UL2016,
         #DataHT_UL2016,
@@ -3385,6 +3411,7 @@ crab_dict = {
         #VBS_SSWW_DIM6_SM_UL2017,
         VBS_SSWW_SM_UL2017,
         VBS_SSWW_DIM6_UL2017,
+        VBS_SSWW_aQGC_UL2017,
         DataMu_UL2017,
         DataEle_UL2017,
         #DataHT_UL2017,
@@ -3409,6 +3436,7 @@ crab_dict = {
         #VBS_SSWW_DIM6_SM_UL2018,
         VBS_SSWW_SM_UL2018,
         VBS_SSWW_DIM6_UL2018,
+        VBS_SSWW_aQGC_UL2018,
         DataMu_UL2018,
         DataEle_UL2018,
         #DataHT_UL2018,
@@ -3478,6 +3506,7 @@ condor_dict = {
     #"WpWpJJ_EWK_UL2016APV":WpWpJJ_EWK_UL2016APV,
     #"WpWpJJ_QCD_UL2016APV":WpWpJJ_QCD_UL2016APV,
     "VBS_SSWW_DIM6_SM_UL2016APV":VBS_SSWW_DIM6_SM_UL2016APV,
+    #"VBS_SSWW_aQGC_UL2016APV":VBS_SSWW_aQGC_UL2016APV,
     "DataMu_UL2016APV":DataMu_UL2016APV,
     "DataEle_UL2016APV":DataEle_UL2016APV,
     "DataHT_UL2016APV":DataHT_UL2016APV,
@@ -3498,6 +3527,7 @@ condor_dict = {
     #"WpWpJJ_EWK_UL2016":WpWpJJ_EWK_UL2016,
     #"WpWpJJ_QCD_UL2016":WpWpJJ_QCD_UL2016,
     "VBS_SSWW_DIM6_SM_UL2016":VBS_SSWW_DIM6_SM_UL2016,
+    #"VBS_SSWW_aQGC_UL2016":VBS_SSWW_aQGC_UL2016,
     "DataMu_UL2016":DataMu_UL2016,
     "DataEle_UL2016":DataEle_UL2016,
     "DataHT_UL2016":DataHT_UL2016,
@@ -3518,6 +3548,7 @@ condor_dict = {
     #"WpWpJJ_EWK_UL2017":WpWpJJ_EWK_UL2017,
     #"WpWpJJ_QCD_UL2017":WpWpJJ_QCD_UL2017,
     "VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
+    #"VBS_SSWW_aQGC_UL2017":VBS_SSWW_aQGC_UL2017,
     "DataMu_UL2017":DataMu_UL2017,
     "DataEle_UL2017":DataEle_UL2017,
     "DataHT_UL2017":DataHT_UL2017,
@@ -3537,6 +3568,7 @@ condor_dict = {
     #"WpWpJJ_EWK_UL2018":WpWpJJ_EWK_UL2018,
     #"WpWpJJ_QCD_UL2018":WpWpJJ_QCD_UL2018,
     "VBS_SSWW_DIM6_SM_UL2018":VBS_SSWW_DIM6_SM_UL2018,
+    #"VBS_SSWW_aQGC_UL2016":VBS_SSWW_aQGC_UL2016,
     "DataMu_UL2018":DataMu_UL2018,
     "DataEle_UL2018":DataEle_UL2018,
     "DataHT_UL2018":DataHT_UL2018,

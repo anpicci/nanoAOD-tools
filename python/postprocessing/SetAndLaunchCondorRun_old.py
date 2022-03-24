@@ -67,7 +67,7 @@ def CondoredList(samplename):
                 for ids, scenario in enumerate(scenarios):
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
-                    except(AttributeError, ReferenceError, RuntimeWarning):
+                    except(AttributeError, ReferenceError):#, RuntimeWarning):
                         try:
                             condlist.remove(condfile)
                         except:
