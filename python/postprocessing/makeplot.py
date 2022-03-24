@@ -1427,6 +1427,7 @@ for year in years:
 
         ######### without systematics ###########
         '''
+        '''
         #try:
             #variables.append(variabile('taggerScore', 'VBS jet tagger score', wzero+'*('+cutbase+')', 10, 0., 1.))
         #except:
@@ -1658,23 +1659,26 @@ for year in years:
         #variables.append(variabile('deltaTheta_' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')',  nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', nbin_deltatheta_jj, bin_deltatheta_jj))
-
-        #if opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            #bin_ptRel = array("f", [0., 50., 75., 100., 125, 150., 250.])
-            #bin_ptRel_lep12 = array("f", [0., 50., 100., 150., 250.])
-        #else:
-            #bin_ptRel = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 250., 300., 400., 500.])
-            #bin_ptRel_lep12 = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 300.])
-        #nbin_ptRel = len(bin_ptRel) - 1
-        #nbin_ptRel_lep12 = len(bin_ptRel_lep12) - 1    
-        #variables.append(variabile('ptRel_jj', 'relative p_{T} j_{1} j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
-        #variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
-        #variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
-        #variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
-        #variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
-        #variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
+        '''
+        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
+            bin_ptRel = array("f", [0., 50., 75., 100., 125, 150., 250.])
+            bin_ptRel_lep12 = array("f", [0., 50., 100., 150., 250.])
+        else:
+            bin_ptRel = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 250., 300., 400., 500.])
+            bin_ptRel_lep12 = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 300.])
+        nbin_ptRel = len(bin_ptRel) - 1
+        nbin_ptRel_lep12 = len(bin_ptRel_lep12) - 1    
+        variables.append(variabile('ptRel_jj', 'relative p_{T} j_{1} j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
+        variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
+        variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
+        variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
+        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
+        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel_lep12, bin_ptRel_lep12))
         
-        #variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
+        variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', 30, 0., 3.))
+
+        variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  10, 0., 1.))
+        variables.append(variabile('subleadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  10, 0., 1.))
 
         for sample in dataset_new:
             print(sample.label, sample.name)
