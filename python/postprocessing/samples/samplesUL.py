@@ -50,7 +50,7 @@ ZZTo4L_UL2016APV.sigma = 13.74 #pb NLO
 #### to be produced ####
 GluGluToContinToZZTo2e2nu_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2nu", "GluGluToContinToZZTo2e2nu_UL2016APV")
 GluGluToContinToZZTo2e2nu_UL2016APV.year = "UL2016APV"
-GluGluToContinToZZTo2e2nu_UL2016APV.dataset = ""
+GluGluToContinToZZTo2e2nu_UL2016APV.dataset = "/GluGluToContinToZZTo2e2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv2-106X_mcRun2_asymptotic_preVFP_v9-v1/NANOAODSIM"
 GluGluToContinToZZTo2e2nu_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 GluGluToContinToZZTo4e_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 4e", "GluGluToContinToZZTo4e_UL2016APV")
@@ -71,7 +71,7 @@ GluGluToContinToZZTo2e2tau_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checke
 #### in production stage ######
 GluGluToContinToZZTo2mu2nu_UL2016APV = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2mu2nu", "GluGluToContinToZZTo2mu2nu_UL2016APV")
 GluGluToContinToZZTo2mu2nu_UL2016APV.year = "UL2016APV"
-#GluGluToContinToZZTo2mu2nu_UL2016APV.dataset = ""
+GluGluToContinToZZTo2mu2nu_UL2016APV.dataset = "/GluGluToContinToZZTo2mu2nu_TuneCP5_13TeV-mcfm701-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
 GluGluToContinToZZTo2mu2nu_UL2016APV.sigma = 0.003194 # * 0.001 #pb to be checked
 
 #### to be replaced with v9 when available ####
@@ -101,11 +101,11 @@ ZZtoLep_UL2016APV.year = "UL2016APV"
 ZZtoLep_UL2016APV.components = [
     ZZTo2L2Nu_UL2016APV,
     ZZTo4L_UL2016APV,
-    #GluGluToContinToZZTo2e2nu_UL2016APV,
+    GluGluToContinToZZTo2e2nu_UL2016APV,
     GluGluToContinToZZTo4e_UL2016APV,
     GluGluToContinToZZTo2e2mu_UL2016APV,
     GluGluToContinToZZTo2e2tau_UL2016APV,
-    #GluGluToContinToZZTo2mu2nu_UL2016APV,
+    GluGluToContinToZZTo2mu2nu_UL2016APV,
     GluGluToContinToZZTo4mu_UL2016APV,
     GluGluToContinToZZTo2mu2tau_UL2016APV,
     #GluGluToContinToZZTo2tau2nu_UL2016APV,
@@ -279,7 +279,7 @@ GluGluHToWWTo2L2Nu_UL2016APV.sigma = 1.0315
 #### in production stage ####
 GluGluHToZZTo4L_UL2016APV = sample(WScolor, 1, 1001, "Single top", "GluGluHToZZTo4L_UL2016APV")
 GluGluHToZZTo4L_UL2016APV.year = "UL2016APV"
-GluGluHToZZTo4L_UL2016APV.dataset = ""
+GluGluHToZZTo4L_UL2016APV.dataset = "/GluGluHToZZTo4L_M125_TuneCP5_13TeV_powheg2_JHUGenV7011_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 GluGluHToZZTo4L_UL2016APV.sigma = 0.0118
 
 #### in production stage ####
@@ -325,10 +325,10 @@ WrongSign_UL2016APV.components = [
     ST_tW_top_UL2016APV,
     ST_tW_antitop_UL2016APV,
     GluGluHToWWTo2L2Nu_UL2016APV,
-    #GluGluHToZZTo4L_UL2016APV,
+    GluGluHToZZTo4L_UL2016APV,
     GluGluHToTauTau_UL2016APV,
     VBFHToWWTo2L2Nu_UL2016APV,
-    #VBFHToTauTau_UL2016APV,
+    VBFHToTauTau_UL2016APV,
     ttHToNonbb_UL2016APV,
     VHToNonbb_UL2016APV,
 ]
