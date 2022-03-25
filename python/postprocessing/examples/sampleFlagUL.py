@@ -31,7 +31,7 @@ class sampleFlagUL(Module):
     def analyze(self, event):
         self.out.fillBranch("Sample", sampleDictUL[self.samplename])
         if not "UL2016" in self.samplename:
-            self.out.fillBranch("HLT_IsoTkMu24", 1)
+            self.out.fillBranch("HLT_IsoTkMu24", 0)
         if "UL2016" in self.samplename:
-            self.out.fillBranch("HLT_Ele35_WPTight_Gsf", 1)
+            self.out.fillBranch("HLT_Ele35_WPTight_Gsf", 0)
         return True
