@@ -20,10 +20,18 @@ class sampleFlagUL(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         self.out.branch("Sample", "I")
+        if not "UL2016" in self.samplename:
+            self.out.branch("HLT_IsoTkMu24", "O")
+        if "UL2016" in self.samplename:
+            self.out.branch("HLT_Ele35_WPTight_Gsf", "O")
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
     def analyze(self, event):
         self.out.fillBranch("Sample", sampleDictUL[self.samplename])
+        if not "UL2016" in self.samplename:
+            self.out.fillBranch("HLT_IsoTkMu24", 1)
+        if "UL2016" in self.samplename:
+            self.out.fillBranch("HLT_Ele35_WPTight_Gsf", 1)
         return True
