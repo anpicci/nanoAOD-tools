@@ -264,8 +264,9 @@ for sample in samples:
 
         if "UL" in str(year):
             #cfg_writer(sample, isMC, "ULVBS_PG")
-            cfg_writer(sample, isMC, "ULVBS")
+            #cfg_writer(sample, isMC, "ULVBS")
             #cfg_writer(sample, isMC, "ULVBSPG")
+            cfg_writer(sample, isMC, "VBSUL")
         else:
             #cfg_writer(sample, isMC, "VBS_PG")
             #cfg_writer(sample, isMC, "RRVBS_PG")
