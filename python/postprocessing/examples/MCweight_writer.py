@@ -58,11 +58,17 @@ class MCweight_writer(Module):
                 self.h_q2weight.Fill('muR=0.5 muF=1', LHEScaleWeight[1].__getattr__(""))
                 self.h_q2weight.Fill('muR=0.5 muF=2', LHEScaleWeight[2].__getattr__(""))
                 self.h_q2weight.Fill('muR=1 muF=0.5', LHEScaleWeight[3].__getattr__(""))
-                self.h_q2weight.Fill('muR=1 muF=1', LHEScaleWeight[4].__getattr__(""))
-                self.h_q2weight.Fill('muR=1 muF=2', LHEScaleWeight[5].__getattr__(""))
-                self.h_q2weight.Fill('muR=2 muF=0.5', LHEScaleWeight[6].__getattr__(""))
-                self.h_q2weight.Fill('muR=2 muF=1', LHEScaleWeight[7].__getattr__(""))
-                self.h_q2weight.Fill('muR=2 muF=2', LHEScaleWeight[8].__getattr__(""))
+                if ("UL" in self.samplename and "aQGC" in self.samplename):
+                    self.h_q2weight.Fill('muR=1 muF=2', LHEScaleWeight[4].__getattr__(""))
+                    self.h_q2weight.Fill('muR=2 muF=0.5', LHEScaleWeight[5].__getattr__(""))
+                    self.h_q2weight.Fill('muR=2 muF=1', LHEScaleWeight[6].__getattr__(""))
+                    self.h_q2weight.Fill('muR=2 muF=2', LHEScaleWeight[7].__getattr__(""))
+                else:
+                    self.h_q2weight.Fill('muR=1 muF=1', LHEScaleWeight[4].__getattr__(""))
+                    self.h_q2weight.Fill('muR=1 muF=2', LHEScaleWeight[5].__getattr__(""))
+                    self.h_q2weight.Fill('muR=2 muF=0.5', LHEScaleWeight[6].__getattr__(""))
+                    self.h_q2weight.Fill('muR=2 muF=1', LHEScaleWeight[7].__getattr__(""))
+                    self.h_q2weight.Fill('muR=2 muF=2', LHEScaleWeight[8].__getattr__(""))
         if len(PSWeight) > 1: #PS weights (w_var / w_nominal); [0] is ISR=0.5 FSR=1; [1] is ISR=1 FSR=0.5; [2] is ISR=2 FSR=1; [3] is ISR=1 FSR=2
             self.h_psweight.Fill('ISRdown', PSWeight[0].__getattr__(""))
             self.h_psweight.Fill('FSRdown', PSWeight[1].__getattr__(""))

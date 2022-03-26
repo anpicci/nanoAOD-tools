@@ -902,7 +902,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             if ScaleWeight is not None and len(ScaleWeight) > 1:
                 lhemin = min([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
                 lhemax = max([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
-                lheSF = LHEitem(ScaleWeight[4])*1.
+                if len(ScaleWeight) < 9:#"UL" in sample.year and "_aQGC-" in sample.dataset:
+                    lheSF = 1.
+                else:
+                    lheSF = LHEitem(ScaleWeight[4])*1.
                 lheUp = lhemax
                 lheDown = lhemin
                 
