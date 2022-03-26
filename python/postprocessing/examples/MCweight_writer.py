@@ -58,7 +58,7 @@ class MCweight_writer(Module):
                 self.h_q2weight.Fill('muR=0.5 muF=1', LHEScaleWeight[1].__getattr__(""))
                 self.h_q2weight.Fill('muR=0.5 muF=2', LHEScaleWeight[2].__getattr__(""))
                 self.h_q2weight.Fill('muR=1 muF=0.5', LHEScaleWeight[3].__getattr__(""))
-                if ("UL" in self.samplename and "aQGC" in self.samplename):
+                if len(LHEScaleWeight) < 9:
                     self.h_q2weight.Fill('muR=1 muF=2', LHEScaleWeight[4].__getattr__(""))
                     self.h_q2weight.Fill('muR=2 muF=0.5', LHEScaleWeight[5].__getattr__(""))
                     self.h_q2weight.Fill('muR=2 muF=1', LHEScaleWeight[6].__getattr__(""))
