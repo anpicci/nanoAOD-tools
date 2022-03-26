@@ -49,7 +49,7 @@ def cfg_writer(sample, isMC, outdir):
         #f.write("config.JobType.numCores = 8\n")
     f.write("config.section_('Data')\n")
     f.write("config.Data.inputDataset = '"+sample.dataset+"'\n")
-    f.write("config.Data.allowNonValidInputDataset = True\n")
+    #f.write("config.Data.allowNonValidInputDataset = True\n")
     #f.write("config.Data.inputDBS = 'phys03'")
     f.write("config.Data.inputDBS = 'global'\n")
     if not isMC:
@@ -86,7 +86,7 @@ def cfg_writer(sample, isMC, outdir):
     f.write("config.Data.publication = False\n")
     f.write("config.Data.outputDatasetTag = '"+sample.label+"'\n")
     f.write("config.section_('Site')\n")
-    f.write("config.Site.ignoreGlobalBlacklist = True\n")
+    #f.write("config.Site.ignoreGlobalBlacklist = True\n")
     f.write("config.Site.storageSite = 'T2_IT_Pisa'\n")
     #f.write("config.Site.storageSite = "T2_CH_CERN"
     #f.write("config.section_("User")
