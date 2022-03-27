@@ -272,9 +272,6 @@ for prname, proc in condor_dict.items():
             if not prname.startswith(opt.dat):
                 continue
 
-        if "DY" in prname:
-            print("hello", prname, proc.label)
-
         if not DoesSampleExist(proc.name):
             continue
 

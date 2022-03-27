@@ -14,17 +14,16 @@ parser.add_option('--or', dest='override', default = False, action = 'store_true
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
 parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
-parser.add_option('--skipML', dest='skipML', default = False, action='store_true', help='default runs ML') 
 
 (opt, args) = parser.parse_args()
 
 print("UL" in opt.year)
 
 if "UL" in opt.year:
-    print("hello1")
+    print("Processing UL samples")
     from samples.samplesUL import *
 else:
-    print("hello2")
+    print("Processing RR samples")
     from samples.samples import *
 
 username = str(os.environ.get('USER'))
@@ -157,12 +156,6 @@ def AreAllCondored(crabname, condorname):
     else:
         return True
 
-#print dirlist
-
-#for dirn in dirlist:
-#exsamples = [d for d in os.listdir(path+dirn) if os.path.isdir(path+dirn+"/"+d)]
-#print exsamples
-
 '''
 print("samples")
 for k, v in merge_dict.items():
@@ -189,9 +182,14 @@ for k, v in merge_dict.items():
     elif opt.isfake:
         if not (k.startswith('TT_') or k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
             continue
-
+    
     if k.startswith('Fake'):
+        if os.path.exists(path + k + "/" + k + ".root"):
+            if not opt.rw:
+                continue
+            
         mergable = False
+
         for c in v.components:
             if os.path.exists(path + c.label + "/" + c.label + ".root"):
                 mergable = True
@@ -200,8 +198,6 @@ for k, v in merge_dict.items():
         
         if mergable:
             cmdstring = "python3 makeplot.py -y " + opt.year +  " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel
-            if opt.skipML:
-                cmdstring += " --skipML"
             if Debug:
                 print(cmdstring)
             else:
@@ -209,6 +205,7 @@ for k, v in merge_dict.items():
         else:
             print(k, "not mergable")
         continue
+    
 
     if hasattr(v, 'components'):
         for c in v.components:
@@ -252,8 +249,6 @@ for k, v in merge_dict.items():
                 print("Merging and luming " + c.label + "...")
                 merging.append(True)
                 cmdstring = "python3 makeplot.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel
-                if opt.skipML:
-                    cmdstring += " --skipML"
                 if Debug:
                     print(cmdstring)
                 else:
@@ -282,8 +277,6 @@ for k, v in merge_dict.items():
                     else:
                         os.system("rm -f "+kpath+k+".root")
                 cmdstring = "python3 makeplot.py -y " + opt.year + " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel
-                if opt.skipML:
-                    cmdstring += " --skipML"
                 if Debug:
                     print(cmdstring)
                 else:
@@ -321,8 +314,6 @@ for k, v in merge_dict.items():
             print(k + " neither merged nor lumied so far")
             print("Merging and luming " + k + "...")
             cmdstring = "python3 makeplot.py -y " + opt.year + " --merpart --lumi --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel
-            if opt.skipML:
-                cmdstring += " --skipML"
             if Debug:
                 print(cmdstring)
             else:
