@@ -306,7 +306,7 @@ else:
     nomtag = "nominal"
 
 print("scenarios:", scenarios)
-
+'''
 systematics = {scenario: [] for scenario in scenarios}
 if opt.syst!="all" and opt.syst!="noSyst":
      for syst in (opt.syst).split(","):
@@ -319,39 +319,72 @@ if opt.syst!="all" and opt.syst!="noSyst":
              systematics[syst].append(syst)
 elif opt.syst!="all" and opt.syst=="noSyst":
     systematics[nomtag].append(("", True)) #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
-else:
-    systematics[nomtag] = [
-        ("", True),
-        ("PFUp", True),
-        ("PFDown", True),
-        ("puUp", True),
-        ("puDown", True),
-        ("btagUp", True),
-        ("btagDown", True),
-        #("mistagUp", True),
-        #("mistagDown", True),
-        ("lepUp", True),
-        ("lepDown", True),
-        ("tau_vsjet_Up", True),
-        ("tau_vsjet_Down", True),
-        ("tau_vsele_Up", True),
-        ("tau_vsele_Down", True),
-        ("tau_vsmu_Up", True),
-        ("tau_vsmu_Down", True),
-        #("trigUp", False),
-        #("trigDown", False),
-        #("pdf_totalUp", False),
-        #("pdf_totalDown", False),
-        #("q2Up", False),
-        #("q2Down, False),
-    ]
-    #systematics["jesUp"]: ["jesUp"]
-    #systematics["jesDown"]:["jesDown"]
-    #systematics["jerUp"]: ["jerUp"]
-    #systematics["jerDown"]: ["jerDown"]
+'''
 
-print("systematics to plot:", systematics)
-print(cut_tag)
+systematicslist = [
+    ["", True, ""],
+    ["PFUp", True, "exp"],
+    ["PFDown", True, "exp"],
+    ["puUp", True, "exp"],
+    ["puDown", True, "exp"],
+    ["btagUp", True, "exp"],
+    ["btagDown", True, "exp"],
+    #["mistagUp", True),
+    #["mistagDown", True),
+    ["lepUp", True, "exp"],
+    ["lepDown", True, "exp"],
+    ["tau_vsjet_Up", True, "exp"],
+    ["tau_vsjet_Down", True, "exp"],
+    ["tau_vsele_Up", True, "exp"],
+    ["tau_vsele_Down", True, "exp"],
+    ["tau_vsmu_Up", True, "exp"],
+    ["tau_vsmu_Down", True, "exp"],
+    #["trigUp", False, "exp"],
+    #["trigDown", False, "exp"],
+    ["pdf_totalUp", True, "th"],
+    ["pdf_totalDown", True, "th"],
+    ["QCDScaleUp", True, "th"],
+    ["QCDScaleDown", True, "th"],
+    ["ISRUp", True, "th"],
+    ["ISRDown", True, "th"],
+    ["FSRUp", True, "th"],
+    ["FSRDown", True, "th"],
+    ["jesUp", True, "en"],
+    ["jesDown", True, "en"],
+    ["jerUp", True, "en"],
+    ["jerDown", True, "en"],
+    ["TESUp", True, "en"],
+    ["TESDown", True, "en"],
+    ["FESUp", True, "en"],
+    ["FESDown", True, "en"],
+]
+
+wanted_systs = opt.syst.split(",")
+systematics = []
+
+if opt.syst!="all" and opt.syst!="noSyst":
+     for wsyst in wanted_systs:
+         for syst in systematicslist:
+             if syst[0] == wsyst:
+                 systematics.append(syst)
+                 break
+             else:
+                 continue
+elif opt.syst!="all" and opt.syst=="noSyst":
+    for syst in systematicslist:
+        if syst[0] == "":
+            print("hello", syst)
+            systematics.append(syst)
+        else:
+            continue
+else:
+    for syst in systematicslist:
+        systematics.append(syst)
+print("systematics to plot:")
+for syst in systematics:
+    print(syst[0])
+
+print("\ncut_tag:\t", cut_tag)
 
 pathplot = plotrepo + lepstr  + "/" # + "_" + str(FRtag) + "/"
 pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
@@ -425,7 +458,7 @@ def lumi_writer(dataset, lumi):
             
             ik = 0
             outfile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE")
-            for key in systematics.keys():
+            for key in scenarios:
                 evtree = "events_" + key
                 try:
                     tree = infile.Get(evtree)
@@ -480,10 +513,16 @@ def lumi_writer(dataset, lumi):
 
 
 def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)]):
-    print("systlist", systlist)
-    systtree = systlist[0]
-    syst = systlist[1][0]
-    isSystCorr = systlist[1][1]
+    #print("systlist", systlist)
+    syst = systlist[0]
+    isSystCorr = systlist[1]
+    systtype = systlist[2]
+
+    if systtype == "en":
+        systtree = syst
+    else:
+        systtree = scenarios[0]
+
     print("in plotf")
     treename = "events_"
     IsDim8 = False
@@ -500,17 +539,18 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
     #if(syst.startswith("jer") or syst.startswith("jes")):
     treename += systtree
 
-    if syst != "":
+    if systtype == "exp":
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
-        if syst.startswith("pdf_total"):
-            nominal = "abs(" + str(nominal) + ")" 
+        cutbase += '*(1./' + nominal + ')'
+    if systtype != "en" and syst != "":
+        cutbase += '*(' + syst + ')'
+
+    if syst != "":
         histoname += "_" + syst
         if not isSystCorr:
             histoname += "_" + str(opt.year).replace("UL", "")
-        if not(syst.startswith("jer") or syst.startswith("jes")):
-        #if syst.startswith("btag"):
-            cutbase += '*(1.*' + syst + '/' + nominal + ')'
-            print('*(1.*' + syst + '/' + nominal + ')')
+        
+    print("after syst applied\tcutbase", cutbase, "\nhistoname:", histoname, "\ttreename:", treename)
 
     cut = ''
 
@@ -659,7 +699,7 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
     fout.Close()
     f1.Close()
-    
+
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
 
@@ -1403,18 +1443,20 @@ for year in years:
                 continue
                     
             if(opt.plot):
+                '''
                 plotsysts = []
                 for ksyst, vsysts in systematics.items():
                     for vsyst in vsysts:
                         plotsysts.append([copy.deepcopy(ksyst), copy.deepcopy(vsyst)])
-                for syst in plotsysts:#systematics:
+                '''
+                for syst in systematics:
                     for var in variables:
                         if opt.count:
                             if not os.path.exists(pathplot + 'countings/'):
                                 os.makedirs(pathplot + 'countings/')
                             if not os.path.exists(pathplot + 'countings/' + cut_tag):
                                 os.makedirs(pathplot + 'countings/' + cut_tag)
-                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[1][0] + ".csv"):
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0] + ".csv"):
                                 tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
                                 tmp_f.write("Process,yields,error\n")
                                 tmp_f.close()
@@ -1434,3 +1476,4 @@ for year in years:
             dataset_new.append(sample_dict['DataEle_'+str(year)])
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
+
