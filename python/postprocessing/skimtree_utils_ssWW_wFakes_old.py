@@ -1100,9 +1100,14 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
             #passHT = True
 
     elif(year == "UL2017"):
-        if(HLT.IsoMu27):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
+        mutrig = HLT.IsoMu27
+        if flag != "test":
+            eletrig = HLT.Ele35_WPTight_Gsf
+        elif flag == "test":
+            eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200 
+        if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
-        if(HLT.Ele35_WPTight_Gsf):# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)                
+        if eletrig:# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)
             passEle = True
         if not(passMu or passEle) and not isGoodPV:
             noTrigger = True
@@ -1110,9 +1115,14 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
             #passHT = True
 
     elif(year == "UL2018"):
-        if(HLT.IsoMu24):# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
+        mutrig = HLT.IsoMu24
+        if flag != "test":
+            eletrig = HLT.Ele32_WPTight_Gsf
+        elif flag == "test":
+            eletrig = HLT.Ele32_WPTight_Gsf or HLT.Photon200 
+        if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
-        if(HLT.Ele32_WPTight_Gsf):# or HLT.Photon200)
+        if eletrig:# or HLT.Photon200)
             passEle = True
         if not(passMu or passEle) and not isGoodPV:
             noTrigger = True
@@ -1124,47 +1134,6 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
    
     return (passMu and isGoodPV), (passEle and isGoodPV), (passHT and isGoodPV), noTrigger
 
-'''
-def trig_map_all(HLT, PV, year, runPeriod):
-    isGoodPV = True#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
-    passMu = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
-    passEle = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
-    passHT = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
-    noTrigger = False#not(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
-    
-    if(year == 2016):# and runPeriod != 'H'):
-        if(HLT.IsoMu24 or HLT.IsoTkMu24):
-            passMu = True
-        if(HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf):
-            passEle = True
-        if(HLT.PFHT250 or HLT.PFHT300):
-            passHT = True
-        if not(passMu or passEle) and not isGoodPV:
-            noTrigger = True
-    elif(year == 2017):#and runPeriod != 'B'):
-        if(HLT.IsoMu24 or HLT.IsoMu27 or HLT.IsoMu30 or HLT.Mu50):
-            passMu = True
-        if(HLT.Ele115_CaloIdVT_GsfTrkIdT or HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf or HLT.Ele35_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG):# or HLT.Photon200):
-            passEle = True  
-        if(HLT.PFHT250 or HLT.PFHT350):
-            passHT = True
-        if not(passMu or passEle) and not isGoodPV:
-            noTrigger = True
-    elif(year == 2018):
-        if(HLT.IsoMu24):
-            passMu = True
-        if(HLT.Ele32_WPTight_Gsf_L1DoubleEG):
-            passEle = True  
-        if not(passMu or passEle) and not isGoodPV:
-            noTrigger = True
-        if(HLT.PFHT250 or HLT.PFHT350):
-            passHT = True
-            
-    else:
-        print('Wrong year! Please enter 2016, 2017, or 2018')
-   
-    return (passMu and isGoodPV), (passEle and isGoodPV), (passHT and isGoodPV), noTrigger
-'''
 
 def print_hist(infile, plotpath, hist, option = "HIST", log = False, stack = False, title = ""):
     if not(isinstance(hist, list)):

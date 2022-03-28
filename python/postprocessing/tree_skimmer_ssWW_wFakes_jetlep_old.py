@@ -133,6 +133,9 @@ if ('Data' in sample.name):
 else:
     isMC = True
     scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+if "/vUL001/" in outpath:
+    scenarios = ['all']
+
 MCReco = MCReco * isMC
 
 IsDim8 = False
