@@ -184,6 +184,8 @@ for k, v in merge_dict.items():
             continue
     
     if k.startswith('Fake'):
+        if opt.dat != "all" and not opt.dat.startswith("Fake"):
+            continue
         if os.path.exists(path + k + "/" + k + ".root"):
             if not opt.rw:
                 continue
@@ -206,7 +208,6 @@ for k, v in merge_dict.items():
             print(k, "not mergable")
         continue
     
-
     if hasattr(v, 'components'):
         for c in v.components:
             if opt.dat != 'all':

@@ -1107,6 +1107,7 @@ else:
 
           dataset_dict[str(v.year)].append(v)
 
+print(dataset_dict)
 
 years = []
 if(opt.year!='all'):
@@ -1225,7 +1226,7 @@ for year in years:
         nbin_taum = len(bin_taum) - 1
         variables.append(variabile(lep2[0] + '_mass',  lep2[1] + ' mass [GeV]',  wzero+'*('+cutbase+')', nbin_taum, bin_taum))
 
-        variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', 10, -2.5., 2.5))
+        variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', 10, -2.5, 2.5))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld', lep2[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', 20, -5, 5))
         variables.append(variabile(lep2[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{#tau}',  wzero+'*('+cutbase+')', 12, -1.5, 1.5))
 
@@ -1423,7 +1424,7 @@ for year in years:
             bin_ptRel = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 300.])
             bin_ptRel_2 = array("f", [0., 25., 50., 75., 100., 125, 150., 200., 300.])
         nbin_ptRel = len(bin_ptRel) - 1
-        nbin_ptRel_2 = len(bin_ptRel_lep12) - 1    
+        nbin_ptRel_2 = len(bin_ptRel_2) - 1    
         variables.append(variabile('ptRel_jj', 'relative p_{T} j_{1} j_{2}',  wzero+'*('+cutbase+')', nbin_ptRel, bin_ptRel))
         variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', nbin_ptRel_2, bin_ptRel_2))
         variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', nbin_ptRel_2, bin_ptRel_2))
@@ -1445,12 +1446,6 @@ for year in years:
                 continue
                     
             if(opt.plot):
-                '''
-                plotsysts = []
-                for ksyst, vsysts in systematics.items():
-                    for vsyst in vsysts:
-                        plotsysts.append([copy.deepcopy(ksyst), copy.deepcopy(vsyst)])
-                '''
                 for syst in systematics:
                     for var in variables:
                         if opt.count:
@@ -1478,4 +1473,3 @@ for year in years:
             dataset_new.append(sample_dict['DataEle_'+str(year)])
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
-

@@ -202,7 +202,6 @@ def MLRun(k, kpath):
         return False
 
     file_path_cp = kpath+k+"_cp.root"
-    os.system("cp " + file_path + " " + file_path_cp)
 
     tmpfile = ROOT.TFile.Open(file_path)
 
@@ -212,11 +211,10 @@ def MLRun(k, kpath):
         #tmpfile.Close()
         #tmpfile.Delete()
         print("Processing events for scenario", scenario)
-        print("entries:", tmpentr)
+        #print("entries:", tmpentr)
 
         if tmpentr > 0:
             # insert BDT output value into merged file
-
             #print(file_path)
 
             # open root file
@@ -231,6 +229,10 @@ def MLRun(k, kpath):
             df.columns = new_columns
 
             for idbr, branch in enumerate(branches):
+                if os.path.exists(file_path_cp):
+                    os.system("rm " + file_path_cp)
+                os.system("cp " + file_path + " " + file_path_cp)
+
                 print("Creating branch for model", branch)
                 to_keep = features[idbr]
 
@@ -242,24 +244,25 @@ def MLRun(k, kpath):
                     output_array = models[idbr].predict(scalers[idbr].transform(X_SM))
                 
                 myfile = ROOT.TFile(file_path_cp, 'update')
+                print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
                 mytree = myfile.Get("events_"+scenario)
                 numOfEvents = mytree.GetEntries()
-
                 brancharray = array('d', [0.5])
                 newbranch = mytree.Branch(branch, brancharray, branch+"/D")
-                #print(newbranch)
                 
                 for n in range(numOfEvents):
                     mytree.GetEntry(n)
+                    sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/tree.GetEntries()))
                     brancharray[0] = output_array[n]
                     newbranch.Fill()
+
                 print(branch, "completed!")
                 myfile.cd()
                 mytree.Write("", ROOT.TFile.kOverwrite)
                 myfile.Close()
         
-        print("Saving tree with ML branches...")
-        os.system("mv " + file_path_cp + " " + file_path)
+                print("Saving tree with ML branches...")
+                os.system("mv " + file_path_cp + " " + file_path)
         
 print("year", opt.year)
 
