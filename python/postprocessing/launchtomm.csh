@@ -1,5 +1,5 @@
 reset
-set bdt_sm_ul="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/not_optimized_model_SM_UL_vUL008_btagSF.model"
+set bdt_sm_ul="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/not_optimized_xgb_SM_UL_vUL008_btagSF.model"
 set bdt_sm_branch = "BDT_SM_xgb_UL008_no"
 set bdt_cW_ul="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/not_optimized_xgb_dim6-cW-INT-BSM_UL_vUL008_btagSF.model"
 set bdt_cW_branch = "BDT_cW_xgb_UL008_no"
