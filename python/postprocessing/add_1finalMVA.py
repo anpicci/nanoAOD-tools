@@ -233,6 +233,17 @@ def MLRun(k, kpath):
                     os.system("rm " + file_path_cp)
                 os.system("cp " + file_path + " " + file_path_cp)
 
+                myfile = ROOT.TFile(file_path_cp, 'update')
+                #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
+                mytree = myfile.Get("events_"+scenario)
+                numOfEvents = mytree.GetEntries()
+                brancharray = array('d', [0.5])
+                newbranch = mytree.Branch(branch, brancharray, branch+"/D")
+
+                if branch in mytree.GetListOfBranches():
+                    print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
+                    continue
+
                 print("Creating branch for model", branch)
                 to_keep = features[idbr]
 
@@ -242,21 +253,14 @@ def MLRun(k, kpath):
                     output_array = models[idbr].predict_proba(X)[:,1]
                 elif "DNN" in branch:
                     output_array = models[idbr].predict(scalers[idbr].transform(X_SM))
-                
-                myfile = ROOT.TFile(file_path_cp, 'update')
-                #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
-                mytree = myfile.Get("events_"+scenario)
-                numOfEvents = mytree.GetEntries()
-                brancharray = array('d', [0.5])
-                newbranch = mytree.Branch(branch, brancharray, branch+"/D")
-                
+                                
                 for n in range(numOfEvents):
                     mytree.GetEntry(n)
                     sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/numOfEvents))
                     brancharray[0] = output_array[n]
                     newbranch.Fill()
 
-                print("\n")
+                #print("\n")
                 print("\n", branch, "completed!")
                 myfile.cd()
                 mytree.Write("", ROOT.TFile.kOverwrite)
