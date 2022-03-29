@@ -198,7 +198,7 @@ for s in complist:
                 print "\tSaving Pisa paths in txts..."
                 os.system(printcommand)
             else:
-                print "\tFile paths already printed out! Let's pass to the next sample..."
+                #print "\tFile paths already printed out! Let's pass to the next sample..."
                 print "\tLet's pass to the next sample..."
 
         else:
