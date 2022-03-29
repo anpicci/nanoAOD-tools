@@ -244,7 +244,7 @@ def MLRun(k, kpath):
                     output_array = models[idbr].predict(scalers[idbr].transform(X_SM))
                 
                 myfile = ROOT.TFile(file_path_cp, 'update')
-                print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
+                #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
                 mytree = myfile.Get("events_"+scenario)
                 numOfEvents = mytree.GetEntries()
                 brancharray = array('d', [0.5])
@@ -252,7 +252,7 @@ def MLRun(k, kpath):
                 
                 for n in range(numOfEvents):
                     mytree.GetEntry(n)
-                    sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/tree.GetEntries()))
+                    sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/numOfEvents))
                     brancharray[0] = output_array[n]
                     newbranch.Fill()
 
