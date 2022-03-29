@@ -256,7 +256,7 @@ def MLRun(k, kpath):
                     brancharray[0] = output_array[n]
                     newbranch.Fill()
 
-                print(branch, "completed!")
+                print("\n", branch, "completed!")
                 myfile.cd()
                 mytree.Write("", ROOT.TFile.kOverwrite)
                 myfile.Close()
