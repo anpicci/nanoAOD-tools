@@ -380,9 +380,10 @@ elif opt.syst!="all" and opt.syst=="noSyst":
 else:
     for syst in systematicslist:
         systematics.append(syst)
-print("systematics to plot:")
-for syst in systematics:
-    print(syst[0])
+if opt.plot or opt.stack:
+    print("systematics to plot:")
+    for syst in systematics:
+        print(syst[0])
 
 print("\ncut_tag:\t", cut_tag)
 

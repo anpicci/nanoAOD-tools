@@ -17,6 +17,7 @@ parser.add_option('-y', dest='year', type=str, default = '2017', help='Please en
 parser.add_option('-f', dest='folder', type=str, default = 'v20', help='Please enter a folder, default is v4')
 parser.add_option('-c', dest='check', default = False, action = 'store_true', help='Default runs makeplot')
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
+parser.add_option('--ov', dest='ovride', default = False, action = 'store_true', help='Override check for completed condorization')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
@@ -192,7 +193,6 @@ def AreAllCondored(crabname, condorname):
 def MLRun(k, kpath):
     if Debug:
         return("ML run...")
-    print(k + " already merged and lumied")
     file_path = kpath+k
     file_path += ".root"
 
@@ -217,57 +217,59 @@ def MLRun(k, kpath):
             # insert BDT output value into merged file
             #print(file_path)
 
-            # open root file
-            file = uproot.open(file_path)#_cp)
-            tree = file["events_" + scenario]
-            df = tree.arrays(library="pd", filter_branch=lambda b: b.name != "w_PDF")
-            df = df.fillna(0)
-
-            new_columns = []
-            for i in df.columns:
-                new_columns.append(i.split('[')[0])
-            df.columns = new_columns
-
             for idbr, branch in enumerate(branches):
-                if os.path.exists(file_path_cp):
-                    os.system("rm " + file_path_cp)
-                os.system("cp " + file_path + " " + file_path_cp)
+                # open root file
+                #file = 
+                with uproot.open(file_path) as file:#_cp)
+                    tree = file["events_" + scenario]
+                    df = tree.arrays(library="pd", filter_branch=lambda b: b.name != "w_PDF")
+                    df = df.fillna(0)
 
-                myfile = ROOT.TFile(file_path_cp, 'update')
-                #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
-                mytree = myfile.Get("events_"+scenario)
-                numOfEvents = mytree.GetEntries()
-                brancharray = array('d', [0.5])
-                newbranch = mytree.Branch(branch, brancharray, branch+"/D")
+                    new_columns = []
+                    for i in df.columns:
+                        new_columns.append(i.split('[')[0])
+                    df.columns = new_columns
 
-                if branch in mytree.GetListOfBranches():
-                    print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
-                    continue
+                    if os.path.exists(file_path_cp):
+                        os.system("rm " + file_path_cp)
+                    os.system("cp " + file_path + " " + file_path_cp)
 
-                print("Creating branch for model", branch)
-                to_keep = features[idbr]
+                    myfile = ROOT.TFile(file_path_cp, 'update')
+                    #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
+                    mytree = myfile.Get("events_"+scenario)
+                    numOfEvents = mytree.GetEntries()
+                    brancharray = array('d', [0.5])
+                    newbranch = mytree.Branch(branch, brancharray, branch+"/D")
 
-                X = df[to_keep].to_numpy()
-                # update root file with BDT branch
-                if "BDT" in branch:
-                    output_array = models[idbr].predict_proba(X)[:,1]
-                elif "DNN" in branch:
-                    output_array = models[idbr].predict(scalers[idbr].transform(X_SM))
+                    if branch in mytree.GetListOfBranches():
+                        print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
+                        myfile.Close()
+                        continue
+
+                    print("Creating branch for model", branch)
+                    to_keep = features[idbr]
+
+                    X = df[to_keep].to_numpy()
+                    # update root file with BDT branch
+                    if "BDT" in branch:
+                        output_array = models[idbr].predict_proba(X)[:,1]
+                    elif "DNN" in branch:
+                        output_array = models[idbr].predict(scalers[idbr].transform(X_SM))
                                 
-                for n in range(numOfEvents):
-                    mytree.GetEntry(n)
-                    sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/numOfEvents))
-                    brancharray[0] = output_array[n]
-                    newbranch.Fill()
+                    for n in range(numOfEvents):
+                        mytree.GetEntry(n)
+                        sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/numOfEvents))
+                        brancharray[0] = output_array[n]
+                        newbranch.Fill()
 
-                #print("\n")
-                print("\n", branch, "completed!")
-                myfile.cd()
-                mytree.Write("", ROOT.TFile.kOverwrite)
-                myfile.Close()
-        
-                print("Saving tree with ML branches...")
-                os.system("mv " + file_path_cp + " " + file_path)
+                    #print("\n")
+                    print("\n", branch, "completed!")
+                    myfile.cd()
+                    mytree.Write("", ROOT.TFile.kOverwrite)
+                    myfile.Close()
+                    
+                    print("Saving tree with ML branches...")
+                    os.system("mv " + file_path_cp + " " + file_path)
         
 print("year", opt.year)
 
@@ -298,6 +300,7 @@ for k, v in merge_dict.items():
         if not (k.startswith('TT_') or k.startswith('DataHT') or k.startswith('DY') or k.startswith('WJets') or k.startswith('GluGluToContin') or k.startswith('ZZ')):
             continue
 
+    #print("\n")
     hascomp = False
     if "UL" in opt.year:
         hascomp = hasattr(v, "components")
@@ -312,13 +315,14 @@ for k, v in merge_dict.items():
         print("Sample: ", k)
 
         for c in v.components:
-            if not DoesSampleExist(c.name):
-                print(c.label, "not crabbed yet")
-                continue
             cpath = path + c.label +"/"
-            if not AreAllCondored(c.name, c.label):
-                print(c.label + " not condorly produced yet")
-                continue
+            if not os.path.exists(cpath+c.label+".root") or opt.rw:
+                if not DoesSampleExist(c.name) and not opt.ovride:
+                    print(c.label, "not crabbed yet")
+                    continue
+                if not AreAllCondored(c.name, c.label) and not opt.ovride:
+                    print(c.label + " not condorly produced yet")
+                    continue
             
             doesexist.append(True)
 
@@ -378,13 +382,13 @@ for k, v in merge_dict.items():
         if opt.dat != 'all':
             if not k.startswith(opt.dat):
                 continue
-        if not DoesSampleExist(v.name):
-            print(k + " not crabbed yet")
-            continue
-        if not AreAllCondored(v.name, k):
-        #if not os.path.exists(kpath+k):
-            print(k + " not condored at all yet")
-            continue
+        if not os.path.exists(kpath+k+".root") or opt.rw:
+            if not DoesSampleExist(v.name) and not opt.ovride:
+                print(k + " not crabbed yet")
+                continue
+            if not AreAllCondored(v.name, k) and not opt.ovride:
+                print(k + " not condored at all yet")
+                continue
 
         doesexist.append(True)
         samplemerge = False

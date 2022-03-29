@@ -291,7 +291,7 @@ for k, v in merge_dict.items():
         if not DoesSampleExist(v.name):
             print(k + " not crabbed yet")
             continue
-        if not AreAllCondored(v.name, v.label):
+        if not AreAllCondored(v.name, v.label) and not opt.override:
         #if not os.path.exists(kpath+k):
             print(k + " not condored at all yet")
             continue
