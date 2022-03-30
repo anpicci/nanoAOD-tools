@@ -260,7 +260,7 @@ for k, v in merge_dict.items():
 
         samplemerge = False
 
-        #print len(doesexist), len(v.components)
+        #print(len(doesexist), len(v.components))
         if len(doesexist) == len(v.components):
             if len(merging) == 0:
                 if os.path.exists(kpath+k+".root") and not opt.rw:

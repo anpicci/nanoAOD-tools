@@ -258,35 +258,6 @@ if opt.bdt or opt.ebdt or opt.mubdt:
 
 lumi = {'2016': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83}
 
-systematiclist = [
-    "",
-    "PFUp",
-    "PFDown",
-    "puUp",
-    "puDown",
-    "btagUp", 
-    "btagDown",
-    ##"mistagUp",
-    ##"mistagDown",
-    "lepUp", 
-    "lepDown",
-    "tau_vsjet_Up",
-    "tau_vsjet_Down",
-    "tau_vsele_Up",
-    "tau_vsele_Down",
-    "tau_vsmu_Up",
-    "tau_vsmu_Down",
-    #"trigUp",
-    #"trigDown",
-    #"pdf_totalUp",
-    #"pdf_totalDown",
-    #"q2Up",
-    #"q2Down"
-    #"jesUp",
-    #"jesDown",
-    #"jerUp",
-    #"jerDown",
-]
 
 if ("UL" in opt.folder and int(opt.folder.split("UL")[-1]) < 10) or (not "UL" in opt.folder):
     scenarios = ["all"]
@@ -323,40 +294,40 @@ elif opt.syst!="all" and opt.syst=="noSyst":
 
 systematicslist = [
     ["", True, ""],
-    ["PFUp", True, "exp"],
-    ["PFDown", True, "exp"],
-    ["puUp", True, "exp"],
-    ["puDown", True, "exp"],
-    ["btagUp", True, "exp"],
-    ["btagDown", True, "exp"],
-    #["mistagUp", True),
-    #["mistagDown", True),
-    ["lepUp", True, "exp"],
-    ["lepDown", True, "exp"],
-    ["tau_vsjet_Up", True, "exp"],
-    ["tau_vsjet_Down", True, "exp"],
-    ["tau_vsele_Up", True, "exp"],
-    ["tau_vsele_Down", True, "exp"],
-    ["tau_vsmu_Up", True, "exp"],
-    ["tau_vsmu_Down", True, "exp"],
-    #["trigUp", False, "exp"],
-    #["trigDown", False, "exp"],
-    ["pdf_totalUp", True, "th"],
-    ["pdf_totalDown", True, "th"],
-    ["QCDScaleUp", True, "th"],
-    ["QCDScaleDown", True, "th"],
-    ["ISRUp", True, "th"],
-    ["ISRDown", True, "th"],
-    ["FSRUp", True, "th"],
-    ["FSRDown", True, "th"],
-    ["jesUp", True, "en"],
-    ["jesDown", True, "en"],
-    ["jerUp", True, "en"],
-    ["jerDown", True, "en"],
-    ["TESUp", True, "en"],
-    ["TESDown", True, "en"],
-    ["FESUp", True, "en"],
-    ["FESDown", True, "en"],
+    #["PFUp", True, "exp"],
+    #["PFDown", True, "exp"],
+    #["puUp", True, "exp"],
+    #["puDown", True, "exp"],
+    #["btagUp", True, "exp"],
+    #["btagDown", True, "exp"],
+    ##["mistagUp", True),
+    ##["mistagDown", True),
+    #["lepUp", True, "exp"],
+    #["lepDown", True, "exp"],
+    #["tau_vsjet_Up", True, "exp"],
+    #["tau_vsjet_Down", True, "exp"],
+    #["tau_vsele_Up", True, "exp"],
+    #["tau_vsele_Down", True, "exp"],
+    #["tau_vsmu_Up", True, "exp"],
+    #["tau_vsmu_Down", True, "exp"],
+    ##["trigUp", False, "exp"],
+    ##["trigDown", False, "exp"],
+    #["pdf_totalUp", True, "th"],
+    #["pdf_totalDown", True, "th"],
+    #["QCDScaleUp", True, "th"],
+    #["QCDScaleDown", True, "th"],
+    #["ISRUp", True, "th"],
+    #["ISRDown", True, "th"],
+    #["FSRUp", True, "th"],
+    #["FSRDown", True, "th"],
+    #["jesUp", True, "en"],
+    #["jesDown", True, "en"],
+    #["jerUp", True, "en"],
+    #["jerDown", True, "en"],
+    #["TESUp", True, "en"],
+    #["TESDown", True, "en"],
+    #["FESUp", True, "en"],
+    #["FESDown", True, "en"],
 ]
 
 wanted_systs = opt.syst.split(",")
@@ -1167,9 +1138,9 @@ for year in years:
         cutbase = cut_dict[lep]
 
         ######### with systematics ###########
-        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
-        variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_dim6_xgb_UL008_no', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
+        #variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_dim6_xgb_UL008_no', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
 
         if opt.sr:
             bin_mjj = array("f", [500., 700., 1000., 1500., 2500.])
@@ -1181,6 +1152,7 @@ for year in years:
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
 
+        '''
         ######### without systematics ###########
 
         #try:
@@ -1437,7 +1409,7 @@ for year in years:
 
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  5, 0., 1.))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  5, 0., 1.))
-
+        '''
 
         for sample in dataset_new:
             print(sample.label, sample.name)

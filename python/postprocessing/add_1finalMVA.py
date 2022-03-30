@@ -90,7 +90,7 @@ split = 50
 
 if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
-    scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+    scenarios = ["nominal"]#, "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
 else:
     isWithSysts = False
     scenarios = ["all"]
@@ -131,6 +131,8 @@ def CondoredList(samplename):
                     pass
 
                 for ids, scenario in enumerate(scenarios):
+                    if samplename.startswith("Data") and ids > 0:
+                        continue
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
                     except(AttributeError, ReferenceError):#, RuntimeWarning):
@@ -206,6 +208,8 @@ def MLRun(k, kpath):
     tmpfile = ROOT.TFile.Open(file_path)
 
     for ids, scenario in enumerate(scenarios):
+        if k.startswith("Data") and ids > 0:
+            continue
         tmptree = tmpfile.Get("events_"+scenario)
         tmpentr = tmptree.GetEntries()
         #tmpfile.Close()
@@ -215,11 +219,8 @@ def MLRun(k, kpath):
 
         if tmpentr > 0:
             # insert BDT output value into merged file
-            #print(file_path)
 
             for idbr, branch in enumerate(branches):
-                # open root file
-                #file = 
                 with uproot.open(file_path) as file:#_cp)
                     tree = file["events_" + scenario]
                     df = tree.arrays(library="pd", filter_branch=lambda b: b.name != "w_PDF")
@@ -238,13 +239,16 @@ def MLRun(k, kpath):
                     #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
                     mytree = myfile.Get("events_"+scenario)
                     numOfEvents = mytree.GetEntries()
-                    brancharray = array('d', [0.5])
-                    newbranch = mytree.Branch(branch, brancharray, branch+"/D")
-
                     if branch in mytree.GetListOfBranches():
                         print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
                         myfile.Close()
                         continue
+                    else:
+                        print("branch", branch, "will be created for sample", k)
+
+
+                    brancharray = array('d', [0.5])
+                    newbranch = mytree.Branch(branch, brancharray, branch+"/D")
 
                     print("Creating branch for model", branch)
                     to_keep = features[idbr]
@@ -262,15 +266,14 @@ def MLRun(k, kpath):
                         brancharray[0] = output_array[n]
                         newbranch.Fill()
 
-                    #print("\n")
                     print("\n", branch, "completed!")
                     myfile.cd()
                     mytree.Write("", ROOT.TFile.kOverwrite)
                     myfile.Close()
-                    
+
                     print("Saving tree with ML branches...")
                     os.system("mv " + file_path_cp + " " + file_path)
-        
+
 print("year", opt.year)
 
 mergefakes = {
