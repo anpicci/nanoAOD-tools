@@ -622,6 +622,7 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_622.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_623.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_624.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_625.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_626.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_627.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_628.root
@@ -631,11 +632,13 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_632.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_633.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_634.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_635.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_636.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_637.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_638.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_639.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_640.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_641.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_642.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_643.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_644.root
@@ -644,6 +647,7 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_647.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_648.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_649.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_650.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_651.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_652.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_653.root
@@ -654,8 +658,10 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_658.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_659.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_660.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_661.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_662.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_663.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_664.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_665.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_666.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/TTToSemiLeptonic_TuneCP5_13TeV-powheg-pythia8/TT_SemiLep_UL2017/220325_233653/0000/tree_hadd_667.root
