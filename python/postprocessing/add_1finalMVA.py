@@ -131,7 +131,7 @@ def CondoredList(samplename):
                     pass
 
                 for ids, scenario in enumerate(scenarios):
-                    if samplename.startswith("Data") and ids > 0:
+                    if (samplename.startswith("Data") or samplename.startswith("Fake")) and ids > 0:
                         continue
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()

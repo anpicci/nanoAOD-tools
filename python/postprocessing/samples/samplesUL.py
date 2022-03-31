@@ -469,7 +469,7 @@ DYJetsToLL_UL2016APV.components = [
 DYJetsToLL_M50_FxFx_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
 DYJetsToLL_M50_FxFx_UL2016APV.year = "UL2016APV"
 DYJetsToLL_M50_FxFx_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016APV.sigma = 6077.22 #6529.0
+DYJetsToLL_M50_FxFx_UL2016APV.sigma = 6529.0 #6077.22 #
 
 DYJetsToLL_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016APV")
 DYJetsToLL_FxFx_UL2016APV.year = "UL2016APV"
@@ -1266,7 +1266,7 @@ DYJetsToLL_UL2016.components = [
 DYJetsToLL_M50_FxFx_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016")
 DYJetsToLL_M50_FxFx_UL2016.year = "UL2016"
 DYJetsToLL_M50_FxFx_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016.sigma = 6077.22 #6529.0
+DYJetsToLL_M50_FxFx_UL2016.sigma = 6529.0 #6077.22
 
 DYJetsToLL_FxFx_UL2016 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016")
 DYJetsToLL_FxFx_UL2016.year = "UL2016"
@@ -2008,7 +2008,7 @@ DYJetsToLL_UL2017.components = [
 DYJetsToLL_M50_FxFx_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2017")
 DYJetsToLL_M50_FxFx_UL2017.year = "UL2017"
 DYJetsToLL_M50_FxFx_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2017.sigma = 6077.22 #6529.0
+DYJetsToLL_M50_FxFx_UL2017.sigma = 6529.0 #6077.22 
 
 DYJetsToLL_FxFx_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2017")
 DYJetsToLL_FxFx_UL2017.year = "UL2017"
@@ -2789,7 +2789,7 @@ DYJetsToLL_UL2018.components = [
 DYJetsToLL_M50_FxFx_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2018")
 DYJetsToLL_M50_FxFx_UL2018.year = "UL2018"
 DYJetsToLL_M50_FxFx_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2018.sigma = 6077.22 #6529.0
+DYJetsToLL_M50_FxFx_UL2018.sigma = 6529.0 #6077.22 #
 
 DYJetsToLL_FxFx_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2018")
 DYJetsToLL_FxFx_UL2018.year = "UL2018"
@@ -3580,13 +3580,13 @@ condor_dict = {
 
 merge_dict = {
     "ZZtoLep_UL2016APV":ZZtoLep_UL2016APV,
-    #"TT_UL2016APV":TT_UL2016APV,
+    "TT_UL2016APV":TT_UL2016APV,
     "TTTo2L2Nu_UL2016APV":TTTo2L2Nu_UL2016APV,
     "TVX_UL2016APV":TVX_UL2016APV,
     "VG_UL2016APV":VG_UL2016APV,
     "WrongSign_UL2016APV":WrongSign_UL2016APV,
     "Triboson_UL2016APV":Triboson_UL2016APV,
-    #"WJets_UL2016APV":WJets_UL2016APV,
+    "WJets_UL2016APV":WJets_UL2016APV,
     "WZ_UL2016APV":WZ_UL2016APV,
     "DYJetsToLL_UL2016APV":DYJetsToLL_UL2016APV,
     "DYJetsToLL_FxFx_UL2016APV":DYJetsToLL_FxFx_UL2016APV,
@@ -3604,13 +3604,13 @@ merge_dict = {
     #"DataHT_UL2016APV":DataHT_UL2016APV,
 
     "ZZtoLep_UL2016":ZZtoLep_UL2016,
-    #"TT_UL2016":TT_UL2016,
+    "TT_UL2016":TT_UL2016,
     "TTTo2L2Nu_UL2016":TTTo2L2Nu_UL2016,
     "TVX_UL2016":TVX_UL2016,
     "VG_UL2016":VG_UL2016,
     "WrongSign_UL2016":WrongSign_UL2016,
     "Triboson_UL2016":Triboson_UL2016,
-    #"WJets_UL2016":WJets_UL2016,
+    "WJets_UL2016":WJets_UL2016,
     "WZ_UL2016":WZ_UL2016,
     "DYJetsToLL_UL2016":DYJetsToLL_UL2016,
     "DYJetsToLL_FxFx_UL2016":DYJetsToLL_FxFx_UL2016,
@@ -3627,15 +3627,14 @@ merge_dict = {
     "FakeEle_UL2016":FakeEle_UL2016,
     #"DataHT_UL2016":DataHT_UL2016,
 
-    "ZZTo2L2Nu_UL2017":ZZTo2L2Nu_UL2017,
     "ZZtoLep_UL2017":ZZtoLep_UL2017,
-    #"TT_UL2017":TT_UL2017,
+    "TT_UL2017":TT_UL2017,
     "TTTo2L2Nu_UL2017":TTTo2L2Nu_UL2017,
     "TVX_UL2017":TVX_UL2017,
     "VG_UL2017":VG_UL2017,
     "WrongSign_UL2017":WrongSign_UL2017,
     "Triboson_UL2017":Triboson_UL2017,
-    #"WJets_UL2017":WJets_UL2017,
+    "WJets_UL2017":WJets_UL2017,
     "WZ_UL2017":WZ_UL2017,
     "DYJetsToLL_UL2017":DYJetsToLL_UL2017,
     "DYJetsToLL_FxFx_UL2017":DYJetsToLL_FxFx_UL2017,
@@ -3653,14 +3652,14 @@ merge_dict = {
     #"DataHT_UL2017":DataHT_UL2017,
 
     "ZZtoLep_UL2018":ZZtoLep_UL2018,
-    #"TT_UL2018":TT_UL2018,
+    "TT_UL2018":TT_UL2018,
     #"TT_beff_UL2018":TT_beff_UL2018,
     "TTTo2L2Nu_UL2018":TTTo2L2Nu_UL2018,
     "TVX_UL2018":TVX_UL2018,
     "VG_UL2018":VG_UL2018,
     "WrongSign_UL2018":WrongSign_UL2018,
     "Triboson_UL2018":Triboson_UL2018,
-    #"WJets_UL2018":WJets_UL2018,
+    "WJets_UL2018":WJets_UL2018,
     "WZ_UL2018":WZ_UL2018,
     "DYJetsToLL_UL2018":DYJetsToLL_UL2018,
     "DYJetsToLL_FxFx_UL2018":DYJetsToLL_FxFx_UL2018,
@@ -3680,19 +3679,19 @@ merge_dict = {
 
 
 class_list = [
-    #WpWpJJ_EWK_UL2016APV,
-    VBS_SSWW_SM_UL2016APV,
-    #VBS_SSWW_DIM6_UL2016APV,
-    #WpWpJJ_QCD_UL2016APV,
-    ZZtoLep_UL2016APV,
-    Triboson_UL2016APV,
-    TVX_UL2016APV,
-    VG_UL2016APV,
-    WZ_UL2016APV,
-    WrongSign_UL2016APV,
-    #DYJetsToLL_UL2016APV,
-    DYJetsToLL_FxFx_UL2016APV,
-    TTTo2L2Nu_UL2016APV,
+    ##WpWpJJ_EWK_UL2016APV,
+    #VBS_SSWW_SM_UL2016APV,
+    ##VBS_SSWW_DIM6_UL2016APV,
+    ##WpWpJJ_QCD_UL2016APV,
+    #ZZtoLep_UL2016APV,
+    #Triboson_UL2016APV,
+    #TVX_UL2016APV,
+    #VG_UL2016APV,
+    #WZ_UL2016APV,
+    #WrongSign_UL2016APV,
+    ##DYJetsToLL_UL2016APV,
+    #DYJetsToLL_FxFx_UL2016APV,
+    #TTTo2L2Nu_UL2016APV,
     ##TT_UL2016APV,
     ##WJets_UL2016APV,
     FakeMu_UL2016APV,
@@ -3706,19 +3705,19 @@ class_list = [
     ##FakeEleFakeTau_UL2016APV,
     DataEle_UL2016APV,
 
-    #WpWpJJ_EWK_UL2016,
-    VBS_SSWW_SM_UL2016,
-    #VBS_SSWW_DIM6_UL2016,
-    #WpWpJJ_QCD_UL2016,
-    ZZtoLep_UL2016,
-    Triboson_UL2016,
-    TVX_UL2016,
-    VG_UL2016,
-    WZ_UL2016,
-    WrongSign_UL2016,
-    DYJetsToLL_FxFx_UL2016,
-    #DYJetsToLL_UL2016,
-    TTTo2L2Nu_UL2016,
+    ##WpWpJJ_EWK_UL2016,
+    #VBS_SSWW_SM_UL2016,
+    ##VBS_SSWW_DIM6_UL2016,
+    ##WpWpJJ_QCD_UL2016,
+    #ZZtoLep_UL2016,
+    #Triboson_UL2016,
+    #TVX_UL2016,
+    #VG_UL2016,
+    #WZ_UL2016,
+    #WrongSign_UL2016,
+    #DYJetsToLL_FxFx_UL2016,
+    ##DYJetsToLL_UL2016,
+    #TTTo2L2Nu_UL2016,
     ##TT_UL2016,
     ##WJets_UL2016,
     FakeMu_UL2016,
@@ -3732,20 +3731,20 @@ class_list = [
     ##FakeEleFakeTau_UL2016,
     DataEle_UL2016,
 
-    #WpWpJJ_EWK_UL2017,
-    VBS_SSWW_SM_UL2017,
-    #VBS_SSWW_cW_BSM_UL2017,
-    #VBS_SSWW_DIM6_UL2017,
-    #WpWpJJ_QCD_UL2017,
-    ZZtoLep_UL2017,
-    Triboson_UL2017,
-    TVX_UL2017,
-    VG_UL2017,
-    WZ_UL2017,
-    WrongSign_UL2017,
-    DYJetsToLL_FxFx_UL2017,
-    #DYJetsToLL_UL2017,
-    TTTo2L2Nu_UL2017,
+    ##WpWpJJ_EWK_UL2017,
+    #VBS_SSWW_SM_UL2017,
+    ##VBS_SSWW_cW_BSM_UL2017,
+    ##VBS_SSWW_DIM6_UL2017,
+    ##WpWpJJ_QCD_UL2017,
+    #ZZtoLep_UL2017,
+    #Triboson_UL2017,
+    #TVX_UL2017,
+    #VG_UL2017,
+    #WZ_UL2017,
+    #WrongSign_UL2017,
+    #DYJetsToLL_FxFx_UL2017,
+    ##DYJetsToLL_UL2017,
+    #TTTo2L2Nu_UL2017,
     ##TT_UL2017,
     ##WJets_UL2017,
     FakeMu_UL2017,
@@ -3760,37 +3759,17 @@ class_list = [
     DataEle_UL2017,
 
     ##WpWpJJ_EWK_UL2018,
-    VBS_SSWW_SM_UL2018,
+    #VBS_SSWW_SM_UL2018,
     ##VBS_SSWW_DIM6_UL2018,
     ##WpWpJJ_QCD_UL2018,
-    ZZtoLep_UL2018,
-    Triboson_UL2018,
-    TVX_UL2018,
-    VG_UL2018,
-    WZ_UL2018,
-    WrongSign_UL2018,
-    DYJetsToLL_FxFx_UL2018,
-    #DYJetsToLL_UL2018,
-    TTTo2L2Nu_UL2018,
-    #WWto2L2Nu_UL2018,
-    #GluGluToWWToENEN_UL2018,
-    #GluGluToWWToENMN_UL2018,
-    #GluGluToWWToENTN_UL2018,
-    #GluGluToWWToMNEN_UL2018,
-    #GluGluToWWToMNMN_UL2018,
-    #GluGluToWWToMNTN_UL2018,
-    #GluGluToWWToTNEN_UL2018,
-    #GluGluToWWToTNMN_UL2018,
-    #GluGluToWWToTNTN_UL2018,
-    #ST_tW_top_UL2018,
-    #ST_tW_antitop_UL2018,
-    #GluGluHToWWTo2L2Nu_UL2018,
-    #GluGluHToZZTo4L_UL2018,
-    #GluGluHToTauTau_UL2018,
-    #VBFHToWWTo2L2Nu_UL2018,
-    #VBFHToTauTau_UL2018,
-    #ttHToNonbb_UL2018,
-    #VHToNonbb_UL2018,
+    #ZZtoLep_UL2018,
+    #Triboson_UL2018,
+    #TVX_UL2018,
+    #VG_UL2018,
+    #WZ_UL2018,
+    #WrongSign_UL2018,
+    #DYJetsToLL_FxFx_UL2018,
+    ##DYJetsToLL_UL2018,
     ##TT_UL2018,
     ##WJets_UL2018,
     FakeMu_UL2018,

@@ -1139,8 +1139,9 @@ for year in years:
 
         ######### with systematics ###########
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
-        #variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        #variables.append(variabile('BDT_dim6_xgb_UL008_no', 'XGBoost dim6 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
 
         if opt.sr:
             bin_mjj = array("f", [500., 700., 1000., 1500., 2500.])
@@ -1420,6 +1421,8 @@ for year in years:
                     
             if(opt.plot):
                 for syst in systematics:
+                    if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
+                        continue
                     for var in variables:
                         if opt.count:
                             if not os.path.exists(pathplot + 'countings/'):

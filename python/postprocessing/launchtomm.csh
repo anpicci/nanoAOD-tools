@@ -7,15 +7,15 @@ set bdt_cHW_ul="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/not_optimize
 set bdt_cHW_branch = "BDT_cHW_xgb_UL008_no"
 set folder="vUL010"
 
-set year="UL2017"
-python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov -d ZZTo2L2Nu_$year #--scalers 
+#set year="UL2017"
+#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov -d DYJetsToLL_FxFx_$year #--scalers 
 
 #set year="UL2018"
-#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov #--scalers 
+#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov -d DYJetsToLL_FxFx_$year #--scalers 
 
 #set year="UL2016"
-#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov #-d TT_UL2016 #--scalers
+#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov -d DYJetsToLL_FxFx_$year #--scalers
 
-#set year="UL2016APV"
-#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov #--scalers 
+set year="UL2016APV"
+python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch --ov #--scalers 
 
