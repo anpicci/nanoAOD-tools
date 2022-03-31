@@ -132,7 +132,7 @@ if ('Data' in sample.name):
     scenarios = ["nominal"]
 else:
     isMC = True
-    scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+    scenarios = ["nominal"]#, "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
 if "/vUL001/" in outpath:
     scenarios = ['all']
 
@@ -264,15 +264,15 @@ if(isMC):
                     h_genweight.SetBins(h_genw_tmp.GetXaxis().GetNbins(), h_genw_tmp.GetXaxis().GetXmin(), h_genw_tmp.GetXaxis().GetXmax())
                 h_genweight.Add(h_genw_tmp)
     
-            if isthere_pdf:
-                h_PDFweight = ROOT.TH1F()
-                h_PDFweight.SetNameTitle("h_PDFweight","h_PDFweight")
-                h_pdfw_tmp = ROOT.TH1F(dirc.Get("h_PDFweight"))
-                if(ROOT.TH1F(h_PDFweight).Integral() < 1.):
-                    h_PDFweight.SetBins(h_pdfw_tmp.GetXaxis().GetNbins(), h_pdfw_tmp.GetXaxis().GetXmin(), h_pdfw_tmp.GetXaxis().GetXmax())
-                h_PDFweight.Add(h_pdfw_tmp)
-            else:
-                addPDF = False
+            #if isthere_pdf:
+                #h_PDFweight = ROOT.TH1F()
+                #h_PDFweight.SetNameTitle("h_PDFweight","h_PDFweight")
+                #h_pdfw_tmp = ROOT.TH1F(dirc.Get("h_PDFweight"))
+                #if(ROOT.TH1F(h_PDFweight).Integral() < 1.):
+                    #h_PDFweight.SetBins(h_pdfw_tmp.GetXaxis().GetNbins(), h_pdfw_tmp.GetXaxis().GetXmin(), h_pdfw_tmp.GetXaxis().GetXmax())
+                #h_PDFweight.Add(h_pdfw_tmp)
+            #else:
+                #addPDF = False
         newfile.Close()
 
 
@@ -610,7 +610,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(pass_everyCut)
 
     #weights#
-    w_PDF_all = array.array('f', [0.]*110)#
+    w_PDF_all = array.array('f', [1.]*103)#
     w_nominal_all = array.array('f', [0.])
 
     #w_dim8
@@ -772,7 +772,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
 
 
     #print("Is MC: " + str(isMC) + "      option addPDF: " + str(addPDF))
-    if(isMC and addPDF):
+    if(isMC):# and addPDF):
+        #print("saving w_PDF")
         systTree.branchTreesSysts(trees, scenario, "w_PDF", outTreeFile, w_PDF_all)
     ####################################################################################################################################################################################################################################
 
@@ -849,12 +850,15 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if isMC:
             genpart = Collection(event, "GenPart")
             gen = Object(event, "Generator")
-            if not ("WZ" in sample.label or "WWTo2L2Nu_DoubleScattering"):
-                LHE = Collection(event, "LHEPart")
+            #if not ("WZ" in sample.label or "WWTo2L2Nu_DoubleScattering"):
+                #LHE = Collection(event, "LHEPart")
             if IsDim8:
                 LHEDim8 = Collection(event, "LHEReweightingWeight")
             if addPDF:
-                PdfWeight = Collection(event, 'LHEPdfWeight')
+                try:
+                    PdfWeight = Collection(event, 'LHEPdfWeight')
+                except:
+                    PdfWeight = []
             if addQCD:
                 try:
                     ScaleWeight = Collection(event, 'LHEScaleWeight')
@@ -868,7 +872,11 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         pdf_totalDown = 1.
         pdf_totalSF = 1.
 
-        if isMC and addPDF:
+        if isMC and addPDF and len(PdfWeight) > 0:
+            #for pdfw, i in zip(PdfWeight, range(1, len(PdfWeight))):
+            for ipdf, pdfw in enumerate(PdfWeight):
+                w_PDF_all[ipdf] = LHEitem(pdfw)
+
             mean_pdf = 0.
             rms = 0.
             pdf_totalSF = LHEitem(PdfWeight[0])
@@ -1701,21 +1709,12 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if(isMC):
             #print("h_genweight first bin content is %f and h_PDFweight has %f bins" %(h_genweight.GetBinContent(1), h_PDFweight.GetNbinsX()))
             h_genweight.Write()
-            if isthere_pdf:
-                h_PDFweight.Write()
+            #if isthere_pdf:
+               # h_PDFweight.Write()
             #h_eff_mu.Write()
             #h_eff_ele.Write()
     #trees[idxs].Write()
-    '''
-    elif scenario == 'jesUp':
-        trees[1].Write()
-    elif scenario == 'jesDown':
-        trees[2].Write()
-    elif scenario == 'jerUp':
-        trees[3].Write()
-    elif scenario == 'jerDown':
-        trees[4].Write()
-    '''
+
     print("events with one only at-least-loose tau:", taucont) 
     if idxs == 0 or (isMC and idxs>0):
         #for scen in scenarios:
