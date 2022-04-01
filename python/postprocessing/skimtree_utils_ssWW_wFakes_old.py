@@ -2,6 +2,7 @@ import ROOT
 import ROOT.TMath as TMath
 import math
 import cmath
+import csv
 import copy as copy
 from os import path
 import array
@@ -133,7 +134,7 @@ effLumi_2017 = {
         "Ele" : {
             "Ele35_WPTight_Gsf"                     : 41.54,
             #"Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
-            #"Photon200"                             : 41.48,
+            "Photon200"                             : 41.48,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
             #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
@@ -163,7 +164,7 @@ effLumi_2018 = {
         "Ele" : {
             #"Ele35_WPTight_Gsf"                     : 59.83,
             "Ele32_WPTight_Gsf"                     : 59.96,
-            #"Photon200"                             : 59.83,
+            "Photon200"                             : 59.83,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
             #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
@@ -261,20 +262,6 @@ def trig_finder(HLT, yearr, samplename):
    
     return vTrigEle, vTrigMu, vTrigHT
     
-       
-
-
-def Chi_TopMass(mT):
-  sigma = 28.8273
-  mST = 174.729
-  chi = ( TMath.Power((mST-mT), 2.) ) / ( TMath.Power(sigma, 2.))
-  return chi
-
-def Chi_W(mT):
-  sigma = 0.012
-  mST = 80.379
-  chi = ( TMath.Power((mST-mT), 2.) ) / ( TMath.Power(sigma, 2.))
-  return chi
 
 ###############################################
 ###         Begin of generic utils          ###   
@@ -743,7 +730,6 @@ def get_ptrel(lepton, jet, taucorr=1.):
     ptrel = (lepjet_tv.Cross(lep_tv)).Mag()/(lepjet_tv.Mag())
     return ptrel
 
-#new
 
 def SelectLepton(leptons, jet1 = None, jet2 = None):
     #default values are setted with the same rationale used for SelectVBSJets
@@ -1051,6 +1037,7 @@ def get_HT(jets):
     return HT
 
 def trig_map(HLT, PV, yearr, runPeriod, flag):
+    print("flag in trig_map", flag)
     isGoodPV = True#copy.deepcopy(pass_MET(flag)) #(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passMu = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passEle = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
@@ -1133,127 +1120,6 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
         print('Wrong year! Please enter 2016, 2017, or 2018')
    
     return (passMu and isGoodPV), (passEle and isGoodPV), (passHT and isGoodPV), noTrigger
-
-
-def print_hist(infile, plotpath, hist, option = "HIST", log = False, stack = False, title = ""):
-    if not(isinstance(hist, list)):
-        c1 = ROOT.TCanvas(infile + "_" + hist.GetName(), "c1", 50,50,700,600)
-        hist.Draw(option)            
-        c1.Print(plotpath + "/" + infile + "_" + hist.GetName() + ".png")
-        c1.Print(plotpath + "/" + infile + "_" + hist.GetName() + ".root")
-    elif isinstance(hist, list):
-        c1 = ROOT.TCanvas(infile + "_" + hist[0].GetName(), "c1", 50,50,700,600)
-        if not (infile == "") or len(hist) > 1:
-            c1 = ROOT.TCanvas(infile + "_" + hist[0].GetName() + '_comparison', "c1", 50,50,700,600)
-        else:
-            c1_name = str(hist[0].GetName) + "_comparison"
-            c1 = ROOT.TCanvas('comparison', "c1", 50,50,700,600)
-
-        if isinstance(hist[0], ROOT.TGraph) or isinstance(hist[0], ROOT.TGraphAsymmErrors):
-            i = 0
-            mg = ROOT.TMultiGraph('mg', hist[0].GetTitle()+';'+hist[0].GetXaxis().GetTitle()+';'+hist[0].GetYaxis().GetTitle())
-            for h in hist:
-                h.SetLineColor(colors[i])
-                mg.Add(h)
-                i += 1
-            print( mg)
-            
-            #cap = hist[0].GetXaxis().GetTitle()
-            mg.SetMinimum(0.001)
-            mg.Draw(option)
-            Low = hist[0].GetXaxis().GetBinLowEdge(1)
-            Nbin = hist[0].GetXaxis().GetNbins()
-            High = hist[0].GetXaxis().GetBinUpEdge(Nbin)
-            mg.GetXaxis().Set(Nbin, Low, High)
-            
-            for i in range(hist[0].GetXaxis().GetNbins()):
-                u = i + 1
-                mg.GetXaxis().SetBinLabel(u, hist[0].GetXaxis().GetBinLabel(u))
-            
-        elif isinstance(hist[0], ROOT.TEfficiency):
-            i = 0
-            mg = ROOT.TMultiGraph('mg', hist[0].GetTitle()+';'+hist[0].CreateGraph().GetXaxis().GetTitle()+';'+hist[0].CreateGraph().GetYaxis().GetTitle())
-
-            for h in hist:
-                print( h)
-                h.SetLineColor(colors[i])
-                mg.Add(h.CreateGraph())
-                i += 1
-            mg.SetMaximum(1.1)
-            mg.SetMinimum(0.001)
-            mg.Draw(option)
-            
-        elif isinstance(hist[0], ROOT.TH1F):
-            mg = ROOT.THStack()
-            i = 0
-            print(hist[0].GetTitle(), hist[0].GetXaxis().GetTitle(), hist[0].GetYaxis().GetTitle())
-            for h in hist:
-                #h.SetLineColor(colors[i])
-                if stack:
-                    #h.SetFillColor(colors[i])
-                    mg.Add(h)
-                    i += 1
-                else:
-                  for h in hist:
-                    h.Draw(option+'SAME')
-            mg.Draw(option)
-            mg.GetXaxis().SetTitle(hist[0].GetXaxis().GetTitle())
-            mg.GetYaxis().SetTitle(hist[0].GetYaxis().GetTitle())
-            if title == "":
-                mg.SetTitle(hist[0].GetTitle()) 
-            else:
-                mg.SetTitle(title)
-                
-        #c1.Modified()
-        #c1.Update()
-        if log:
-            c1.SetLogy(1)
-        c1.Pad().Modified()
-        c1.Pad().Update()
-        c1.BuildLegend(0.7, 0.65, 0.95, 0.9)
-        #c1.Modified()
-        #c1.Update()
-        c1.Pad().Modified()
-        c1.Pad().Update()
-        
-        if not (infile == ""):
-            c1.Print(plotpath + "/" + infile + "_" + hist[0].GetName() + '_comparison.png')
-            c1.Print(plotpath + "/" + infile + "_" + hist[0].GetName() + '_comparison.root')
-        else:
-            c1.Print(plotpath + "/" + str(hist[0].GetName()) + '_comparison.png')
-            c1.Print(plotpath + "/" + str(hist[0].GetName()) + '_comparison.root')
-
-def save_hist(infile, plotpath, hist, option = "HIST"):
-     fout = ROOT.TFile.Open(plotpath + "/" + infile +".root", "UPDATE")
-     fout.cd()
-     hist.Write()
-     fout.Close()
-
-def miniisoscan(isMu,threshold, lepton):
-    for lepton in leptons:
-        if(isMC and (lepton.genPartFlav == 1 or lepton.genPartFlav == 15)):
-            totalMClep += 1.
-            if (lepton.miniPFRelIso_all < threshold):
-                if (lepton.pt > 50):
-                    lepmatch_iso0p1_pt_50 += 1.
-                if (lepton.pt > 75):
-                    lepmatch_iso0p1_pt_75 += 1.
-                if (lepton.pt > 100):
-                    lepmatch_iso0p1_pt_100 += 1.
-                if (lepton.pt > 125):
-                    lepmatch_iso0p1_pt_125 += 1.
-        if not(isMC and (lepton.genPartFlav == 1 or lepton.genPartFlav == 15)):
-            totalnoMClep += 1.
-            if (lepton.miniPFRelIso_all < threshold):
-                if (lepton.pt > 50):
-                    lepnomatch_iso0p1_pt_50 += 1.
-                if (lepton.pt > 75):
-                    lepnomatch_iso0p1_pt_75 += 1.
-                if (lepton.pt > 100):
-                    lepnomatch_iso0p1_pt_100 += 1.
-                if (lepton.pt > 125):
-                    lepnomatch_iso0p1_pt_125 += 1.
-    return totalMClep,lepmatch_iso0p1_pt_50,lepmatch_iso0p1_pt_75,lepmatch_iso0p1_pt_100,lepmatch_iso0p1_pt_125,totalnoMClep,lepnomatch_iso0p1_pt_50,lepnomatch_iso0p1_pt_75,lepnomatch_iso0p1_pt_100,lepnomatch_iso0p1_pt_125
 
 def HEMveto(jets, electrons):
   hemvetoetaup = -3.05
@@ -2640,3 +2506,13 @@ def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):
 
     return FR/(1-FR)
 
+def IsPdfHessian(firstpdf, lastpdf):
+    pdfcsv = open("data/lhapdf.csv")
+    reader = csv.reader(pdfcsv)
+    pdfdict = {rows[0]:rows[1] for rows in reader}
+    namepdf = pdfdict[str(firstpdf)]
+    if "hess" in namepdf:
+        return True
+    else:
+        return False
+    

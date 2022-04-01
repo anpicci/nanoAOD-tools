@@ -134,7 +134,7 @@ TT_UL2016APV.components = [
 TTTo2L2Nu_UL2016APV = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016APV")
 TTTo2L2Nu_UL2016APV.year = "UL2016APV"
 TTTo2L2Nu_UL2016APV.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-TTTo2L2Nu_UL2016APV.sigma = 831.76 * 0.105 #pb
+TTTo2L2Nu_UL2016APV.sigma = 72.1 #831.76 * 0.105 #pb
 
 TT_beff_UL2016APV = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016APV")
 TT_beff_UL2016APV.year = "UL2016APV"
@@ -938,7 +938,7 @@ TT_UL2016.components = [
 TTTo2L2Nu_UL2016 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016")
 TTTo2L2Nu_UL2016.year = "UL2016"
 TTTo2L2Nu_UL2016.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-TTTo2L2Nu_UL2016.sigma = 831.76 * 0.105 #pb
+TTTo2L2Nu_UL2016.sigma = 72.1 #831.76 * 0.105 #pb
 
 TT_beff_UL2016 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2016")
 TT_beff_UL2016.year = "UL2016"
@@ -1679,7 +1679,7 @@ TT_UL2017.components = [
 TTTo2L2Nu_UL2017 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2017")
 TTTo2L2Nu_UL2017.year = "UL2017"
 TTTo2L2Nu_UL2017.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-TTTo2L2Nu_UL2017.sigma = 831.76 * 0.105 #pb
+TTTo2L2Nu_UL2017.sigma = 72.1 #831.76 * 0.105 #pb
 
 TT_beff_UL2017 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2017")
 TT_beff_UL2017.year = "UL2017"
@@ -2459,7 +2459,7 @@ TT_UL2018.components = [
 TTTo2L2Nu_UL2018 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2018")
 TTTo2L2Nu_UL2018.year = "UL2018"
 TTTo2L2Nu_UL2018.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
-TTTo2L2Nu_UL2018.sigma = 831.76 * 0.105 #pb
+TTTo2L2Nu_UL2018.sigma = 72.1 #831.76 * 0.105 #pb
 
 TT_beff_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} inclusive", "TT_beff_UL2018")
 TT_beff_UL2018.year = "UL2018"

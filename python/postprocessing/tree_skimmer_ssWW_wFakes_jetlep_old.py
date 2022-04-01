@@ -132,7 +132,7 @@ if ('Data' in sample.name):
     scenarios = ["nominal"]
 else:
     isMC = True
-    scenarios = ["nominal"]#, "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+    scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
 if "/vUL001/" in outpath:
     scenarios = ['all']
 
@@ -150,7 +150,20 @@ if 'DataEle' in sample.name:
     dataEle = True
 
 ### placeholder to determinate which strategy to be used to implement PDF uncertainty ###
-isPDFHessian = True
+try:
+    pdftitle = chain.GetBranch("LHEPdfWeight").GetTitle()
+except:
+    isPDFHessian = False
+    pass
+else:
+    if pdftitle != "":
+        firstpdf = pdftitle.split(" ")[-3]
+        lastpdf = pdftitle.split(" ")[-1]
+        isPDFHessian = IsPdfHessian(firstpdf, lastpdf)
+    else:
+        isPDFHessian = False
+
+print("isPDFHessian", isPDFHessian)
 
 #Cut_dict = {}
 
@@ -1075,7 +1088,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             if not Flag.eeBadScFilter:
                 continue
 
-        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, Flag)
+        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, sys.argv[4])
         
         if noTrigger:
             continue
