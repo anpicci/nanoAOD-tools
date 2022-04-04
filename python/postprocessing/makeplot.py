@@ -366,7 +366,8 @@ pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 
 if opt.plot:
     if not os.path.exists(pathplot) and cut_tag != "1p":
-        os.makedirs(pathplot)
+        #os.makedirs(pathplot)
+        os.system("mkdir -p " + pathplot)
 
 if opt.stack:
     if not os.path.exists(plotrepo + 'stack') and cut_tag != "1p":
@@ -1138,11 +1139,12 @@ for year in years:
         cutbase = cut_dict[lep]
 
         ######### with systematics ###########
-        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
+        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
         variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
 
+        '''
         if opt.sr:
             bin_mjj = array("f", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
@@ -1152,7 +1154,7 @@ for year in years:
             #bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
-
+        '''
         '''
         ######### without systematics ###########
 

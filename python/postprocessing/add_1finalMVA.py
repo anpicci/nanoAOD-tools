@@ -90,7 +90,9 @@ split = 50
 
 if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
-    scenarios = ["nominal"]#, "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+    scenarios = [
+        "nominal",
+        "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
 else:
     isWithSysts = False
     scenarios = ["all"]
@@ -203,7 +205,8 @@ def MLRun(k, kpath):
         print(file_path, "does not exist!")
         return False
 
-    file_path_cp = kpath+k+"_cp.root"
+    #file_path_cp = kpath+k+"_cp.root"
+    file_path_cp = k+"_cp.root"
 
     tmpfile = ROOT.TFile.Open(file_path)
 

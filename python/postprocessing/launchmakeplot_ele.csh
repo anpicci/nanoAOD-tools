@@ -8,7 +8,7 @@ set year3 = UL2018
 set folder0 = vUL010 #_tagger_DataSplit_MCnoSplit
 #set folder0 = v100
 set channel = 'ltau' #
-reset
+#reset
 
 ######## year1 #######################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year1*
@@ -19,10 +19,10 @@ reset
 
 ######### year1bis #######################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year1bis_*
-python3 makeplot.py -y $year1bis --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--syst noSyst
-python3 makeplot.py -y $year1bis --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--syst noSyst
-python3 makeplot.py -y $year1bis --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--syst noSyst
-python3 makeplot.py -y $year1bis --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL #--syst noSyst
+#python3 makeplot.py -y $year1bis --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--syst noSyst
+#python3 makeplot.py -y $year1bis --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--syst noSyst
+#python3 makeplot.py -y $year1bis --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count #--syst noSyst
+#python3 makeplot.py -y $year1bis --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL #--syst noSyst
 
 ######## year2 #######################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year2*
