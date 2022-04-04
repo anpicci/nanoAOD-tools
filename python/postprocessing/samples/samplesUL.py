@@ -1761,48 +1761,48 @@ WWto2L2Nu_UL2017.sigma = 12.178
 GluGluToWWToENEN_UL2017 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENEN_UL2017")
 GluGluToWWToENEN_UL2017.year = "UL2017"
 GluGluToWWToENEN_UL2017.dataset = "/GluGluToWWToENEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToENEN_UL2017.sigma = 36.8 * 1./9. * 1.4 * 0.001 
+GluGluToWWToENEN_UL2017.sigma = 63.87 * 1./9. # 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENMN_UL2017 = sample(WScolor, 1, 1001, "WW --> 2l2#nu", "GluGluToWWToENMN_UL2017")
 GluGluToWWToENMN_UL2017.year = "UL2017"
 GluGluToWWToENMN_UL2017.dataset = "/GluGluToWWToENMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToENMN_UL2017.sigma = 36.8 * 1./9. * 1.4 * 0.001 
+GluGluToWWToENMN_UL2017.sigma = 63.87 * 1./9. # 36.8 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToENTN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToENTN_UL2017")
 GluGluToWWToENTN_UL2017.year = "UL2017"
 GluGluToWWToENTN_UL2017.dataset = "/GluGluToWWToENTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToENTN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
+GluGluToWWToENTN_UL2017.sigma = 63.87 * 1./9. # 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNEN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNEN_UL2017")
 GluGluToWWToMNEN_UL2017.year = "UL2017"
 GluGluToWWToMNEN_UL2017.dataset = "/GluGluToWWToMNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToMNEN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
+GluGluToWWToMNEN_UL2017.sigma = 63.87 * 1./9. # 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNMN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNMN_UL2017")
 GluGluToWWToMNMN_UL2017.year = "UL2017"
 GluGluToWWToMNMN_UL2017.dataset = "/GluGluToWWToMNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToMNMN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
+GluGluToWWToMNMN_UL2017.sigma = 63.87 * 1./9. # 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToMNTN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToMNTN_UL2017")
 GluGluToWWToMNTN_UL2017.year = "UL2017"
 GluGluToWWToMNTN_UL2017.dataset = "/GluGluToWWToMNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToMNTN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
+GluGluToWWToMNTN_UL2017.sigma = 63.87 * 1./9. # 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNEN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNEN_UL2017")
 GluGluToWWToTNEN_UL2017.year = "UL2017"
 GluGluToWWToTNEN_UL2017.dataset = "/GluGluToWWToTNEN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToTNEN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
+GluGluToWWToTNEN_UL2017.sigma = 63.87 * 1./9. # 36.81 * 1./9. * 1.4 * 0.001 
 
 #### to be replaced with v9 when available ####
 GluGluToWWToTNMN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNMN_UL2017")
 GluGluToWWToTNMN_UL2017.year = "UL2017"
 GluGluToWWToTNMN_UL2017.dataset = "/GluGluToWWToTNMN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv2-106X_mc2017_realistic_v8-v1/NANOAODSIM"
-GluGluToWWToTNMN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
+GluGluToWWToTNMN_UL2017.sigma = 63.87 * 1./9. # 36.81 * 1./9. * 1.4 * 0.001 
 
 GluGluToWWToTNTN_UL2017 = sample(WScolor, 1, 1001, "gg --> WW --> e#tau2#nu", "GluGluToWWToTNTN_UL2017")
 GluGluToWWToTNTN_UL2017.year = "UL2017"
 GluGluToWWToTNTN_UL2017.dataset = "/GluGluToWWToTNTN_TuneCP5_13TeV_MCFM701_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
-GluGluToWWToTNTN_UL2017.sigma = 36.81 * 1./9. * 1.4 * 0.001 
+GluGluToWWToTNTN_UL2017.sigma = 63.87 * 1./9. # 36.81 * 1./9. * 1.4 * 0.001 
 
 ST_tW_top_UL2017 = sample(WScolor, 1, 1001, "Single top", "ST_tW_top_UL2017")
 ST_tW_top_UL2017.year = "UL2017"
@@ -2013,6 +2013,7 @@ DYJetsToLL_M50_FxFx_UL2017.sigma = 7181.0 #6077.22 #6529.0
 DYJetsToLL_FxFx_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2017")
 DYJetsToLL_FxFx_UL2017.year = "UL2017"
 DYJetsToLL_FxFx_UL2017.components = [
+    DYJetsToLL_M10to50_UL2017,
     DYJetsToLL_M50_FxFx_UL2017,
 ]
 

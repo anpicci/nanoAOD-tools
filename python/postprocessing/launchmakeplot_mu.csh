@@ -27,10 +27,10 @@ reset
 
 #################### year2 #################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*/*$year2*
-python3 makeplot.py -y $year2 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d DYJetsToLL_FxFx_$year2 #--syst noSyst
-python3 makeplot.py -y $year2 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d DYJetsToLL_FxFx_$year2 #--syst noSyst
-python3 makeplot.py -y $year2 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d DYJetsToLL_FxFx_$year2 #--syst noSyst
-python3 makeplot.py -y $year2 --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d DYJetsToLL_FxFx_$year2 --bvetoL #--syst noSyst
+python3 makeplot.py -y $year2 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d WrongSign_$year2 #--syst noSyst
+python3 makeplot.py -y $year2 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d WrongSign_$year2 #--syst noSyst
+python3 makeplot.py -y $year2 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d WrongSign_$year2 #--syst noSyst
+python3 makeplot.py -y $year2 --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d WrongSign_$year2 --bvetoL #--syst noSyst
 
 #################### year3 #################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*/*$year3*
