@@ -1137,7 +1137,7 @@ for year in years:
             wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
 
         cutbase = cut_dict[lep]
-
+        '''
         ######### with systematics ###########
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
         variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
@@ -1153,8 +1153,8 @@ for year in years:
             #bin_mjj = array("f", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
-
         '''
+
         ######### without systematics ###########
 
         #try:
@@ -1411,7 +1411,6 @@ for year in years:
 
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  5, 0., 1.))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  5, 0., 1.))
-        '''
 
         for sample in dataset_new:
             print(sample.label, sample.name)
