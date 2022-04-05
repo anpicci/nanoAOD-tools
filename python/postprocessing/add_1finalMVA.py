@@ -206,7 +206,8 @@ def MLRun(k, kpath):
         return False
 
     #file_path_cp = kpath+k+"_cp.root"
-    file_path_cp = k+"_cp.root"
+    os.system("mkdir tmpML")
+    file_path_cp = "tmpML/"+k+"_cp.root"
 
     tmpfile = ROOT.TFile.Open(file_path)
 
@@ -276,6 +277,7 @@ def MLRun(k, kpath):
 
                     print("Saving tree with ML branches...")
                     os.system("mv " + file_path_cp + " " + file_path)
+    os.system("rm tmpML")    
 
 print("year", opt.year)
 
