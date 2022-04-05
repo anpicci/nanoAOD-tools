@@ -8,7 +8,7 @@ set year3 = UL2018
 set folder0 = vUL010 #_tagger_DataSplit_MCnoSplit
 #set folder0 = v100
 set channel = 'ltau' #
-reset
+#reset
 
 ######## year1 #######################
 rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year1*
