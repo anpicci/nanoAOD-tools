@@ -208,7 +208,7 @@ for k, v in merge_dict.items():
             print(k, "not mergable")
         continue
     
-    if hasattr(v, 'components'):
+    if hasattr(v, 'components') and v.components is not None:
         for c in v.components:
             if opt.dat != 'all':
                 if not str(c.label).startswith(opt.dat):

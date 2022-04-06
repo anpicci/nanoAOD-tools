@@ -2481,7 +2481,6 @@ def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):
 
     inFile = ROOT.TFile.Open(frvsjet)
 
-
     if not year.startswith("UL"):
         histo=ROOT.TH2F(inFile.Get("hFRDatamudif"))
     else:

@@ -1139,13 +1139,26 @@ for year in years:
         cutbase = cut_dict[lep]
 
         ######### with systematics ###########
-        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
+        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
         bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 0.8, 1.])
         nbin_bdtsm = len(bin_bdtsm) - 1
-        #variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        #variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+
+        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
+            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        elif opt.sr:
+            bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        else:
+            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
+        variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
+
         '''
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
@@ -1331,18 +1344,6 @@ for year in years:
         nbin_invmtl = len(bin_invmtl) - 1 
           
         variables.append(variabile('m_' + lep12[0], 'invariant mass ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', nbin_invmtl, bin_invmtl))
-
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        elif opt.sr:
-            bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        else:
-            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
-        variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', nbin_m1, bin_m1))
 
         if opt.sr:
             bin_mTs = array("d", [0., 50., 100., 150., 300.])

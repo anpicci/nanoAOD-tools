@@ -2,7 +2,6 @@ import os
 import optparse
 import sys
 
-
 usage = 'python submit_condor.py -d dataset_name -f destination_folder --wp working_point'
 parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dat', type=str, default = '', help='Please enter a dataset name')
@@ -115,7 +114,7 @@ dataset = sample_dict[opt.dat]
 samples = []
 
 
-if hasattr(dataset, 'components'): # How to check whether this exists or not
+if hasattr(dataset, 'components') and dataset.components is not None: # How to check whether this exists or not
     samples = [sample for sample in dataset.components]# Method exists and was used.
 else:
     print "You are launching a single sample and not an entire bunch of samples"
