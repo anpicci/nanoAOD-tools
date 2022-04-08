@@ -277,7 +277,7 @@ def MLRun(k, kpath):
 
                     print("Saving tree with ML branches...")
                     os.system("mv " + file_path_cp + " " + file_path)
-    os.system("rm tmpML")    
+    os.system("rm -r tmpML")    
 
 print("year", opt.year)
 

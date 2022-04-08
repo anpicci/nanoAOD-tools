@@ -1,9 +1,9 @@
 set year1 = 2016
 set year2 = 2017
 set year3 = 2018
-set folder0 = v008 #_tagger_DataSplit_MCnoSplit
+set folder0 = v100 #_tagger_DataSplit_MCnoSplit
 set channel = 'ltau' #
-set user = "ttedesch"
+set user = "apiccine"
 
 ######## year1 #######################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/*$year1*root 
@@ -17,11 +17,11 @@ set user = "ttedesch"
 ######## year2 #######################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/*$year2*root 
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year2*
-python3 makeplot.py -y $year2 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --user $user -d TTTo2L2Nu_$year2
-python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --user $user -d TTTo2L2Nu_$year2
-python3 makeplot.py -y $year2 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --user $user -d TTTo2L2Nu_$year2
-python3 makeplot.py -y $year2 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --user $user -d TTTo2L2Nu_$year2
-python3 makeplot.py -y $year2 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --user $user -d TTTo2L2Nu_$year2
+python3 makeplot.py -y $year2 --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --horn
+python3 makeplot.py -y $year2 --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --horn
+python3 makeplot.py -y $year2 --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --horn
+python3 makeplot.py -y $year2 --lep electron --ws -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --horn
+python3 makeplot.py -y $year2 --lep electron --dy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --syst noSyst --horn
 
 ####### year3 #######################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/*$year3*root 

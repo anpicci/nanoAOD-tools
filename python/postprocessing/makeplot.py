@@ -504,7 +504,7 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
    
     print("IsDim8?:", IsDim8)
     print("in plot function")
-    print("plotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, "with FR", FRtag, "syst applied", syst)
+    print("\nplotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, "with FR", FRtag, "syst applied", syst)
     ROOT.TH1.SetDefaultSumw2()
     cutbase = variable._taglio
     histoname = "h_" + variable._name + "_" + cut_tag
@@ -1138,6 +1138,7 @@ for year in years:
 
         cutbase = cut_dict[lep]
 
+        '''
         ######### with systematics ###########
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
         bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 0.8, 1.])
@@ -1146,7 +1147,10 @@ for year in years:
         #variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-
+        '''
+        variables.append(variabile('BDT_fT1_xgb_RR_no', 'XGBoost f_{T1} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_aQGC_xgb_RR_no', 'XGBoost a_{QGC} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
@@ -1168,7 +1172,7 @@ for year in years:
             #bin_mjj = array("d", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
-
+        '''
         '''
         ######### without systematics ###########
 
