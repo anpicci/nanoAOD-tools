@@ -1150,6 +1150,8 @@ for year in years:
         '''
         variables.append(variabile('BDT_fT1_xgb_RR_no', 'XGBoost f_{T1} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_aQGC_xgb_RR_no', 'XGBoost a_{QGC} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_fS0_25_xgb_RR_no', 'XGBoost f_{S0}=25 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_fS0_xgb_RR_no', 'XGBoost mixed f_{S0} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])

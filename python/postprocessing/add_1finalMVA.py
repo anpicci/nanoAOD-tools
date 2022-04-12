@@ -91,8 +91,11 @@ split = 50
 if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
     scenarios = [
-        "nominal",
-        "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+        #"nominal",
+        #"jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown",
+        "FESUp",
+        #"FESDown"
+    ]
 else:
     isWithSysts = False
     scenarios = ["all"]
@@ -235,9 +238,10 @@ def MLRun(k, kpath):
                         new_columns.append(i.split('[')[0])
                     df.columns = new_columns
 
-                    if os.path.exists(file_path_cp):
+                    if os.path.exists(file_path_cp) and idbr == 0:
                         os.system("rm " + file_path_cp)
-                    os.system("cp " + file_path + " " + file_path_cp)
+                    elif not os.path.exists(file_path_cp):
+                        os.system("cp " + file_path + " " + file_path_cp)
 
                     myfile = ROOT.TFile(file_path_cp, 'update')
                     #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
@@ -275,8 +279,8 @@ def MLRun(k, kpath):
                     mytree.Write("", ROOT.TFile.kOverwrite)
                     myfile.Close()
 
-                    print("Saving tree with ML branches...")
-                    os.system("mv " + file_path_cp + " " + file_path)
+            print("Saving tree with ML branches...")
+            os.system("mv " + file_path_cp + " " + file_path)
     os.system("rm -r tmpML")    
 
 print("year", opt.year)

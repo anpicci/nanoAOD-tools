@@ -4,7 +4,7 @@ set year3 = 2018
 set folder0 = v100 #_tagger_DataSplit_MCnoSplit
 set channel = 'ltau' #
 set user = "apiccine"
-
+reset
 ######## year1 #######################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/*$year1*root 
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year1*
