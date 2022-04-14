@@ -91,10 +91,15 @@ split = 50
 if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
     scenarios = [
-        #"nominal",
-        #"jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown",
+        "nominal",
+        "jesUp",
+        "jesDown",
+        "jerUp",
+        "jerDown",
+        "TESUp",
+        "TESDown",
         "FESUp",
-        #"FESDown"
+        "FESDown",
     ]
 else:
     isWithSysts = False
@@ -207,25 +212,30 @@ def MLRun(k, kpath):
     if not os.path.exists(file_path):
         print(file_path, "does not exist!")
         return False
-
+    tmpdir = "tmpML_" + opt.folder
     #file_path_cp = kpath+k+"_cp.root"
-    os.system("mkdir tmpML")
-    file_path_cp = "tmpML/"+k+"_cp.root"
-
-    tmpfile = ROOT.TFile.Open(file_path)
+    os.system("mkdir " + tmpdir)
+    file_path_cp = tmpdir + "/"+k+"_cp.root"
+    #tmpfile = ROOT.TFile.Open(file_path)
 
     for ids, scenario in enumerate(scenarios):
         if k.startswith("Data") and ids > 0:
             continue
+
+        tmpfile = ROOT.TFile.Open(file_path)
         tmptree = tmpfile.Get("events_"+scenario)
         tmpentr = tmptree.GetEntries()
-        #tmpfile.Close()
+        tmpfile.Close()
         #tmpfile.Delete()
         print("Processing events for scenario", scenario)
         #print("entries:", tmpentr)
-
+        
         if tmpentr > 0:
             # insert BDT output value into merged file
+            if os.path.exists(file_path_cp):
+                os.system("rm " + file_path_cp)
+            if not os.path.exists(file_path_cp):
+                os.system("cp " + file_path + " " + file_path_cp)
 
             for idbr, branch in enumerate(branches):
                 with uproot.open(file_path) as file:#_cp)
@@ -237,11 +247,6 @@ def MLRun(k, kpath):
                     for i in df.columns:
                         new_columns.append(i.split('[')[0])
                     df.columns = new_columns
-
-                    if os.path.exists(file_path_cp) and idbr == 0:
-                        os.system("rm " + file_path_cp)
-                    elif not os.path.exists(file_path_cp):
-                        os.system("cp " + file_path + " " + file_path_cp)
 
                     myfile = ROOT.TFile(file_path_cp, 'update')
                     #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
@@ -281,7 +286,7 @@ def MLRun(k, kpath):
 
             print("Saving tree with ML branches...")
             os.system("mv " + file_path_cp + " " + file_path)
-    os.system("rm -r tmpML")    
+    os.system("rm -rf " + tmpdir)    
 
 print("year", opt.year)
 

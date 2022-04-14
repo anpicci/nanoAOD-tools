@@ -6,9 +6,8 @@ set folder = vUL010 #### with loose bveto, new txt files, systematics
 
 #######    2017   #######
 set year = 'UL2017'
-python3 PrepareToPlot.py -f $folder -y $year -d TTTo2L2Nu_UL2017 --rw
-#python3 PrepareToPlot.py -f $folder -y $year -d TT_UL2017 --rw
-#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d TT_SemiLep_UL2017 --rw
+python3 PrepareToPlot.py -f $folder -y $year
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2018   #######

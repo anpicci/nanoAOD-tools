@@ -16,7 +16,7 @@ set folder="vUL010"
 
 set year="UL2017"
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch #--scalers 
-python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul,$bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch,$bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch -d TTTo2L2Nu_UL2017 #--scalers 
+#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
 
 set year="UL2018"
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch #--scalers 
@@ -24,9 +24,9 @@ set year="UL2018"
 
 set year="UL2016"
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch #--scalers
-#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
+python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
 
 set year="UL2016APV"
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch #--scalers 
-#python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
+python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
 
