@@ -10,6 +10,7 @@ import numpy as np
 import sklearn
 from xgboost import XGBClassifier
 
+#os.environ['TF_CPP_MIN_LOG_LEVEL']
 
 usage = 'python3 PrepareToPlot.py -y year -f folder'
 parser = optparse.OptionParser(usage)
@@ -58,7 +59,8 @@ if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and 
 
 modelpaths = opt.paths.split(",")
 branches = opt.branches.split(",")
-scalers = opt.scalers.split(",")
+scalerpaths = opt.scalers.split(",")
+print(branches, scalerpaths)
 
 for im, model in enumerate(modelpaths):
     print(im, model)
@@ -79,12 +81,12 @@ for idm, modelpath in enumerate(modelpaths):
     if "BDT" in branches[idm]:
         models.append(XGBClassifier())
         models[idm].load_model(modelpath)
-    elif "DNN" in branch[idm]:
-        with open(scalers[idm], 'rb') as file:
+    elif "DNN" in branches[idm]:
+        with open(scalerpaths[idm], 'rb') as file:
             scalers.append(pickle.load(file))
         models.append(tensorflow.keras.models.load_model(modelpath))
 
-print(len(modelpaths), len(branches))
+#print(len(modelpaths), len(branches))
 Debug = opt.check # True # False #
 split = 50
 
@@ -214,6 +216,8 @@ def MLRun(k, kpath):
         return False
     tmpdir = "tmpML_" + opt.folder
     #file_path_cp = kpath+k+"_cp.root"
+    if os.path.exists(tmpdir):
+        os.system("rm -rf " + tmpdir)
     os.system("mkdir " + tmpdir)
     file_path_cp = tmpdir + "/"+k+"_cp.root"
     #tmpfile = ROOT.TFile.Open(file_path)
@@ -271,7 +275,7 @@ def MLRun(k, kpath):
                     if "BDT" in branch:
                         output_array = models[idbr].predict_proba(X)[:,1]
                     elif "DNN" in branch:
-                        output_array = models[idbr].predict(scalers[idbr].transform(X_SM))
+                        output_array = models[idbr].predict(scalers[idbr].transform(X))
                                 
                     for n in range(numOfEvents):
                         mytree.GetEntry(n)

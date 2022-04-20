@@ -34,7 +34,7 @@ reset
 
 #################### year3 #################
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*/*$year3*
-python3 makeplot.py -y $year3 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d TTTo2L2Nu_$year3 #--syst noSyst
-python3 makeplot.py -y $year3 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d TTTo2L2Nu_$year3 #--syst noSyst
-python3 makeplot.py -y $year3 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d TTTo2L2Nu_$year3 #--syst noSyst
-python3 makeplot.py -y $year3 --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d TTTo2L2Nu_$year3 --bvetoL #--syst noSyst
+python3 makeplot.py -y $year3 --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #--syst noSyst
+python3 makeplot.py -y $year3 --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #--syst noSyst
+python3 makeplot.py -y $year3 --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count #--syst noSyst
+python3 makeplot.py -y $year3 --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL #--syst noSyst
