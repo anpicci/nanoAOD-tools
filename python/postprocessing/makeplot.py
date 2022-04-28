@@ -1140,7 +1140,7 @@ for year in years:
 
 
         ######### with systematics ###########
-        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
+        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
         '''
         bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 0.8, 1.])
         nbin_bdtsm = len(bin_bdtsm) - 1
@@ -1151,11 +1151,11 @@ for year in years:
         variables.append(variabile('BDT_SM_xgb_UL010_allBKG', 'XGBoost allbkg SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_cW_xgb_UL010_allBKG', 'XGBoost allbkg c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_cHW_xgb_UL010_allBKG', 'XGBoost allbkg c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
+
         variables.append(variabile('DNN_SM_UL010_allBKG', 'XGBoost allbkg SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('DNN_cW_UL010_allBKG', 'XGBoost allbkg c_{W} DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('DNN_cHW_UL010_allBKG', 'XGBoost allbkg c_{HW} DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
+
         variables.append(variabile('BDT_fT1_xgb_RR_no', 'XGBoost f_{T1} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_aQGC_xgb_RR_no', 'XGBoost a_{QGC} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_fS0_25_xgb_RR_no', 'XGBoost f_{S0}=25 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
