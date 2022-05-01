@@ -822,8 +822,8 @@ def SelectAndVetoTaus(year, taus, sellep, jet1 = None, jet2 = None):
             act_camp = copy.deepcopy(cam)
             break
 
-    tesTool = TauESTool(act_camp, 'DeepTau2017v2p1VSjet')
-    fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
+    #tesTool = TauESTool(act_camp, 'DeepTau2017v2p1VSjet')
+    #fesTool = TauFESTool(act_camp, 'DeepTau2017v2p1VSe')
 
     #default values are setted with the same rationale used for SelectVBSJets
     jet1eta = 0.
@@ -845,9 +845,9 @@ def SelectAndVetoTaus(year, taus, sellep, jet1 = None, jet2 = None):
     if len(taus)==0:
         return 0, idxl
     for i, tau in enumerate(taus):
-        tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
-        fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
-        es = tes*fes
+        #tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
+        #fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
+        #es = tes*fes
         if abs(sellep.pdgId)==11:
             #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE
@@ -855,7 +855,7 @@ def SelectAndVetoTaus(year, taus, sellep, jet1 = None, jet2 = None):
             #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU
 
-        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt*es>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
+        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
             nTau+=1
 
             isAtLeastLoose = False

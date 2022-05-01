@@ -1385,11 +1385,11 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if isMC:
             GoodLep_SF = GoodLep.effSF
             #GoodLep_SF = Lepton_IDIso_SF(GoodLep)
-            #GoodLep_SFUp = GoodLep.effSF_errUp
-            #GoodLep_SFDown = GoodLep.effSF_errDown
+            GoodLep_SFUp = abs(GoodLep.effSF_errUp)
+            GoodLep_SFDown = abs(GoodLep.effSF_errDown)
             systTree.setWeightName("lepSF", copy.deepcopy(GoodLep_SF))
-            #systTree.setWeightName("lepUp", copy.deepcopy(GoodLep_SFUp))
-            #systTree.setWeightName("lepDown", copy.deepcopy(GoodLep_SFDown))
+            systTree.setWeightName("lepUp", copy.deepcopy(GoodLep_SFUp))
+            systTree.setWeightName("lepDown", copy.deepcopy(GoodLep_SFDown))
 
             PF_SF = chain.PrefireWeight
             PF_SFUp = chain.PrefireWeight_Up
