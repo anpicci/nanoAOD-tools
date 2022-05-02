@@ -904,7 +904,7 @@ ZZtoLep_UL2016 = sample(ZZcolor, 1, 1001, "ZZ", "ZZtoLep_UL2016")
 ZZtoLep_UL2016.year = "UL2016"
 ZZtoLep_UL2016.components = [
     ZZTo2L2Nu_UL2016,
-    ZZTo4L_UL2016,
+    #ZZTo4L_UL2016,
     GluGluToContinToZZTo2e2nu_UL2016,
     GluGluToContinToZZTo4e_UL2016,
     GluGluToContinToZZTo2e2mu_UL2016,

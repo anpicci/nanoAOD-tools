@@ -107,14 +107,14 @@ effLumi_2016 = {
             "PFHT350"                       : 0.0779,
             },
         "Ele" : {
-            "Ele27_WPTight_Gsf"                     : 36.47,
+            "Ele27_WPTight_Gsf"                     : 36.33,
             #"Ele32_WPTight_Gsf"                     : 8.76,
             #"Photon175"                             : 36.33,
             },
         "Mu" : {
-            "IsoMu24"                       : 36.47,
-            "IsoTkMu24"                     : 36.47,
-            #"Mu50"                          : 36.47,
+            "IsoMu24"                       : 36.33,
+            "IsoTkMu24"                     : 36.33,
+            #"Mu50"                          : 36.33,
             #"TkMu50"                        : 33.64,
             },
         }
@@ -132,7 +132,7 @@ effLumi_2017 = {
             "PFHT350"                       : 0.17,
             },
         "Ele" : {
-            "Ele35_WPTight_Gsf"                     : 41.54,
+            "Ele35_WPTight_Gsf"                     : 41.48,
             #"Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
             "Photon200"                             : 41.48,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
@@ -140,8 +140,8 @@ effLumi_2017 = {
             #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
             },
         "Mu" : {
-            "IsoMu27"                       : 41.54,
-            #"Mu50"                          : 41.54,
+            "IsoMu27"                       : 41.48,
+            #"Mu50"                          : 41.48,
             #"OldMu100"                      : 36.75,
             #"TkMu100"                       : 36.75,
             #"Mu8_TrkIsoVVL"                 : 0.0027,
@@ -163,7 +163,7 @@ effLumi_2018 = {
             },
         "Ele" : {
             #"Ele35_WPTight_Gsf"                     : 59.83,
-            "Ele32_WPTight_Gsf"                     : 59.96,
+            "Ele32_WPTight_Gsf"                     : 59.83,
             "Photon200"                             : 59.83,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
