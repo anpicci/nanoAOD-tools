@@ -851,7 +851,7 @@ ZZTo2L2Nu_UL2016.sigma = 0.9738 #pb NLO
 
 ZZTo4L_UL2016 = sample(ZZcolor, 1, 1001, "ZZ --> 4l", "ZZTo4L_UL2016") ### not sure is the right background
 ZZTo4L_UL2016.year = "UL2016"
-ZZTo4L_UL2016.dataset = "/ZZTo2L2Nu_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-20UL16JMENano_106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+ZZTo4L_UL2016.dataset = "/ZZTo4L_M-1toInf_TuneCP5_13TeV_powheg_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 ZZTo4L_UL2016.sigma = 13.74 #pb NLO
 
 GluGluToContinToZZTo2e2nu_UL2016 = sample(ZZcolor, 1, 1001, "gg --> ZZ --> 2e2nu", "GluGluToContinToZZTo2e2nu_UL2016")
