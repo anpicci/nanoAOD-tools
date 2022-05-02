@@ -570,9 +570,9 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
 
     if not ("Data" in sample.label):
         if sample.year == "UL2016APV":
-            cut += "*(0.54)"
+            cut += "*(0.5373)"
         elif sample.year == "UL2016":
-            cut += "*(0.46)"
+            cut += "*(0.4627)"
         else:
             cut += "*(1.)"
 
