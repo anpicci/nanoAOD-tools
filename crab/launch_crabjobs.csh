@@ -1,4 +1,4 @@
-set year = '2018'
+set year = 'UL2016'
 reset
 #python submit_crab.py -d TT_$year --status
 #python submit_crab.py -d WJets_$year --status
@@ -25,7 +25,7 @@ reset
 #python submit_crab.py -d DataMu_$year --status
 
 ######### UL ######
-python submit_crab.py -d TTTo2L2Nu_UL2016APV -k #--sampleFlag
-python submit_crab.py -d TTTo2L2Nu_UL2016 -k #--sampleFlag
-python submit_crab.py -d TTTo2L2Nu_UL2017 -k #--sampleFlag
-python submit_crab.py -d TTTo2L2Nu_UL2018 -k #--sampleFlag
+#python submit_crab.py -d TTTo2L2Nu_UL2016APV -k #--sampleFlag
+python submit_crab.py -d ZZTo4L_UL2016 --status #--sampleFlag
+#python submit_crab.py -d TTTo2L2Nu_UL2017 -k #--sampleFlag
+#python submit_crab.py -d TTTo2L2Nu_UL2018 -k #--sampleFlag

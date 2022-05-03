@@ -31,7 +31,7 @@ reset
 #python files_writer_new.py -d DataEle_$year 
 #python files_writer_new.py -d DataMu_$year 
 
-set year = '2018'
+#set year = '2018'
 #python files_writer_new.py -d TT_$year --fake -t HT
 #python files_writer_new.py -d WJets_$year 
 #python files_writer_new.py -d WJets_$year --fake -t HT
@@ -55,9 +55,10 @@ set year = '2018'
 #python files_writer_new.py -d VBFHToTauTau_$year # --fake -t HT
 #python files_writer_new.py -d DataEle_$year 
 #python files_writer_new.py -d DataMu_$year 
-python files_writer_new.py -d DataHTC_UL2017 --fake -t HT 
+#python files_writer_new.py -d DataHTC_UL2017 --fake -t HT 
 
 #python files_writer_new.py -d TTTo2L2Nu_UL2016APV 
 #python files_writer_new.py -d TTTo2L2Nu_UL2016 
+python files_writer_new.py -d ZZTo4L_UL2016
 #python files_writer_new.py -d TTTo2L2Nu_UL2017 
 #python files_writer_new.py -d TTTo2L2Nu_UL2018

@@ -55,7 +55,8 @@ for sample in samples:
     if not os.path.exists(dirpath):
         os.makedirs(dirpath)
 
-    url = os.popen('crab getoutput --xrootd --jobids 1 -d ' + path + crabdir).readlines()
+    #url = os.popen('crab getoutput --xrootd --jobids 1 -d ' + path + crabdir).readlines()
+    url = os.popen('crab getoutput --xrootd -d ' + path + crabdir).readlines()
 
     print "Printing out crabbed files for "+str(sample.label)
 
