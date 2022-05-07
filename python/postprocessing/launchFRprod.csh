@@ -1,17 +1,50 @@
+reset
+set wp = 16
+#set wp = 8
+
 set year = 2018
 set FOLDER="FR_UL"$year
-set wp = 8
-reset
-#python submit_condor_FR_dev.py -f $FOLDER --wpvsJet 2 --nodata -d SampleHTFake_UL$year
-#python submit_condor_FR_dev.py -f $FOLDER --wpvsJet 4 -d WJetsHT1200to2500_UL2016
+#python submit_condor_FR_dev.py -f $FOLDER --wpvsJet $wp -d SampleHTFake_UL$year
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp
+#python3 PrepareToPlot.py -f FR_UL$year/$wp --fake -y UL$year --ct HT --max 20 #--or 
+cd FakeRatio
+python3 Calculator.py --inf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp/ --year $year # --nobkg
+cd -
 
-python submit_condor_FR_dev.py -d SampleHTFake_UL$year -f $FOLDER --wpvsJet $wp
 
-#python3 PrepareToPlot.py -f FR_UL$year/2 --fake -y UL$year --ct HT
-#python3 PrepareToPlot.py -f FR_UL$year/4 --fake -y UL$year --ct HT --or
-#python3 PrepareToPlot.py -f FR_UL$year/8 --fake -y UL$year --ct HT --or 
 
-#cd FakeRatio
-#python3 Calculator.py --inf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp/ --year $year # --nobkg
-#cd -
+set year = 2017
+set FOLDER="FR_UL"$year
+
+#python submit_condor_FR_dev.py -f $FOLDER --wpvsJet $wp -d SampleHTFake_UL$year 
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp
+#python3 PrepareToPlot.py -f FR_UL$year/$wp --fake -y UL$year --ct HT --max 20 #--or 
+cd FakeRatio
+python3 Calculator.py --inf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp/ --year $year # --nobkg
+cd -
+
+
+
+
+set year = 2016
+set FOLDER="FR_UL"$year
+
+#python submit_condor_FR_dev.py -f $FOLDER --wpvsJet $wp -d SampleHTFake_UL$year 
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp
+#python3 PrepareToPlot.py -f FR_UL$year/$wp --fake -y UL$year --ct HT --max 20 #--or 
+cd FakeRatio
+python3 Calculator.py --inf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp/ --year $year # --nobkg
+cd -
+
+
+
+
+set year = 2016APV
+set FOLDER="FR_UL"$year
+
+#python submit_condor_FR_dev.py -f $FOLDER --wpvsJet $wp -d SampleHTFake_UL$year 
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp
+#python3 PrepareToPlot.py -f FR_UL$year/$wp --fake -y UL$year --ct HT --max 20 #--or 
+cd FakeRatio
+python3 Calculator.py --inf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp/ --year $year # --nobkg
+cd -

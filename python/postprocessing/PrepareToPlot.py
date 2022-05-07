@@ -9,6 +9,7 @@ parser.add_option('-f', dest='folder', type=str, default = 'v20', help='Please e
 parser.add_option('-c', dest='check', default = False, action = 'store_true', help='Default runs makeplot')
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
+parser.add_option('--max', dest='maxj', type=int, default = 0, help='Please enter maximum!')
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
 parser.add_option('--or', dest='override', default = False, action = 'store_true', help='Default does not override AreAllCondored')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
@@ -59,7 +60,7 @@ Debug = opt.check # True # False #
 split = 50
 
 isWithSysts = False
-if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
+if "UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
     scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
 else:
@@ -147,7 +148,12 @@ def AreAllCondored(crabname, condorname):
         if remainder > 0:
             lenstore += 1
 
-    if len(condoredlist) < (lenstore):
+    IsThereMaximum = bool(opt.maxj) and bool(opt.maxj < lenstore) and bool("Data" not in crabname)
+    #print("IsThereMaximum", IsThereMaximum)
+    if IsThereMaximum and 'Data' not in crabname and len(condoredlist) < opt.maxj:
+        print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
+        return False
+    elif not IsThereMaximum and len(condoredlist) < (lenstore):
         print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
         return False
     elif lenstore==0 and len(condoredlist)==0:

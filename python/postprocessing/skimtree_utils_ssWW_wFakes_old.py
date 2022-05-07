@@ -1088,9 +1088,9 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
 
     elif(year == "UL2017"):
         mutrig = HLT.IsoMu27
-        if flag != "test":
+        if True:#flag != "test":
             eletrig = HLT.Ele35_WPTight_Gsf
-        elif flag == "test":
+        else:# flag == "test":
             eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200 
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
@@ -1103,9 +1103,9 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
 
     elif(year == "UL2018"):
         mutrig = HLT.IsoMu24
-        if flag != "test":
+        if True:#flag != "test":
             eletrig = HLT.Ele32_WPTight_Gsf
-        elif flag == "test":
+        else:#if flag == "test":
             eletrig = HLT.Ele32_WPTight_Gsf or HLT.Photon200 
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
@@ -2403,7 +2403,7 @@ def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote")
     histo = ROOT.TH2F()
 
     frvsjet = 'FR_' + wp + "_" + str(year)
-    if (folder == "test") and wp == 'vsjet8':
+    if (folder == "test"):# and wp == 'vsjet8':
         frvsjet += "_test"
 
     frvsjet += ".root"
@@ -2437,7 +2437,7 @@ def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017', folder = "remote"):
     histo = ROOT.TH2F()
     frvsjet = 'FR_' + wp + "_" + str(year)
 
-    if (folder == "test") and wp == 'vsjet8':
+    if (folder == "test"):# and wp == 'vsjet8':
         frvsjet += "_test"
 
     frvsjet += ".root"
@@ -2473,7 +2473,7 @@ def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):
     histo = ROOT.TH2F()
     frvsjet = 'FR_' + wp + "_" + str(year)
 
-    if (folder == "test") and wp == 'vsjet8':
+    if (folder == "test"):# and wp == 'vsjet8':
         frvsjet += "_test"
 
     frvsjet += ".root"

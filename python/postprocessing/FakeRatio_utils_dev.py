@@ -7,7 +7,54 @@ from os import path
 import array
 import types
 from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
-from CutsAndValues import *
+try:
+    from CutsAndValues_UL2016APV import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2016APV imported!")
+
+try:
+    from CutsAndValues_UL2016 import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2016 imported!")
+
+try:
+    from CutsAndValues_UL2017 import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2017 imported!")
+
+try:
+    from CutsAndValues_UL2018 import *
+except:
+    pass
+else:
+    print("CutsAndValues_UL2018 imported!")
+
+try:
+    from CutsAndValues_2016 import *
+except:
+    pass
+else:
+    print("CutsAndValues_2016 imported!")
+
+try:
+    from CutsAndValues_2017 import *
+except:
+    pass
+else:
+    print("CutsAndValues_2017 imported!")
+
+try:
+    from CutsAndValues_2018 import *
+except:
+    pass
+else:
+    print("CutsAndValues_2018 imported!")
 
 
 ROOT.PyConfig.IgnoreCommandLineOptions = True

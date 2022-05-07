@@ -9,7 +9,7 @@ parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dat', type=str, default = '', help='Please enter a dataset name')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
 parser.add_option('--wpvsJet', dest='wpvsJet', type=str, default = '2', help='Please enter working point for deeptauVsJet!')
-parser.add_option('--max', dest='maxj', type=int, default = 0, help='Please enter working point!')
+parser.add_option('--max', dest='maxj', type=int, default = 20, help='Please enter maximum!')
 parser.add_option('--trig', dest='trig', type=str, default = 'HT', help='Please enter trigger (electron, muon, HT)')
 parser.add_option('--infold', dest = 'infold', type = str, default= 'Fake', help = 'input folder for the crabbed files')
 parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
@@ -17,10 +17,10 @@ parser.add_option('--nodata', dest='nodata', default = False, action='store_true
 (opt, args) = parser.parse_args()
 #Insert here your uid... you can see it typing echo $uid
 
-#username = str(os.environ.get('USER'))
-username = "mmagheri"
-#inituser = str(os.environ.get('USER')[0])
-inituser = "m"
+username = str(os.environ.get('USER'))
+#username = "mmagheri"
+inituser = str(os.environ.get('USER')[0])
+#inituser = "m"
 if username == 'mmagheri':
     uid = 102889
 elif username == 'apiccine':
@@ -38,7 +38,8 @@ def sub_writer(sample, n, files, folder):
     f.write("use_x509userproxy       = true\n")
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
-    f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, FakeRatio_utils_dev.py, TauIDSFTool.py, CutsAndValues.py, Btag_eff_" + str(sample.year) + ".root, __init__.py, ./data\n")
+    tagyear = str(sample.year)
+    f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, FakeRatio_utils_dev.py, TauIDSFTool.py, CutsAndValues_" + tagyear + ".py, Btag_eff_" + str(sample.year) + ".root, __init__.py, ./data\n")
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + str(opt.wpvsJet)+ "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     f.write("executable              = FakeRatio_dev.py\n")

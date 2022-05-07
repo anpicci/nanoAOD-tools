@@ -259,7 +259,7 @@ if opt.bdt or opt.ebdt or opt.mubdt:
 lumi = {'2016': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83}
 
 
-if ("UL" in opt.folder and int(opt.folder.split("UL")[-1]) < 10) or (not "UL" in opt.folder):
+if ("UL" in opt.folder and not "FR" in opt.folder and int(opt.folder.split("UL")[-1]) < 10) or (not "UL" in opt.folder) or "FR" in opt.folder:
     scenarios = ["all"]
     nomtag = "all"
 else:
@@ -440,6 +440,7 @@ def lumi_writer(dataset, lumi):
                 else:
                     pass
                 
+                print("evtree:", evtree, tree)
                 tree.SetBranchStatus('w_nominal', 0)
                 #tree.SetBranchStatus('w_PDF', 0)
                 tree_new = tree.CloneTree(0)
@@ -1140,28 +1141,29 @@ for year in years:
 
 
         ######### with systematics ###########
+
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', 1, -0.5, 0.5))
-        '''
+
         bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 0.8, 1.])
         nbin_bdtsm = len(bin_bdtsm) - 1
-        variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         #variables.append(variabile('BDT_SM_xgb_UL008_no', 'XGBoost SM BDT output', wzero+'*('+cutbase+')', nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_SM_xgb_UL010_allBKG', 'XGBoost allbkg SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_cW_xgb_UL010_allBKG', 'XGBoost allbkg c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_cW_xgb_UL008_no', 'XGBoost c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_cHW_xgb_UL008_no', 'XGBoost c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_SM_xgb_UL010_allBKG_v2', 'XGBoost allbkg SM BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        variables.append(variabile('BDT_cW_xgb_UL010_allBKG_v2', 'XGBoost allbkg c_{W} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_cHW_xgb_UL010_allBKG', 'XGBoost allbkg c_{HW} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
 
         variables.append(variabile('DNN_SM_UL010_allBKG', 'XGBoost allbkg SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('DNN_cW_UL010_allBKG', 'XGBoost allbkg c_{W} DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('DNN_cHW_UL010_allBKG', 'XGBoost allbkg c_{HW} DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
-
+        '''
         variables.append(variabile('BDT_fT1_xgb_RR_no', 'XGBoost f_{T1} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_aQGC_xgb_RR_no', 'XGBoost a_{QGC} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_fS0_25_xgb_RR_no', 'XGBoost f_{S0}=25 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('BDT_fS0_xgb_RR_no', 'XGBoost mixed f_{S0} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
         '''
-        '''
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
@@ -1183,7 +1185,7 @@ for year in years:
             #bin_mjj = array("d", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', nbin_mjj, bin_mjj))# 20, 500, 2000))
-        '''
+
         '''
         ######### without systematics ###########
 
@@ -1207,7 +1209,7 @@ for year in years:
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', nbin_lepton_pt, bin_lepton_pt))#30, 1500))
 
         #variables.append(variabile(lep1[0] + '_pdgid', lep1[1] + ' pdgid',  wzero+'*('+cutbase+')', 31, -15.5, 15.5))
-        #variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' rel iso',  wzero+'*('+cutbase+')', 15, 0, 0.15))
+        variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' pfRelIso04',  wzero+'*('+cutbase+')', 15, 0, 0.15))
         #variables.append(variabile(lep1[0] + '_Zeppenfeld', lep1[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', 24, -6, 6))
 
         if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
@@ -1240,7 +1242,7 @@ for year in years:
         else:
             variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')',  14, -3.50, 3.50))
 
-        
+
         if opt.channel == "ltau":
             variables.append(variabile(lep2[0] + '_DecayMode', '#tau decay mode',  wzero+'*('+cutbase+')', 12, -0.5, 11.5))
             
@@ -1266,15 +1268,15 @@ for year in years:
             variables.append(variabile('taujet_EmGamma',  '#tau jet em. #Gamma',  wzero+'*('+cutbase+')', 8, -1., 1.))
 
             variables.append(variabile('taujet_HEGamma',  '#tau jet had.+em. #Gamma',  wzero+'*('+cutbase+')', 8, -1., 1.))
-        
-            #variables.append(variabile('tau_DeepTauVsEle_raw', '#tau DeepTauVsEle raw',  wzero+'*('+cutbase+')',  10, 0.35, 1.35))
-            #variables.append(variabile('tau_DeepTauVsMu_raw', '#tau DeepTauVsMu raw',  wzero+'*('+cutbase+')',  10, 0.2, 1.2))
+
+            variables.append(variabile('tau_DeepTauVsEle_raw', '#tau DeepTauVsEle raw',  wzero+'*('+cutbase+')',  10, 0.35, 1.35))
+            variables.append(variabile('tau_DeepTauVsMu_raw', '#tau DeepTauVsMu raw',  wzero+'*('+cutbase+')',  10, 0.2, 1.2))
             #variables.append(variabile('tau_DeepTauVsJet_raw', '#tau DeepTauVsJet raw',  wzero+'*('+cutbase+')',  10, 0., 1.))
-            
+
             #variables.append(variabile('tau_DeepTauVsEle_WP', '#tau DeepTauVsEle WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsMu_WP', '#tau DeepTauVsMu WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsJet_WP', '#tau DeepTauVsJet WP',  wzero+'*('+cutbase+')',  11, -0.5, 10.5))
-        
+
         if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
             bin_leadjet_pt = array("d", [0., 50., 100., 150., 250., 400.])
             nbin_leadjet_pt = len(bin_leadjet_pt)-1
@@ -1430,6 +1432,7 @@ for year in years:
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  5, 0., 1.))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')',  5, 0., 1.))
         '''
+
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:

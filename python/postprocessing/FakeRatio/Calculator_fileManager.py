@@ -19,12 +19,15 @@ class fileManager:
         newTime = timeStr.replace(" ", "_")
         endTime = newTime.replace(":", "")
         timeToUse = endTime.split(".")
+        '''
         self.filename =  "FakeRatio_trigger_" + trigger + "_year_" + year + '_wpDeepTauVsJet_' + vsJetWp + '_METcut_' + met + '_mt_lep_MET_cut_' + mt_lepMet + '_DateTime_' + timeToUse[0]
         print("saving in: ", self.filename)
         if bkg:
             self.filename += '_MCpromptSUBTRACTED'
         if onlybkg:
             self.filename += '_onlymcprompt'
+        '''
+        self.filename = "FR_vsjet" + vsJetWp + "_UL" + year + "_test"
         self.filename += '.root'
         self.filename = directory + self.filename
         self.f = ROOT.TFile(self.filename, "RECREATE")

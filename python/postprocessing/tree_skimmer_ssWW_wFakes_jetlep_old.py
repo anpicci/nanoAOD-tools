@@ -674,6 +674,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "tau_DeepTauVsMu_WP",       outTreeFile, tau_DeepTauVsMu_WP)#
     systTree.branchTreesSysts(trees, scenario, "tau_DeepTauVsMu_raw",      outTreeFile, tau_DeepTauVsMu_raw)#
     systTree.branchTreesSysts(trees, scenario, "tau_DeepTauVsJet_WP",      outTreeFile, tau_DeepTauVsJet_WP)#
+    systTree.branchTreesSysts(trees, scenario, "tau_DeepTauVsJet_raw",      outTreeFile, tau_DeepTauVsJet_raw)#
     systTree.branchTreesSysts(trees, scenario, "tau_TightRegion",          outTreeFile, tau_TightRegion)#
     systTree.branchTreesSysts(trees, scenario, "tau_LnTRegion",            outTreeFile, tau_LnTRegion)#
     systTree.branchTreesSysts(trees, scenario, "tau_SFFake_vsjet2",               outTreeFile, tau_SFFake_vsjet2)#

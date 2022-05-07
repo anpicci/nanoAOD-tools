@@ -14,17 +14,19 @@ from ROOT import TCanvas, TColor, TGaxis, TH1F, TPad
 
 class EfficiencyHisto_manager:
     def __init__(self, lepton, leptonPrompt=5):
-        print(array.array('d', lower_pt), array.array('d', lower_eta_ele))
         print('Creating histo for lepton: ', lepton)
+        self.ptbins = lower_pt[lepton]
+        self.etabins = lower_eta[lepton]
+        print(array.array('d', self.ptbins), array.array('d', self.etabins))
         self.lepton = lepton
         self.leptonPrompt = leptonPrompt
-        self.hNLoose_Data   = ROOT.TH2F("h2NLoose" + lepton + "_data", lepton + "#loose events",    (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-        self.hNTight_Data   = ROOT.TH2F("h2NTight" + lepton + "_data", lepton + "#tight events",    (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-        self.hNLoose_MC     = ROOT.TH2F("h2NLoose" + lepton + "_MC",   lepton + "#loose events_MC", (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-        self.hNTight_MC     = ROOT.TH2F("h2NTight" + lepton + "_MC",   lepton + "#tight events_MC", (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-        self.Efficiency     = ROOT.TH2F("FakeRatio" + lepton + "",     lepton + "Fake Ratio",       (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-        self.Numerator      = ROOT.TH2F("Numerator" + lepton + "",     lepton + " Numerator",       (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-        self.Denumerator    = ROOT.TH2F("Denumerator" + lepton + "",   lepton + " Denumerator",     (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+        self.hNLoose_Data   = ROOT.TH2F("h2NLoose" + lepton + "_data", lepton + "#loose events",    (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+        self.hNTight_Data   = ROOT.TH2F("h2NTight" + lepton + "_data", lepton + "#tight events",    (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+        self.hNLoose_MC     = ROOT.TH2F("h2NLoose" + lepton + "_MC",   lepton + "#loose events_MC", (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+        self.hNTight_MC     = ROOT.TH2F("h2NTight" + lepton + "_MC",   lepton + "#tight events_MC", (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+        self.Efficiency     = ROOT.TH2F("FakeRatio" + lepton + "",     lepton + "Fake Ratio",       (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+        self.Numerator      = ROOT.TH2F("Numerator" + lepton + "",     lepton + " Numerator",       (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+        self.Denumerator    = ROOT.TH2F("Denumerator" + lepton + "",   lepton + " Denumerator",     (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
 
     def addEvent(self, isTight, isData, pt, eta, SF):
         if(isData):
@@ -40,12 +42,12 @@ class EfficiencyHisto_manager:
 
     def ProjectTree(self, tree, isData, cut_l, cut_t, region):
         if isData:
-            hNLoose_Data   = ROOT.TH2F("h2NLoose" + self.lepton + "_data_temp", self.lepton + "#loose events",    (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-            hNTight_Data   = ROOT.TH2F("h2NTight" + self.lepton + "_data_temp", self.lepton + "#tight events",    (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+            hNLoose_Data   = ROOT.TH2F("h2NLoose" + self.lepton + "_data_temp", self.lepton + "#loose events",    (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+            hNTight_Data   = ROOT.TH2F("h2NTight" + self.lepton + "_data_temp", self.lepton + "#tight events",    (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
 
         else:
-            hNLoose_MC     = ROOT.TH2F("h2NLoose" + self.lepton + "_MC_temp",   self.lepton + "#loose events_MC", (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
-            hNTight_MC     = ROOT.TH2F("h2NTight" + self.lepton + "_MC_temp",   self.lepton + "#tight events_MC", (len(lower_pt)-1), array.array('d', lower_pt), (len(lower_eta_ele)-1), array.array('d', lower_eta_ele))
+            hNLoose_MC     = ROOT.TH2F("h2NLoose" + self.lepton + "_MC_temp",   self.lepton + "#loose events_MC", (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
+            hNTight_MC     = ROOT.TH2F("h2NTight" + self.lepton + "_MC_temp",   self.lepton + "#tight events_MC", (len(self.ptbins)-1), array.array('d', self.ptbins), (len(self.etabins)-1), array.array('d', self.etabins))
 
         print("hello, i'm projecting", tree.GetName(), "in", self.lepton)
         leptag = ""
