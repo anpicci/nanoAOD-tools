@@ -718,11 +718,11 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     if(cut_tag_ == ""):
         histoname = "h_" + variabile_._name
         stackname = "stack_" + reg_ + "_" + variabile_._name
-        canvasname = "stack_" + reg_ + "_" + variabile_._name + "_" + lep_ + "_" + str(samples_[0].year)
+        canvasname = "stack_" + reg_ + "_" + variabile_._name + "_" + lep_ + "_" + year #str(samples_[0].year)
     else:
         histoname = "h_" + variabile_._name + "_" + cut_tag_
         stackname = "stack_" + reg_ + "_" + variabile_._name + "_" + cut_tag_
-        canvasname = "stack_" + reg_ + "_" + variabile_._name+ "_" + cut_tag_ + "_" + lep_ + "_" + str(samples_[0].year)
+        canvasname = "stack_" + reg_ + "_" + variabile_._name+ "_" + cut_tag_ + "_" + lep_ + "_" + year #str(samples_[0].year)
     if opt.wfake != 'nofake':
         stackname += "_wFakes_" + str(opt.wfake.split('_')[0])
         canvasname += "_wFakes_" + str(opt.wfake.split('_')[0])
@@ -1100,9 +1100,11 @@ years = []
 if(opt.year!='all'):
      years = opt.year.strip('[]').split(',')
 else:
-     years = ['UL2016APV','UL2016','UL2017','UL2018']
+     years = ['UL2016APV','UL2016', "UL2016M", 'UL2017','UL2018']
 
 for year in years:
+    if year == "UL2016M":
+        continue
     for sample in dataset_dict[year]:
         if(opt.merpart):
             mergepart(sample)
