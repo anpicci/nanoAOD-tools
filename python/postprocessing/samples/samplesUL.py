@@ -31,8 +31,8 @@ VBScolor = ROOT.kRed
 VBSLLcolor = ROOT.kGreen+3
 VBSTLcolor = ROOT.kBlue+3
 VBSTTcolor = ROOT.kMagenta+3
-CWcolor = ROOT.kMagenta+3
-CHWcolor = ROOT.kMagenta+2
+CWcolor = ROOT.kSpring-7
+CHWcolor = ROOT.kAzure+10
 ######### UL2016APV ##########
 
 ### ZZtoLep ###
@@ -539,7 +539,7 @@ VBS_SSWW_cW_UL2016APV.components = [
     VBS_SSWW_cW_INT_UL2016APV,
 ]
 
-VBS_SSWW_cW_SM_UL2016APV = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{W} + SM", "VBS_SSWW_cW_SM_UL2016APV")
+VBS_SSWW_cW_SM_UL2016APV = sample(CWcolor, 1, 1001, "VBS ssWW c_{W} + SM", "VBS_SSWW_cW_SM_UL2016APV")
 VBS_SSWW_cW_SM_UL2016APV.year = "UL2016APV"
 VBS_SSWW_cW_SM_UL2016APV.components = [
     VBS_SSWW_cW_BSM_UL2016APV,
@@ -566,7 +566,7 @@ VBS_SSWW_cHW_UL2016APV.components = [
     VBS_SSWW_cHW_INT_UL2016APV,
 ]
 
-VBS_SSWW_cHW_SM_UL2016APV = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2016APV")
+VBS_SSWW_cHW_SM_UL2016APV = sample(CHWcolor, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2016APV")
 VBS_SSWW_cHW_SM_UL2016APV.year = "UL2016APV"
 VBS_SSWW_cHW_SM_UL2016APV.components = [
     VBS_SSWW_cHW_BSM_UL2016APV,
@@ -1468,7 +1468,7 @@ VBS_SSWW_cHW_UL2016M.components = [
     VBS_SSWW_cHW_UL2016,
 ]
 
-VBS_SSWW_cHW_SM_UL2016 = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2016")
+VBS_SSWW_cHW_SM_UL2016 = sample(CHWcolor, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2016")
 VBS_SSWW_cHW_SM_UL2016.year = "UL2016"
 VBS_SSWW_cHW_SM_UL2016.components = [
     VBS_SSWW_cHW_BSM_UL2016,
@@ -1478,7 +1478,7 @@ VBS_SSWW_cHW_SM_UL2016.components = [
     VBS_SSWW_TT_SM_UL2016,
 ]
 
-VBS_SSWW_cHW_SM_UL2016M = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2016M")
+VBS_SSWW_cHW_SM_UL2016M = sample(CHWcolor, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2016M")
 VBS_SSWW_cHW_SM_UL2016M.year = "UL2016M"
 VBS_SSWW_cHW_SM_UL2016M.components = [
     VBS_SSWW_cHW_SM_UL2016APV,
@@ -2242,7 +2242,7 @@ VBS_SSWW_cW_UL2017.components = [
     VBS_SSWW_cW_INT_UL2017,
 ]
 
-VBS_SSWW_cW_SM_UL2017 = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{W} + SM", "VBS_SSWW_cW_SM_UL2017")
+VBS_SSWW_cW_SM_UL2017 = sample(CWcolor, 1, 1001, "VBS ssWW c_{W} + SM", "VBS_SSWW_cW_SM_UL2017")
 VBS_SSWW_cW_SM_UL2017.year = "UL2017"
 VBS_SSWW_cW_SM_UL2017.components = [
     VBS_SSWW_cW_BSM_UL2017,
@@ -2269,7 +2269,7 @@ VBS_SSWW_cHW_UL2017.components = [
     VBS_SSWW_cHW_INT_UL2017,
 ]
 
-VBS_SSWW_cHW_SM_UL2017 = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2017")
+VBS_SSWW_cHW_SM_UL2017 = sample(CHWcolor, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2017")
 VBS_SSWW_cHW_SM_UL2017.year = "UL2017"
 VBS_SSWW_cHW_SM_UL2017.components = [
     VBS_SSWW_cHW_BSM_UL2017,
@@ -3020,7 +3020,7 @@ VBS_SSWW_cW_UL2018.components = [
     VBS_SSWW_cW_INT_UL2018,
 ]
 
-VBS_SSWW_cW_SM_UL2018 = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{W} + SM", "VBS_SSWW_cW_SM_UL2018")
+VBS_SSWW_cW_SM_UL2018 = sample(CWcolor, 1, 1001, "VBS ssWW c_{W} + SM", "VBS_SSWW_cW_SM_UL2018")
 VBS_SSWW_cW_SM_UL2018.year = "UL2018"
 VBS_SSWW_cW_SM_UL2018.components = [
     VBS_SSWW_cW_BSM_UL2018,

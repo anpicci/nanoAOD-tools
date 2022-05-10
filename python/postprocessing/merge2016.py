@@ -1,7 +1,7 @@
 import os
 from samples.samplesUL import *
 
-folder = "vUL010"
+folder = "vUL020"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot/"
 leptons = ["electron", "muon"]
 
