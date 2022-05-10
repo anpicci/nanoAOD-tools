@@ -955,9 +955,9 @@ TTTo2L2Nu_UL2016.year = "UL2016"
 TTTo2L2Nu_UL2016.dataset = "/TTTo2L2Nu_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 TTTo2L2Nu_UL2016.sigma = 72.1 #831.76 * 0.105 #pb
 
-TTTo2L2Nu_UL2016 = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016M")
-TTTo2L2Nu_UL2016.year = "UL2016M"
-TTTo2L2Nu_UL2016.compoents= [
+TTTo2L2Nu_UL2016M = sample(TTdilepcolor, 1, 1001, "t#bar{t} DiLep", "TTTo2L2Nu_UL2016M")
+TTTo2L2Nu_UL2016M.year = "UL2016M"
+TTTo2L2Nu_UL2016M.compoents= [
     TTTo2L2Nu_UL2016APV,
     TTTo2L2Nu_UL2016,
 ]
