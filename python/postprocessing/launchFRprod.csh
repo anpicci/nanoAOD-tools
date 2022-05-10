@@ -1,6 +1,7 @@
 reset
 set wp = 16
 #set wp = 8
+echo $wp
 
 set year = 2018
 set FOLDER="FR_UL"$year
@@ -39,8 +40,8 @@ cd -
 
 
 
-set year = 2016APV
-set FOLDER="FR_UL"$year
+#set year = 2016APV
+#set FOLDER="FR_UL"$year
 
 #python submit_condor_FR_dev.py -f $FOLDER --wpvsJet $wp -d SampleHTFake_UL$year 
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/FR_UL$year/$wp

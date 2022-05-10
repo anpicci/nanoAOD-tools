@@ -452,6 +452,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     leadjet_CSVv2_b             =   array.array('f', [-999.])
     leadjet_DeepFlv_b           =   array.array('f', [-999.])
     leadjet_DeepCSVv2_b         =   array.array('f', [-999.])
+    leadjet_qgl                 =   array.array('f', [-999.])
     nJets                       =   array.array('f', [-999.])#
     nBJets                      =   array.array('f', [-999.])#
     AK8leadjet_pt                  =   array.array('f', [-999.])
@@ -470,6 +471,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(leadjet_CSVv2_b)
     var_list.append(leadjet_DeepFlv_b)
     var_list.append(leadjet_DeepCSVv2_b)
+    var_list.append(leadjet_qgl)
     var_list.append(nJets)#
     var_list.append(nBJets)#
     var_list.append(AK8leadjet_pt)
@@ -488,6 +490,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     subleadjet_CSVv2_b          =   array.array('f', [-999.])
     subleadjet_DeepFlv_b        =   array.array('f', [-999.])
     subleadjet_DeepCSVv2_b      =   array.array('f', [-999.])
+    subleadjet_qgl              =   array.array('f', [-999.])
     AK8subleadjet_pt                  =   array.array('f', [-999.])
     AK8subleadjet_eta                 =   array.array('f', [-999.])
     AK8subleadjet_phi                 =   array.array('f', [-999.])
@@ -504,6 +507,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(subleadjet_CSVv2_b)
     var_list.append(subleadjet_DeepFlv_b)
     var_list.append(subleadjet_DeepCSVv2_b)
+    var_list.append(subleadjet_qgl)
     var_list.append(AK8subleadjet_pt)
     var_list.append(AK8subleadjet_eta)
     var_list.append(AK8subleadjet_phi)
@@ -704,6 +708,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "leadjet_CSVv2_b",      outTreeFile, leadjet_CSVv2_b)
     systTree.branchTreesSysts(trees, scenario, "leadjet_DeepFlv_b",    outTreeFile, leadjet_DeepFlv_b)
     systTree.branchTreesSysts(trees, scenario, "leadjet_DeepCSVv2_b",  outTreeFile, leadjet_DeepCSVv2_b)
+    systTree.branchTreesSysts(trees, scenario, "leadjet_qgl",           outTreeFile, leadjet_qgl)
     systTree.branchTreesSysts(trees, scenario, "AK8leadjet_pt",           outTreeFile, AK8leadjet_pt)
     systTree.branchTreesSysts(trees, scenario, "AK8leadjet_eta",          outTreeFile, AK8leadjet_eta)
     systTree.branchTreesSysts(trees, scenario, "AK8leadjet_phi",          outTreeFile, AK8leadjet_phi)
@@ -716,6 +721,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "subleadjet_eta",          outTreeFile, subleadjet_eta)
     systTree.branchTreesSysts(trees, scenario, "subleadjet_phi",          outTreeFile, subleadjet_phi)
     systTree.branchTreesSysts(trees, scenario, "subleadjet_mass",         outTreeFile, subleadjet_mass)
+    systTree.branchTreesSysts(trees, scenario, "subleadjet_qgl",           outTreeFile, subleadjet_qgl)
     systTree.branchTreesSysts(trees, scenario, "subleadjet_CSVv2_b",      outTreeFile, subleadjet_CSVv2_b)
     systTree.branchTreesSysts(trees, scenario, "subleadjet_DeepFlv_b",    outTreeFile, subleadjet_DeepFlv_b)
     systTree.branchTreesSysts(trees, scenario, "subleadjet_DeepCSVv2_b",  outTreeFile, subleadjet_DeepCSVv2_b)
@@ -1004,6 +1010,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 tau.mass = tau.mass*tes*fes
             if scenario == 'jesUp':
                 met.pt = met.pt_jesTotalUp
+                met.phi = met.phi_jesTotalUp
                 for jet in jets:
                     jet.pt = jet.pt_jesTotalUp
                     jet.mass = jet.mass_jesTotalUp 
@@ -1013,6 +1020,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     fatjet.msoftdrop = fatjet.msoftdrop_jesTotalUp
             elif scenario == 'jesDown':
                 met.pt = met.pt_jesTotalDown
+                met.phi = met.phi_jesTotalDown
                 for jet in jets:
                     jet.pt = jet.pt_jesTotalDown
                     jet.mass = jet.mass_jesTotalDown 
@@ -1022,6 +1030,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     fatjet.msoftdrop = fatjet.msoftdrop_jesTotalDown
             elif scenario == 'jerUp':
                 met.pt = met.pt_jerUp
+                met.phi = met.phi_jerUp
                 for jet in jets:
                     jet.pt = jet.pt_jerUp
                     jet.mass = jet.mass_jerUp 
@@ -1031,6 +1040,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     fatjet.msoftdrop = fatjet.msoftdrop_jerUp
             elif scenario == 'jerDown':
                 met.pt = met.pt_jerDown
+                met.phi = met.phi_jerDown
                 for jet in jets:
                     jet.pt = jet.pt_jerDown
                     jet.mass = jet.mass_jerDown 
@@ -1550,6 +1560,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         leadjet_DeepFlv_b[0]        =   leadjet.btagDeepFlavB
         leadjet_DeepCSVv2_b[0]      =   leadjet.btagDeepB
         leadjet_CSVv2_b[0]          =   leadjet.btagCSVV2
+        leadjet_qgl[0]              =   leadjet.qgl
         subleadjet_pt[0]            =   subleadjet.pt
         subleadjet_eta[0]           =   subleadjet.eta
         subleadjet_phi[0]           =   subleadjet.phi
@@ -1557,6 +1568,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         subleadjet_DeepFlv_b[0]     =   subleadjet.btagDeepFlavB
         subleadjet_DeepCSVv2_b[0]   =   subleadjet.btagDeepB
         subleadjet_CSVv2_b[0]       =   subleadjet.btagCSVV2
+        subleadjet_qgl[0]            =   subleadjet.qgl
 
         #calculating deltaPhi                                                                                                      
         deltaPhi_jj[0]      =   deltaPhi(leadjet, subleadjet)#

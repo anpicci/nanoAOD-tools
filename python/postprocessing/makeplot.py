@@ -520,7 +520,7 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
         cutbase += '*(' + syst + ')'
 
     if syst != "":
-        histoname += "_" + syst
+        histoname += "_" + syst.replace("_Up", "Up").replace("_Down", "Down")
         if not isSystCorr:
             histoname += "_" + str(opt.year).replace("UL", "")
         
@@ -530,7 +530,7 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
 
     print("count? ", opt.count)
     if opt.count:
-        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst + ".csv", "a")
+        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst.replace("_Up", "Up").replace("_Down", "Down") + ".csv", "a")
         countf.write(sample.leglabel)
         countf.write(',')
         #countf.write("\nBin\tContent\tError")
@@ -667,11 +667,20 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
         countf.write(str(bincont) + "," + str(binerrcont))
         countf.write("\n")
     print("int:", h1.Integral())
-      
-    fout = ROOT.TFile.Open(foutput, "UPDATE")
-    fout.cd()
-    h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
-    fout.Close()
+
+    try:
+        fout = ROOT.TFile.Open(foutput, "UPDATE")
+    except:
+        print("herror")
+        fout.Recover()
+    else:
+        print("herror")
+        pass
+    finally:
+        fout.cd()
+        h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
+        fout.Close()
+
     f1.Close()
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
@@ -718,9 +727,9 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         stackname += "_wFakes_" + str(opt.wfake.split('_')[0])
         canvasname += "_wFakes_" + str(opt.wfake.split('_')[0])
     if syst_ != "":
-        histoname += "_" + syst
-        stackname += "_" + syst
-        canvasname += "_" + syst
+        histoname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
+        stackname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
+        canvasname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
 
     if opt.sr:
         blind = True
@@ -1037,20 +1046,24 @@ else:
 #print(class_list)
 
 if(opt.dat != 'all'):
-     print(opt.dat)
-     if not(opt.dat in sample_dict.keys()):
-          print("dataset not found!")
-          print(sample_dict.keys())
+     print("opt.dat", opt.dat)
      #print(opt.dat)
      if 'DataMET' in str(opt.dat):
           raise Exception("Not interesting dataset")
      elif not opt.folder.startswith('CTHT') and 'DataHT' in str(opt.dat) and (opt.plot or opt.stack):
           raise Exception("Not interesting dataset")
      dataset_names = opt.dat.strip('[]').split(',')
-     #print(dataset_names)
+     print("dataset_names", dataset_names)
+     for dat in dataset_names:
+          if not(dat in sample_dict.keys()):
+              raise Exception("dataset not found!")
+              #print(sample_dict.keys())
+        
      samples = []
      [samples.append(sample_dict[dataset_name]) for dataset_name in dataset_names]
      [dataset_dict[str(sample.year)].append(sample) for sample in samples]
+
+
 else:
      for v in class_list:
 
@@ -1081,7 +1094,7 @@ else:
 
           dataset_dict[str(v.year)].append(v)
 
-print(dataset_dict)
+print("dataset_dict", dataset_dict)
 
 years = []
 if(opt.year!='all'):
@@ -1157,13 +1170,12 @@ for year in years:
         variables.append(variabile('DNN_SM_UL010_allBKG', 'XGBoost allbkg SM DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('DNN_cW_UL010_allBKG', 'XGBoost allbkg c_{W} DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
         variables.append(variabile('DNN_cHW_UL010_allBKG', 'XGBoost allbkg c_{HW} DNN output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
-        variables.append(variabile('BDT_fT1_xgb_RR_no', 'XGBoost f_{T1} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_aQGC_xgb_RR_no', 'XGBoost a_{QGC} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_fS0_25_xgb_RR_no', 'XGBoost f_{S0}=25 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        variables.append(variabile('BDT_fS0_xgb_RR_no', 'XGBoost mixed f_{S0} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
-        '''
 
+        #variables.append(variabile('BDT_fT1_xgb_RR_no', 'XGBoost f_{T1} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_aQGC_xgb_RR_no', 'XGBoost a_{QGC} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_fS0_25_xgb_RR_no', 'XGBoost f_{S0}=25 BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        #variables.append(variabile('BDT_fS0_xgb_RR_no', 'XGBoost mixed f_{S0} BDT output', wzero+'*('+cutbase+')', 5, 0., 1.))
+        
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
@@ -1439,18 +1451,20 @@ for year in years:
                 continue
             elif ('DataMu' in sample.label or 'DataEle' in sample.label or 'DataMET' in sample.label or 'QCD' in sample.label) and opt.folder.startswith("CTHT"):
                 continue
-                    
+
             if(opt.plot):
                 for syst in systematics:
                     if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
                         continue
                     for var in variables:
                         if opt.count:
-                            if not os.path.exists(pathplot + 'countings/'):
+                            if os.path.exists(pathplot + 'countings/'):
+                                print("hello", pathplot + 'countings/')
+                            else:
                                 os.makedirs(pathplot + 'countings/')
                             if not os.path.exists(pathplot + 'countings/' + cut_tag):
                                 os.makedirs(pathplot + 'countings/' + cut_tag)
-                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0] + ".csv"):
+                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0].replace("_Up", "Up").replace("_Down", "Down") + ".csv"):
                                 tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
                                 tmp_f.write("Process,yields,error\n")
                                 tmp_f.close()

@@ -35,10 +35,10 @@ if __name__ == "__main__" :
     print('Starting @ '+ str(time))
 
     wpTagger = "/FR_UL" + str(opt.year) + "/" 
-    wp = opt.infolder.split(wpTagger)
-    wp = wp[1]
-    wp = wp[0]
+    wp = opt.infolder.split(wpTagger)[-1].replace("/", "")
+
     print('wp',wp)
+    
     input_folder = opt.infolder
     outdir = 'FakeRatio_calcs/' + wp + '/'
 
@@ -46,7 +46,7 @@ if __name__ == "__main__" :
         raise NameError('ERROR: directory ', input_folder, ' not found')
     else:
         print('Using as input folder: ', input_folder)
-
+    
     print('Processing events with met cut: ' + str(opt.met_cut) + ' and mT(lep, MET) cut: ' + str(opt.mt_lepMET_cut))
 
     makeDir(outdir)
@@ -85,5 +85,5 @@ if __name__ == "__main__" :
 
     fManager.saveFile()
     fManager.closeFile()
-
+    
 #running on lxplus726

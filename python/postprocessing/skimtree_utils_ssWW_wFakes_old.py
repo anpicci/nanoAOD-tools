@@ -901,8 +901,8 @@ def BVetoLoose(jetCollection):
 
 def CountBJets(jetCollection):
     nb=0
-    #for k in range(len(jetCollection)):
-    for jet in jetCollection:
+    jets = get_Jet(jetCollection, PT_CUT_JET)
+    for jet in jets:
         if jet.btagDeepFlavB>=WP_btagger[BTAG_ALGO][BTAG_WP] and jet.pt>BTAG_PT_CUT and abs(jet.eta)<BTAG_ETA_CUT: 
           nb+=1
     return nb
