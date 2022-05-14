@@ -11,6 +11,8 @@ samples2016 = [cl for cl in class_list if "UL2016" == cl.year]
 for lepton in leptons:
     compath = path + lepton + "/"
     print("Lepton considered:", lepton)
+    os.system("rm " + compath +"*UL2016M*root")
+
     for sample in samples2016:
         infiles = [f for f in os.listdir(path + lepton) if f.startswith(sample.label)]
         if len(infiles) == 0:
@@ -26,3 +28,4 @@ for lepton in leptons:
     print(lepton, "ended")
 
 print("That's all!")
+

@@ -93,14 +93,14 @@ split = 50
 if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
     scenarios = [
-        "nominal",
-        "jesUp",
-        "jesDown",
-        "jerUp",
-        "jerDown",
-        "TESUp",
-        "TESDown",
-        "FESUp",
+        #"nominal",
+        #"jesUp",
+        #"jesDown",
+        #"jerUp",
+        #"jerDown",
+        #"TESUp",
+        #"TESDown",
+        #"FESUp",
         "FESDown",
     ]
 else:

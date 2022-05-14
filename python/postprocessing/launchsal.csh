@@ -6,34 +6,32 @@ set folder = vUL025 #### with loose bveto, new txt files, systematics
 
 #######    2017   #######
 set year = 'UL2017'
-#python3 PrepareToPlot.py -f $folder -y $year -d WJets_$year
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #to redo when condor finished
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year 
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2018   #######
 set year = 'UL2018'
-#python3 PrepareToPlot.py -f $folder -y $year -d WJets_$year
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year 
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d WJets_$year #done
+python3 PrepareToPlot.py -f $folder -y $year 
+reset
+python3 PrepareToPlot.py -f $folder -y $year 
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #rifare
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2016   #######
 set year = 'UL2016'
-#python3 PrepareToPlot.py -f $folder -y $year -d WJets_$year
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #to redo when condor finished
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #to redo when condor finished
 ##python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 
 #######    2016APV   #######
 set year = 'UL2016APV'
-#python3 PrepareToPlot.py -f $folder -y $year -d WJets_$year
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #to redo when condor finished
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #to redo when condor finished
 ##python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
