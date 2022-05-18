@@ -50,8 +50,10 @@ def cfg_writer(sample, isMC, outdir):
     f.write("config.section_('Data')\n")
     f.write("config.Data.inputDataset = '"+sample.dataset+"'\n")
     #f.write("config.Data.allowNonValidInputDataset = True\n")
-    #f.write("config.Data.inputDBS = 'phys03'")
-    f.write("config.Data.inputDBS = 'global'\n")
+    if sample.dataset.endswith("/USER"):
+        f.write("config.Data.inputDBS = 'phys03'\n")
+    else:
+        f.write("config.Data.inputDBS = 'global'\n")
     if not isMC:
         f.write("config.Data.splitting = 'LumiBased'\n")
         if sample.year == '2016':
