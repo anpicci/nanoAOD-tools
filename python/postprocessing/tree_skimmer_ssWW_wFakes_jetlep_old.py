@@ -432,6 +432,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(taujet_deltaPhi)
     var_list.append(taujet_deltaEta)
     var_list.append(taujet_HadGamma)
+    var_list.append(taujet_EmGamma)
     var_list.append(taujet_HEGamma)
 
     #event SFFake
