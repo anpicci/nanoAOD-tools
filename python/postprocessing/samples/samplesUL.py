@@ -2727,6 +2727,13 @@ VG_UL2018.components = [
     WG_UL2018,
 ]
 
+VG_UL2016M = sample(VGcolor, 1, 1001, "V#gamma", "VG_UL2016M")
+VG_UL2016M.year = "UL2016M"
+VG_UL2016M.components = [
+    VG_UL2016APV,
+    VG_UL2016,
+]
+
 VG_ULRunII = sample(VGcolor, 1, 1001, "V#gamma", "VG_ULRunII")
 VG_ULRunII.year = "ULRunII"
 VG_ULRunII.components = [

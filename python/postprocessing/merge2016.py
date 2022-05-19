@@ -1,4 +1,5 @@
 import os
+os.system("reset")
 from samples.samplesUL import *
 
 folder = "vUL025"
@@ -14,11 +15,11 @@ for lepton in leptons:
     os.system("rm " + compath +"*UL2016M*root")
 
     for sample in samples2016:
-        infiles = [f for f in os.listdir(path + lepton) if f.startswith(sample.label+"_UL")]
+        labelsample = sample.label.split("_UL")[0]
+        infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and "2016" in f]
         if len(infiles) == 0:
             continue
         #print(infiles)
-        labelsample = sample.label.split("_UL")[0]
         haddcommand = "hadd -f " + compath + sample.label +"M_" + lepton + ".root "
         for infile in infiles:
             haddcommand += compath + infile + " "
