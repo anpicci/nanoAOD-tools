@@ -256,7 +256,7 @@ if opt.bdt or opt.ebdt or opt.mubdt:
         cut_tag = cut_tag + "_lepBDTcut"        
 
 
-lumi = {'2016': 35.9, 'UL2016M': 36.3, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83}
+lumi = {'2016': 35.9, 'UL2016M': 36.3, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.48, "2018": 59.7, 'UL2018':59.83, "ULRunII":137.13}
 
 
 if ("UL" in opt.folder and not "FR" in opt.folder and int(opt.folder.split("UL")[-1]) < 10) or (not "UL" in opt.folder) or "FR" in opt.folder:

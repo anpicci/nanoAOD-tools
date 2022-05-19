@@ -14,7 +14,7 @@ for lepton in leptons:
     os.system("rm " + compath +"*UL2016M*root")
 
     for sample in samples2016:
-        infiles = [f for f in os.listdir(path + lepton) if f.startswith(sample.label)]
+        infiles = [f for f in os.listdir(path + lepton) if f.startswith(sample.label+"_UL")]
         if len(infiles) == 0:
             continue
         #print(infiles)

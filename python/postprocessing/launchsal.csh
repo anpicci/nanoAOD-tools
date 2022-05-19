@@ -15,14 +15,14 @@ python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta 
 set year = 'UL2018'
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year 
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #rifare
+python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2016   #######
 set year = 'UL2016'
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #to redo when condor finished
+python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year
 ##python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 
@@ -30,6 +30,6 @@ python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta 
 set year = 'UL2016APV'
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #to redo when condor finished
+python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year
 ##python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
