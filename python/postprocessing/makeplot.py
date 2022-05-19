@@ -1044,7 +1044,7 @@ leptons = opt.lep.split(',')
 if not "UL" in opt.year:
     dataset_dict = {'2017':[],'2018':[]}
 else:
-    dataset_dict = {'UL2016APV':[], 'UL2016': [], 'UL2016M':[], 'UL2017':[], 'UL2018':[]}
+    dataset_dict = {'UL2016APV':[], 'UL2016': [], 'UL2016M':[], 'UL2017':[], 'UL2018':[], "ULRunII":[]}
 #print(class_list)
 
 if(opt.dat != 'all'):

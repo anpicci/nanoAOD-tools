@@ -16,7 +16,7 @@ for lepton in leptons:
 
     for sample in samples2016:
         labelsample = sample.label.split("_UL")[0]
-        infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and "2016" in f]
+        infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and ("2016." in f or "2016APV" in f)]
         if len(infiles) == 0:
             continue
         #print(infiles)
