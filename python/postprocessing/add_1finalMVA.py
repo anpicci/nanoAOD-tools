@@ -251,6 +251,9 @@ def MLRun(k, kpath):
                     for i in df.columns:
                         new_columns.append(i.split('[')[0])
                     df.columns = new_columns
+                    for i in df.columns:
+                        if 'taujet' in i:
+                            df.loc[df[i]==-999,i] = -2. 
 
                     myfile = ROOT.TFile(file_path_cp, 'update')
                     #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())

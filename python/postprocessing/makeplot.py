@@ -1158,7 +1158,7 @@ for year in years:
 
 
         ######### with systematics ###########
-
+        '''
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
         
         bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 0.8, 1.])
@@ -1191,7 +1191,7 @@ for year in years:
             nbin_m1 = len(bin_m1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-
+        '''
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
@@ -1201,7 +1201,7 @@ for year in years:
             #bin_mjj = array("d", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 2000., 2500., 3500., 4500.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mjj, bin_mjj))
-
+        '''
         ######### without systematics ###########
 
         #try:
@@ -1448,7 +1448,7 @@ for year in years:
 
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False,  5, 0., 1.))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, 5, 0., 1.))
-
+        '''
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
