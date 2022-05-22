@@ -69,7 +69,7 @@ for im, model in enumerate(modelpaths):
 features = []
 for ib, branch in enumerate(branches):
     features.append([])
-    listfile = open(branch + "_features.txt")
+    listfile = open("ML/" + branch + "_features.txt")
     for line in listfile.readlines():
         line = line.replace("\n", "")
         for word in line.split(","):
