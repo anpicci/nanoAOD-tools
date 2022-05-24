@@ -20,6 +20,7 @@ parser.add_option('-c', dest='check', default = False, action = 'store_true', he
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
 parser.add_option('--ov', dest='ovride', default = False, action = 'store_true', help='Override check for completed condorization')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
+parser.add_option('-s', dest='scenario', type=str, default = 'all', help='Default is all')
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
@@ -92,17 +93,20 @@ split = 50
 
 if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
-    scenarios = [
-        "nominal",
-        "jesUp",
-        "jesDown",
-        "jerUp",
-        "jerDown",
-        "TESUp",
-        "TESDown",
-        "FESUp",
-        "FESDown",
-    ]
+    if opt.scenario == "all":
+        scenarios = [
+            "nominal",
+            "jesUp",
+            "jesDown",
+            "jerUp",
+            "jerDown",
+            "TESUp",
+            "TESDown",
+            "FESUp",
+            "FESDown",
+        ]
+    else:
+        scenarios = scenario.split(",")
 else:
     isWithSysts = False
     scenarios = ["all"]

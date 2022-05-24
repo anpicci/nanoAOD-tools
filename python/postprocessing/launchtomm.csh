@@ -54,29 +54,42 @@ set year="UL2017"
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_v2_ul,$bdt_cW_allbkg_v2_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_v2_branch,$bdt_cW_allbkg_v2_branch,$bdt_cHW_allbkg_branch #--scalers 
  #python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path,$dnn_cW_path,$dnn_cHW_path --branches $dnn_sm_branch,$dnn_cW_branch,$dnn_cHW_branch --scalers $dnn_sm_scaler,$dnn_cW_scaler,$dnn_cHW_scaler
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TT_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TT_$year
+
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TTTo2L2Nu_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TTTo2L2Nu_$year
+
 
 set year="UL2018"
 ##python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch #--scalers 
 ##python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_v2_ul,$bdt_cW_allbkg_v2_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_v2_branch,$bdt_cW_allbkg_v2_branch,$bdt_cHW_allbkg_branch #--scalers 
 #python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path,$dnn_cW_path,$dnn_cHW_path --branches $dnn_sm_branch,$dnn_cW_branch,$dnn_cHW_branch --scalers $dnn_sm_scaler,$dnn_cW_scaler,$dnn_cHW_scaler
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TT_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TT_$year
+
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TTTo2L2Nu_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TTTo2L2Nu_$year
 
 set year="UL2016"
 ##python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch #--scalers
 ##python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_v2_ul,$bdt_cW_allbkg_v2_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_v2_branch,$bdt_cW_allbkg_v2_branch,$bdt_cHW_allbkg_branch #--scalers 
 #python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path,$dnn_cW_path,$dnn_cHW_path --branches $dnn_sm_branch,$dnn_cW_branch,$dnn_cHW_branch --scalers $dnn_sm_scaler,$dnn_cW_scaler,$dnn_cHW_scaler
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TT_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TT_$year
+
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TTTo2L2Nu_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TTTo2L2Nu_$year
 
 set year="UL2016APV"
 ##python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_ul,$bdt_cW_ul,$bdt_cHW_ul --branches $bdt_sm_branch,$bdt_cW_branch,$bdt_cHW_branch #--scalers 
 ##python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_ul,$bdt_cW_allbkg_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_branch,$bdt_cW_allbkg_branch,$bdt_cHW_allbkg_branch #--scalers 
 #python3 add_1finalMVA.py -y $year -f $folder --paths $bdt_sm_allbkg_v2_ul,$bdt_cW_allbkg_v2_ul,$bdt_cHW_allbkg_ul --branches $bdt_sm_allbkg_v2_branch,$bdt_cW_allbkg_v2_branch,$bdt_cHW_allbkg_branch #--scalers 
 #python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path,$dnn_cW_path,$dnn_cHW_path --branches $dnn_sm_branch,$dnn_cW_branch,$dnn_cHW_branch --scalers $dnn_sm_scaler,$dnn_cW_scaler,$dnn_cHW_scaler
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal
-python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TT_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TT_$year
+
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_bal,$dnn_cW_path_bal,$dnn_cHW_path_bal --branches $dnn_sm_branch_bal,$dnn_cW_branch_bal,$dnn_cHW_branch_bal --scalers $dnn_sm_scaler_bal,$dnn_cW_scaler_bal,$dnn_cHW_scaler_bal -d TTTo2L2Nu_$year
+python3 add_1finalMVA.py -y $year -f $folder --paths $dnn_sm_path_nobal,$dnn_cW_path_nobal,$dnn_cHW_path_nobal --branches $dnn_sm_branch_nobal,$dnn_cW_branch_nobal,$dnn_cHW_branch_nobal --scalers $dnn_sm_scaler_nobal,$dnn_cW_scaler_nobal,$dnn_cHW_scaler_nobal -d TTTo2L2Nu_$year
