@@ -21,6 +21,7 @@ parser.add_option('-c', dest='check', default = False, action = 'store_true', he
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
 parser.add_option('--ov', dest='ovride', default = False, action = 'store_true', help='Override check for completed condorization')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
+parser.add_option('-v', dest='veto', type=str, default = 'none', help='Default is none')
 parser.add_option('-s', dest='scenario', type=str, default = 'all', help='Default is all')
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
@@ -54,7 +55,8 @@ ofolder = ''
 
 ofolder += opt.folder# + "/"
 
-path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
+#path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
+path = "/eos/home-a/apiccine/VBS/nosynch/" + ofolder + "/"
 #print(path, opt.isfake)
 if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     path += opt.channel + "/"
@@ -63,6 +65,11 @@ modelpaths = opt.paths.split(",")
 branches = opt.branches.split(",")
 scalerpaths = opt.scalers.split(",")
 print(branches, scalerpaths)
+
+toVeto = False
+if opt.veto != "none":
+    vetosamp = opt.veto.split(",")
+    toVeto = True
 
 for im, model in enumerate(modelpaths):
     print(im, model)
@@ -340,6 +347,9 @@ print("year", opt.year)
 #}
 
 for k, v in merge_dict.items():
+    if toVeto and k in vetosamp:
+        continue
+
     if not k.endswith(str(opt.year)):
         continue
 
