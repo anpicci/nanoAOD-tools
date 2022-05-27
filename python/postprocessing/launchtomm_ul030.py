@@ -74,6 +74,6 @@ folder="vUL030"
 
 for year in years:
     for scenario in scenarios:
-        os.system("python3 add_1finalMVA_chunck.py -y " + year + " -f " + folder + " --paths " + dnn_cW_path_bal_v2 + " --branches " + dnn_cW_branch_bal_v2 + " --scalers " + dnn_cW_scaler_bal_v2)# + " -d TTTo2L2Nu_" + year + " -s " + scenario)
+        os.system("python3 add_1finalMVA_chunck.py -y " + year + " -f " + folder + " --paths " + dnn_cW_path_bal_v2 + " --branches " + dnn_cW_branch_bal_v2 + " --scalers " + dnn_cW_scaler_bal_v2 + " -d TTTo2L2Nu_" + year + " -s " + scenario)
         #os.system("python3 add_1finalMVA_chunck.py -y " + year + " -f " + folder + " --paths " + dnn_sm_path_nobal + "," + dnn_cW_path_nobal + "," + dnn_cHW_path_nobal + " --branches " + dnn_sm_branch_nobal + "," + dnn_cW_branch_nobal + "," + dnn_cHW_branch_nobal + " --scalers " + dnn_sm_scaler_nobal + "," + dnn_cW_scaler_nobal + "," + dnn_cHW_scaler_nobal)# + " -d TTTo2L2Nu_" + year + " -s " + scenario)
         break
