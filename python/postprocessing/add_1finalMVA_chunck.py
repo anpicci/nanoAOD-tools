@@ -237,7 +237,7 @@ def MLRun(k, kpath):
         tmpfile = ROOT.TFile.Open(file_path)
         print(file_path, ROOT.TFile.Open(file_path))
         tmptree = tmpfile.Get("events_"+scenario)
-        print("tree:", tmpentr)
+        print("tree:", tmptree)
         tmpentr = tmptree.GetEntries()
         tmpfile.Close()
         #tmpfile.Delete()
