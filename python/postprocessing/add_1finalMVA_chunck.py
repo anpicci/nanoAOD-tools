@@ -66,6 +66,11 @@ branches = opt.branches.split(",")
 scalerpaths = opt.scalers.split(",")
 print(branches, scalerpaths)
 
+notAll = False
+if opt.dat != "all":
+    mergesamp = opt.dat.split(",")
+    notAll = True
+
 toVeto = False
 if opt.veto != "none":
     vetosamp = opt.veto.split(",")
@@ -345,6 +350,9 @@ print("year", opt.year)
 
 for k, v in merge_dict.items():
     if toVeto and k in vetosamp:
+        continue
+
+    if notAll and k not in mergesamp:
         continue
 
     if not k.endswith(str(opt.year)):
