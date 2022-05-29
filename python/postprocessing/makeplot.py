@@ -1176,7 +1176,7 @@ for year in years:
         variables.append(variabile('DNN_SM_UL025_nobal', 'noBal. SM DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         variables.append(variabile('DNN_cW_UL025_nobal', 'noBal. c_{W} DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         variables.append(variabile('DNN_cHW_UL025_nobal', 'noBal. c_{HW} DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
-
+        
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
