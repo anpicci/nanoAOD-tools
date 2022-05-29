@@ -75,6 +75,7 @@ toVeto = False
 if opt.veto != "none":
     vetosamp = opt.veto.split(",")
     toVeto = True
+    print("Samples to veto:", vetosamp)
 
 for im, model in enumerate(modelpaths):
     print(im, model)
@@ -411,9 +412,9 @@ for k, v in merge_dict.items():
                 #if (hasattr(v, "components") and os.path.exists(cpath+k+"_merged.root")) or opt.rw:
                 if os.path.exists(cpath+c.label+"_merged.root") or opt.rw:
                     if Debug:
-                        print("rm -f " + cpath + c + "_merged.root")
+                        print("rm -f " + cpath + c.label + "_merged.root")
                     else:
-                        os.system("rm -f " + cpath + c + "_merged.root")
+                        os.system("rm -f " + cpath + c.label + "_merged.root")
             print("Merging parts?", partmerge)
             if partmerge:
                 print(c.label + " not merged so far")
