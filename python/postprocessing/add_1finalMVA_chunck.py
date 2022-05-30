@@ -246,6 +246,7 @@ def MLRun(k, kpath):
         if k.startswith("Data") and ids > 0:
             continue
 
+        print("Processing events for scenario", scenario)
         tmpfile = ROOT.TFile.Open(file_path)
         tmptree = tmpfile.Get("events_"+scenario)
         tmpentr = tmptree.GetEntries()
@@ -277,7 +278,6 @@ def MLRun(k, kpath):
                 to_keep = features[idbr]
          
                 with uproot.open(file_path) as file:#_cp)
-                    print("Processing events for scenario", scenario)
                     df = pd.DataFrame(columns = to_keep)
                     stepsize = 1000
                     tree = file["events_" + scenario]

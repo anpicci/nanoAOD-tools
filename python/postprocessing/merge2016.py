@@ -2,7 +2,7 @@ import os
 os.system("reset")
 from samples.samplesUL import *
 
-folder = "vUL025"
+folder = "vUL030"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot/"
 leptons = ["electron", "muon"]
 
