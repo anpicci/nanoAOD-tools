@@ -169,7 +169,7 @@ for k, v in merge_dict.items():
 '''
 
 for k, v in merge_dict.items():
-    #print("hello", k)
+    
     #if opt.year not in k:
     if not k.endswith(opt.year):
         continue
