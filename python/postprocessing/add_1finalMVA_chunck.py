@@ -236,7 +236,7 @@ def MLRun(k, kpath):
     #file_path_cp = kpath+k+"_cp.root"
     if os.path.exists(tmpdir):
         pass
-        #os.system("rm -rf " + tmpdir)
+        os.system("rm -rf " + tmpdir + "/*")
     else:
         os.system("mkdir " + tmpdir)
     file_path_cp = tmpdir + "/"+k+"_cp.root"
