@@ -236,13 +236,16 @@ def MLRun(k, kpath):
     #file_path_cp = kpath+k+"_cp.root"
     if os.path.exists(tmpdir):
         pass
-        os.system("rm -rf " + tmpdir + "/*")
+        #os.system("rm -rf " + tmpdir + "/*" + opt.year + "_*")
     else:
         os.system("mkdir " + tmpdir)
     file_path_cp = tmpdir + "/"+k+"_cp.root"
     #tmpfile = ROOT.TFile.Open(file_path)
 
-    for ids, scenario in enumerate(scenarios):
+    ids = 0
+    while ids < len(scenarios):
+    #for ids, scenario in enumerate(scenarios):
+        scenario = scenarios[ids]
         if k.startswith("Data") and ids > 0:
             continue
 
@@ -254,27 +257,27 @@ def MLRun(k, kpath):
         #tmpfile.Delete()
         #print("entries:", tmpentr)
         #print("tmpentr", tmpentr)
+        isDamaged = False
         if tmpentr > 0:
             ## insert BDT output value into merged file
             #if os.path.exists(file_path_cp):
                 #os.system("rm " + file_path_cp)
             #if not os.path.exists(file_path_cp):
                 #os.system("cp " + file_path + " " + file_path_cp)
-            isDamaged = False
-            for idbr, branch in enumerate(branches):
-                os.system("cp " + file_path + " " + file_path_cp)
-                myfile = ROOT.TFile(file_path_cp, 'update')
 
+            idbr = 0
+            os.system("cp " + file_path + " " + file_path_cp)
+            myfile = ROOT.TFile(file_path_cp, 'update')
+            mytree = myfile.Get("events_"+scenario)
+
+            for idbr, branch in enumerate(branches):
                 if branch in myfile.Get("events_"+scenario).GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
-                    myfile.Close()
                     continue
                 else:
                     print("branch", branch, "will be created for sample", k)
                     pass
-                    #myfile.Close()
 
-                mytree = myfile.Get("events_"+scenario)
                 to_keep = features[idbr]
          
                 with uproot.open(file_path) as file:#_cp)
@@ -319,28 +322,30 @@ def MLRun(k, kpath):
                         newbranch.Fill()
 
                     print("\n", branch, "completed!")
-                
-                myfile.cd()
-                mytree.Write("", ROOT.TFile.kOverwrite)
-                myfile.Close()
-            
-                try:
-                    myfile = ROOT.TFile(file_path_cp, 'update')
-                except:
-                    print("Warning!")
-                    isDamaged = True
-                    break
-                else:
-                    os.system("cp " + file_path_cp + " " + file_path)
-                    os.system("rm " + file_path_cp)
-            
-            if isDamaged:
-                print("Branching damaged file! Avoid to save and relaunch!")
-                break
                     
-            #print("Saving tree with ML branches...")
-            #os.system("cp " + file_path_cp + " " + file_path)
-    #os.system("rm -rf " + tmpdir)    
+            myfile.cd()
+            mytree.Write("", ROOT.TFile.kOverwrite)
+            myfile.Close()
+            
+        myfile = ROOT.TFile(file_path_cp, 'update')
+            
+        for alscen in scenarios:
+            try:
+                lob = myfile.Get("events_"+alscen).GetListOfBranches()
+            except:
+                print("Warning!")
+                myfile.Close()
+                isDamaged = True
+                break
+            else:
+                myfile.Close()
+                os.system("cp " + file_path_cp + " " + file_path)
+                os.system("rm " + file_path_cp)
+            
+        if isDamaged:
+            print("Branching damaged file! Avoid to save and relaunch!")
+        else:
+            ids += 1
 
 print("year", opt.year)
 

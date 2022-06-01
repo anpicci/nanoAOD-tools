@@ -8,6 +8,7 @@ import uproot
 import pickle
 import numpy as np
 import sklearn
+import math
 from xgboost import XGBClassifier
 
 #os.environ['TF_CPP_MIN_LOG_LEVEL']
@@ -20,6 +21,7 @@ parser.add_option('-c', dest='check', default = False, action = 'store_true', he
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
 parser.add_option('--ov', dest='ovride', default = False, action = 'store_true', help='Override check for completed condorization')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
+parser.add_option('-v', dest='veto', type=str, default = 'none', help='Default is none')
 parser.add_option('-s', dest='scenario', type=str, default = 'all', help='Default is all')
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
 parser.add_option('--ct', dest='ct', type=str, default = '', help='Default is analysis, otherwise specified CT')
@@ -53,7 +55,8 @@ ofolder = ''
 
 ofolder += opt.folder# + "/"
 
-path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
+#path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + ofolder + "/"
+path = "/eos/home-a/apiccine/VBS/nosynch/" + ofolder + "/"
 #print(path, opt.isfake)
 if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     path += opt.channel + "/"
@@ -62,6 +65,17 @@ modelpaths = opt.paths.split(",")
 branches = opt.branches.split(",")
 scalerpaths = opt.scalers.split(",")
 print(branches, scalerpaths)
+
+notAll = False
+if opt.dat != "all":
+    mergesamp = opt.dat.split(",")
+    notAll = True
+
+toVeto = False
+if opt.veto != "none":
+    vetosamp = opt.veto.split(",")
+    toVeto = True
+    print("Samples to veto:", vetosamp)
 
 for im, model in enumerate(modelpaths):
     print(im, model)
@@ -106,7 +120,7 @@ if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
             "FESDown",
         ]
     else:
-        scenarios = scenario.split(",")
+        scenarios = opt.scenario.split(",")
 else:
     isWithSysts = False
     scenarios = ["all"]
@@ -142,7 +156,7 @@ def CondoredList(samplename):
                         os.system("rm "+ path + samplename + "/" + condfile)
                     else:
                         print("rm "+ path + samplename + "/" + condfile)
-                    
+
                 else:
                     pass
 
@@ -192,7 +206,7 @@ def AreAllCondored(crabname, condorname):
         condoredlist.remove(condorname+".root")
 
     lenstore = len(storelist)
-    
+
     if 'Data' in crabname:
         remainder = int(lenstore%split)
         lenstore = int(lenstore/split)
@@ -218,95 +232,107 @@ def MLRun(k, kpath):
     if not os.path.exists(file_path):
         print(file_path, "does not exist!")
         return False
-    tmpdir = "tmpML_" + opt.folder
-    #file_path_cp = kpath+k+"_cp.root"
+    #tmpdir = "/eos/home-t/ttedesch/ML_inference/tmpML_" + opt.folder
+    tmpdir = "/eos/home-a/apiccine/ML_inference/tmpML_" + opt.folder
+
     if os.path.exists(tmpdir):
-        os.system("rm -rf " + tmpdir)
-    os.system("mkdir " + tmpdir)
+        pass
+        #os.system("rm -rf " + tmpdir)
+    else:
+        os.system("mkdir -p " + tmpdir)
     file_path_cp = tmpdir + "/"+k+"_cp.root"
-    #tmpfile = ROOT.TFile.Open(file_path)
 
-    for ids, scenario in enumerate(scenarios):
-        if k.startswith("Data") and ids > 0:
-            continue
+    tmplist = []
 
-        tmpfile = ROOT.TFile.Open(file_path)
-        tmptree = tmpfile.Get("events_"+scenario)
-        tmpentr = tmptree.GetEntries()
-        tmpfile.Close()
-        #tmpfile.Delete()
-        print("Processing events for scenario", scenario)
-        #print("entries:", tmpentr)
-        
-        if tmpentr > 0:
-            # insert BDT output value into merged file
-            if os.path.exists(file_path_cp):
-                os.system("rm " + file_path_cp)
-            if not os.path.exists(file_path_cp):
-                os.system("cp " + file_path + " " + file_path_cp)
+    for idf, fgroup in enumerate(features):
+        for feature in fgroup:
+            if feature not in tmplist:
+                tmplist.append(feature)
 
-            for idbr, branch in enumerate(branches):
-                with uproot.open(file_path) as file:#_cp)
-                    tree = file["events_" + scenario]
-                    df = tree.arrays(library="pd", filter_branch=lambda b: b.name != "w_PDF")
-                    df = df.fillna(0)
+    to_keep_all = set(tmplist)
 
+    os.system("cp " + file_path + " " + file_path_cp)
+    with uproot.open(file_path) as file:
+        myfile = ROOT.TFile(file_path_cp, 'update')
+        for ids, scenario in enumerate(scenarios):
+            if k.startswith("Data") and ids > 0:
+                continue
+
+            mytree = myfile.Get("events_"+scenario)
+            tmpentr = mytree.GetEntries()            
+            if tmpentr > 0:
+                df = pd.DataFrame(columns = to_keep_all)
+                stepsize = 1000
+                tree = file["events_" + scenario]
+                steps = math.floor(tmpentr/stepsize) + 1
+                for step in range(0,steps):
+
+                    df_step = tree.arrays(library="pd", filter_branch=lambda b: b.name in to_keep_all, entry_start = stepsize * step, entry_stop = min(tmpentr, stepsize * (step + 1)))
+                    df_step = df_step.fillna(0)
                     new_columns = []
-                    for i in df.columns:
+                    for i in df_step.columns:
                         new_columns.append(i.split('[')[0])
-                    df.columns = new_columns
-                    for i in df.columns:
-                        if 'taujet' in i:
-                            df.loc[df[i]==-999,i] = -2. 
+                    df_step.columns = new_columns
+                    df_step = df_step[to_keep_all]
+                    df = pd.concat([df,df_step])
 
-                    myfile = ROOT.TFile(file_path_cp, 'update')
-                    #print("entries", scenario, myfile.Get("events_"+scenario).GetEntries())
-                    mytree = myfile.Get("events_"+scenario)
-                    numOfEvents = mytree.GetEntries()
-                    if branch in mytree.GetListOfBranches():
+                for i in df.columns:
+                    if 'taujet' in i:
+                        df.loc[df[i]==-999,i] = -2.
+                
+                for idbr, branch in enumerate(branches):
+                    to_keep = features[idbr]
+                    if branch in myfile.Get("events_"+scenario).GetListOfBranches():
                         print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
-                        myfile.Close()
                         continue
                     else:
                         print("branch", branch, "will be created for sample", k)
-
-
+                        pass
+                    print("Processing events for scenario", scenario)
+                    #print("steps", steps)
+                    numOfEvents = mytree.GetEntries()
                     brancharray = array('d', [0.5])
                     newbranch = mytree.Branch(branch, brancharray, branch+"/D")
-
                     print("Creating branch for model", branch)
                     to_keep = features[idbr]
-
                     X = df[to_keep].to_numpy()
                     # update root file with BDT branch
                     if "BDT" in branch:
                         output_array = models[idbr].predict_proba(X)[:,1]
                     elif "DNN" in branch:
                         output_array = models[idbr].predict(scalers[idbr].transform(X))
-                                
                     for n in range(numOfEvents):
                         mytree.GetEntry(n)
                         sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/numOfEvents))
                         brancharray[0] = output_array[n]
                         newbranch.Fill()
-
                     print("\n", branch, "completed!")
-                    myfile.cd()
-                    mytree.Write("", ROOT.TFile.kOverwrite)
-                    myfile.Close()
 
-            print("Saving tree with ML branches...")
-            os.system("mv " + file_path_cp + " " + file_path)
-    os.system("rm -rf " + tmpdir)    
+                myfile.cd()
+                mytree.Write("", ROOT.TFile.kOverwrite)
+        myfile.Close()    
+    os.system("cp " + file_path_cp + " " + file_path)
+    os.system("rm " + file_path_cp)
+
+            
+            #print("Saving tree with ML branches...")
+            #os.system("cp " + file_path_cp + " " + file_path)
+    #os.system("rm -rf " + tmpdir)
 
 print("year", opt.year)
 
-mergefakes = {
-    str("FakeMu_"+str(opt.year)): {comp.label:False for comp in merge_dict["FakeMu_"+str(opt.year)].components},
-    str("FakeEle_"+str(opt.year)): {comp.label:False for comp in merge_dict["FakeEle_"+str(opt.year)].components},
-}
+#mergefakes = {
+    #str("FakeMu_"+str(opt.year)): {comp.label:False for comp in merge_dict["FakeMu_"+str(opt.year)].components},
+    #str("FakeEle_"+str(opt.year)): {comp.label:False for comp in merge_dict["FakeEle_"+str(opt.year)].components},
+#}
 
 for k, v in merge_dict.items():
+    if toVeto and k in vetosamp:
+        continue
+
+    if notAll and k not in mergesamp:
+        continue
+
     if not k.endswith(str(opt.year)):
         continue
 
@@ -334,6 +360,7 @@ for k, v in merge_dict.items():
         hascomp = hasattr(v, "components")
     else:
         hascomp = v.components is not None
+
     if hascomp:
         if opt.dat != 'all':
             if not str(k).startswith(opt.dat):
@@ -351,7 +378,7 @@ for k, v in merge_dict.items():
                 if not AreAllCondored(c.name, c.label) and not opt.ovride:
                     print(c.label + " not condorly produced yet")
                     continue
-            
+
             doesexist.append(True)
 
             #print(cpath)
@@ -362,9 +389,9 @@ for k, v in merge_dict.items():
                 #if (hasattr(v, "components") and os.path.exists(cpath+k+"_merged.root")) or opt.rw:
                 if os.path.exists(cpath+c.label+"_merged.root") or opt.rw:
                     if Debug:
-                        print("rm -f " + cpath + c + "_merged.root")
+                        print("rm -f " + cpath + c.label + "_merged.root")
                     else:
-                        os.system("rm -f " + cpath + c + "_merged.root")
+                        os.system("rm -f " + cpath + c.label + "_merged.root")
             print("Merging parts?", partmerge)
             if partmerge:
                 print(c.label + " not merged so far")
@@ -385,7 +412,7 @@ for k, v in merge_dict.items():
             else:
                 print(c.label + " already merged and lumied")
             #partmerge = False
-            
+
             MLRun(c.label, cpath)
 
         samplemerge = False
@@ -405,10 +432,11 @@ for k, v in merge_dict.items():
 
         else:
             print(k + "not ready to be merged")
-            
+
     else:
         if opt.dat != 'all':
             if not k.startswith(opt.dat):
+                print(k, opt.dat, "hello")
                 continue
         if not os.path.exists(kpath+k+".root") or opt.rw:
             if not DoesSampleExist(v.name) and not opt.ovride:
@@ -417,6 +445,7 @@ for k, v in merge_dict.items():
             if not AreAllCondored(v.name, k) and not opt.ovride:
                 print(k + " not condored at all yet")
                 continue
+
 
         doesexist.append(True)
         samplemerge = False
@@ -445,11 +474,12 @@ for k, v in merge_dict.items():
             print(k + " already merged and lumied")
         MLRun(k, kpath)
 
-    if opt.dat=="all" or opt.dat.startswith("Fake"):
-        for kf, vf in mergefakes.items():
-            if k in vf.keys():
-                vf[k] = True
+    #if opt.dat=="all" or opt.dat.startswith("Fake"):
+        #for kf, vf in mergefakes.items():
+            #if k in vf.keys():
+                #vf[k] = True
 
+'''
 if opt.dat=="all" or opt.dat.startswith("Fake"):
     for kf, vf in mergefakes.items():
         if False in vf.values():
@@ -467,3 +497,4 @@ if opt.dat=="all" or opt.dat.startswith("Fake"):
             os.system("python3 makeplot.py -y " + opt.year + " --mertree -d " + kf + " --folder " + ofolder + " --ch " + opt.channel )
 
 print(mergefakes)
+'''
