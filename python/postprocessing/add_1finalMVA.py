@@ -241,15 +241,24 @@ def MLRun(k, kpath):
         os.system("mkdir " + tmpdir)
     file_path_cp = tmpdir + "/"+k+"_cp.root"
     #tmpfile = ROOT.TFile.Open(file_path)
-
-    for ids, scenario in enumerate(scenarios):
+    ids = 0
+    while ids < len(scenarios):
+    #for ids, scenario in enumerate(scenarios):
+        scenario = scenarios[ids]
         if k.startswith("Data") and ids > 0:
             continue
 
         print("Processing events for scenario", scenario)
-        tmpfile = ROOT.TFile.Open(file_path)
-        tmptree = tmpfile.Get("events_"+scenario)
-        tmpentr = tmptree.GetEntries()
+        try:
+            tmpfile = ROOT.TFile.Open(file_path)
+            tmptree = tmpfile.Get("events_"+scenario)
+            tmpentr = tmptree.GetEntries()
+        except:
+            print("Problems with opening " + file_path + ", retrying...")
+            continue
+        else:
+            pass
+        ids += 1
         tmpfile.Close()
         #tmpfile.Delete()
         #print("entries:", tmpentr)
@@ -320,7 +329,13 @@ def MLRun(k, kpath):
                                 
                     for n in range(numOfEvents):
                         mytree.GetEntry(n)
-                        if (n+1)%int(numOfEvents/20) == 0 or (n+1) == numOfEvents:
+
+                        try:
+                            remainder = (n+1)%int(numOfEvents/20)
+                        except ZeroDivisionError:
+                            remainder = 0
+
+                        if remainder == 0 or (n+1) == numOfEvents:
                             sys.stdout.write("\nProcessing event {0}     complete {1:.0f} percent".format(n, round(100*(n+1)/numOfEvents), 0))
                         brancharray[0] = output_array[n]
                         newbranch.Fill()
@@ -333,8 +348,8 @@ def MLRun(k, kpath):
 
                 file_path_bu = file_path.replace(".root", "_bu.root")
                 os.system("mv " + file_path + " " + file_path_bu)
-                os.system("cp " + file_path_cp + " " + file_path)
-                os.system("rm " + file_path_cp)
+                os.system("mv " + file_path_cp + " " + file_path)
+                #os.system("rm " + file_path_cp)
                 
                 try:
                     checkfile = ROOT.TFile(file_path, 'update')
@@ -462,10 +477,10 @@ for k, v in merge_dict.items():
                 print(c.label + " already merged and lumied")
             #partmerge = False
             
-            #try:
-            MLRun(c.label, cpath)
-            #except:
-            #print("Unexpected corruption for " + cpath + " while running ML! Invest")
+            try:
+                MLRun(c.label, cpath)
+            except:
+                print("Unexpected corruption for " + cpath + " while running ML! Investigate offline")
 
         samplemerge = False
         if len(doesexist) == len(v.components):
@@ -525,10 +540,10 @@ for k, v in merge_dict.items():
         else:
             print(k + " already merged and lumied")
 
-        #try:
-        MLRun(k, kpath)
-        #except:
-        #print("Unexpected corruption for " + kpath + " while running ML! Invest")
+        try:
+            MLRun(k, kpath)
+        except:
+            print("Unexpected corruption for " + kpath + " while running ML! Investigate offline")
 
 '''
 if opt.dat=="all" or opt.dat.startswith("Fake"):
