@@ -156,7 +156,7 @@ def CondoredList(samplename):
                         os.system("rm "+ path + samplename + "/" + condfile)
                     else:
                         print("rm "+ path + samplename + "/" + condfile)
-
+                    
                 else:
                     pass
 
@@ -206,7 +206,7 @@ def AreAllCondored(crabname, condorname):
         condoredlist.remove(condorname+".root")
 
     lenstore = len(storelist)
-
+    
     if 'Data' in crabname:
         remainder = int(lenstore%split)
         lenstore = int(lenstore/split)
@@ -232,67 +232,83 @@ def MLRun(k, kpath):
     if not os.path.exists(file_path):
         print(file_path, "does not exist!")
         return False
-    #tmpdir = "/eos/home-t/ttedesch/ML_inference/tmpML_" + opt.folder
-    tmpdir = "/eos/home-a/apiccine/ML_inference/tmpML_" + opt.folder
-
+    tmpdir = "tmpML_" + opt.folder
+    #file_path_cp = kpath+k+"_cp.root"
     if os.path.exists(tmpdir):
         pass
-        #os.system("rm -rf " + tmpdir)
+        #os.system("rm -rf " + tmpdir + "/*")
     else:
-        os.system("mkdir -p " + tmpdir)
+        os.system("mkdir " + tmpdir)
     file_path_cp = tmpdir + "/"+k+"_cp.root"
+    #tmpfile = ROOT.TFile.Open(file_path)
 
-    tmplist = []
+    for ids, scenario in enumerate(scenarios):
+        if k.startswith("Data") and ids > 0:
+            continue
 
-    for idf, fgroup in enumerate(features):
-        for feature in fgroup:
-            if feature not in tmplist:
-                tmplist.append(feature)
+        print("Processing events for scenario", scenario)
+        tmpfile = ROOT.TFile.Open(file_path)
+        tmptree = tmpfile.Get("events_"+scenario)
+        tmpentr = tmptree.GetEntries()
+        tmpfile.Close()
+        #tmpfile.Delete()
+        #print("entries:", tmpentr)
+        #print("tmpentr", tmpentr)
+        if tmpentr > 0:
+            ## insert BDT output value into merged file
+            #if os.path.exists(file_path_cp):
+                #os.system("rm " + file_path_cp)
+            #if not os.path.exists(file_path_cp):
+                #os.system("cp " + file_path + " " + file_path_cp)
+            
+            idbr = 0
+            #for idbr, branch in enumerate(branches):
+            while idbr < len(branches):
+                branch = branches[idbr]
+                isDamaged1 = False
+                isDamaged2 = False
+                os.system("cp " + file_path + " " + file_path_cp)
+                myfile = ROOT.TFile(file_path_cp, 'update')
 
-    to_keep_all = set(tmplist)
+                if branch in myfile.Get("events_"+scenario).GetListOfBranches():
+                    print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
+                    myfile.Close()
+                    idbr += 1
+                    continue
+                else:
+                    print("branch", branch, "will be created for sample", k)
+                    pass
+                    #myfile.Close()
 
-    os.system("cp " + file_path + " " + file_path_cp)
-    with uproot.open(file_path) as file:
-        myfile = ROOT.TFile(file_path_cp, 'update')
-        for ids, scenario in enumerate(scenarios):
-            if k.startswith("Data") and ids > 0:
-                continue
-
-            mytree = myfile.Get("events_"+scenario)
-            tmpentr = mytree.GetEntries()            
-            if tmpentr > 0:
-                df = pd.DataFrame(columns = to_keep_all)
-                stepsize = 1000
-                tree = file["events_" + scenario]
-                steps = math.floor(tmpentr/stepsize) + 1
-                for step in range(0,steps):
-
-                    df_step = tree.arrays(library="pd", filter_branch=lambda b: b.name in to_keep_all, entry_start = stepsize * step, entry_stop = min(tmpentr, stepsize * (step + 1)))
-                    df_step = df_step.fillna(0)
-                    new_columns = []
-                    for i in df_step.columns:
-                        new_columns.append(i.split('[')[0])
-                    df_step.columns = new_columns
-                    df_step = df_step[to_keep_all]
-                    df = pd.concat([df,df_step])
-
-                for i in df.columns:
-                    if 'taujet' in i:
-                        df.loc[df[i]==-999,i] = -2.
-                
-                for idbr, branch in enumerate(branches):
-                    to_keep = features[idbr]
-                    if branch in myfile.Get("events_"+scenario).GetListOfBranches():
-                        print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
-                        continue
-                    else:
-                        print("branch", branch, "will be created for sample", k)
-                        pass
-                    print("Processing events for scenario", scenario)
+                mytree = myfile.Get("events_"+scenario)
+                to_keep = features[idbr]
+         
+                with uproot.open(file_path) as file:#_cp)
+                    df = pd.DataFrame(columns = to_keep)
+                    stepsize = 1000
+                    tree = file["events_" + scenario]
+                    steps = math.floor(tmpentr/stepsize) + 1
                     #print("steps", steps)
+                    for step in range(0,steps):
+                        #print("step", step)
+                        #print("entry_start", stepsize * step, "entry_stop", min(tmpentr, stepsize * (step + 1)))
+                        df_step = tree.arrays(library="pd", filter_branch=lambda b: b.name in to_keep, entry_start = stepsize * step, entry_stop = min(tmpentr, stepsize * (step + 1)))
+                        df_step = df_step.fillna(0)
+                        new_columns = []
+                        for i in df_step.columns:
+                            new_columns.append(i.split('[')[0])
+                        df_step.columns = new_columns
+                        df_step = df_step[to_keep]
+                        df = pd.concat([df,df_step])
+                        for i in df.columns:
+                            if 'taujet' in i:
+                                df.loc[df[i]==-999,i] = -2. 
+                        
                     numOfEvents = mytree.GetEntries()
+
                     brancharray = array('d', [0.5])
                     newbranch = mytree.Branch(branch, brancharray, branch+"/D")
+
                     print("Creating branch for model", branch)
                     to_keep = features[idbr]
                     X = df[to_keep].to_numpy()
@@ -301,23 +317,55 @@ def MLRun(k, kpath):
                         output_array = models[idbr].predict_proba(X)[:,1]
                     elif "DNN" in branch:
                         output_array = models[idbr].predict(scalers[idbr].transform(X))
+                                
                     for n in range(numOfEvents):
                         mytree.GetEntry(n)
                         sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/numOfEvents))
                         brancharray[0] = output_array[n]
                         newbranch.Fill()
-                    print("\n", branch, "completed!")
 
+                    print("\n", branch, "completed!")
+                
                 myfile.cd()
                 mytree.Write("", ROOT.TFile.kOverwrite)
-        myfile.Close()    
-    os.system("cp " + file_path_cp + " " + file_path)
-    os.system("rm " + file_path_cp)
+                myfile.Close()
 
-            
-            #print("Saving tree with ML branches...")
-            #os.system("cp " + file_path_cp + " " + file_path)
-    #os.system("rm -rf " + tmpdir)
+                file_path_bu = file_path.replace(".root", "_bu.root")
+                os.system("mv " + file_path + " " + file_path_bu)
+                os.system("cp " + file_path_cp + " " + file_path)
+                os.system("rm " + file_path_cp)
+                
+                try:
+                    checkfile = ROOT.TFile(file_path, 'update')
+                except:
+                    print("Warning! " + file_path + " corrupted afer copy, retrying the branching " + branch)
+                    os.system("mv " + file_path_bu + " " + file_path)
+                    isDamaged1 = True
+                else:
+                    pass
+                
+                for chscen in scenarios:
+                    try:
+                        checknum = checkfile.Get("events_"+chscen).GetEntries()
+                    except:
+                        print("Warning! " + file_path + " " + chscen + " corrupted after copy, retrying the branching " + branch)
+                        os.system("mv " + file_path_bu + " " + file_path)
+                        isDamaged2 = True
+                        break
+                    else:
+                        pass
+                    pass
+                
+                print("isDamaged?", (isDamaged1 or isDamaged2))
+
+                if isDamaged1 or isDamaged2:
+                    print("Branching damaged file! Avoid to save and relaunching"  + branch + "...")
+                    if isDamaged2:
+                        checkfile.Close()
+                    continue
+                else:
+                    checkfile.Close()
+                    idbr += 1
 
 print("year", opt.year)
 
@@ -378,7 +426,7 @@ for k, v in merge_dict.items():
                 if not AreAllCondored(c.name, c.label) and not opt.ovride:
                     print(c.label + " not condorly produced yet")
                     continue
-
+            
             doesexist.append(True)
 
             #print(cpath)
@@ -412,8 +460,11 @@ for k, v in merge_dict.items():
             else:
                 print(c.label + " already merged and lumied")
             #partmerge = False
-
+            
+            #try:
             MLRun(c.label, cpath)
+            #except:
+            #print("Unexpected corruption for " + cpath + " while running ML! Invest")
 
         samplemerge = False
         if len(doesexist) == len(v.components):
@@ -432,7 +483,7 @@ for k, v in merge_dict.items():
 
         else:
             print(k + "not ready to be merged")
-
+            
     else:
         if opt.dat != 'all':
             if not k.startswith(opt.dat):
@@ -472,14 +523,18 @@ for k, v in merge_dict.items():
             print("Merged and lumied!")
         else:
             print(k + " already merged and lumied")
-        MLRun(k, kpath)
 
-    #if opt.dat=="all" or opt.dat.startswith("Fake"):
-        #for kf, vf in mergefakes.items():
-            #if k in vf.keys():
-                #vf[k] = True
+        #try:
+        MLRun(k, kpath)
+        #except:
+        #print("Unexpected corruption for " + kpath + " while running ML! Invest")
 
 '''
+if opt.dat=="all" or opt.dat.startswith("Fake"):
+        for kf, vf in mergefakes.items():
+            if k in vf.keys():
+                vf[k] = True
+
 if opt.dat=="all" or opt.dat.startswith("Fake"):
     for kf, vf in mergefakes.items():
         if False in vf.values():
