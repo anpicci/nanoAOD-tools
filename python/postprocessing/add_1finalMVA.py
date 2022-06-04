@@ -320,7 +320,8 @@ def MLRun(k, kpath):
                                 
                     for n in range(numOfEvents):
                         mytree.GetEntry(n)
-                        sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(n, 100*n/numOfEvents))
+                        if (n+1)%int(numOfEvents/20) == 0 or (n+1) == numOfEvents:
+                            sys.stdout.write("\nProcessing event {0}     complete {1:.0f} percent".format(n, round(100*(n+1)/numOfEvents), 0))
                         brancharray[0] = output_array[n]
                         newbranch.Fill()
 
