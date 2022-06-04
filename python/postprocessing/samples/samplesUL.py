@@ -33,6 +33,8 @@ VBSTLcolor = ROOT.kBlue+3
 VBSTTcolor = ROOT.kMagenta+3
 CWcolor = ROOT.kSpring-7
 CHWcolor = ROOT.kAzure+10
+EWVBScolor = ROOT.kOrange+7
+QCDVBScolor = ROOT.kBlue+2
 ######### UL2016APV ##########
 
 ### ZZtoLep ###
@@ -481,18 +483,18 @@ DYJetsToLL_FxFx_UL2016APV.components = [
 ### WpWp EWK ###
 
 #### to be produced ####
-WpWpJJ_EWK_UL2016APV = sample(VBScolor, 1, 1001, "EW ssWW", "WpWpJJ_EWK_UL2016APV")
-WpWpJJ_EWK_UL2016APV.sigma = 0.02064
+WpWpJJ_EWK_UL2016APV = sample(EWVBScolor, 1, 1001, "EW ssWW VBS", "WpWpJJ_EWK_UL2016APV")
+WpWpJJ_EWK_UL2016APV.sigma = 0.0287
 WpWpJJ_EWK_UL2016APV.year = "UL2016APV"
-WpWpJJ_EWK_UL2016APV.dataset = ""
+WpWpJJ_EWK_UL2016APV.dataset = "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 
 ### WpWp QCD ###
 
 #### to be produced ####
-WpWpJJ_QCD_UL2016APV = sample(ROOT.kPink+1, 1, 1001, "QCD ssWW", "WpWpJJ_QCD_UL2016APV")
-WpWpJJ_QCD_UL2016APV.sigma = 0.01538
+WpWpJJ_QCD_UL2016APV = sample(QCDVBScolor, 1, 1001, "QCD ssWW VBS", "WpWpJJ_QCD_UL2016APV")
+WpWpJJ_QCD_UL2016APV.sigma = 0.02227
 WpWpJJ_QCD_UL2016APV.year = "UL2016APV"
-WpWpJJ_QCD_UL2016APV.dataset = ""
+WpWpJJ_QCD_UL2016APV.dataset = "/WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 
 ### VBS ssWW polarized ###
 
@@ -1349,18 +1351,18 @@ DYJetsToLL_FxFx_UL2016M.components = [
 ### WpWp EWK ###
 
 #### to be produced ####
-WpWpJJ_EWK_UL2016 = sample(ROOT.kRed, 1, 1001, "EW ssWW", "WpWpJJ_EWK_UL2016")
-WpWpJJ_EWK_UL2016.sigma = 0.02064
+WpWpJJ_EWK_UL2016 = sample(EWVBScolor, 1, 1001, "EW ssWW VBS", "WpWpJJ_EWK_UL2016")
+WpWpJJ_EWK_UL2016.sigma = 0.0287
 WpWpJJ_EWK_UL2016.year = "UL2016"
-WpWpJJ_EWK_UL2016.dataset = ""
+WpWpJJ_EWK_UL2016.dataset = "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 
 ### WpWp QCD ###
 
 #### to be produced ####
-WpWpJJ_QCD_UL2016 = sample(ROOT.kPink+1, 1, 1001, "QCD ssWW", "WpWpJJ_QCD_UL2016")
-WpWpJJ_QCD_UL2016.sigma = 0.01538
+WpWpJJ_QCD_UL2016 = sample(QCDVBScolor, 1, 1001, "QCD ssWW VBS", "WpWpJJ_QCD_UL2016")
+WpWpJJ_QCD_UL2016.sigma = 0.02227
 WpWpJJ_QCD_UL2016.year = "UL2016"
-WpWpJJ_QCD_UL2016.dataset = ""
+WpWpJJ_QCD_UL2016.dataset = "/WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 
 ### VBS ssWW polarized ###
 
@@ -2190,18 +2192,18 @@ DYJetsToLL_FxFx_UL2017.components = [
 ### WpWp EWK ###
 
 #### to be produced ####
-WpWpJJ_EWK_UL2017 = sample(ROOT.kRed, 1, 1001, "EW ssWW", "WpWpJJ_EWK_UL2017")
-WpWpJJ_EWK_UL2017.sigma = 0.02064
+WpWpJJ_EWK_UL2017 = sample(EWVBScolor, 1, 1001, "EW ssWW VBS", "WpWpJJ_EWK_UL2017")
+WpWpJJ_EWK_UL2017.sigma = 0.0287
 WpWpJJ_EWK_UL2017.year = "UL2017"
-WpWpJJ_EWK_UL2017.dataset = ""
+WpWpJJ_EWK_UL2017.dataset = "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 
 ### WpWp QCD ###
 
 #### to be produced ####
-WpWpJJ_QCD_UL2017 = sample(ROOT.kPink+1, 1, 1001, "QCD ssWW", "WpWpJJ_QCD_UL2017")
-WpWpJJ_QCD_UL2017.sigma = 0.01538
+WpWpJJ_QCD_UL2017 = sample(QCDVBScolor, 1, 1001, "QCD ssWW VBS", "WpWpJJ_QCD_UL2017")
+WpWpJJ_QCD_UL2017.sigma = 0.02227
 WpWpJJ_QCD_UL2017.year = "UL2017"
-WpWpJJ_QCD_UL2017.dataset = ""
+WpWpJJ_QCD_UL2017.dataset = "/WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 
 ### VBS ssWW polarized ###
 
@@ -3076,13 +3078,13 @@ DYJetsToLL_FxFx_ULRunII.components = [
 ]
 
 ### WpWp EWK ###
-WpWpJJ_EWK_UL2018 = sample(ROOT.kRed, 1, 1001, "EW ssWW", "WpWpJJ_EWK_UL2018")
-WpWpJJ_EWK_UL2018.sigma = 0.02064
+WpWpJJ_EWK_UL2018 = sample(EWVBScolor, 1, 1001, "EW ssWW VBS", "WpWpJJ_EWK_UL2018")
+WpWpJJ_EWK_UL2018.sigma = 0.0287
 WpWpJJ_EWK_UL2018.year = "UL2018"
-WpWpJJ_EWK_UL2018.dataset = ""
+WpWpJJ_EWK_UL2018.dataset = "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 
 ### WpWp QCD ###
-WpWpJJ_QCD_UL2018 = sample(ROOT.kPink+1, 1, 1001, "QCD ssWW", "WpWpJJ_QCD_UL2018")
+WpWpJJ_QCD_UL2018 = sample(QCDVBScolor, 1, 1001, "QCD ssWW VBS", "WpWpJJ_QCD_UL2018")
 WpWpJJ_QCD_UL2018.sigma = 0.01538
 WpWpJJ_QCD_UL2018.year = "UL2018"
 WpWpJJ_QCD_UL2018.dataset = ""
