@@ -246,6 +246,7 @@ def MLRun(k, kpath):
     #for ids, scenario in enumerate(scenarios):
         scenario = scenarios[ids]
         if k.startswith("Data") and ids > 0:
+            ids += 1
             continue
 
         print("Processing events for scenario", scenario)
@@ -277,8 +278,15 @@ def MLRun(k, kpath):
                 isDamaged1 = False
                 isDamaged2 = False
                 os.system("cp " + file_path + " " + file_path_cp)
-                myfile = ROOT.TFile(file_path_cp, 'update')
-
+                try:
+                    myfile = ROOT.TFile(file_path_cp, 'update')
+                except:
+                    print("Problems with copying " + file_path + ", retrying...")
+                    myfile.Close()
+                    os.system("rm " + file_path_cp)
+                    continue
+                else:
+                    pass
                 if branch in myfile.Get("events_"+scenario).GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
                     myfile.Close()
@@ -287,7 +295,6 @@ def MLRun(k, kpath):
                 else:
                     print("branch", branch, "will be created for sample", k)
                     pass
-                    #myfile.Close()
 
                 mytree = myfile.Get("events_"+scenario)
                 to_keep = features[idbr]
@@ -360,7 +367,9 @@ def MLRun(k, kpath):
                 else:
                     pass
                 
-                for chscen in scenarios:
+                for idcs, chscen in enumerate(scenarios):
+                    if k.startswith("Data") and (idcs > 0 or chscen != "nominal"):
+                        continue#break
                     try:
                         checknum = checkfile.Get("events_"+chscen).GetEntries()
                     except:
@@ -477,10 +486,10 @@ for k, v in merge_dict.items():
                 print(c.label + " already merged and lumied")
             #partmerge = False
             
-            try:
-                MLRun(c.label, cpath)
-            except:
-                print("Unexpected corruption for " + cpath + " while running ML! Investigate offline")
+            #try:
+            MLRun(c.label, cpath)
+            #except:
+            #    print("Unexpected corruption for " + cpath + " while running ML! Investigate offline")
 
         samplemerge = False
         if len(doesexist) == len(v.components):
@@ -540,10 +549,10 @@ for k, v in merge_dict.items():
         else:
             print(k + " already merged and lumied")
 
-        try:
-            MLRun(k, kpath)
-        except:
-            print("Unexpected corruption for " + kpath + " while running ML! Investigate offline")
+        #try:
+        MLRun(k, kpath)
+        #except:
+        #    print("Unexpected corruption for " + kpath + " while running ML! Investigate offline")
 
 '''
 if opt.dat=="all" or opt.dat.startswith("Fake"):
