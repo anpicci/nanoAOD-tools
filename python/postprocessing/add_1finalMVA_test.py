@@ -110,14 +110,14 @@ if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     if opt.scenario == "all":
         scenarios = [
             "nominal",
-            #"jesUp",
-            #"jesDown",
-            #"jerUp",
-            #"jerDown",
-            #"TESUp",
-            #"TESDown",
-            #"FESUp",
-            #"FESDown",
+            "jesUp",
+            "jesDown",
+            "jerUp",
+            "jerDown",
+            "TESUp",
+            "TESDown",
+            "FESUp",
+            "FESDown",
         ]
     else:
         scenarios = opt.scenario.split(",")
@@ -417,9 +417,9 @@ def OpenAndRun(k, file_path):
                 else:
                     checkfile.Close()
                     os.system("rm " + file_path_bu)
-                    MLed.append(False)
+                    MLed.append(True)
                     idbr += 1
-
+    
     if True in MLed:
         return True
     else:
