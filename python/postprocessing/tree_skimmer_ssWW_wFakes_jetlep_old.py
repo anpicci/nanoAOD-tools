@@ -21,6 +21,8 @@ from array import array
 from skimtree_utils_ssWW_wFakes_old import *
 from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 from EFTOperator_dict import *
+from rwgcards.FromCardToDict import *
+from collections import OrderedDict
 
 dim8_points = [
     "20",
@@ -171,6 +173,9 @@ else:
 
 print("isPDFHessian", isPDFHessian)
 
+if "aQGC" in sample.label:
+    rwgdict = CardToDict("dim8", "FT1_2p0")
+
 #Cut_dict = {}
 
 #if Debug:
@@ -306,14 +311,14 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
 
     print("scenario:", scenario)
 
+    wcoeff = OrderedDict()
     if IsDim8:
-        w_dim8             =   array.array('f', [-999.])
-        w_neg              =   array.array('f', [-999.])
-        w_pos              =   array.array('f', [-999.])
-        var_list.append(w_dim8)
-        var_list.append(w_neg)
-        var_list.append(w_pos)
-    
+        for opname, opdict in rwgdict.items():
+            for val in opdict.keys():
+                coeffstr = opname + "_" + val
+                wcoeff[coeffstr] = array.array('f', [-999.]*6)
+                var_list.append(wcoeff[coeffstr])
+
     #++++++++++++++++++++++++++++++++++
     #++         All category         ++
     #++++++++++++++++++++++++++++++++++
@@ -645,10 +650,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
 
     #w_dim8
     if IsDim8:
-        systTree.branchTreesSysts(trees, scenario, "w_dim8",            outTreeFile, w_dim8)
-        systTree.branchTreesSysts(trees, scenario, "w_pos",            outTreeFile, w_pos)
-        systTree.branchTreesSysts(trees, scenario, "w_neg",            outTreeFile, w_neg)
-    
+        for coeffname, coeffarray in wcoeff.items():
+            systTree.branchTreesSysts(trees, scenario, coeffname, outTreeFile, coeffarray)
+            
     #branches added for ssWW analysis
     #lepton
     systTree.branchTreesSysts(trees, scenario, "lepton_pt",            outTreeFile, lepton_pt)
@@ -836,9 +840,12 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         #reinizializza tutte le variabili a 0, per sicurezza
         for j, var in enumerate(var_list):
             if j<len(var_list)-13:#
-                var_list[j][0] = -999
+                defvalue = -999
             else:
-                var_list[j][0] = 0
+                defvalue = 0
+            for idvar, varel in enumerate(var_list[j]):
+                var_list[j][idvar] = defvalue
+
         SF_Fake[0]=1
 
         w_nominal_all[0] = 1.
@@ -848,7 +855,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         #++++++++++++++++++++++++++++++++++
     
         if Debug:
-            if i > 1000:
+            if i > 2:#1000:
                 #continue
                 break
             if True:#(i+1)%1000 == 0 and i!=0:
@@ -1686,6 +1693,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 w_nominal_all[0] *= 0.354
     
         if IsDim8:
+            pass
+            '''
             opname = ""
             opmag = 0
             for opi, opn in enumerate(EFT_operator_names):
@@ -1746,7 +1755,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                             break
                     break
             #print("w_dim8:", w_dim8[0])
-    
+            '''
         w_nominal_all[0] *= pdf_totalSF
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         systTree.fillTreesSysts(trees, scenario)

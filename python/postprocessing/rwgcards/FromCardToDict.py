@@ -4,7 +4,7 @@ from collections import OrderedDict
 def CardToDict(dim, op):
     coeffdict = OrderedDict()
 
-    rwgcard = open("/afs/cern.ch/work/a/apiccine/CMSSW_11_3_0_pre5/src/PhysicsTools/NanoAODTools/python/rwgcards/" + dim + "_" + op + ".txt", "r")
+    rwgcard = open("rwgcards/" + dim + "_" + op + ".txt", "r")
     interlines = [line.replace("\n","").replace("\t", "") for line in rwgcard.readlines() if line.startswith("launch") or line.startswith("\t")]
     coeff = ""
     valstr = ""
@@ -56,8 +56,3 @@ def CardToDict(dim, op):
                     pass
 
     return coeffdict
-
-for k, v in CardToDict("dim8", "FT1_2p0").items():
-    print("\n" + k)
-    for kv, vv in v.items():
-        print(kv, vv)

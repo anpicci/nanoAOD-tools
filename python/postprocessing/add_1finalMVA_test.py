@@ -13,7 +13,7 @@ from xgboost import XGBClassifier
 
 #os.environ['TF_CPP_MIN_LOG_LEVEL']
 
-usage = 'python3 PrepareToPlot.py -y year -f folder'
+usage = 'python3 add_1finalMVA_test.py -y year -f folder'
 parser = optparse.OptionParser(usage)
 parser.add_option('-y', dest='year', type=str, default = '2017', help='Please enter a year, default is 2017')
 parser.add_option('-f', dest='folder', type=str, default = 'v20', help='Please enter a folder, default is v4')
@@ -446,7 +446,7 @@ for k, v in merge_dict.items():
         continue
 
     isMLed = False
-    doesexist = []
+
     merging = []
 
     kpath = path+k+"/"
@@ -467,6 +467,7 @@ for k, v in merge_dict.items():
     else:
         hascomp = v.components is not None
 
+    doesexist = []
     if hascomp:
         if opt.dat != 'all':
             if not str(k).startswith(opt.dat):
