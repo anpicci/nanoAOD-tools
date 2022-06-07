@@ -110,14 +110,14 @@ if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     if opt.scenario == "all":
         scenarios = [
             "nominal",
-            "jesUp",
-            "jesDown",
-            "jerUp",
-            "jerDown",
-            "TESUp",
-            "TESDown",
-            "FESUp",
-            "FESDown",
+            #"jesUp",
+            #"jesDown",
+            #"jerUp",
+            #"jerDown",
+            #"TESUp",
+            #"TESDown",
+            #"FESUp",
+            #"FESDown",
         ]
     else:
         scenarios = opt.scenario.split(",")
@@ -127,7 +127,7 @@ else:
 
 def CondoredList(samplename):
     try:
-        condlist = os.listdir(path+samplename)
+        condlist = [f for f in os.listdir(path+samplename) if "_part" in f]
     except:
         condlist = []
 
@@ -225,13 +225,26 @@ def AreAllCondored(crabname, condorname):
 def MLRun(k, kpath):
     if Debug:
         return("ML run...")
-    file_path = kpath+k
-    file_path += ".root"
+    #file_path = kpath+k
+    #file_path += ".root"
+    filelist = [f for f in CondoredList(k) if "part" in f]
+    totMLed = []
+    for fpath in filelist:
+        totfpath = kpath+fpath
+        fMLed = OpenAndRun(k, totfpath)
+        totMLed.append(fMLed)
 
+    if True in totMLed:
+        return True
+    else:
+        return False
+
+def OpenAndRun(k, file_path):
     #check if there is at least one event in the tree
     if not os.path.exists(file_path):
         print(file_path, "does not exist!")
         return False
+    print("\nProcessing " + file_path)
     tmpdir = "tmpML_" + opt.folder
     #file_path_cp = kpath+k+"_cp.root"
     if os.path.exists(tmpdir):
@@ -242,6 +255,7 @@ def MLRun(k, kpath):
     file_path_cp = tmpdir + "/"+k+"_cp.root"
     #tmpfile = ROOT.TFile.Open(file_path)
     ids = 0
+    MLed = []
     while ids < len(scenarios):
     #for ids, scenario in enumerate(scenarios):
         scenario = scenarios[ids]
@@ -263,7 +277,7 @@ def MLRun(k, kpath):
         tmpfile.Close()
 
         if tmpentr > 0:
-            print("\nStarting with " + scenario)
+            print("Starting with " + scenario)
             idbr = 0
             #for idbr, branch in enumerate(branches):
             while idbr < len(branches):
@@ -285,6 +299,7 @@ def MLRun(k, kpath):
                 if branch in myfile.Get("events_"+scenario).GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
                     myfile.Close()
+                    MLed.append(False)
                     idbr += 1
                     continue
                 else:
@@ -402,7 +417,13 @@ def MLRun(k, kpath):
                 else:
                     checkfile.Close()
                     os.system("rm " + file_path_bu)
+                    MLed.append(False)
                     idbr += 1
+
+    if True in MLed:
+        return True
+    else:
+        return False
 
 print("year", opt.year)
 
@@ -412,19 +433,19 @@ print("year", opt.year)
 #}
 
 for k, v in merge_dict.items():
+    if not k.endswith(str(opt.year)):
+        continue
+
     if toVeto and k in vetosamp:
         continue
 
     if notAll and k not in mergesamp:
         continue
 
-    if not k.endswith(str(opt.year)):
-        continue
-
     if k.startswith("Fake"):
         continue
 
-    ismerged = False
+    isMLed = False
     doesexist = []
     merging = []
 
@@ -463,48 +484,12 @@ for k, v in merge_dict.items():
                 if not AreAllCondored(c.name, c.label) and not opt.ovride:
                     print(c.label + " not condorly produced yet")
                     continue
-            
-            doesexist.append(True)
 
-            #print(cpath)
-            partmerge = False
-            #print(cpath+k+".root")
-            if not os.path.exists(cpath+c.label+".root") or opt.rw:
-                partmerge = True
-                #if (hasattr(v, "components") and os.path.exists(cpath+k+"_merged.root")) or opt.rw:
-                if os.path.exists(cpath+c.label+"_merged.root") or opt.rw:
-                    if Debug:
-                        print("rm -f " + cpath + c.label + "_merged.root")
-                    else:
-                        os.system("rm -f " + cpath + c.label + "_merged.root")
-            print("Merging parts?", partmerge)
-            if partmerge:
-                print(c.label + " not merged so far")
-
-                if os.path.exists(cpath+c.label+".root"):
-                    if Debug:
-                        print("rm -f " + cpath + c.label + ".root")
-                    else:
-                        os.system("rm -f " + cpath + c.label + ".root")
-
-                print("Merging and luming " + c.label + "...")
-                merging.append(True)
-                if Debug:
-                    print("python3 makeplot.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel )
-                else:
-                    os.system("python3 makeplot.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel )
-                print("Merged and lumied!")
-            else:
-                print(c.label + " already merged and lumied")
-            #partmerge = False
-            
-            #try:
-            MLRun(c.label, cpath)
-            #except:
-            #    print("Unexpected corruption for " + cpath + " while running ML! Investigate offline")
+            result = MLRun(c.label, cpath)
+            doesexist.append(result)
 
         samplemerge = False
-        if len(doesexist) == len(v.components):
+        if len(doesexist) == len(v.components) and True in doesexist:
             samplemerge = True
 
         if samplemerge:
@@ -514,9 +499,9 @@ for k, v in merge_dict.items():
                 else:
                     os.system("rm -f "+kpath+k+".root")
             if Debug:
-                print("python3 makeplot.py -y ", opt.year, " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel )
+                print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
             else:
-                os.system("python3 makeplot.py -y " + opt.year + " --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel )
+                os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
 
         else:
             print(k + "not ready to be merged")
@@ -534,53 +519,21 @@ for k, v in merge_dict.items():
                 print(k + " not condored at all yet")
                 continue
 
+        result = MLRun(k, kpath)
 
-        doesexist.append(True)
-        samplemerge = False
-        if not os.path.exists(kpath+k+".root") or opt.rw:
-            samplemerge = True
-            if os.path.exists(kpath+k+"_merged.root") or opt.rw:
-                if Debug:
-                    print("rm -f " + kpath + k + "_merged.root")
-                else:
-                    os.system("rm -f " + kpath + k + "_merged.root")
+        samplemerge = result
+        if not samplemerge:
+            continue
 
-        if samplemerge:
-            if os.path.exists(kpath+k+".root"):
-                if Debug:
-                    print("rm -f " + kpath + k + ".root")
-                else:
-                    os.system("rm -f " + kpath + k + ".root")
-            print(k + " neither merged nor lumied so far")
-            print("Merging and luming " + k + "...")
+        if os.path.exists(kpath+k+".root"):
             if Debug:
-                print("python3 makeplot.py -y ", opt.year, " --merpart --lumi --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel )
+                print("rm -f "+kpath+k+".root")
             else:
-                os.system("python3 makeplot.py -y " + opt.year + " --merpart --lumi --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel )
-            print("Merged and lumied!")
+                os.system("rm -f "+kpath+k+".root")
+        if Debug:
+            print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
         else:
-            print(k + " already merged and lumied")
-
-        #try:
-        MLRun(k, kpath)
-        #except:
-        #    print("Unexpected corruption for " + kpath + " while running ML! Investigate offline")
-
-        samplemerge = True
-
-        if samplemerge:
-            if os.path.exists(kpath+k+".root"):
-                if Debug:
-                    print("rm -f "+kpath+k+".root")
-                else:
-                    os.system("rm -f "+kpath+k+".root")
-            if Debug:
-                print("python3 makeplot.py -y ", opt.year, " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel )
-            else:
-                os.system("python3 makeplot.py -y " + opt.year + " --mertree -d " + k + " --folder " + ofolder + " --ch " + opt.channel )
-
-        else:
-            print(k + "not ready to be merged")
+            os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
 
 
 '''
