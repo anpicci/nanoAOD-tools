@@ -244,7 +244,7 @@ def OpenAndRun(k, file_path):
     if not os.path.exists(file_path):
         print(file_path, "does not exist!")
         return False
-    print("\nProcessing " + file_path)
+    print("\n\nProcessing " + file_path)
     tmpdir = "tmpML_" + opt.folder
     #file_path_cp = kpath+k+"_cp.root"
     if os.path.exists(tmpdir):
@@ -277,7 +277,7 @@ def OpenAndRun(k, file_path):
         tmpfile.Close()
 
         if tmpentr > 0:
-            print("Starting with " + scenario)
+            print("\nStarting with " + scenario)
             idbr = 0
             #for idbr, branch in enumerate(branches):
             while idbr < len(branches):
