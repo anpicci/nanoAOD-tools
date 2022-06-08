@@ -3,8 +3,11 @@ from collections import OrderedDict
 
 def CardToDict(dim, op):
     coeffdict = OrderedDict()
-
-    rwgcard = open("rwgcards/" + dim + "_" + op + ".txt", "r")
+    
+    if not "rwgcard" in os.getcwd():
+        rwgcard = open("rwgcards/" + dim + "_" + op + ".txt", "r")
+    else:
+        rwgcard = open(dim + "_" + op + ".txt", "r")
     interlines = [line.replace("\n","").replace("\t", "") for line in rwgcard.readlines() if line.startswith("launch") or line.startswith("\t")]
     coeff = ""
     valstr = ""
@@ -56,3 +59,5 @@ def CardToDict(dim, op):
                     pass
 
     return coeffdict
+
+print(CardToDict("dim8", "FT1_2p0"))

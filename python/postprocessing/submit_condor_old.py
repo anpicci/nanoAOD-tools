@@ -79,7 +79,7 @@ def sub_writer(sample, n, files, folder):
     inputfiles = "transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues_" + tagyear + ".py, FR_vsjet2_" + tagyear + ".root, FR_vsjet4_" + tagyear + ".root, FR_vsjet8_" + tagyear
     if runtype == "test":
         inputfiles += "_test"
-    inputfiles += ".root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_" + tagyear + ".root, __init__.py, ./data\n"
+    inputfiles += ".root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_" + tagyear + ".root, __init__.py, ./data, ./rwgcards\n"
     f.write(inputfiles)
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-a/apiccine/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")

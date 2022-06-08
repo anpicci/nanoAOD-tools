@@ -502,6 +502,7 @@ for k, v in merge_dict.items():
             if Debug:
                 print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
             else:
+                print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
                 os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
 
         else:
@@ -534,6 +535,7 @@ for k, v in merge_dict.items():
         if Debug:
             print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
         else:
+            print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
             os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
 
 

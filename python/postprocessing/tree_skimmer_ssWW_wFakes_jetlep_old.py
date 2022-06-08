@@ -855,7 +855,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         #++++++++++++++++++++++++++++++++++
     
         if Debug:
-            if i > 2:#1000:
+            if i > 3:#1000:
                 #continue
                 break
             if True:#(i+1)%1000 == 0 and i!=0:
@@ -1693,69 +1693,58 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 w_nominal_all[0] *= 0.354
     
         if IsDim8:
-            pass
-            '''
-            opname = ""
-            opmag = 0
-            for opi, opn in enumerate(EFT_operator_names):
-                if ("_" + opn + "_") in sample.label:
-                    opmax = EFT_operator[opn]["max"]
-                    step = opmax/5.
+            #pass
+            for opname, opdict in rwgdict.items():
+                for val in opdict.keys():
+                    if val == '0':
+                        continue
 
-                    for eidx in range(11):
-                        epoint = opmax - step * eidx
-                        IsZero = (epoint == 0.)
-                        str_epoint = "_" + str(epoint).replace(".0", "").replace(".", "p") + "_"
+                    epoint = float(val.replace("p", "."))
+                    coeffstr = opname + "_" + val
+                    idxpos = opdict[val][1]#int((EFT_operator[opn]["idx"])*11 - (eidx + 1))
+                    idxneg = opdict[val][0]#int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
+                    idxzero = opdict["0"][0]#int((EFT_operator[opn]["idx"] - 1)*11 + 5)
 
-                        if str_epoint in sample.label:
-                            #print("opn:", opn, "opmax:", opmax, "step:", step, "epoint:", epoint)
-                            #print('index:', EFT_operator[opn]["idx"], 'eidx:', eidx)
-                            idxpos = int((EFT_operator[opn]["idx"])*11 - (eidx + 1))
-                            idxneg = int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
-                            idxzero = int((EFT_operator[opn]["idx"] - 1)*11 + 5)
-                            if IsZero and idxneg != idxpos:
-                                print("Something went wrong with dim8 weights assignment")
-                                #break
-                            wpos = LHEitem(LHEDim8[idxpos])
-                            wneg = LHEitem(LHEDim8[idxneg])
-                            wzero = LHEitem(LHEDim8[idxzero])
-                            #print('idxneg:', idxneg, 'wneg:', wneg)
-                            #print('idxpos:', idxpos, 'wpos:', wpos)
+                    wpos = LHEitem(LHEDim8[idxpos]) if idxpos >= 0 else 1.
+                    wneg = LHEitem(LHEDim8[idxneg]) if idxneg >= 0 else 1.
+                    wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
+                    #print('idxneg:', idxneg, 'wneg:', wneg)
+                    #print('idxpos:', idxpos, 'wpos:', wpos)
+                    #print('idxzero:', idxzero, 'wzero:', wzero)
 
-                            w_pos[0] = copy.deepcopy(wpos)
-                            w_neg[0] = copy.deepcopy(wneg)
+                    wcoeff[coeffstr][0] = wzero
+                    wcoeff[coeffstr][1] = wneg
+                    wcoeff[coeffstr][2] = wpos
 
-                            wsign = 0
-                            kpow = 0
-                            #print(sample.label, "_BSM_" in sample.label, "_0_" in sample.label, "_INT_" in sample.label)
-                            if "_BSM_" in sample.label:#
-                                if Debug:
-                                    print("BSM")
-                                wsign = +1.
-                                wpos += -2.*wzero
-                                kpow = 2.*(epoint**2.)
-                            elif "_0_" in sample.label:
-                                if Debug:
-                                    print("0")
-                                wsign = +1.
-                                kpow = +2.
-                            elif "_INT_" in sample.label:
-                                if Debug:
-                                    print("INT")
-                                wsign = -1.
-                                kpow = 2.*epoint
+                    wsign = 0
+                    kpow = 0
+
+                    for idwc in range(3, 6):
+                        if idwc == 3:
+                            if Debug:
+                                print("0")
+                            wsign = +1.
+                            kpow = +2.
+                        elif idwc == 4:
+                            if Debug:
+                                print("INT")
+                            wsign = -1.
+                            kpow = 2.*epoint
+                        elif idwc == 5:
+                            if Debug:
+                                print("BSM")
+                            wsign = +1.
+                            wpos += -2.*wzero
+                            kpow = 2.*(epoint**2.)
                             
-                            print("wsign:", wsign, "kpow:", kpow)
+                        #print("wsign:", wsign, "kpow:", kpow)
 
-                            w_coeff = (wpos + wsign * wneg) / kpow
-                            #print("w_coeff:", w_coeff)
-                            w_dim8[0] = copy.deepcopy(w_coeff)
+                        w_coeff = (wpos + wsign * wneg) / kpow
+                        if w_coeff < 0.:
+                            print("Warning! negative weight for " + coeffstr + "at position " + str(idwc))
+                        #print("idwc", idwc, "w_coeff", w_coeff)
+                        wcoeff[coeffstr][idwc] = w_coeff
         
-
-                            break
-                    break
-            #print("w_dim8:", w_dim8[0])
-            '''
         w_nominal_all[0] *= pdf_totalSF
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         systTree.fillTreesSysts(trees, scenario)
