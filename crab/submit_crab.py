@@ -49,7 +49,8 @@ def cfg_writer(sample, isMC, outdir):
         #f.write("config.JobType.numCores = 8\n")
     f.write("config.section_('Data')\n")
     f.write("config.Data.inputDataset = '"+sample.dataset+"'\n")
-    #f.write("config.Data.allowNonValidInputDataset = True\n")
+    if sample.dataset.startswith("/WpWp"):
+        f.write("config.Data.allowNonValidInputDataset = True\n")
     if sample.dataset.endswith("/USER"):
         f.write("config.Data.inputDBS = 'phys03'\n")
     else:
@@ -269,6 +270,7 @@ for sample in samples:
             #cfg_writer(sample, isMC, "ULVBS_PG")
             #cfg_writer(sample, isMC, "ULVBS")
             cfg_writer(sample, isMC, "VBSUL")
+            #cfg_writer(sample, isMC, "RDFprova")
             #cfg_writer(sample, isMC, "ULVBSPG")
         else:
             #cfg_writer(sample, isMC, "VBS_PG")
