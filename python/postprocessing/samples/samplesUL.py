@@ -3279,22 +3279,26 @@ VBS_SSWW_aQGC_ULRunII.components = [
 DataMuA_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuA_UL2018")
 DataMuA_UL2018.runP = 'A'
 DataMuA_UL2018.year = "UL2018"
-DataMuA_UL2018.dataset = "/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+#DataMuA_UL2018.dataset = "/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+DataMuA_UL2018.dataset = "/SingleMuon/Run2018A-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD"
 
 DataMuB_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuB_UL2018")
 DataMuB_UL2018.runP = 'B'
 DataMuB_UL2018.year = "UL2018"
-DataMuB_UL2018.dataset = "/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+#DataMuB_UL2018.dataset = "/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+DataMuB_UL2018.dataset = "/SingleMuon/Run2018B-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD"
 
 DataMuC_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuC_UL2018")
 DataMuC_UL2018.runP = 'C'
 DataMuC_UL2018.year = "UL2018"
-DataMuC_UL2018.dataset = "/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+#DataMuC_UL2018.dataset = "/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9-v2/NANOAOD"
+DataMuC_UL2018.dataset = "/SingleMuon/Run2018C-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD"
 
 DataMuD_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuD_UL2018")
 DataMuD_UL2018.runP = 'D'
 DataMuD_UL2018.year = "UL2018"
-DataMuD_UL2018.dataset = "/SingleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+#DataMuD_UL2018.dataset = "/SingleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+DataMuD_UL2018.dataset = "/SingleMuon/Run2018D-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD"
 
 DataMu_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMu_UL2018")
 DataMu_UL2018.year = "UL2018"
@@ -3317,7 +3321,7 @@ DataMu_ULRunII.components =  [
 DataEleA_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataEleA_UL2018")
 DataEleA_UL2018.runP = 'A'
 DataEleA_UL2018.year = "UL2018"
-DataEleA_UL2018.dataset = "/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9-v1/NANOAOD"
+DataEleA_UL2018.dataset = "/EGamma/Run2018A-UL2018_MiniAODv2_NanoAODv9_GT36-v1/NANOAOD"
 
 DataEleB_UL2018 = sample(ROOT.kBlack, 1, 1001, "Data", "DataEleB_UL2018")
 DataEleB_UL2018.runP = 'B'
