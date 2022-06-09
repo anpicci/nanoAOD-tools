@@ -18,7 +18,7 @@ parser.add_option('--nodata', dest='nodata', default = False, action='store_true
 
 (opt, args) = parser.parse_args()
 
-print("UL" in opt.year, opt.year)
+#print("UL" in opt.year, opt.year)
 
 if "UL" in opt.year:
     print("Processing UL samples")

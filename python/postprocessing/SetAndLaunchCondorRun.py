@@ -132,8 +132,8 @@ vsEle_dict = {"VVVL": '1',
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])
 
-print(username)
-print(opt.dat)
+#print(username)
+#print(opt.dat)
 
 if opt.fold == '':
     folder = "Eff_Jet" + opt.jetwp + "_Mu" + opt.muwp + "_Ele" + opt.elewp
@@ -144,9 +144,9 @@ else:
     else:
         opt.channel = 'bjet'
 
-print(opt.fold, opt.channel, folder)
-path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/"
-print("output path:", path, "\n")
+#print(opt.fold, opt.channel, folder)
+#path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/"
+#print("output path:", path, "\n")
 
 subpy = ""
 optstring = " -f " + folder
