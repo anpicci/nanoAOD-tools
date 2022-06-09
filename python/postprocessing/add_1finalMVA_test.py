@@ -70,6 +70,7 @@ notAll = False
 if opt.dat != "all":
     mergesamp = opt.dat.split(",")
     notAll = True
+    print("Samples to do:", mergesamp)
 
 toVeto = False
 if opt.veto != "none":
@@ -222,16 +223,37 @@ def AreAllCondored(crabname, condorname):
     else:
         return True
 
-def MLRun(k, kpath):
+def MLRun(st, stpath):
     if Debug:
         return("ML run...")
-    #file_path = kpath+k
+    #file_path = stpath+k
     #file_path += ".root"
-    filelist = [f for f in CondoredList(k) if "part" in f]
+    filelist = [f for f in CondoredList(st) if "part" in f]
+    finalpath = stpath + st + ".root"
+    
+    if os.path.exists(finalpath):
+        IsThere = []
+        finalfile = ROOT.TFile.Open(finalpath, "READ")
+        print(finalfile)
+
+        for scen in scenarios:
+            finaltree = finalfile.Get("events_" + scen)
+            for bran in branches:
+                if bran in finaltree.GetListOfBranches():
+                    print(bran + " already there in " + finalpath + " for scenario " + scen)
+                    IsThere.append(True)
+                else:
+                    IsThere.append(False)
+
+        if True in IsThere:
+            return False
+        else:
+            pass
+                    
     totMLed = []
     for fpath in filelist:
-        totfpath = kpath+fpath
-        fMLed = OpenAndRun(k, totfpath)
+        totfpath = stpath+fpath
+        fMLed = OpenAndRun(st, totfpath)
         totMLed.append(fMLed)
 
     if True in totMLed:
@@ -239,27 +261,29 @@ def MLRun(k, kpath):
     else:
         return False
 
-def OpenAndRun(k, file_path):
+def OpenAndRun(st, file_path):
     #check if there is at least one event in the tree
     if not os.path.exists(file_path):
         print(file_path, "does not exist!")
         return False
     print("\n\nProcessing " + file_path)
     tmpdir = "tmpML_" + opt.folder
-    #file_path_cp = kpath+k+"_cp.root"
+    #file_path_cp = stpath+st+"_cp.root"
     if os.path.exists(tmpdir):
         pass
         #os.system("rm -rf " + tmpdir + "/*")
     else:
         os.system("mkdir " + tmpdir)
-    file_path_cp = tmpdir + "/"+k+"_cp.root"
+    fname = file_path.split("/")[-1].replace(".root", "")
+    #file_path_cp = tmpdir + "/"+st+"_cp.root"
+    file_path_cp = tmpdir + "/"+fname+"_cp.root"
     #tmpfile = ROOT.TFile.Open(file_path)
     ids = 0
     MLed = []
     while ids < len(scenarios):
     #for ids, scenario in enumerate(scenarios):
         scenario = scenarios[ids]
-        if k.startswith("Data") and ids > 0:
+        if st.startswith("Data") and ids > 0:
             ids += 1
             continue
 
@@ -297,13 +321,13 @@ def OpenAndRun(k, file_path):
                 else:
                     pass
                 if branch in myfile.Get("events_"+scenario).GetListOfBranches():
-                    print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", k, "and then come back to us!")
+                    print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", st, "and then come back to us!")
                     myfile.Close()
                     MLed.append(False)
                     idbr += 1
                     continue
                 else:
-                    print("branch", branch, "will be created for sample", k)
+                    print("branch", branch, "will be created for sample", st)
                     pass
 
                 mytree = myfile.Get("events_"+scenario)
@@ -378,7 +402,7 @@ def OpenAndRun(k, file_path):
                     pass
                 
                 for idcs, chscen in enumerate(scenarios):
-                    if k.startswith("Data") and (idcs > 0 or chscen != "nominal"):
+                    if st.startswith("Data") and (idcs > 0 or chscen != "nominal"):
                         continue#break
                     try:
                         checknum = checkfile.Get("events_"+chscen).GetEntries()
@@ -419,7 +443,29 @@ def OpenAndRun(k, file_path):
                     os.system("rm " + file_path_bu)
                     MLed.append(True)
                     idbr += 1
-    
+        
+        else:
+            os.system("cp " + file_path + " " + file_path_cp)
+            myfile = ROOT.TFile(file_path_cp, 'update')
+            mytree = myfile.Get("events_"+scenario)
+
+            for branch in branches:
+                if branch in mytree.GetListOfBranches():
+                    print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", st, "and then come back to us!")
+                    myfile.Close()
+                    MLed.append(False)
+                    continue
+                
+                brancharray = array('d', [0])
+                newbranch = mytree.Branch(branch, brancharray, branch+"/D")
+                MLed.append(True)
+
+                myfile.cd()
+                mytree.Write("", ROOT.TFile.kOverwrite)
+
+            myfile.Close()
+            os.system("mv " + file_path_cp + " " + file_path)
+                
     if True in MLed:
         return True
     else:
@@ -441,6 +487,8 @@ for k, v in merge_dict.items():
 
     if notAll and k not in mergesamp:
         continue
+    #else:
+        #print(notAll, k)
 
     if k.startswith("Fake"):
         continue
@@ -470,9 +518,15 @@ for k, v in merge_dict.items():
     doesexist = []
     if hascomp:
         if opt.dat != 'all':
-            if not str(k).startswith(opt.dat):
-                if not k.startswith(opt.dat):
+            IsIncluded = False
+            for dat in mergesamp:
+                if str(k).startswith(dat):
+                    IsIncluded = True
+                    break
+                
+            if not IsIncluded:
                     continue
+
         print("with components")
         print("Sample: ", k)
 
@@ -493,26 +547,31 @@ for k, v in merge_dict.items():
         if len(doesexist) == len(v.components) and True in doesexist:
             samplemerge = True
 
-        if samplemerge:
+        if True:#samplemerge:
             if os.path.exists(kpath+k+".root"):
                 if Debug:
                     print("rm -f "+kpath+k+".root")
                 else:
                     os.system("rm -f "+kpath+k+".root")
             if Debug:
-                print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
+                print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
             else:
-                print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
-                os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
+                print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
+                os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
 
         else:
-            print(k + "not ready to be merged")
+            print(k + " not ready to be merged")
             
     else:
         if opt.dat != 'all':
-            if not k.startswith(opt.dat):
-                print(k, opt.dat, "hello")
+            IsIncluded = False
+            for dat in mergesamp:
+                if k.startswith(dat):
+                    IsIncluded = True
+                    break
+            if not IsInclued:
                 continue
+
         if not os.path.exists(kpath+k+".root") or opt.rw:
             if not DoesSampleExist(v.name) and not opt.ovride:
                 print(k + " not crabbed yet")
@@ -523,7 +582,7 @@ for k, v in merge_dict.items():
 
         result = MLRun(k, kpath)
 
-        samplemerge = result
+        samplemerge = True#result
         if not samplemerge:
             continue
 
@@ -533,10 +592,10 @@ for k, v in merge_dict.items():
             else:
                 os.system("rm -f "+kpath+k+".root")
         if Debug:
-            print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
+            print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
         else:
-            print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
-            os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw")
+            print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
+            os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
 
 
 '''

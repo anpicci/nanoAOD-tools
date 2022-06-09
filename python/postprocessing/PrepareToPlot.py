@@ -168,6 +168,8 @@ for k, v in merge_dict.items():
     print(k, v)
 '''
 
+datoprocess = opt.dat.split(",")
+
 for k, v in merge_dict.items():
     
     #if opt.year not in k:
@@ -190,8 +192,15 @@ for k, v in merge_dict.items():
             continue
     
     if k.startswith('Fake'):
-        if opt.dat != "all" and not opt.dat.startswith("Fake"):
+        if opt.dat != "all":
+            IsIncluded = False
+            for dat in datoprocess:
+                if dat.startswith("Fake"):
+                    IsIncluded = True
+                    break
+        if not IsIncluded:
             continue
+            
         if os.path.exists(path + k + "/" + k + ".root"):
             if not opt.rw:
                 continue
@@ -203,6 +212,8 @@ for k, v in merge_dict.items():
                 mergable = True
             else:
                 mergable = False
+            
+        
         
         if mergable:
             cmdstring = "python3 makeplot.py -y " + opt.year +  " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel
@@ -217,9 +228,14 @@ for k, v in merge_dict.items():
     if hasattr(v, 'components') and v.components is not None:
         for c in v.components:
             if opt.dat != 'all':
-                if not str(c.label).startswith(opt.dat):
-                    if not k.startswith(opt.dat):
-                        continue
+                IsIncluded = False
+                for dat in datoprocess:
+                    if str(c.label).startswith(dat) or k.startswith(dat):
+                        IsIncluded = True
+                        break
+
+                if not IsIncluded:
+                    continue
 
             elif opt.nodata and 'Data' in c.label:
                 continue
@@ -229,12 +245,11 @@ for k, v in merge_dict.items():
                 continue
             cpath = path + c.label + "/"
             if (not AreAllCondored(c.name, c.label) and not opt.override):
-            #if not os.path.exists(cpath):
                 print(c.label + " not condorly produced yet")
                 continue
 
             doesexist.append(True)
-
+        
             partmerge = False
             if not os.path.exists(cpath+c.label+".root") or opt.rw:
                 partmerge = True
@@ -290,13 +305,23 @@ for k, v in merge_dict.items():
                     os.system(cmdstring)
         #else:
             #print k + "not ready to be merged"
+        
+        
     else:
         if opt.dat != 'all':
-            if not k.startswith(opt.dat):
+            IsIncluded = False
+            for dat in datoprocess:
+                if k.startswith(opt.dat):
+                    IsIncluded = True
+                    break
+            
+            if not IsIncluded:
                 continue
+
         if not DoesSampleExist(v.name):
             print(k + " not crabbed yet")
             continue
+
         if not AreAllCondored(v.name, v.label) and not opt.override:
         #if not os.path.exists(kpath+k):
             print(k + " not condored at all yet")
