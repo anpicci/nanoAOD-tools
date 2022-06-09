@@ -234,18 +234,18 @@ def MLRun(st, stpath):
     if os.path.exists(finalpath):
         IsThere = []
         finalfile = ROOT.TFile.Open(finalpath, "READ")
-        print(finalfile)
 
         for scen in scenarios:
             finaltree = finalfile.Get("events_" + scen)
             for bran in branches:
                 if bran in finaltree.GetListOfBranches():
-                    print(bran + " already there in " + finalpath + " for scenario " + scen)
+                    print(bran + " already there in " + st + " for scenario " + scen)
                     IsThere.append(True)
                 else:
                     IsThere.append(False)
 
         if True in IsThere:
+            print("\n")
             return False
         else:
             pass
@@ -448,7 +448,7 @@ def OpenAndRun(st, file_path):
             os.system("cp " + file_path + " " + file_path_cp)
             myfile = ROOT.TFile(file_path_cp, 'update')
             mytree = myfile.Get("events_"+scenario)
-
+            print("File has 0 entries, managing with this...")
             for branch in branches:
                 if branch in mytree.GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", st, "and then come back to us!")
