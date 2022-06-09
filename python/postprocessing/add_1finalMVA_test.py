@@ -236,6 +236,8 @@ def MLRun(st, stpath):
         finalfile = ROOT.TFile.Open(finalpath, "READ")
 
         for scen in scenarios:
+            if "Data" in st and scen != "nominal":
+                continue
             finaltree = finalfile.Get("events_" + scen)
             for bran in branches:
                 if bran in finaltree.GetListOfBranches():
