@@ -238,7 +238,15 @@ def MLRun(st, stpath):
         for scen in scenarios:
             if "Data" in st and scen != "nominal":
                 continue
-            finaltree = finalfile.Get("events_" + scen)
+            try:
+                finaltree = finalfile.Get("events_" + scen)
+            except:
+                print("Something went wrong when trying to open " + finalpath +", redoing this...")
+                IsThere.append(False)
+                break
+            else:
+                pass
+
             for bran in branches:
                 if bran in finaltree.GetListOfBranches():
                     print(bran + " already there in " + st + " for scenario " + scen)
@@ -549,7 +557,7 @@ for k, v in merge_dict.items():
         if len(doesexist) == len(v.components) and True in doesexist:
             samplemerge = True
 
-        if True:#samplemerge:
+        if samplemerge:
             if os.path.exists(kpath+k+".root"):
                 if Debug:
                     print("rm -f "+kpath+k+".root")
@@ -561,8 +569,9 @@ for k, v in merge_dict.items():
                 print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
                 os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
 
+            
         else:
-            print(k + " not ready to be merged")
+            print(k + " not to be merged")
             
     else:
         if opt.dat != 'all':

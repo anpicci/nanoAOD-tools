@@ -910,7 +910,7 @@ ZZtoLep_UL2016.components = [
     ZZTo4L_UL2016,
     GluGluToContinToZZTo2e2nu_UL2016,
     GluGluToContinToZZTo4e_UL2016,
-    #GluGluToContinToZZTo2e2mu_UL2016,
+    GluGluToContinToZZTo2e2mu_UL2016,
     GluGluToContinToZZTo2e2tau_UL2016,
     GluGluToContinToZZTo2mu2nu_UL2016,
     GluGluToContinToZZTo4mu_UL2016,
