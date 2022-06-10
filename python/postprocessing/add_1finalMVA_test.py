@@ -64,7 +64,11 @@ if not "btag" in opt.folder and not opt.isfake and (("mcreco" in opt.folder and 
 modelpaths = opt.paths.split(",")
 branches = opt.branches.split(",")
 scalerpaths = opt.scalers.split(",")
-print(branches, scalerpaths)
+
+for idb, branch in enumerate(branches):
+    print("\nbranch:\t", branch)
+    print("modelpath:\t", modelpaths[idb])
+    print("scaler:\t", scalerpaths[idb])
 
 notAll = False
 if opt.dat != "all":
@@ -77,10 +81,6 @@ if opt.veto != "none":
     vetosamp = opt.veto.split(",")
     toVeto = True
     print("Samples to veto:", vetosamp)
-
-for im, model in enumerate(modelpaths):
-    print(im, model)
-    print(im, branches[im])#
 
 features = []
 for ib, branch in enumerate(branches):
@@ -97,6 +97,7 @@ for idm, modelpath in enumerate(modelpaths):
     if "BDT" in branches[idm]:
         models.append(XGBClassifier())
         models[idm].load_model(modelpath)
+        scalers.append(scalerpaths[idm])
     elif "DNN" in branches[idm]:
         with open(scalerpaths[idm], 'rb') as file:
             scalers.append(pickle.load(file))
@@ -557,7 +558,7 @@ for k, v in merge_dict.items():
         if len(doesexist) == len(v.components) and True in doesexist:
             samplemerge = True
 
-        if samplemerge:
+        if True:#samplemerge:
             if os.path.exists(kpath+k+".root"):
                 if Debug:
                     print("rm -f "+kpath+k+".root")

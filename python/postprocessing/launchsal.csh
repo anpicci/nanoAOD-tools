@@ -9,8 +9,8 @@ set year = 'UL2017'
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year -d #--rw
 #python3 PrepareToPlot.py -f $folder -y $year -d VBS_SSWW_aQGC_$year #--rw
-#python3 PrepareToPlot.py -f $folder -y $year -d WpWpJJ_EWK_$year #--rw
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d ZZtoLep_$year --rw
+python3 PrepareToPlot.py -f $folder -y $year -d ZZtoLep_$year #--rw
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d ZZtoLep_$year --rw
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d WpWpJJ_EWK_$year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
