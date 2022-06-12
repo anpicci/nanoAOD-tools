@@ -86,7 +86,7 @@ for sample in samples:
                     finished = True
                     break
 
-                print curl
+                #print curl
                 cidx = 0
                 while cidx < len(curl):
                     cu = curl[cidx]
