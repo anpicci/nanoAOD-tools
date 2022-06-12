@@ -6,10 +6,10 @@ reset
 #################### year1 #################
 set year = UL2016APV
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*/*$year*
-python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
-python3 makeplot.py -y $year --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
-python3 makeplot.py -y $year --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count 
-python3 makeplot.py -y $year --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL 
+#python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_cHW_SM_$year,WpWpJJ_EWK_$year
+#python3 makeplot.py -y $year --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_cHW_SM_$year,WpWpJJ_EWK_$year
+#python3 makeplot.py -y $year --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_cHW_SM_$year,WpWpJJ_EWK_$year
+#python3 makeplot.py -y $year --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL -d VBS_SSWW_cHW_SM_$year,WpWpJJ_EWK_$year
 
 #################### year1bis #################
 set year = UL2016
@@ -30,7 +30,7 @@ set year = UL2017
 #################### year3 #################
 set year = UL2018
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/muon/countings/*/*$year*
-#python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count 
-#python3 makeplot.py -y $year --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count 
-#python3 makeplot.py -y $year --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count 
-#python3 makeplot.py -y $year --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL 
+python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count 
+python3 makeplot.py -y $year --lep muon --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count 
+python3 makeplot.py -y $year --lep muon --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count 
+python3 makeplot.py -y $year --lep muon --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL 

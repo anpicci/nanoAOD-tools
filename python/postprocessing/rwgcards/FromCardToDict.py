@@ -60,4 +60,4 @@ def CardToDict(dim, op):
 
     return coeffdict
 
-print(CardToDict("dim8", "FT1_2p0"))
+#print(CardToDict("dim8", "FT1_2p0"))

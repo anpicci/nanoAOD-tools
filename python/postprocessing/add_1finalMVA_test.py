@@ -82,6 +82,7 @@ if opt.veto != "none":
     toVeto = True
     print("Samples to veto:", vetosamp)
 
+
 features = []
 for ib, branch in enumerate(branches):
     features.append([])
@@ -493,16 +494,32 @@ for k, v in merge_dict.items():
     if not k.endswith(str(opt.year)):
         continue
 
-    if toVeto and k in vetosamp:
-        continue
+    if toVeto:
+        toContinue = False
+        for vs in vetosamp:
+            if k.startswith(vs):
+                toContinue = True
+                break
+        if toContinue:
+            continue
 
-    if notAll and k not in mergesamp:
-        continue
+    if notAll:
+        toPass = False
+        for ms in mergesamp:
+            if k.startswith(ms):
+                toPass = True
+                break
+        if not toPass:
+            continue
+
+    print(k,"hello2")
+
     #else:
         #print(notAll, k)
 
     if k.startswith("Fake"):
         continue
+
 
     isMLed = False
 
@@ -581,7 +598,7 @@ for k, v in merge_dict.items():
                 if k.startswith(dat):
                     IsIncluded = True
                     break
-            if not IsInclued:
+            if not IsIncluded:
                 continue
 
         if not os.path.exists(kpath+k+".root") or opt.rw:
