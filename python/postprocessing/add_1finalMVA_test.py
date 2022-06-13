@@ -256,7 +256,7 @@ def MLRun(st, stpath):
                 else:
                     IsThere.append(False)
 
-        if True in IsThere:
+        if not False in IsThere:
             print("\n")
             return False
         else:
