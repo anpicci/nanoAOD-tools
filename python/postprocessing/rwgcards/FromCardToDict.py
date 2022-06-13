@@ -57,7 +57,7 @@ def CardToDict(dim, op):
                     idc += 1
                 else:
                     pass
-
+  
     return coeffdict
 
-#print(CardToDict("dim8", "FT1_2p0"))
+CardToDict("dim8", "FT1_2p0")
