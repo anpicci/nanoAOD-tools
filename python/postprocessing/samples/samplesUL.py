@@ -3130,7 +3130,7 @@ WpWpJJ_EWK_UL2018.dataset = "/WpWpJJ_EWKnotop_TuneCP5_13TeV-madgraph-pythia8/Run
 WpWpJJ_QCD_UL2018 = sample(QCDVBScolor, 1, 1001, "QCD ssWW VBS", "WpWpJJ_QCD_UL2018")
 WpWpJJ_QCD_UL2018.sigma = 0.01538
 WpWpJJ_QCD_UL2018.year = "UL2018"
-WpWpJJ_QCD_UL2018.dataset = ""
+WpWpJJ_QCD_UL2018.dataset = "/WpWpJJ_QCDnotop_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v1/NANOAODSIM"
 
 WpWpJJ_UL2018 = sample(WWJJcolor, 1, 1001, "EW+QCD VBS ssWW", "WpWpJJ_UL2018")
 WpWpJJ_UL2018.year = "UL2018"
