@@ -40,7 +40,7 @@ if __name__ == "__main__" :
     print('wp',wp)
     
     input_folder = opt.infolder
-    outdir = 'FakeRatio_calcs_VT/' + wp + '/'
+    outdir = 'FakeRatio_calcs/' + wp + '/'
 
     if not os.path.isdir(input_folder): 
         raise NameError('ERROR: directory ', input_folder, ' not found')
