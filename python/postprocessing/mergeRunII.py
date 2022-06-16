@@ -25,7 +25,7 @@ for lepton in leptons:
         haddcommand = "hadd -f " + compath + sampletag +"_ULRunII_" + lepton + ".root "
         for infile in infiles:
             haddcommand += compath + infile + " "
-        print("Merging 2016 samples for " + sampletag + "...")
+        print("Merging RunII samples for " + sampletag + "...")
         os.system(haddcommand)
         #print(haddcommand)
         
