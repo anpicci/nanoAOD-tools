@@ -460,11 +460,13 @@ def OpenAndRun(st, file_path):
             os.system("cp " + file_path + " " + file_path_cp)
             myfile = ROOT.TFile(file_path_cp, 'update')
             mytree = myfile.Get("events_"+scenario)
+            print("opened", mytree)
             print("File has 0 entries, managing with this...")
             for branch in branches:
+                print(mytree.Print("*pol*"))
                 if branch in mytree.GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", st, "and then come back to us!")
-                    myfile.Close()
+                    #myfile.Close()
                     MLed.append(False)
                     continue
                 
