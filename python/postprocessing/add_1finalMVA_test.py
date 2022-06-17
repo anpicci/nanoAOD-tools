@@ -250,6 +250,15 @@ def MLRun(st, stpath):
                 pass
 
             for bran in branches:
+                try:
+                    bran in finaltree.GetListOfBranches()
+                except:
+                    print("Something wrong with for scenario " + scen + " let's redo it...")
+                    IsThere.append(False)
+                    continue
+                else:
+                    pass
+                    
                 if bran in finaltree.GetListOfBranches():
                     print(bran + " already there in " + st + " for scenario " + scen)
                     IsThere.append(True)
@@ -463,7 +472,6 @@ def OpenAndRun(st, file_path):
             print("opened", mytree)
             print("File has 0 entries, managing with this...")
             for branch in branches:
-                print(mytree.Print("*pol*"))
                 if branch in mytree.GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", st, "and then come back to us!")
                     #myfile.Close()
