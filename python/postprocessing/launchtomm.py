@@ -70,5 +70,5 @@ for idb, branch in enumerate(branches):
     scalerstr += scalers[idb]
 
 for year in years:
-    #os.system("python3 add_1finalMVA_test.py -y " + year + " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr + " -v TT_" + year + ",WJets_" + year + ",VBS_SSWW_aQGC_" + year)
-    os.system("python3 add_1finalMVA_test.py -y " + year + " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr + " -d WpWpJJ_QCD_" + year)
+    os.system("python3 add_1finalMVA_test.py -y " + year + " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr + " -v TT_" + year + ",WJets_" + year + ",VBS_SSWW_aQGC_" + year)
+    #os.system("python3 add_1finalMVA_test.py -y " + year + " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr + " -d WpWpJJ_QCD_" + year)
