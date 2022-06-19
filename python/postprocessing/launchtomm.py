@@ -3,9 +3,9 @@ from ML.MLmodels import *
 os.system("reset")
 
 years = [
-    #"UL2016APV",
+    "UL2016APV",
     #"UL2016",
-    "UL2017",
+    #"UL2017",
     #"UL2018",
 ]
 
@@ -77,4 +77,4 @@ for idb, branch in enumerate(branches):
 
 for year in years:
     #os.system("python3 add_1finalMVA_test.py -y " + year + " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr + " -d WZ_" + year + " -v TT_" + year + ",WJets_" + year + ",VBS_SSWW_aQGC_" + year)
-    os.system("python3 add_1finalMVA_test.py -y " + year + " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr + " -d WZ_" + year)
+    os.system("python3 add_1finalMVA_test.py -y " + year + " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr + " -d WZ_" + year + " --ov")
