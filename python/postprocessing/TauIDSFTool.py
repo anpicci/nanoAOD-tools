@@ -92,7 +92,7 @@ class TauIDSFTool:
         if "UL" in year and "VSmu" in id:
             #print(">>> TauIDSFTool: Warning! Using pre-UL (%r) SFs for %s..."%(year,id))
             year = '2016Legacy' if '2016' in year else '2017ReReco' if '2017' in year else '2018ReReco'
-            print("now:", year)
+            #print("now:", year)
         assert year in campaigns, "You must choose a year from %s."%(', '.join(campaigns))
         self.ID       = id
         self.WP       = wp

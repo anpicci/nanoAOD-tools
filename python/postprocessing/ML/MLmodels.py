@@ -26,6 +26,10 @@ bdt_pol_path="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/polUL-vUL030.m
 bdt_pol_branch = "BDT_pol_UL030"
 bdt_pol_scaler = ""
 
+bdt_pol_path_v2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/polUL-vUL030_polBDT_v2.model"
+bdt_pol_branch_v2 = "BDT_pol_UL030_v2"
+bdt_pol_scaler_v2 = ""
+
 dnn_cW_branch_bal_v2 = "DNN_cW_UL025_bal_v2"
 dnn_cW_path_bal_v2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/optimized_dnn_dim6-cW-INT-BSM_UL-allBKGs_vUL025_optimization_Balancing_redoAN_reduced_loss.h5"
 dnn_cW_scaler_bal_v2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/minmaxscaler_dim6-cW-INT-BSM_UL-allBKGs_vUL025_optimization_Balancing_redoAN_reduced_loss.p"
@@ -54,3 +58,6 @@ dnn_pol_branch = "DNN_pol_UL030"
 dnn_pol_path = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/optimized_model_SM-allBKGs_UL_vUL030_pol.h5"
 dnn_pol_scaler = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/minmaxscaler_SM_UL-allBKGs_vUL030_pol.p"
 
+dnn_pol_branch_v2 = "DNN_pol_UL030_v2"
+dnn_pol_path_v2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/optimized_model_SM-allBKGs_UL_vUL030_polDNN_v2.h5"
+dnn_pol_scaler_v2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/minmaxscaler_SM_UL-allBKGs_vUL030_polDNN_v2.p"

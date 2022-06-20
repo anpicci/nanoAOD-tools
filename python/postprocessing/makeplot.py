@@ -273,7 +273,7 @@ else:
         "TESDown",
         "FESUp", 
         "FESDown"
-    ]
+   ]
     nomtag = "nominal"
 
 print("scenarios:", scenarios)
@@ -366,14 +366,17 @@ pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 
 if opt.plot:
     if not os.path.exists(pathplot) and cut_tag != "1p":
+        print("hello")
         #os.makedirs(pathplot)
         os.system("mkdir -p " + pathplot)
 
 if opt.stack:
     if not os.path.exists(plotrepo + 'stack') and cut_tag != "1p":
-        os.makedirs(plotrepo + 'stack')
+        #os.makedirs(plotrepo + 'stack')
+        os.system("mkdir -p " + plotrepo + 'stack')
     if not os.path.exists(pathstack) and cut_tag != "1p":
-        os.makedirs(pathstack)
+        #os.makedirs(pathstack)
+        os.system("mkdir -p " + pathstack)
 
 if not (opt.wfake=='nofake' or opt.wfake.startswith('incl') or opt.wfake.startswith('sep')):
     raise ValueError('Specify a value for --wfake between nofake, incl*, and sep*')
@@ -398,7 +401,7 @@ def mergepart(dataset):
             
 def mergetree(sample):
     if not os.path.exists(filerepo + sample.label):
-        os.makedirs(filerepo + sample.label)
+        os.system("mkdir -p " + filerepo + sample.label)
     hascomp = False
     if "UL" in opt.year:
         hascomp = hasattr(sample, "components")
@@ -529,8 +532,16 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
     cut = ''
 
     print("count? ", opt.count)
-    if opt.count:
-        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst.replace("_Up", "Up").replace("_Down", "Down") + ".csv", "a")
+    if opt.count and not syst == "nominal":
+        IsOpen = False
+        while not IsOpen:
+            try:
+                countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst.replace("_Up", "Up").replace("_Down", "Down") + ".csv", "a")
+            except:
+                continue
+            else:
+                IsOpen = True
+
         countf.write(sample.leglabel)
         countf.write(';')
         #countf.write("\nBin\tContent\tError")
@@ -1123,7 +1134,7 @@ for year in years:
 print("\nStarting")
 for year in years:
     if not os.path.exists(pathstack + str(year) + "/") and cut_tag != "1p":
-        os.makedirs(pathstack + str(year) + "/")
+        os.system("mkdir -p " + pathstack + str(year) + "/")
     print(year)
     for lep in leptons:
         print(lep)
@@ -1178,8 +1189,9 @@ for year in years:
         #variables.append(variabile('DNN_SM_UL025_nobal', 'noBal. SM DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         #variables.append(variabile('DNN_cW_UL025_nobal', 'noBal. c_{W} DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         #variables.append(variabile('DNN_cHW_UL025_nobal', 'noBal. c_{HW} DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
-
-        variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
+        
+        #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
+        variables.append(variabile('DNN_pol_UL030_v2', 'LL vs TX VBS DNN output (v2)', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         
         variables.append(variabile('BDT_SM_xgb_UL025_bal_noopt', 'Bal. SM BDT output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         variables.append(variabile('BDT_cW_xgb_UL025_bal_noopt', 'Bal. c_{W} BDT output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
@@ -1188,8 +1200,9 @@ for year in years:
         #variables.append(variabile('BDT_SM_xgb_UL025_nobal_noopt', 'noBal. SM BDT output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         #variables.append(variabile('BDT_cW_xgb_UL025_nobal_noopt', 'noBal. c_{W} BDT output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         #variables.append(variabile('BDT_cHW_xgb_UL025_nobal_noopt', 'noBal. c_{HW} BDT output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
-
-        variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
+        
+        #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
+        variables.append(variabile('BDT_pol_UL030_v2', 'LL vs TX VBS BDT output (v2)', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
@@ -1459,8 +1472,8 @@ for year in years:
 
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False,  5, 0., 1.))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, 5, 0., 1.))
-        '''
-        '''
+
+
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
@@ -1479,9 +1492,9 @@ for year in years:
                             if os.path.exists(pathplot + 'countings/'):
                                 pass#print("hello", pathplot + 'countings/')
                             else:
-                                os.makedirs(pathplot + 'countings/')
+                                os.system("mkdir -p " + pathplot + 'countings/')
                             if not os.path.exists(pathplot + 'countings/' + cut_tag):
-                                os.makedirs(pathplot + 'countings/' + cut_tag)
+                                os.system("mkdir -p " + pathplot + 'countings/' + cut_tag)
                             if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0].replace("_Up", "Up").replace("_Down", "Down") + ".csv"):
                                 tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
                                 tmp_f.write("Process,yields,error\n")
