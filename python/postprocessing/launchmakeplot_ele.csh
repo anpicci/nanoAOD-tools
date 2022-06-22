@@ -6,10 +6,10 @@ reset
 ######## year1 #######################
 set year = UL2016APV
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
-python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
-python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
-python3 makeplot.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL
+#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
+#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
+#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count
+#python3 makeplot.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --bvetoL
 
 ######### year1bis #######################
 set year = UL2016
@@ -30,7 +30,7 @@ set year = UL2017
 ####### year3 #######################
 set year = UL2018
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-#python3 makeplot_tt.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot_tt.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot_tt.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
-#python3 makeplot_tt.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL 
+python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
+python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
+python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count
+python3 makeplot.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --bvetoL 
