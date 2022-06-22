@@ -1009,11 +1009,11 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     ratio.GetXaxis().SetTitleSize(0.16)
     ratio.GetYaxis().SetTitleSize(0.16)
     if "fakes_" in cut_tag_ or "SR" in cut_tag_:
-        ratio.GetYaxis().SetRangeUser(0.7, 1.3)
+        ratio.GetYaxis().SetRangeUser(0.5, 1.5)
     elif "ttbar_" in cut_tag_:
-        ratio.GetYaxis().SetRangeUser(0.8, 1.2)
+        ratio.GetYaxis().SetRangeUser(0.5, 1.5)
     elif "OS_" in cut_tag_:
-        ratio.GetYaxis().SetRangeUser(0.8, 1.3)
+        ratio.GetYaxis().SetRangeUser(0.5, 1.5)
     ratio.GetXaxis().SetTitle(variabile_._title)
     ratio.GetXaxis().SetLabelOffset(0.04)
     ratio.GetYaxis().SetLabelOffset(0.02)
@@ -1062,6 +1062,11 @@ if not "UL" in opt.year:
 else:
     dataset_dict = {'UL2016APV':[], 'UL2016': [], 'UL2016M':[], 'UL2017':[], 'UL2018':[], "ULRunII":[]}
 #print(class_list)
+
+if opt.stack:
+    class_list = stack_list
+else:
+    class_list = plot_list
 
 if(opt.dat != 'all'):
      print("opt.dat", opt.dat)
