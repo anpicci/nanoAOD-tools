@@ -7,7 +7,7 @@ folder = "vUL030"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot/"
 leptons = ["electron", "muon"]
 
-samples = [cl for cl in class_list if "UL2016" == cl.year]
+samples = [cl for cl in plot_list if "UL2016" == cl.year]
 #print([sample.label for sample in samples])
 
 for lepton in leptons:
