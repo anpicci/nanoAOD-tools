@@ -1,5 +1,4 @@
 import os 
-#import commands
 import sys
 import optparse
 import ROOT
@@ -14,9 +13,33 @@ import pickle
 import numpy as np
 import sklearn
 import xgboost
+from rwgcards.FromCardToDict import *
 
-#print TT_2017
-#ciao
+rwgdict = CardToDict("dim8", "FT1_2p0")
+desiredop = [
+    "FS0_1p0",
+    "FS1_1p0",
+    "FM0_1p0",
+    "FM1_0p9",
+    "FM6_1p0",
+    "FM7_1p0",
+    "FT0_1p0",
+    "FT1_1p0",
+    "FT2_0p9",
+]
+wcoeff = []
+for opname, opdict in rwgdict.items():
+    coeffstr = ""
+    for val in opdict.keys():
+        coeffstr = opname + "_" + val
+        if coeffstr in desiredop:
+            wcoeff.append(coeffstr)
+print(wcoeff)
+typcontr = [
+    "0",
+    "SM",
+    "BSM",
+]
 
 ROOT.ROOT.EnableThreadSafety()
 
@@ -47,7 +70,7 @@ parser.add_option('--user', dest='user', type='string', default=str(os.environ.g
 parser.add_option('--ttbar', dest='ttbar', default = False, action='store_true', help='Enable ttbar CR, default disabled')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='Enable countings')
 parser.add_option('--HT', dest='HT', default = False, action='store_true', help='Enable CTHT')
-parser.add_option('--wfake', dest='wfake', type='string', default = 'nofake', help='Enable stackplots with data-driven fake leptons, default disabled')
+parser.add_option('--wfake', dest='wfake', type='string', default = 'fake', help='Enable stackplots with data-driven fake leptons, default disabled')
 parser.add_option('--wjets', dest='wjets', default = False, action='store_true', help='Enable WJets CR, default disabled')
 parser.add_option('--fakes', dest='fakes', default = False, action='store_true', help='Enable FL CR, default disabled')
 parser.add_option('--ws', dest='ws', default = False, action='store_true', help='Enable WrongSign CR, default disabled')
@@ -57,15 +80,13 @@ parser.add_option('--qcd', dest='qcd', default = False, action='store_true', hel
 parser.add_option('--blinded', dest='blinded', default = False, action='store_true', help='Activate blinding')
 parser.add_option('--signal', dest='signal', default = False, action='store_true', help='Activate only signal')
 parser.add_option('--horn', dest='horn', default = False, action='store_true', help='eta horns for 2017')
-#parser.add_option('--skipML', dest='runML', default = True, action='store_false', help='default runs ML')
 parser.add_option('--rPrompt', dest='removePrompt', default = False, action='store_true', help='default runs ML')
 parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Select final state, default is h_tau + lepton')
+parser.add_option('-v', dest='varss', type=str, default = 'all', help='Select variables to plot')
 parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='Tag to distinguish between different makeplot runs')
 parser.add_option('--bvetoL', dest='bvetoL', default = False, action='store_true', help='apply bveto loose in ws and dy CRs')
 
 (opt, args) = parser.parse_args()
-#print (opt, args)
-print("to stack?", opt.tostack)
 
 if "UL" in opt.year:
     from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
@@ -88,15 +109,12 @@ if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco"
     folder += "/" + opt.channel
 pfolder = opt.folder + opt.plot_tag
 
-print(folder)
-
 filerepo = '/eos/home-'+opt.user[0]+'/'+opt.user+'/VBS/nosynch/' + folder + '/'
 plotrepo = '/eos/home-'+opt.user[0]+'/'+opt.user+'/VBS/nosynch/' + pfolder + '/'
 
-print(filerepo, plotrepo)
+#print(filerepo, plotrepo)
 
 FRtag = opt.wfake.split("_")[-1]
-print("FRtag:", FRtag)
 
 ROOT.gROOT.SetBatch() # don't pop up canvases
 if opt.lep != 'incl':
@@ -108,7 +126,7 @@ else:
         lepstr = 'plot/' + opt.lep
 
 cut = opt.cut #default cut must be obvious, for example 1.
-
+vartoplot = opt.varss.split(",")
 if opt.channel=="ltau":
     epdgstr = "lepton"
     mpdgstr = "lepton"
@@ -258,39 +276,20 @@ if opt.bdt or opt.ebdt or opt.mubdt:
 
 lumi = {'2016': 35.9, 'UL2016M': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.5, "2018": 59.7, 'UL2018':59.8, "ULRunII":137.1}
 
-
-if ("UL" in opt.folder and not "FR" in opt.folder and int(opt.folder.split("UL")[-1]) < 10) or (not "UL" in opt.folder) or "FR" in opt.folder:
-    scenarios = ["all"]
-    nomtag = "all"
-else:
-    scenarios = [
-        "nominal",
-        "jesUp",
-        "jesDown",
-        "jerUp",
-        "jerDown",
-        "TESUp", 
-        "TESDown",
-        "FESUp", 
-        "FESDown"
-   ]
-    nomtag = "nominal"
-
-print("scenarios:", scenarios)
-'''
-systematics = {scenario: [] for scenario in scenarios}
-if opt.syst!="all" and opt.syst!="noSyst":
-     for syst in (opt.syst).split(","):
-         if not syst in scenarios:
-             try:
-                 systematics[nomtag].append([syst, True])
-             except:
-                 pass
-         else:
-             systematics[syst].append(syst)
-elif opt.syst!="all" and opt.syst=="noSyst":
-    systematics[nomtag].append(("", True)) #di default per syst="" alla variabile si applica il peso standard incluso nella macro macro_plot.C
-'''
+scenarios = [
+    "nominal",
+    "lepenUp",
+    "lepenDown",
+    "jesUp",
+    "jesDown",
+    "jerUp",
+    "jerDown",
+    "TESUp", 
+    "TESDown",
+    "FESUp", 
+    "FESDown"
+]
+nomtag = "nominal"
 
 systematicslist = [
     ["", True, ""],
@@ -300,8 +299,8 @@ systematicslist = [
     ["puDown", True, "exp"],
     ["btagUp", True, "exp"],
     ["btagDown", True, "exp"],
-    #["mistagUp", True),
-    #["mistagDown", True),
+    ["mistagUp", True, "exp"],
+    ["mistagDown", True, "exp"],
     ["lepUp", True, "exp"],
     ["lepDown", True, "exp"],
     ["tau_vsjet_Up", True, "exp"],
@@ -310,8 +309,6 @@ systematicslist = [
     ["tau_vsele_Down", True, "exp"],
     ["tau_vsmu_Up", True, "exp"],
     ["tau_vsmu_Down", True, "exp"],
-    #["trigUp", False, "exp"],
-    #["trigDown", False, "exp"],
     ["pdf_totalUp", True, "th"],
     ["pdf_totalDown", True, "th"],
     ["QCDScaleUp", True, "th"],
@@ -322,6 +319,8 @@ systematicslist = [
     ["FSRDown", True, "th"],
     ["jesUp", True, "en"],
     ["jesDown", True, "en"],
+    ["lepenUp", True, "en"],
+    ["lepenDown", True, "en"],
     ["jerUp", True, "en"],
     ["jerDown", True, "en"],
     ["TESUp", True, "en"],
@@ -329,6 +328,9 @@ systematicslist = [
     ["FESUp", True, "en"],
     ["FESDown", True, "en"],
 ]
+
+#["trigUp", False, "exp"],
+#["trigDown", False, "exp"],
 
 wanted_systs = opt.syst.split(",")
 systematics = []
@@ -358,28 +360,18 @@ if opt.plot or opt.stack:
 
 print("\ncut_tag:\t", cut_tag)
 
-pathplot = plotrepo + lepstr  + "/" # + "_" + str(FRtag) + "/"
+pathplot = plotrepo + lepstr  + "/" 
 pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
-#pathstack = plotrepo + "stack_" + str(FRtag) + "/" + cut_tag + "/"
-#print (plotrepo, pathplot)
-
 
 if opt.plot:
     if not os.path.exists(pathplot) and cut_tag != "1p":
-        print("hello")
-        #os.makedirs(pathplot)
         os.system("mkdir -p " + pathplot)
 
 if opt.stack:
     if not os.path.exists(plotrepo + 'stack') and cut_tag != "1p":
-        #os.makedirs(plotrepo + 'stack')
         os.system("mkdir -p " + plotrepo + 'stack')
     if not os.path.exists(pathstack) and cut_tag != "1p":
-        #os.makedirs(pathstack)
         os.system("mkdir -p " + pathstack)
-
-if not (opt.wfake=='nofake' or opt.wfake.startswith('incl') or opt.wfake.startswith('sep')):
-    raise ValueError('Specify a value for --wfake between nofake, incl*, and sep*')
 
 def mergepart(dataset):
     samples = []
@@ -396,7 +388,6 @@ def mergepart(dataset):
     for sample in samples:
         # merge files 
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + "_part*.root" 
-        print(add)
         os.system(str(add))
             
 def mergetree(sample):
@@ -411,7 +402,6 @@ def mergetree(sample):
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + ".root" 
         for comp in sample.components:
             add+= " " + filerepo + comp.label + "/"  + comp.label + ".root" 
-        print(add)
         os.system(str(add))
 
 def lumi_writer(dataset, lumi):
@@ -425,13 +415,11 @@ def lumi_writer(dataset, lumi):
         samples = [sample for sample in dataset.components]# Method exists and was used.
     else:
         samples.append(dataset)
-    #print(samples)
+    
     for sample in samples:
         if not ('Data' in sample.label):# or 'TT_dilep' in sample.label):
             infile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root")
             isthere_gen = bool(infile.GetListOfKeys().Contains("h_genweight"))
-            #isthere_pdf = bool(infile.GetListOfKeys().Contains("h_PDFweight"))
-            
             ik = 0
             outfile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE")
             for key in scenarios:
@@ -445,52 +433,32 @@ def lumi_writer(dataset, lumi):
                 
                 print("evtree:", evtree, tree)
                 tree.SetBranchStatus('w_nominal', 0)
-                #tree.SetBranchStatus('w_PDF', 0)
                 tree_new = tree.CloneTree(0)
-                #print("Getting the histos from %s" %(infile))
                 h_genw_tmp = ROOT.TH1F(infile.Get("h_genweight"))
 
                 w_nom = array('f', [0.]) 
                 tree_new.Branch('w_nominal', w_nom, 'w_nominal/F')
                 tree.SetBranchStatus('w_nominal', 1)
                 
-                '''
-                if isthere_pdf:# ("WZ" in sample.label):
-                    h_pdfw_tmp = ROOT.TH1F(infile.Get("h_PDFweight"))
-                    nbins = h_pdfw_tmp.GetXaxis().GetNbins()
-                    #print(nbins)
-                    w_PDF = array('f', [0.]*nbins)
-                else:
-                    w_PDF = array('f', [1.])
-                print('len w_PDF:', len(w_PDF))
-                tree_new.Branch('w_PDF', w_PDF, 'w_PDF[' + str(int(len(w_PDF))) + ']/F')
-                '''
                 print("Calculating renormalization weights for scenario", key)
                 for event in range(0, tree.GetEntries()):
                     tree.GetEntry(event)
                     perc = (event+1)/(tree.GetEntries())*100000
                     if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
-                        #print("Processing event %s     complete %s percent" %(event, 100*event/tree.GetEntries()))
                         sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(event, 100*event/tree.GetEntries()))
 
                     w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
-                    #if isthere_pdf: #not ("WZ" in sample.label):
-                        #for i in range(0, nbins):
-                            #w_PDF[i] = h_pdfw_tmp.GetBinContent(i+1)/h_genw_tmp.GetBinContent(2) 
                     tree_new.Fill()
                 tree_new.Write()
                 print("\n")
             outfile.Close()
             print('\n')
 
-            #end
         else:
             os.popen("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
-            print("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
 
 
-def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)]):
-    #print("systlist", systlist)
+def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)], sampletagg = "", dim8cut = ""):
     syst = systlist[0]
     isSystCorr = systlist[1]
     systtype = systlist[2]
@@ -500,20 +468,16 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
     else:
         systtree = scenarios[0]
 
-    print("in plotf")
     treename = "events_"
-    IsDim8 = False
-    if sample.label.startswith("VBS_SSWW_F"):
-        IsDim8 = True
-   
-    print("IsDim8?:", IsDim8)
-    print("in plot function")
-    print("\nplotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, "with FR", FRtag, "syst applied", syst)
+
+    isdim8 = False
+    if (not "_UL" in sample.label and sample.label.startswith("VBS_SSWW_F")) or ("_UL" in sample.label and sample.label.startswith("VBS_SSWW_aQGC")):
+        isdim8 = True
+  
     ROOT.TH1.SetDefaultSumw2()
     cutbase = variable._taglio
     histoname = "h_" + variable._name + "_" + cut_tag
 
-    #if(syst.startswith("jer") or syst.startswith("jes")):
     treename += systtree
 
     if systtype == "exp":
@@ -527,22 +491,17 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
         if not isSystCorr:
             histoname += "_" + str(opt.year).replace("UL", "")
         
-    print("after syst applied\tcutbase", cutbase, "\nhistoname:", histoname, "\ttreename:", treename)
+    #print("after syst applied\tcutbase", cutbase, "\nhistoname:", histoname, "\ttreename:", treename)
 
     cut = ''
 
-    print("count? ", opt.count)
-    if opt.count and not syst == "nominal":
-        IsOpen = False
-        while not IsOpen:
-            try:
-                countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst.replace("_Up", "Up").replace("_Down", "Down") + ".csv", "a")
-            except:
-                continue
-            else:
-                IsOpen = True
-
-        countf.write(sample.leglabel)
+    if opt.count:
+        if not "_aQGC_" in sample.label:
+            samcountlab = sample.leglabel
+        else:
+            samcountlab = sampletagg.replace("VBS_SSWW_", "EFT ").replace("_", "=").replace("p", ".")
+        countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst.replace("_Up", "Up").replace("_Down", "Down") + ".csv", "a")
+        countf.write(samcountlab)
         countf.write(';')
         #countf.write("\nBin\tContent\tError")
 
@@ -554,30 +513,23 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
         l2fstr = "muon"
 
     if 'Fake' in str(sample.label):
-        if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
-            f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
-        elif opt.removePrompt:
-            f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
-        else:
-            f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
         if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
             if opt.channel == 'ltau':
-                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1||" + l2fstr + "_LnTRegion==1)*(event_SFFake)*(event_SFFake>-100.)"
         elif str(sample.label).startswith('FakeElePromptTau') or str(sample.label).startswith('FakeMuPromptTau'):
             if opt.channel == 'ltau':
-                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(event_SFFake)*(event_SFFake>-100.)"
         elif str(sample.label).startswith('PromptEleFakeTau') or str(sample.label).startswith('PromptMuFakeTau'):
             if opt.channel == 'ltau':
-                cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(event_SFFake)*(event_SFFake>-100.)"
         elif str(sample.label).startswith('FakeEleFakeTau') or str(sample.label).startswith('FakeMuFakeTau'):
             if opt.channel == 'ltau':
-                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake_" + str(FRtag)  + ")*(event_SFFake_" + str(FRtag)  + ">-100.)"
+                cut = cutbase + "*(" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(event_SFFake)*(event_SFFake>-100.)"
         elif str(sample.label).startswith('FakeEleMu'):
             if opt.channel == 'emu':
-                cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake_vsjet4" + "))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake_vsjet4" + "*" + l2fstr + "_SFFake_vsjet4" + "))" + ")"
+                cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake*" + l2fstr + "_SFFake))" + ")"
 
     else:
-        f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
         cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
 
     if not ("Data" in sample.label):
@@ -591,12 +543,22 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
     if not ('Fake' in str(sample.label) or 'Data' in str(sample.label)):
         if opt.channel == 'ltau':
             cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&" + l2fstr + "_isPrompt==5)"
-        #elif opt.channel == 'emu':
-             #cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&(" + l2fstr + "_isPrompt==1||" + l2fstr + "_isPrompt==15))"
+        elif opt.channel == 'emu':
+             cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&(" + l2fstr + "_isPrompt==1||" + l2fstr + "_isPrompt==15))"
 
+    if isdim8:
+        if not "_UL" in sample.label:
+            cut = "(w_dim8[0])*" + cut
+        else:
+            cut = "(" + dim8cut + ")*" + cut
+            samplelab = sampletagg
+    else:
+        samplelab = sample.label
+    
+    print("\nplotting ", variable._name, "\nsample:", samplelab, "\ncut:", cut_tag, "\nsyst applied:", syst)
+    
     nbins = variable._nbins
 
-    #print(variable._iscustom)
     if not variable._iscustom:
         h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin, variable._xmax)
     else:
@@ -604,12 +566,8 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
 
     h1.Sumw2()
 
-    if IsDim8:
-        cut = "(w_dim8[0])*" + cut
-
     vartoproject = ''
     if variable._name == 'countings':
-        print("name", variable._name, "histname:", h1.GetName())
         vartoproject = 'm_jj'
     elif variable._name.startswith("lepBDT_"):
         vartoproject = "BDT_output_"
@@ -622,27 +580,22 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
     else:
         vartoproject = variable._name
 
-    #if not variable._name == 'countings':
     if 'MC' in variable._name:
         cut = cut + "*(" + str(vartoproject) + "!-100.)"
     else:
         cut = cut + "*(" + str(vartoproject) + ">-10.)"
-    #else:
-        #cut = cut + '*(1.)'
-    #if "WpWpJJ_EWK" in sample.label or 'VBS_SSWW' in sample.label:
+
+    #if "WpWpJJ_EWK" in samplelab or 'VBS_SSWW' in samplelab:
         #cut = cut + "*10."
 
     if opt.horn:
         cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
 
-    print('cut:', str(cut))
     foutput = pathplot + sample.label + "_" + lep + ".root"
-    print(treename)
     f1.Get(treename).Project(histoname,vartoproject,cut)
 
     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
     h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
-    #if not (opt.blinded and (variable._name == 'MET_pt' or variable._name == 'm_jj')):
     h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
     h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
 
@@ -662,7 +615,6 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
         if not opt.count:
             continue
         else:
-            #pass
             minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
             maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
             bincont = round(h1.GetBinContent(bidx_l), 6)
@@ -671,30 +623,14 @@ def plot(lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)])
             binerrcont = round(h1.GetBinError(bidx_l), 6)
             terr += binerrcont**2.
             binerrcont = str(binerrcont)
-            #countf.write("\n[" + minedge + ", " + maxedge +")\t" + bincont + "\t" + binerrcont)
 
     if opt.count:
         terr = terr**0.5
         countf.write(str(bincont).replace(".",",") + ";" + str(binerrcont).replace(".",","))
         countf.write("\n")
-    print("int:", h1.Integral())
-
-    #try:
-    fout = ROOT.TFile.Open(foutput, "UPDATE")
-    '''
-    except:
-        print("herror")
-        fout.Recover()
-    else:
-        print("herror")
-        pass
-    finally:
-    '''
+    
     fout.cd()
     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
-    fout.Close()
-
-    f1.Close()
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
@@ -731,14 +667,14 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     if(cut_tag_ == ""):
         histoname = "h_" + variabile_._name
         stackname = "stack_" + reg_ + "_" + variabile_._name
-        canvasname = "stack_" + reg_ + "_" + variabile_._name + "_" + lep_ + "_" + year #str(samples_[0].year)
+        canvasname = "stack_" + reg_ + "_" + variabile_._name + "_" + lep_ + "_" + year
     else:
         histoname = "h_" + variabile_._name + "_" + cut_tag_
         stackname = "stack_" + reg_ + "_" + variabile_._name + "_" + cut_tag_
-        canvasname = "stack_" + reg_ + "_" + variabile_._name+ "_" + cut_tag_ + "_" + lep_ + "_" + year #str(samples_[0].year)
+        canvasname = "stack_" + reg_ + "_" + variabile_._name+ "_" + cut_tag_ + "_" + lep_ + "_" + year
     if opt.wfake != 'nofake':
-        stackname += "_wFakes_" + str(opt.wfake.split('_')[0])
-        canvasname += "_wFakes_" + str(opt.wfake.split('_')[0])
+        stackname += "_wFakes"
+        canvasname += "_wFakes"
     if syst_ != "":
         histoname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
         stackname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
@@ -750,13 +686,12 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     leg_stack = ROOT.TLegend(0.32,0.58,0.93,0.87)
     signal = False
 
-    #print(samples_)
     for s in samples_:
-        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or 'SSWW_FS0_' in s.label or 'SSWW_FM1_' in s.label or 'SSWW_FT2_' in s.label) and not str(s.year) in s.label:
+        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label) and not str(s.year) in s.label:
             print("not passed")
             continue
         if opt.wfake != 'nofake':
-            if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('TT_'):#or s.label.startswith('DY')
+            if s.label.startswith('WJets') or s.label.startswith('QCD') or s.label.startswith('TT_'):
                 continue
             elif 'Fake' in s.label:
                 if opt.wfake.startswith('incl') and not (s.label.startswith('FakeEle_') or s.label.startswith('FakeMu_') or s.label.startswith('FakeEleMu_')):
@@ -777,7 +712,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     print("infile:", infile)
 
     for s in samples_:
-        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or 'SSWW_FS0_' in s.label or 'SSWW_FM1_' in s.label or 'SSWW_FT2_' in s.label) and not str(s.year) in s.label:
+        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label) and not str(s.year) in s.label:
             print("not passed")
             continue
         if opt.wfake != 'nofake':
@@ -1187,6 +1122,7 @@ for year in years:
 
         
         variables.append(variabile('DNN_SM_UL025_bal', 'Bal. SM DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
+        
         variables.append(variabile('DNN_cW_UL025_bal_v2', 'Bal. c_{W} DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         variables.append(variabile('DNN_cHW_UL025_bal', 'Bal. c_{HW} DNN output', wzero+'*('+cutbase+')', True, 5, 0., 1.))
         
@@ -1218,9 +1154,9 @@ for year in years:
         else:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
-        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
+        #variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-
+        
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
@@ -1478,7 +1414,6 @@ for year in years:
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False,  5, 0., 1.))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, 5, 0., 1.))
 
-
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
@@ -1486,35 +1421,80 @@ for year in years:
             elif ('DataMu' in sample.label or 'DataEle' in sample.label or 'DataMET' in sample.label or 'QCD' in sample.label) and opt.folder.startswith("CTHT"):
                 continue
 
+            IsDim8 = False
+            if "_aQGC_" in sample.label:
+                IsDim8 = True
+
             if(opt.plot):
-                for ids, syst in enumerate(systematics):
-                    if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
-                        continue
-                    for var in variables:
-                        if syst[0] != "" and not var.IsSystApplied():
-                            continue
-                        if opt.count:
-                            if os.path.exists(pathplot + 'countings/'):
-                                pass#print("hello", pathplot + 'countings/')
+                dimsamplenames = []
+                samplelabs = []
+                dimcuts = []
+                if IsDim8:
+                    for cstr in wcoeff:
+                        dimtag = cstr
+                        for idt, typ in enumerate(typcontr):
+                            if idt != 1:
+                                idarray = str(idt + 3)
+                                dimcut = dimtag + "[" + idarray + "]"
                             else:
-                                os.system("mkdir -p " + pathplot + 'countings/')
-                            if not os.path.exists(pathplot + 'countings/' + cut_tag):
-                                os.system("mkdir -p " + pathplot + 'countings/' + cut_tag)
-                            if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0].replace("_Up", "Up").replace("_Down", "Down") + ".csv"):
-                                tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
-                                tmp_f.write("Process,yields,error\n")
-                                tmp_f.close()
-                        if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
+                                dimcut = dimtag + "[3]+" + dimtag + "[4]+" + dimtag + "[5]"
+                            dimcuts.append(dimcut)
+                            dimsamplenames.append(sample.label.replace("aQGC", dimtag + "_" + typ))
+                            samplelabs.append(sample.label.replace("aQGC", dimtag + "_" + typ))
+                else:
+                    dimcuts.append("")
+                    dimsamplenames.append("")
+                    samplelabs.append(sample.label)
+                for idsl, samplelab in enumerate(samplelabs):
+                    dimcut = dimcuts[idsl]
+                    dimsamplename = dimsamplenames[idsl]
+                    foutput = pathplot + samplelab + "_" + lep + ".root"
+                    fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    if 'Fake' in str(sample.label):
+                        if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
+                            f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
+                        elif opt.removePrompt:
+                            f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+                        else:
+                            f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
+   
+                    else:
+                        f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+        
+                    for ids, syst in enumerate(systematics):
+                        if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
                             continue
-                        plot(lep, opt.channel, var, sample, cut_tag, syst)
+                        for var in variables:
+                            if syst[0] != "" and not var.IsSystApplied():
+                                continue
+                            if not "all" in vartoplot:
+                                if not var._name in vartoplot:
+                                    continue
+                            if opt.count:
+                                if os.path.exists(pathplot + 'countings/'):
+                                    pass
+                                else:
+                                    os.makedirs(pathplot + 'countings/')
+                                if not os.path.exists(pathplot + 'countings/' + cut_tag):
+                                    os.makedirs(pathplot + 'countings/' + cut_tag)
+                                if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0].replace("_Up", "Up").replace("_Down", "Down") + ".csv"):
+                                    tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
+                                    tmp_f.write("Process,yields,error\n")
+                                    tmp_f.close()
+                            if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
+                                continue
+                            plot(f1, fout, samplelab, lep, opt.channel, var, sample, cut_tag, syst, dimsamplename, dimcut)
+                    
+                    fout.Close()
+                    f1.Close()
 
         if(opt.stack):
             for var in variables:
                 print(var._xmax)
-                #os.system('set LD_PRELOAD=libtcmalloc.so')
+                os.system('set LD_PRELOAD=libtcmalloc.so')
                 print("channel", opt.channel)
                 makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)], year)
-                #os.system('set LD_PRELOAD=libtcmalloc.so')
+                os.system('set LD_PRELOAD=libtcmalloc.so')
 
         if lep == 'muon':
             dataset_new.append(sample_dict['DataEle_'+str(year)])

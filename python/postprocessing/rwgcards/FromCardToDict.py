@@ -60,4 +60,9 @@ def CardToDict(dim, op):
   
     return coeffdict
 
-CardToDict("dim8", "FT1_2p0")
+'''
+for k, v in CardToDict("dim8", "FT1_2p0").items():
+    print("\ncoeff\t", k)
+    for kv in v.keys():
+        print(kv)
+'''

@@ -67,6 +67,32 @@ import numpy as np
 import pickle
 from TauIDSFTool import TauIDSFTool, TauESTool, TauFESTool, campaigns
 
+years = ["UL2016APV", "UL2016", "UL2017", "UL2018"]
+
+h_btag = {}
+for yearr in years:
+    infile = ROOT.TFile.Open("Btag_eff_" + str(yearr) + ".root")
+    
+    h_btag[yearr] = {}
+    
+    h_btag[yearr]["b"] = ROOT.TH2F()
+    h_btag[yearr]["c"] = ROOT.TH2F()
+    h_btag[yearr]["udsg"] = ROOT.TH2F()
+    
+    h_btag[yearr]["b"] = infile.Get("h2_BTaggingEff_b").CreateHistogram()
+    h_btag[yearr]["c"] = infile.Get("h2_BTaggingEff_c").CreateHistogram()
+    h_btag[yearr]["udsg"] = infile.Get("h2_BTaggingEff_udsg").CreateHistogram()
+    
+    infile.Close()
+
+print("\n")
+h_puid = {}
+infile = ROOT.TFile.Open("PUID_SFs.root")
+for yearr in years:
+    h_puid[yearr] = [copy.deepcopy(infile.Get("h2_eff_sf" + str(yearr) + "_T")), copy.deepcopy(infile.Get("h2_eff_sf" + str(yearr) + "_T_Systuncty"))]
+
+infile.Close()
+
 #with open('/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p', 'rb') as file:
 #with open('VBSTagger_XGB.p', 'rb') as file:
     #model = pickle.load(file)
@@ -310,14 +336,12 @@ def getweightfromhisto(histogram, eta, pt):
 
 def efficiency(flv, eta, pt, yearr):
     year = str(yearr)#.replace("UL", "").replace("APV", "")
-    infile = ROOT.TFile.Open("Btag_eff_" + str(year) + ".root")
-    h = ROOT.TH2F()
     if(flv == 5):
-        h = infile.Get("h2_BTaggingEff_b").CreateHistogram()
+        h = h_btag[yearr]["b"]
     elif(flv == 4):
-        h = infile.Get("h2_BTaggingEff_c").CreateHistogram()
+        h = h_btag[yearr]["c"]
     else:
-        h = infile.Get("h2_BTaggingEff_udsg").CreateHistogram()
+        h = h_btag[yearr]["udsg"]
     return getweightfromhisto(h, eta, pt)
  
 def btagcalc(JetsC, year):
@@ -362,6 +386,15 @@ def btagcalc(JetsC, year):
             p_data_mistagDown *= (1 - jet.btagSF_deepjet_M_down*efficiency(abs(jet.partonFlavour), jet.eta, jet.pt, year))
 
     return p_data/p_MC, p_data_btagUp/p_MC, p_data_btagDown/p_MC, p_data_mistagUp/p_MC, p_data_mistagDown/p_MC
+
+def PUJetIDSF(jet, year):
+    if jet.pt > 50.:
+        return (1., 1., 1.)
+    
+    else:
+        sf, errsf = getweightfromhisto(h_puid[year][0], jet.eta, jet.pt), getweightfromhisto(h_puid[year][1], jet.eta, jet.pt)
+        return (sf, sf + errsf, sf - errsf)
+    
 
 def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
     return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
@@ -512,147 +545,6 @@ def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = Non
         #print("abs(deltaEta_jj):", abs(jet1.eta - jet2.eta), "passes deltaEtacut?", bool(abs(jet1.eta - jet2.eta)>DELTAETA_JJ_CUT))
 
     return jet1, jet2
-
-'''
-def SelectVBSJetsTagger(jets, modelPath = None, modelType = None,  applyDeltaEtaCut = True, lep1 = None, lep2 = None):
-    jet1 = None
-    jet2 = None
-
-    #default value are 0, so if leps are None possible cut regarding jet-leps isolation does not really cuts
-    isocone1 = 0.
-    isocone2 = 0.
-
-    #default leps eta and phi are set to 0., in order to get jet-lep isocut uneffective if leps are None
-    lep1eta = 0.
-    lep2eta = 0.
-    lep1phi = 0.
-    lep2phi = 0.
-    
-    #saving jet-lep isocut depending on lepton flavours
-    if lep1 != None and lep2 != None:
-        isocone1 = DR_OVERLAP_CONE_OTHER
-        isocone2 = DR_OVERLAP_CONE_OTHER
-       
-        lep1eta = lep1.eta
-        lep2eta = lep2.eta
-        lep1phi = lep1.phi
-        lep2phi = lep2.phi
-    
-    #print("isocones:", isocone1, isocone2, "lep1:", lep1eta, lep1phi, "lep2:", lep2eta, lep2phi) 
-
-    #filtering jets with jet-related requests and then refiltering with jet-leps isocone
-    goodjets = get_Jet(jets)    
-    goodjets = list(filter(lambda x : abs(deltaR(x.eta, x.phi, lep1eta, lep1phi)) > isocone1 and abs(deltaR(x.eta, x.phi, lep2eta, lep2phi)) > isocone2, goodjets))
-
-    
-    maxScore = -999.
-    #if there are 0 or 1 goodjets, return default values
-    if len(goodjets) < 2:
-        return jet1, jet2, maxScore
-
-    
-    #if modelType == 'xgboost':
-        #with open(modelPath, 'rb') as file:
-            #model = pickle.load(file)
-    #elif modelType == 'keras':
-        #model = load_model(modelPath)
-    #else:
-        #print("Tell me if it's either an XGboost or a Keras model") 
-    #else, search for two isolated jets compatible with VBS
-
-    idxjet1 = -1
-    idxjet2 = -1
-    jet1 = None
-    jet2 = None
-
-    #print("\nuseMassCrit?", useMassCrit)
-    #print("goodjets:", goodjets)
-    #print(goodjets)
-    for idxj, jet in enumerate(goodjets):
-        #print("idxj:", idxj, "jet:", jet)
-        skgoodjets = list(goodjets)
-
-        compatible_jets = list(filter(lambda x : IsNotTheSameObject(x, jet), skgoodjets))
-        #print("compatible_jets (first):", compatible_jets)
-        if applyDeltaEtaCut:
-            #print("applying DeltaEtaCut")
-            #refiltering compatible jets with deltaEtajj cut
-            compatible_jets = list(filter(lambda x : abs(x.eta - jet.eta) >= DELTAETA_JJ_CUT, compatible_jets))
-            for jj in compatible_jets:
-                if abs(jj.eta - jet.eta) < DELTAETA_JJ_CUT:
-                    print("Warning! Something went wrong")
-        #else:
-            #print("not applying DeltaEtaCut")
-
-        #print("compatible_jets (dEta cut):", compatible_jets)
-        #if there are no compatible jet, returns default value
-        if len(compatible_jets) < 1:
-            continue
-         
-        for idxc, cjet in enumerate(compatible_jets):
-            #print("idxc:", idxc, "cjet:", cjet)
-            if jets.index(cjet) <= jets.index(jet):
-                continue
-            #print(jets.index(jet),jets.index(cjet))
-            features = [[
-	        jet.area,
-		jet.chHEF,
-		#jet.eta,
-		#jet.mass,
-		jet.muEF,
-		jet.neEmEF,
-		jet.neHEF,
-		#jet.phi,
-		#jet.pt,
-		jet.puIdDisc,
-		jet.jetId,
-		jet.nConstituents,
-		jet.nElectrons,
-		jet.nMuons,
-		jet.puId,
-		cjet.area,
-		cjet.chHEF,
-		#cjet.eta,
-		#cjet.mass,
-		cjet.muEF,
-		cjet.neEmEF,
-		cjet.neHEF,
-		#cjet.phi,
-		#cjet.pt,
-		cjet.puIdDisc,
-		cjet.jetId,
-		cjet.nConstituents,
-		cjet.nElectrons,
-		cjet.nMuons,
-		cjet.puId,
-	    ]]
-
-            X = np.asarray(features)
-                
-            if modelType == 'xgboost':
-                score = model.predict_proba(X)[:,1] 
-            elif modelType == 'keras':
-                score = model.predict(X)
-            
-            #print('score:',score)
-            if score > maxScore:
-                idxjet1 = jets.index(jet)
-                idxjet2 = jets.index(cjet)
-                maxScore = score
-        
-    #print('maxScore:', maxScore)
-    #print()
-
-    #print("final\tidxjet1:", idxjet1, "idxjet2:", idxjet2, "maxmass:", maxInvMass)
-    if idxjet1 > -1 and idxjet2 > -1:
-        jet1 = jets[idxjet1]
-        jet2 = jets[idxjet2]
-
-        #print("final\tjet1:", jet1, "jet2:", jet2)
-        #print("abs(deltaEta_jj):", abs(jet1.eta - jet2.eta), "passes deltaEtacut?", bool(abs(jet1.eta - jet2.eta)>DELTAETA_JJ_CUT))
-
-    return jet1, jet2, maxScore
-'''
 
 def SelectGenNus(genparts):
     wlnus = [gp for gp in genparts if (abs(gp.pdgId)==12 or abs(gp.pdgId)==14) and gp.genPartIdxMother > -1 and abs(genparts[gp.genPartIdxMother].pdgId)==24]
@@ -1037,7 +929,6 @@ def get_HT(jets):
     return HT
 
 def trig_map(HLT, PV, yearr, runPeriod, flag):
-    print("flag in trig_map", flag)
     isGoodPV = True#copy.deepcopy(pass_MET(flag)) #(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passMu = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passEle = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
@@ -1138,300 +1029,32 @@ def HEMveto(jets, electrons):
  
   return passesMETHEMVeto
 
+def ReweightingFunc(x, p):
+    return 0.103*TMath.Exp(-0.0118*x[0]) - 0.000134*x[0] + 0.973
+
+def TopPtReweighter(genparticles):
+    rwf = ROOT.TF1("ReweightingFunc", ReweightingFunc, -10., 1000., 0)
+    gentop = None
+    genantitop = None
+    for genpart in genparticles:
+        if abs(genpart.pdgId) == 6:
+            if genpart.pdgId == 6:
+                gentop = genpart
+            else:
+                genantitop = genpart
+
+    #print(gentop.pt, genantitop.pt)
+    sf = rwf.Eval(gentop.pt)
+    antisf = rwf.Eval(genantitop.pt)
+
+
+    if gentop.pt * genantitop.pt > 0.:
+        return TMath.Sqrt(sf*antisf)
+    else:
+        return 1.
+
 ###############################################
 ###          End of generic utils           ###   
-###############################################
-
-###############################################
-###         Begin of topreco_utils          ###   
-###############################################
-def EqSolv(a1, a2, a3, a4):
-    if type(a1) != float and type(a1) != int:
-        if type(a1) == list:
-            a = a1[0]
-            b = a1[1]
-            c = a1[2]
-            d = a1[3]
-            result = []
-        elif type(a1) == dict:
-            a = a1['a']
-            b = a1['b']
-            c = a1['c']
-            d = a1['d']
-            result = {}
-    else:
-        a = a1
-        b = a2
-        c = a3
-        d = a4
-        result = []
-    #print " a = %f, b = %f, c = %f, d = %f " %(a, b, c, d)
-    if a != 0.:
-        q = (3.*a*c - b*b)/(9.*a*a)
-        r = (9.*a*b*c - 27.*a*a*d - 2.*b**3.)/(54.*a**3.)
-        Delta = q**3. + r**2.
-    
-        #print " q = %f, r = %f, Delta = %f " %(q, r, Delta)
-          
-        if Delta <= 0: #da testare
-            rho = (-(q**(3)))**(0.5)
-            theta = math.acos(r/rho)
-            s = cmath.rect((-q)**(0.5), theta/3.0)
-            t = cmath.rect((-q)**(0.5), -theta/3.0)
-        if Delta > 0:
-            args = r+(Delta)**(0.5)
-            argt = r-(Delta)**(0.5)
-            signs = math.copysign(1, args)
-            signt = math.copysign(1, argt)
-            s = complex(signs*TMath.Power(abs(args), 1./3), 0)
-            t = complex(signt*TMath.Power(abs(argt), 1./3), 0)
-        
-        rpar = b/(3.*a)
-        x1 = s + t + complex(-rpar, 0)
-        x2 = (s+t)*complex(-0.5, 0) - complex(rpar, 0) + (s-t)*(1j)*complex((3.**(0.5))/2., 0)
-        x3 = (s+t)*complex(-0.5, 0) - complex(rpar, 0) - (s-t)*(1j)*complex((3.**(0.5))/2., 0)
-        #print "  x1 = " + str(x1) + ", x2 = " + str(x2) + ", x3 =  " + str(x3)
-        if abs(x1.imag)<0.0001:
-            if type(a1)==dict:
-                result.update({'x1': x1.real})
-            else:
-                result.append(x1.real)
-        if abs(x2.imag)<0.0001:
-            if type(a1)==dict:
-                result.update({'x2': x2.real})
-            else:
-                result.append(x2.real)
-        if abs(x3.imag)<0.0001:
-            if type(a1)==dict:
-                result.update({'x3': x3.real})
-            else:
-                result.append(x3.real)            
-    else:
-        result = None
-    #print result
-    return result
-
-class TopUtilities():
-    def __init__(self):
-        if False:
-            print('ok')
-
-    def NuMomentum(self,  leptonPx, leptonPy, leptonPz, leptonPt, leptonE, metPx, metPy):
-      mW = 80.379
-      #print "\tutils NuMomentum: lPx=", leptonPx, " lPy=", leptonPy, " lPz", leptonPz, " lPt", leptonPt, " lE=", leptonE, " METPx=", metPx, " METPy=", metPy
-      MisET2 = (metPx**2. + metPy**2.)
-      mu = (mW**2.)/2. + metPx*leptonPx + metPy*leptonPy # this is the lambda factor
-      a = mu*leptonPz/leptonPt**2
-      a2 = a**2.
-      b = (leptonE**2.*MisET2 - mu**2.)/leptonPt**2
-      #print "+++++++++++++++++++++ MET2 is %f, mu is %f" %(MisET2, mu)
-      #print "+++++++++++++++++++++ a is %f, a2 is %f and b is %f "%(a, a2, b)
-      IsNegative = False
-      
-      p4nu_rec = None#ROOT.TLorentzVector()
-      p4W_rec = ROOT.TLorentzVector()
-      p4b_rec = ROOT.TLorentzVector()
-      p4Top_rec = ROOT.TLorentzVector()
-      p4lep_rec = ROOT.TLorentzVector()
-      neutrino = None#ROOT.TLorentzVector()
-      
-      p4lep_rec.SetPxPyPzE(leptonPx, leptonPy, leptonPz, leptonE)
-      p40_rec = ROOT.TLorentzVector(0.0, 0.0, 0.0, 0.0)
-      
-      delta = a2 - b
-      #print "+++++++++++++++++++++ delta is %f" %delta
-
-      if delta >= 0:
-        root = cmath.sqrt((a2-b))
-        pzs = []
-        pzs.append((a + root).real)
-        pzs.append((a - root).real)
-        chi2w = 100000000.**2.
-        
-        for pz in pzs:
-          Enu = TMath.Power((MisET2 + pz**2), 0.5)
-          #Enu = TMath.Power((MisET2 + pznu**2), 0.5)
-          p4nu = ROOT.TLorentzVector()
-          p4nu.SetPxPyPzE(metPx, metPy, pz, Enu)
-          #p4nu_rec.SetPxPyPzE(metPx, metPy, pznu, Enu)
-          p4W = p4nu + p4lep_rec
-          if Chi_W(p4W.M()) < chi2w:
-            chi2w = Chi_W(p4W.M())
-            p4nu_rec = copy.deepcopy(p4nu)
-          
-        neutrino = copy.deepcopy(p4nu_rec)
-        
-      elif delta < 0:
-        IsNegative = True
-        #print "negative delta"
-        EquationCoeff1 = [1,
-                          (-3 * leptonPy * mW / leptonPt),
-                          (((mW**2.) * (2. * leptonPy**2.) / (leptonPt**2)) + mW**2. - (4. * leptonPx**3. * metPx / leptonPt**2) - (4. * leptonPx**2. * leptonPy * metPy / leptonPt**2)),
-                          ((4. * leptonPx**2. * mW * metPy / leptonPt) - leptonPy * mW**3. / leptonPt)
-                        ]
-
-        EquationCoeff2 = copy.deepcopy(EquationCoeff1)
-        EquationCoeff2[1] = - EquationCoeff2[1]
-        EquationCoeff2[3] = - EquationCoeff2[3]
-        #print " EquationCoeff1 is " + str(EquationCoeff1) + " and EquationCoeff2 is " + str(EquationCoeff2)
-        solutions = [EqSolv(EquationCoeff1,'','',''), EqSolv(EquationCoeff2,'','','')]
-        #print str(solutions)
-        deltaMin = 14000.**2.
-        zeroValue = - mW**2./(4.*leptonPx)
-        minPx = 0.
-        minPy = 0.
-
-        ncoeff = ['x1', 'x2', 'x3']
-        
-        for j in range(2):
-          for value in solutions[j]:
-            if value < 0.:
-              continue
-            #usePxPlusSolutions_
-            p_x = (value**2. - mW**2.) / (4.*leptonPx)
-            p_y = ((mW**2.)*leptonPy + 2.*leptonPx*leptonPy*p_x - mW*leptonPt*value) / (2*leptonPx**2.)
-            Delta2 = (p_x - metPx)**2. + (p_y - metPy)**2.
-            #print "Solutions 1 p_x = %f, p_y = %f, Delta2 = %f" %(p_x, p_y, Delta2)
-            if Delta2 < deltaMin and Delta2 > 0:
-              deltaMin = copy.deepcopy(Delta2)
-              minPx = copy.deepcopy(p_x)
-              minPy = copy.deepcopy(p_y)
-
-            #usePxMinusSolutions_
-            p_x = (value**2. - mW**2.) / (4.*leptonPx)
-            p_y = ((mW**2.)*leptonPy + 2.*leptonPx*leptonPy*p_x + mW*leptonPt*value) / (2*leptonPx**2.)
-            Delta2 = (p_x - metPx)**2. + (p_y - metPy)**2.
-            #print "Solutions 2 p_x = %f, p_y = %f, Delta2 = %f" %(p_x, p_y, Delta2)
-            if Delta2 < deltaMin and Delta2 > 0:
-              deltaMin = copy.deepcopy(Delta2)
-              minPx = copy.deepcopy(p_x)
-              minPy = copy.deepcopy(p_y)
-            #print " Used solutions minp_x = %f, minp_y = %f, Delta2 = %f" %(minPx, minPy, deltaMin)
-        pyZeroValue = mW**2.*leptonPx + 2.*leptonPx*leptonPy*zeroValue
-        delta2ZeroValue = (zeroValue - metPx)**2. + (pyZeroValue - metPy)**2.
-
-        #print "minp_x = %f, minp_y = %f, Deltamin = %f" %(minPx, minPy, deltaMin)
-        #print " pyZeroValue = %f and delta2ZeroValue %f "%(pyZeroValue, delta2ZeroValue)
-        if deltaMin == 14000.**2. :
-          #neutrino = copy.deepcopy(p4nu_rec)
-          #print "\tDelta2 too high!"
-          neutrino = None
-          #print "problem with neutrino reco!"
-          return neutrino, IsNegative
-          
-        elif delta2ZeroValue < deltaMin :
-              #print "\tDelta2 not so high!"
-              deltaMin = copy.deepcopy(delta2ZeroValue)
-              minPx = copy.deepcopy(zeroValue)
-              minPy = copy.deepcopy(pyZeroValue)
-
-        if not abs(leptonE) == abs(leptonPz):
-          #print "\tleptonE != leptonPz"
-          mu_Minimum = mW**2./2. + minPx*leptonPx + minPy*leptonPy
-          a_Minimum = (mu_Minimum*leptonPz) / (leptonE**2. - leptonPz**2.)
-          pznu = a_Minimum
-          Enu = TMath.Power((minPx**2. + minPy**2. + pznu**2.), 0.5)
-          p4nu = ROOT.TLorentzVector()
-          #print " mu_Minimum = %f, a_Minimum = %f, pznu = %f, Enu= %f" %(mu_Minimum, a_Minimum, pznu, Enu )
-          p4nu.SetPxPyPzE(minPx, minPy, pznu, Enu)
-          p4nu_rec = copy.deepcopy(p4nu)
-          neutrino = copy.deepcopy(p4nu_rec)
-          #p4nu.SetPxPyPzE(minPx, minPy, pznu, Enu)
-        else:
-          #print "\tleptonE == leptonPz"
-          neutrino = None#copy.deepcopy(p4nu_rec)
-      #print " ********************* neutrino 4-momentum is (%f,%f,%f,%f) " %(neutrino.Pt(), neutrino.Eta(), neutrino.Phi(), neutrino.E())
-      return neutrino, IsNegative
-
-    def top4Momentum(self, lepton, jet, metPx, metPy):
-        #topMt = self.topMtw(lepton, jet, metPx, metPy)
-        '''
-        if topMt == None:
-        self.reco_topqv = None
-        self.neutrino = None
-        return None
-        '''
-        dR_lepjet = None
-        dR_lepjet = deltaR(jet.Eta(), jet.Phi(), lepton.Eta(), lepton.Phi())
-        #print "lepton inside top4momentum(begin) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
-        neutrino, IsNeg = self.NuMomentum(lepton.Px(), lepton.Py(), lepton.Pz(), lepton.Pt(), lepton.E(), metPx, metPy)
-        besttop = None
-        #recochi = []
-        rtop = ROOT.TLorentzVector()
-
-        if isinstance(neutrino, list):
-          chi2 = 100000000.**2.
-          for i in range(len(neutrino)):
-            if dR_lepjet > 0.4:
-              rtop = lepton + jet + neutrino[i]
-            else:
-              rtop = jet + neutrino[i]
-            
-            rchi = Chi_TopMass(rtop.M())
-            if rchi < chi2:
-              besttop = copy.deepcopy(rtop)
-              chi2 = copy.deepcopy(rchi)
-              dR_lepjet_top = copy.deepcopy(dR_lepjet)
-
-        elif isinstance(neutrino, ROOT.TLorentzVector):
-          if dR_lepjet > 0.4:
-            rtop = lepton + jet + neutrino
-            #print " lepton outside the jet!!!! its mass is %f" %rtop.M()
-          else:
-            rtop = jet + neutrino
-            #print " lepton inside the jet!!!! its mass is %f" %rtop.M()
-          rchi = Chi_TopMass(rtop.M())
-          besttop = copy.deepcopy(rtop)
-          dR_lepjet_top = copy.deepcopy(dR_lepjet)
-
-        elif neutrino is None:
-          besttop = None
-          dR_lepjet_top = None
-        #print "lepton inside top4momentum(end) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
-
-        return besttop, IsNeg, dR_lepjet_top
-
-    def topMtw(self, lepton, jet, metPx, metPy):
-        lb = lepton + jet
-        mlb2 = lb.M2()
-        ptlb = lb.Pt()
-        pxlb = lb.Px()
-        pylb = lb.Py() 
-        '''
-        if mlb2 < 0.:
-            self.reco_topMt = None
-            self.IsParticle = False
-            return None
-        '''
-        etlb = TMath.Power((mlb2 + ptlb**2.), 0.5)
-        metPt = TMath.Power((metPx**2. + metPy**2.), 0.5)
-
-        return TMath.Power((mlb2 + 2.*(etlb*metPt - pxlb*metPx - pylb*metPy)), 0.5)
-
-    def costhetapol(self, lepton, jet, top):
-      #print "lepton inside costhetapol(begin) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
-      top_1 = ROOT.TLorentzVector()
-      jet_copy = copy.deepcopy(jet)
-      lepton_copy = copy.deepcopy(lepton)
-      top_1.SetPxPyPzE(-top.Px(), -top.Py(), -top.Pz(), top.E())
-      jet_copy.Boost(top.BoostVector())
-      lepton_copy.Boost(top_1.BoostVector())
-      costheta = (jet_copy.Vect()*lepton_copy.Vect())/((jet_copy.Vect()).Mag()*(lepton_copy.Vect()).Mag())
-      #print "lepton inside costhetapol(end) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
-      return costheta
-
-    def costhetapollep(self, lepton, top):
-      #print "lepton inside costhetapollep(begin) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
-      lepton_copy = copy.deepcopy(lepton)
-      top_1 = ROOT.TLorentzVector()
-      top_1.SetPxPyPzE(-top.Px(), -top.Py(), -top.Pz(), top.E())
-      lepton_copy.Boost(top_1.BoostVector())
-      costheta = (top.Vect()*lepton_copy.Vect())/((top.Vect()).Mag()*(lepton_copy.Vect()).Mag())
-      #print "lepton inside costhetapollep(end) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
-      return costheta
-
-###############################################
-###          End of topreco_utils           ###   
 ###############################################
 
 ###############################################
@@ -1845,8 +1468,13 @@ class systWeights(object):
             self.weightedNames[28] = "btagSF"
             self.weightedNames[29] = "btagUp"
             self.weightedNames[30] = "btagDown"
-            self.weightedNames[31] = "mistagUp"
-            self.weightedNames[32] = "mistagDown"
+            self.weightedNames[31] = "mistagSF"
+            self.weightedNames[32] = "mistagUp"
+            self.weightedNames[33] = "mistagDown"
+            self.weightedNames[34] = "puIDSF"
+            self.weightedNames[35] = "puIDUp"
+            self.weightedNames[36] = "puIDDown"
+                        
             '''
             self.weightedNames[10] = "btagSF"
             self.weightedNames[11] = "btagUp"
@@ -1878,8 +1506,8 @@ class systWeights(object):
             #self.weightedNames[10] = "isoDown"
             #self.weightedNames[11] = "trigUp"
             #self.weightedNames[12] = "trigDown"
-            self.setMax(32)
-            self.setMaxNonPDF(31)
+            self.setMax(36)
+            self.setMaxNonPDF(35)
             self.weightedNames[self.maxSysts] = ""
 
         if addQ2: 
@@ -2397,17 +2025,14 @@ def Lepton_IDIso_SF(lepton):
         print("I dunno what to do with this particle :/")
         return -1.
 
-def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
-    #inFile = ROOT.TFile.Open("FR_vsjet2.root")
-    #year = year.replace("UL", "").replace("APV", "")
+def SFFakeRatio_ele_calc(pT, eta, year='2017', folder = "remote", wp = 'vsjet' + str(ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE)):
     histo = ROOT.TH2F()
-
-    frvsjet = 'FR_' + wp + "_" + str(year)
-    if (folder == "test"):# and wp == 'vsjet8':
-        frvsjet += "_test"
-
+    frfolder = "FRs/" + wp.replace("vsjet", "") + "/"
+    frvsjet = frfolder + 'FR_' + wp + "_" + str(year)
+    #if (folder == "test"):# and wp == 'vsjet8':                                                                                  
+    frvsjet += "_test"
     frvsjet += ".root"
-    #print(frvsjet)
+
     inFile = ROOT.TFile.Open(frvsjet)
 
     if not year.startswith("UL"):
@@ -2433,16 +2058,19 @@ def SFFakeRatio_ele_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote")
 
     return FR/(1-FR)
 
-def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017', folder = "remote"):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
+def SFFakeRatio_tau_calc(pT, eta, idl, year='2017', folder = "remote", wpp ='vsjet'):
+    if idl == 11:
+        wp = wpp + str(ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE)
+    elif idl == 13:
+        wp = wpp + str(ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU)
+   
     histo = ROOT.TH2F()
-    frvsjet = 'FR_' + wp + "_" + str(year)
+    frfolder = "FRs/" + wp.replace("vsjet", "") + "/"
+    frvsjet = frfolder + 'FR_' + wp + "_" + str(year)
 
-    if (folder == "test"):# and wp == 'vsjet8':
-        frvsjet += "_test"
-
+    frvsjet += "_test"
     frvsjet += ".root"
 
-    #print(frvsjet)
     inFile = ROOT.TFile.Open(frvsjet)
 
     if not year.startswith("UL"):
@@ -2469,15 +2097,13 @@ def SFFakeRatio_tau_calc(pT, eta, wp ='vsjet2', year='2017', folder = "remote"):
 
     return FR/(1-FR)
 
-def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):#, frvsjet2 = 'FR_vsjet2_', frvsjet4 = 'FR_vsjet4_'):
+def SFFakeRatio_mu_calc(pT, eta, year='2017', folder = "remote", wp = 'vsjet'+ str(ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU)):
     histo = ROOT.TH2F()
-    frvsjet = 'FR_' + wp + "_" + str(year)
+    frfolder = "FRs/" + wp.replace("vsjet", "") + "/"
+    frvsjet = frfolder + 'FR_' + wp + "_" + str(year)
 
-    if (folder == "test"):# and wp == 'vsjet8':
-        frvsjet += "_test"
-
+    frvsjet += "_test"
     frvsjet += ".root"
-    #print(frvsjet)
 
     inFile = ROOT.TFile.Open(frvsjet)
 
@@ -2504,6 +2130,7 @@ def SFFakeRatio_mu_calc(pT, eta, wp = 'vsjet2', year='2017', folder = "remote"):
     FR = copy.deepcopy(histo.GetBinContent(binx, biny))
 
     return FR/(1-FR)
+
 
 def IsPdfHessian(firstpdf, lastpdf):
     pdfcsv = open("data/lhapdf.csv")

@@ -74,12 +74,8 @@ def sub_writer(sample, n, files, folder):
     f.write("use_x509userproxy       = true\n")
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
-    tagyear = str(sample.year)#.replace("UL", "").replace("APV", "")
-    #print(tagyear)
-    inputfiles = "transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues_" + tagyear + ".py, FR_vsjet2_" + tagyear + ".root, FR_vsjet4_" + tagyear + ".root, FR_vsjet8_" + tagyear
-    if runtype == "test":
-        inputfiles += "_test"
-    inputfiles += ".root, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_" + tagyear + ".root, __init__.py, ./data, ./rwgcards\n"
+    tagyear = str(sample.year)
+    inputfiles = "transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues_" + tagyear + ".py, ./FRs, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, PUID_SFs.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_UL2016APV.root, Btag_eff_UL2016.root, Btag_eff_UL2017.root, Btag_eff_UL2018.root, __init__.py, ./data, ./rwgcards\n"
     f.write(inputfiles)
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-a/apiccine/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
@@ -99,7 +95,7 @@ def sub_writer(sample, n, files, folder):
     print executpy, args
 
     f.write("executable              = " + executpy + "\n")
-    f.write("arguments               = " + args + "\n")#sample.label + " " + str(n) + " " + str(files) + " remote " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu + "\n")# + str(wopstring) + "\n")
+    f.write("arguments               = " + args + "\n")
     #f.write("input                   = input.txt\n")
     f.write("request_disk                   = 50MB\n")
     f.write("output                  = condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out\n")

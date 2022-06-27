@@ -76,15 +76,6 @@ part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))
 print(file_list)
 
-'''
-if sys.argv[5] == 'prompt':
-    fakewithprompt = True
-elif sys.argv[5] == 'noprompt':
-    fakewithprompt = False
-
-print(fakewithprompt)
-'''
-
 vsjetWP = vsJet[sys.argv[5]]
 vseleWP = vsEle[sys.argv[6]]
 vsmuWP = vsMu[sys.argv[7]]
@@ -129,6 +120,7 @@ print("Number of events in chain " + str(chain.GetEntries()))
 print("Number of events in tree from chain " + str((chain.GetTree()).GetEntries()))
 tree = InputTree(chain)
 isMC = True
+
 if ('Data' in sample.name):
     isMC = False
     if "UL" in str(sample.year):
@@ -138,7 +130,7 @@ if ('Data' in sample.name):
 else:
     isMC = True
     if "UL" in str(sample.year):
-        scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+        scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
     else:
         scenarios = ["all"]
 if "/vUL001/" in outpath:
@@ -147,8 +139,11 @@ if "/vUL001/" in outpath:
 MCReco = MCReco * isMC
 
 IsDim8 = False
+Isttbar = False
 if 'aQGC' in sample.name:
     IsDim8 = True
+elif "TTTo2L2Nu" in sample.name or sample.name.startswith("TT_"):
+    Isttbar = True
 
 dataEle = False
 dataMu = False
@@ -224,6 +219,9 @@ systTree.setWeightName("w_nominal",1.)
 systTree.setWeightName("puSF",1.)
 systTree.setWeightName("puUp",1.)
 systTree.setWeightName("puDown",1.)
+systTree.setWeightName("puIDSF",1.)
+systTree.setWeightName("puIDUp",1.)
+systTree.setWeightName("puIDDown",1.)
 systTree.setWeightName("lepSF",1.)
 systTree.setWeightName("lepUp",1.)
 systTree.setWeightName("lepDown",1.)
@@ -251,6 +249,7 @@ systTree.setWeightName("FESDown",1.)
 systTree.setWeightName("btagSF",1.)
 systTree.setWeightName("btagUp",1.)
 systTree.setWeightName("btagDown",1.)
+systTree.setWeightName("mistagSF",1.)
 systTree.setWeightName("mistagUp",1.)
 systTree.setWeightName("mistagDown",1.)
 systTree.setWeightName("pdf_totalSF", 1.)
@@ -333,11 +332,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     lepton_pdgid            =   array.array('i', [-999])
     lepton_pfRelIso04       =   array.array('f', [-999.])
     lepton_TightRegion      =   array.array('i', [-999])
-    lepton_LnTRegion        =   array.array('i', [-999])
-    lepton_SFFake_vsjet2           =   array.array('f', [-999.])
-    lepton_SFFake_vsjet4           =   array.array('f', [-999.])
-    if ("vUL001" in outpath):
-        lepton_SFFake_vsjet8           =   array.array('f', [-999.])
+    lepton_LnTRegion      =   array.array('i', [-999])
+    lepton_SFFake           =   array.array('f', [-999.])
     lepton_isPrompt           =   array.array('i', [-999])
     lepton_Zeppenfeld           =   array.array('f', [-999])
     lepton_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
@@ -349,10 +345,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(lepton_pfRelIso04)
     var_list.append(lepton_TightRegion)
     var_list.append(lepton_LnTRegion)
-    var_list.append(lepton_SFFake_vsjet2)
-    var_list.append(lepton_SFFake_vsjet4)
-    if ("vUL001" in outpath):
-        var_list.append(lepton_SFFake_vsjet8)
+    var_list.append(lepton_SFFake)
     var_list.append(lepton_isPrompt)
     var_list.append(lepton_Zeppenfeld)
     var_list.append(lepton_Zeppenfeld_over_deltaEta_jj)
@@ -376,10 +369,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     tau_DeepTauVsJet_raw    =   array.array('f', [-999.])
     tau_TightRegion         =   array.array('i', [-999])
     tau_LnTRegion           =   array.array('i', [-999])
-    tau_SFFake_vsjet2              =   array.array('f', [-999.])
-    tau_SFFake_vsjet4              =   array.array('f', [-999.])
-    if ("vUL001" in outpath):
-        tau_SFFake_vsjet8              =   array.array('f', [-999.])
+    tau_SFFake              =   array.array('f', [-999.])
     tau_isPrompt           =   array.array('i', [-999])
     tau_Zeppenfeld           =   array.array('f', [-999])
     tau_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
@@ -400,10 +390,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(tau_DeepTauVsJet_raw)#
     var_list.append(tau_TightRegion)#
     var_list.append(tau_LnTRegion)#
-    var_list.append(tau_SFFake_vsjet2)#
-    var_list.append(tau_SFFake_vsjet4)#
-    if ("vUL001" in outpath):
-        var_list.append(tau_SFFake_vsjet8)#
+    var_list.append(tau_SFFake)#
     var_list.append(tau_isPrompt)#
     var_list.append(tau_Zeppenfeld)
     var_list.append(tau_Zeppenfeld_over_deltaEta_jj)
@@ -441,14 +428,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(taujet_HEGamma)
 
     #event SFFake
-    event_SFFake_vsjet2              =   array.array('f', [-999.])
-    event_SFFake_vsjet4              =   array.array('f', [-999.])
-    if ("vUL001" in outpath):
-        event_SFFake_vsjet8              =   array.array('f', [-999.])
-    var_list.append(event_SFFake_vsjet2)
-    var_list.append(event_SFFake_vsjet4)
-    if ("vUL001" in outpath):
-        var_list.append(event_SFFake_vsjet8)
+    event_SFFake              =   array.array('f', [-999.])
+    var_list.append(event_SFFake)
 
     #jet#
     leadjet_pt                  =   array.array('f', [-999.])
@@ -663,11 +644,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "lepton_pfRelIso04",    outTreeFile, lepton_pfRelIso04)
     systTree.branchTreesSysts(trees, scenario, "lepton_TightRegion",   outTreeFile, lepton_TightRegion)
     systTree.branchTreesSysts(trees, scenario, "lepton_LnTRegion",     outTreeFile, lepton_LnTRegion)
-    systTree.branchTreesSysts(trees, scenario, "lepton_SFFake_vsjet2",        outTreeFile, lepton_SFFake_vsjet2)
-    systTree.branchTreesSysts(trees, scenario, "lepton_SFFake_vsjet4",        outTreeFile, lepton_SFFake_vsjet4)
-    if ("vUL001" in outpath):
-        systTree.branchTreesSysts(trees, scenario, "lepton_SFFake_vsjet8",        outTreeFile, lepton_SFFake_vsjet8)
-    systTree.branchTreesSysts(trees, scenario, "lepton_isPrompt",        outTreeFile, lepton_isPrompt)
+    systTree.branchTreesSysts(trees, scenario, "lepton_SFFake",        outTreeFile, lepton_SFFake)
 
     #tau variables
     systTree.branchTreesSysts(trees, scenario, "tau_pt",               outTreeFile, tau_pt)
@@ -686,15 +663,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "tau_DeepTauVsJet_raw",      outTreeFile, tau_DeepTauVsJet_raw)#
     systTree.branchTreesSysts(trees, scenario, "tau_TightRegion",          outTreeFile, tau_TightRegion)#
     systTree.branchTreesSysts(trees, scenario, "tau_LnTRegion",            outTreeFile, tau_LnTRegion)#
-    systTree.branchTreesSysts(trees, scenario, "tau_SFFake_vsjet2",               outTreeFile, tau_SFFake_vsjet2)#
-    systTree.branchTreesSysts(trees, scenario, "tau_SFFake_vsjet4",               outTreeFile, tau_SFFake_vsjet4)#
-    if ("vUL001" in outpath):
-        systTree.branchTreesSysts(trees, scenario, "tau_SFFake_vsjet8",               outTreeFile, tau_SFFake_vsjet8)#
+    systTree.branchTreesSysts(trees, scenario, "tau_SFFake",               outTreeFile, tau_SFFake)#
     systTree.branchTreesSysts(trees, scenario, "tau_isPrompt",               outTreeFile, tau_isPrompt)#
-    systTree.branchTreesSysts(trees, scenario, "event_SFFake_vsjet2",               outTreeFile, event_SFFake_vsjet2)#
-    systTree.branchTreesSysts(trees, scenario, "event_SFFake_vsjet4",               outTreeFile, event_SFFake_vsjet4)#
-    if ("vUL001" in outpath):
-        systTree.branchTreesSysts(trees, scenario, "event_SFFake_vsjet8",               outTreeFile, event_SFFake_vsjet8)#
+    systTree.branchTreesSysts(trees, scenario, "event_SFFake",               outTreeFile, event_SFFake)#
     systTree.branchTreesSysts(trees, scenario, "tauleadTk_ptOverTau",      outTreeFile, tauleadTk_ptOverTau)
     systTree.branchTreesSysts(trees, scenario, "tauleadTk_deltaPhi",      outTreeFile, tauleadTk_deltaPhi)
     systTree.branchTreesSysts(trees, scenario, "tauleadTk_deltaEta",      outTreeFile, tauleadTk_deltaEta)
@@ -811,25 +782,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "pass_everyCut",            outTreeFile, pass_everyCut)
 
 
-    #print("Is MC: " + str(isMC) + "      option addPDF: " + str(addPDF))
-    if(isMC):# and addPDF):
-        #print("saving w_PDF")
+    if(isMC):
         systTree.branchTreesSysts(trees, scenario, "w_PDF", outTreeFile, w_PDF_all)
-    ####################################################################################################################################################################################################################################
 
-    '''
-    #++++++++++++++++++++++++++++++++++
-    #++      Efficiency studies      ++
-    #++++++++++++++++++++++++++++++++++
-    neutrino_failed = 0
-    nrecochi = 0
-    nrecoclosest = 0
-    nrecosublead = 0
-    nrecobest = 0
-    nbinseff = 10
-    h_eff_mu = ROOT.TH1D("h_eff_mu", "h_eff_mu", nbinseff, 0, nbinseff)
-    h_eff_ele = ROOT.TH1D("h_eff_ele", "h_eff_ele", nbinseff, 0, nbinseff)
-    '''
     contagood=0
 
     #++++++++++++++++++++++++++++++++++
@@ -838,6 +793,15 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     taucont = 0
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
+        if Debug:
+            if i > 1000:
+                #continue
+                break
+            print("\nevento n. " + str(i))
+        else:
+            if (i+1)%1000 == 0 and i!=0:
+                print("Event #", i+1, " out of ", tree.GetEntries())
+
         for j, var in enumerate(var_list):
             if j<len(var_list)-13:#
                 defvalue = -999
@@ -854,17 +818,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         #++        taking objects        ++
         #++++++++++++++++++++++++++++++++++
     
-        if Debug:
-            if i > 3:#1000:
-                #continue
-                break
-            if True:#(i+1)%1000 == 0 and i!=0:
-                print("\nevento n. " + str(i))
+        
     
-        else:
-            if (i+1)%1000 == 0 and i!=0:
-                print("Event #", i+1, " out of ", tree.GetEntries())
-
         if i%(tree.GetEntries()) == 0 and i!=0:
             print("Last event being processed (#" + str(i+1))
 
@@ -885,13 +840,13 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         else:
             met         = Object(event, "MET_T1")
     
-        genpart = None
-    
+        genparts = None
+        toprwg = 1.
         #h_eff_mu.Fill('Total', 1)
         #h_eff_ele.Fill('Total', 1)
 
         if isMC:
-            genpart = Collection(event, "GenPart")
+            genparts = Collection(event, "GenPart")
             gen = Object(event, "Generator")
             #if not ("WZ" in sample.label or "WWTo2L2Nu_DoubleScattering"):
                 #LHE = Collection(event, "LHEPart")
@@ -909,6 +864,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     ScaleWeight = None
             if addPS:
                 PSWeight = Collection(event, 'PSWeight')
+                
+            if Isttbar:
+                toprwg = TopPtReweighter(genparts)
+   
         chain.GetEntry(i)
 
         pdf_totalUp = 1.
@@ -1010,12 +969,16 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
                 tau.pt = tau.pt*tes*fes
                 tau.mass = tau.mass*tes*fes
+            for mu in muons:
+                mu.pt = mu.corrected_pt
         elif scenario.startswith("je"):
             for tau in taus:
                 tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
                 fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
                 tau.pt = tau.pt*tes*fes
                 tau.mass = tau.mass*tes*fes
+            for mu in muons:
+                mu.pt = mu.corrected_pt
             if scenario == 'jesUp':
                 met.pt = met.pt_jesTotalUp
                 met.phi = met.phi_jesTotalUp
@@ -1065,7 +1028,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 fatjet.pt = fatjet.pt_nom
                 fatjet.mass = fatjet.mass_nom 
                 fatjet.msoftdrop = fatjet.msoftdrop_nom
-            
+            for mu in muons:
+                mu.pt = mu.corrected_pt
             if scenario.startswith("TES"):
                 for tau in taus:
                     tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
@@ -1087,6 +1051,27 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                         tau.pt = tau.pt*tes*fes_Down
                         tau.mass = tau.mass*tes*fes_Down
 
+        elif scenario.startswith("lep"):
+            for jet in jets:
+                jet.pt = jet.pt_nom
+                jet.mass = jet.mass_nom 
+            for fatjet in fatjets:
+                fatjet.pt = fatjet.pt_nom
+                fatjet.mass = fatjet.mass_nom 
+                fatjet.msoftdrop = fatjet.msoftdrop_nom
+            for tau in taus:
+                tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
+                fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
+                tau.pt = tau.pt*tes*fes
+                tau.mass = tau.mass*tes*fes
+            if "Up" in scenario:
+                for mu in muons:
+                    mu.pt = mu.correctedUp_pt
+            elif "Down" in scenario:
+                for mu in muons:
+                    mu.pt = mu.correctedDown_pt
+
+                    
         #++++++++++++++++++++++++++++++++++
         #++      defining variables      ++
         #++++++++++++++++++++++++++++++++++
@@ -1276,49 +1261,6 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             pass_lepton_selection[0] = 0
             pass_lepton_veto[0] = 0
 
-        GoodLep_p4 = ROOT.TLorentzVector()
-        if abs(GoodLep.pdgId)==13:
-            GoodLep_p4.SetPtEtaPhiM(GoodLep.corrected_pt, GoodLep.eta, GoodLep.phi, GoodLep.mass)
-        elif abs(GoodLep.pdgId)==11:
-            GoodLep_p4.SetPtEtaPhiM(GoodLep.pt, GoodLep.eta, GoodLep.phi, GoodLep.mass)
-
-        #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodEle:", indexGoodEle, "indexGoodMu:", indexGoodMu, "GoodLep_pdgid:", GoodLep.pdgId)
-        #if Debug:
-            #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodLep:", indexGoodLep, "tightlep_pdgid:", GoodLep.pdgId, "pass_lepton_veto:", pass_lepton_veto[0])
-
-        MET_pt[0]   =   met.pt  
-        MET_phi[0]  =   met.phi
-
-        if abs(GoodLep.pdgId)==13:
-            lepton_pt[0]                =   GoodLep.corrected_pt
-        elif abs(GoodLep.pdgId)==11:
-            lepton_pt[0]                =   GoodLep.pt
-        lepton_eta[0]               =   GoodLep.eta
-        lepton_phi[0]               =   GoodLep.phi
-        lepton_mass[0]              =   GoodLep.mass
-        lepton_pdgid[0]             =   GoodLep.pdgId
-        if SingleMu==1:
-            lepton_pfRelIso04[0]        =   GoodLep.pfRelIso04_all
-        elif SingleEle==1:
-            lepton_pfRelIso04[0]        =   GoodLep.jetRelIso
-
-        #if not isMC:
-        if abs(GoodLep.pdgId)==11:
-            lepton_SFFake_vsjet4[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', str(sample.year), sys.argv[4])
-            lepton_SFFake_vsjet2[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', str(sample.year), sys.argv[4])
-            if ("vUL001" in outpath):
-                lepton_SFFake_vsjet8[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], 'vsjet8', str(sample.year), sys.argv[4])
-        elif abs(GoodLep.pdgId)==13:
-            lepton_SFFake_vsjet4[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet4', str(sample.year), sys.argv[4])
-            lepton_SFFake_vsjet2[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet2', str(sample.year), sys.argv[4])
-            if ("vUL001" in outpath):
-                lepton_SFFake_vsjet8[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], 'vsjet8', str(sample.year), sys.argv[4])
-        #else:
-        if isMC:
-            lepton_isPrompt[0] = GoodLep.genPartFlav
-    
-        mT_lep_MET[0]=mTlepMet(met, GoodLep_p4)
-
         ThereIsOneTau, ltau_list = SelectAndVetoTaus(str(sample.year), list(taus), GoodLep, leadjet, subleadjet)
 
         if ThereIsOneTau:
@@ -1339,6 +1281,42 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             pass_tau_selection[0] = 1
         else:
             pass_tau_selection[0] = 0
+
+        GoodLep_p4 = ROOT.TLorentzVector()
+        if abs(GoodLep.pdgId)==13:
+            GoodLep_p4.SetPtEtaPhiM(GoodLep.pt, GoodLep.eta, GoodLep.phi, GoodLep.mass)
+        elif abs(GoodLep.pdgId)==11:
+            GoodLep_p4.SetPtEtaPhiM(GoodLep.pt, GoodLep.eta, GoodLep.phi, GoodLep.mass)
+
+        #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodEle:", indexGoodEle, "indexGoodMu:", indexGoodMu, "GoodLep_pdgid:", GoodLep.pdgId)
+        #if Debug:
+            #print("passEle:", passEle, "passMu:", passMu, 'SingleEle:', SingleEle, 'SingleMu:', SingleMu, "indexGoodLep:", indexGoodLep, "tightlep_pdgid:", GoodLep.pdgId, "pass_lepton_veto:", pass_lepton_veto[0])
+
+        MET_pt[0]   =   met.pt  
+        MET_phi[0]  =   met.phi
+
+        if abs(GoodLep.pdgId)==13:
+            lepton_pt[0]                =   GoodLep.pt
+        elif abs(GoodLep.pdgId)==11:
+            lepton_pt[0]                =   GoodLep.pt
+        lepton_eta[0]               =   GoodLep.eta
+        lepton_phi[0]               =   GoodLep.phi
+        lepton_mass[0]              =   GoodLep.mass
+        lepton_pdgid[0]             =   GoodLep.pdgId
+        if SingleMu==1:
+            lepton_pfRelIso04[0]        =   GoodLep.pfRelIso04_all
+        elif SingleEle==1:
+            lepton_pfRelIso04[0]        =   GoodLep.jetRelIso
+
+        #if not isMC:
+        if abs(GoodLep.pdgId)==11:
+            lepton_SFFake[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], str(sample.year), sys.argv[4])
+        elif abs(GoodLep.pdgId)==13:
+            lepton_SFFake[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], str(sample.year), sys.argv[4])
+        if isMC:
+            lepton_isPrompt[0] = GoodLep.genPartFlav
+    
+        mT_lep_MET[0]=mTlepMet(met, GoodLep_p4)
     
         #print("GoodTau:", GoodTau, "tauTR", tau_TightRegion[0], "tauLnT", tau_LnTRegion[0])
 
@@ -1352,12 +1330,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             tau_GenMatch[0]         =   GoodTau.genPartFlav
         tau_DecayMode[0]        =   GoodTau.decayMode
 
-        #if not isMC:
-        tau_SFFake_vsjet4[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet4', str(sample.year), sys.argv[4])
-        tau_SFFake_vsjet2[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet2', str(sample.year), sys.argv[4])
-        if ("vUL001" in outpath):
-            tau_SFFake_vsjet8[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], 'vsjet8', str(sample.year), sys.argv[4])
-        #else:
+        tau_SFFake[0] = SFFakeRatio_tau_calc(tau_pt[0], tau_eta[0], abs(GoodLep.pdgId), str(sample.year), sys.argv[4])
+      
         if isMC:
             tau_isPrompt[0] = GoodTau.genPartFlav
     
@@ -1424,10 +1398,20 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             systTree.setWeightName("puUp", copy.deepcopy(PU_SFUp))
             systTree.setWeightName("puDown", copy.deepcopy(PU_SFDown))
             
+            leadpuID_SF, leadpuID_SFUp, leadpuID_SFDown = PUJetIDSF(leadjet, year)
+            subleadpuID_SF, subleadpuID_SFUp, subleadpuID_SFDown = PUJetIDSF(subleadjet, year)
+            puID_SF = leadpuID_SF*subleadpuID_SF
+            puID_SFUp = leadpuID_SFUp*subleadpuID_SFUp
+            puID_SFDown = leadpuID_SFDown*subleadpuID_SFDown
+            systTree.setWeightName("puIDSF", copy.deepcopy(puID_SF))
+            systTree.setWeightName("puIDUp", copy.deepcopy(puID_SFUp))
+            systTree.setWeightName("puIDDown", copy.deepcopy(puID_SFDown))
+            
             btagSF, btagUp, btagDown, mistagUp, mistagDown = btagcalc(jets, year)
             systTree.setWeightName("btagSF", copy.deepcopy(btagSF))
             systTree.setWeightName("btagUp", copy.deepcopy(btagUp))
             systTree.setWeightName("btagDown", copy.deepcopy(btagDown))
+            systTree.setWeightName("mistagSF", copy.deepcopy(btagSF))
             systTree.setWeightName("mistagUp", copy.deepcopy(mistagUp))
             systTree.setWeightName("mistagDown", copy.deepcopy(mistagDown))
 
@@ -1443,12 +1427,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             systTree.setWeightName("TESUp", copy.deepcopy(tes_Up))
             systTree.setWeightName("TESDown", copy.deepcopy(tes_Down))
             #print('tes:', tes_Down, tes, tes_Up)
-            '''
-            tau_pt[0] *= tes
-            tau_mass[0] *= tes
-            tauleadTk_ptOverTau[0] *= 1/(tes)
-            '''
-
+        
             #ele faking tau
             GoodTau_vsele_Down, GoodTau_vsele_SF, GoodTau_vsele_Up = tauSFTool_vsele.getSFvsEta(GoodTau.eta, GoodTau.genPartFlav, unc='All')
             #print('vsEle SFs:', GoodTau_vsele_Down, GoodTau_vsele_SF, GoodTau_vsele_Up)
@@ -1461,15 +1440,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             systTree.setWeightName("FESUp", copy.deepcopy(fes_Up))
             systTree.setWeightName("FESDown", copy.deepcopy(fes_Down))
             #print('fes:', fes_Down, fes, fes_Up)
-            '''
-            tau_pt[0] *= fes
-            tau_mass[0] *= fes
-            tauleadTk_ptOverTau[0] *= 1/(fes)
-            
-
-            if GoodTau.jetIdx > -1:
-                taujet_RelPt[0] *= 1/(fes*tes)
-            '''
+        
             #tauleadTk_Gamma[0] = 2.*GoodTau.leadTkPtOverTauPt/(fes*tes) - 1.
             tauleadTk_Gamma[0] = 2.*GoodTau.leadTkPtOverTauPt - 1.
 
@@ -1513,44 +1484,21 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
 
         #if not isMC:
         if lepton_LnTRegion[0]==1 and tau_LnTRegion[0]==0:
-            event_SFFake_vsjet4[0] = lepton_SFFake_vsjet4[0]
-            event_SFFake_vsjet2[0] = lepton_SFFake_vsjet2[0]
-            if ("vUL001" in outpath):
-                event_SFFake_vsjet8[0] = lepton_SFFake_vsjet8[0]
+            event_SFFake[0] = lepton_SFFake[0]
         elif lepton_LnTRegion[0]==0 and tau_LnTRegion[0]==1:
-            event_SFFake_vsjet4[0] = tau_SFFake_vsjet4[0]
-            event_SFFake_vsjet2[0] = tau_SFFake_vsjet2[0]
-            if ("vUL001" in outpath):
-                event_SFFake_vsjet8[0] = tau_SFFake_vsjet8[0]
+            event_SFFake[0] = tau_SFFake[0]
         elif lepton_LnTRegion[0]==1 and tau_LnTRegion[0]==1:
-            event_SFFake_vsjet4[0] = lepton_SFFake_vsjet4[0]*tau_SFFake_vsjet4[0]
-            event_SFFake_vsjet2[0] = lepton_SFFake_vsjet2[0]*tau_SFFake_vsjet2[0]
-            if ("vUL001" in outpath):
-                event_SFFake_vsjet8[0] = lepton_SFFake_vsjet8[0]*tau_SFFake_vsjet8[0]
+            event_SFFake[0] = -1.*lepton_SFFake[0]*tau_SFFake[0]
         elif lepton_LnTRegion[0]==0 and tau_LnTRegion[0]==0:
-            event_SFFake_vsjet4[0] = 0.
-            event_SFFake_vsjet2[0] = 0.
-            if ("vUL001" in outpath):
-                event_SFFake_vsjet8[0] = 0.
+            event_SFFake[0] = 0.
 
         if isMC:
-            if event_SFFake_vsjet4[0]>0.:
-                if abs(lepton_isPrompt[0])==1 or abs(lepton_isPrompt[0])==15 or abs(tau_isPrompt[0])==5:
-                    event_SFFake_vsjet4[0] = -1.*event_SFFake_vsjet4[0]
+            if event_SFFake[0]>0.:
+                if ( ( abs(lepton_isPrompt[0])==1 or abs(lepton_isPrompt[0])==15 ) and lepton_LnTRegion[0]==1 ) or ( abs(tau_isPrompt[0])==5 and lepton_LnTRegion[0]==1 ):
+                    event_SFFake[0] = -1.*event_SFFake[0]
                 else:
-                    event_SFFake_vsjet4[0] = 0.
-            if event_SFFake_vsjet2[0]>0.:
-                if abs(lepton_isPrompt[0])==1 or abs(lepton_isPrompt[0])==15 or abs(tau_isPrompt[0])==5:
-                    event_SFFake_vsjet2[0] = -1.*event_SFFake_vsjet2[0]
-                else:
-                    event_SFFake_vsjet2[0] = 0.
-            if ("vUL001" in outpath):
-                if event_SFFake_vsjet8[0]>0.:
-                    if abs(lepton_isPrompt[0])==1 or abs(lepton_isPrompt[0])==15 or abs(tau_isPrompt[0])==5:
-                        event_SFFake_vsjet8[0] = -1.*event_SFFake_vsjet8[0]
-                    else:
-                        event_SFFake_vsjet8[0] = 0.
-        
+                    event_SFFake[0] = 0.
+            
         if GoodTau.charge==GoodLep.charge:
             pass_charge_selection[0]=1
     
@@ -1721,31 +1669,20 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
 
                     for idwc in range(3, 6):
                         if idwc == 3:
-                            if Debug:
-                                print("0")
                             wsign = +1.
                             kpow = +2.
                         elif idwc == 4:
-                            if Debug:
-                                print("INT")
                             wsign = -1.
                             kpow = 2.*epoint
                         elif idwc == 5:
-                            if Debug:
-                                print("BSM")
                             wsign = +1.
                             wpos += -2.*wzero
                             kpow = 2.*(epoint**2.)
-                            
-                        #print("wsign:", wsign, "kpow:", kpow)
 
                         w_coeff = (wpos + wsign * wneg) / kpow
-                        if w_coeff < 0.:
-                            print("Warning! negative weight for " + coeffstr + "at position " + str(idwc))
-                        #print("idwc", idwc, "w_coeff", w_coeff)
                         wcoeff[coeffstr][idwc] = w_coeff
         
-        w_nominal_all[0] *= pdf_totalSF
+        w_nominal_all[0] *= pdf_totalSF*toprwg
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         systTree.fillTreesSysts(trees, scenario)
         #if Debug:

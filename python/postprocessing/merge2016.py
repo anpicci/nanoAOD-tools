@@ -2,9 +2,11 @@ import os
 os.system("reset")
 from samples.samplesUL import *
 
-folder = "vUL030"
+folder = "vULF16"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot/"
 leptons = ["electron", "muon"]
+
+class_list = plot_list
 
 samples2016 = [cl for cl in class_list if "UL2016" == cl.year]
 #print([sample.label for sample in samples2016])
