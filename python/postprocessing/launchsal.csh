@@ -20,7 +20,7 @@ set year = 'UL2018'
 set year = 'UL2016'
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year #--rw
-python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #--rw 
+#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year #--rw 
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year --rw
 
 #######    2016APV   #######
