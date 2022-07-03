@@ -39,11 +39,12 @@ def CondoredList(samplename):
         condlist = os.listdir(path+samplename)
     except:
         condlist = []
-
+        
+    toRel = False
+    wrongex = False
+    StillCondoring = False
+        
     if len(condlist) > 0:
-        toRel = False
-        wrongex = False
-        StillCondoring = False
         for condfile in condlist:
             logpath = "condor_" + opt.fold + "/ltau/output/" + condfile.split("_part")[0] + "_VTVLT_" + condfile.split(".root")[0].split("_")[-1] + ".out"
             if not os.path.exists(logpath):
@@ -98,7 +99,8 @@ def CondoredList(samplename):
                 return CondoredList(samplename)
         elif StillCondoring:
             print(samplename, "not fully condored yet, please wait and have a coffee break...")
-    
+    else:
+        toRel = True
     return condlist, toRel, wrongex, StillCondoring
     
 def DoesSampleExist(samplename):

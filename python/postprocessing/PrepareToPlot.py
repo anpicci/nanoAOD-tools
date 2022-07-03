@@ -75,13 +75,9 @@ def CondoredList(samplename):
     if len(condlist) > 0:
         toRel = False
         wrongex = False
-        StillCondoring = False
+ 
         for condfile in condlist:
             logpath = "condor_" + opt.folder + "/ltau/output/" + condfile.split("_part")[0] + "_VTVLT_" + condfile.split(".root")[0].split("_")[-1] + ".out"
-            if not os.path.exists(logpath):
-                StillCondoring = True
-                condlist.remove(condfile)
-                continue
             if os.stat(path+samplename+"/"+condfile).st_size == 0.:
                 print("Condoring still not ended so far")
                 condlist.remove(condfile)
@@ -128,10 +124,8 @@ def CondoredList(samplename):
             print("Something went wrong when remapping rootfiles for", samplename, "fix it and relaunch")
             if not opt.check:
                 return CondoredList(samplename)
-        elif StillCondoring:
-            print(samplename, "not fully condored yet, please wait and have a coffee break...")
 
-    return condlist, toRel, wrongex, StillCondoring
+    return condlist, toRel, wrongex
 
 def DoesSampleExist(samplename):
     if samplename+".txt" not in os.listdir(crabpath):
@@ -141,8 +135,8 @@ def DoesSampleExist(samplename):
 
 def AreAllCondored(crabname, condorname):
     toRel = False
-    condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
-    if not StillCondoring and (torel or wrongex):
+    condoredlist, torel, wrongex = CondoredList(condorname)
+    if (torel or wrongex):
         toRel = True
         storelist = [line for line in open("../../crab/macros/files/"+crabname+".txt")]
 

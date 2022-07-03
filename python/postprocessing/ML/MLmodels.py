@@ -1,10 +1,10 @@
-bdt_sm_path="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/notoptimized_xgb_SM_UL-allBKGs_vUL025optimization_nobalancing_redoAN_reduced.model"
-bdt_sm_branch = "BDT_SM_xgb_UL025_nobal_noopt"
-bdt_sm_scaler = ""
+#bdt_sm_path="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/notoptimized_xgb_SM_UL-allBKGs_vUL025optimization_nobalancing_redoAN_reduced.model"
+#bdt_sm_branch = "BDT_SM_xgb_UL025_nobal_noopt"
+#bdt_sm_scaler = ""
 
-bdt_sm_path_v2   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/SM-BDT_vUL030_v2_redo_sigQCD.model"
-bdt_sm_branch_v2 = "BDT_SM_UL030_v2"
-bdt_sm_scaler_v2 = ""
+bdt_sm_path   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/SM-BDT_vUL030_v2_redo_sigQCD.model"
+bdt_sm_branch = "BDT_SM_UL030_v2"
+bdt_sm_scaler = ""
 
 bdt_cW_path_nobal="/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/notoptimized_xgb_dim6-cW-INT-BSM_UL-allBKGs_vUL025optimization_noBalancing_redoAN_reduced.model"
 bdt_cW_branch_nobal = "BDT_cW_xgb_UL025_nobal_noopt"
