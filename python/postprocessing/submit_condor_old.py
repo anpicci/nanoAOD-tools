@@ -101,8 +101,16 @@ def sub_writer(sample, n, files, folder):
     f.write("output                  = condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_" + opt.folder + "/error/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".err\n")
     f.write("log                     = condor_" + opt.folder + "/log/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".log\n")
-
+    
     f.write("queue\n")
+
+    if os.path.exists("condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out"):
+        os.system("rm condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out")
+    if os.path.exists("condor_" + opt.folder + "/error/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".err"):
+        os.system("rm condor_" + opt.folder + "/error/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".err")
+    if os.path.exists("condor_" + opt.folder + "/log/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".log"):
+        os.system("rm condor_" + opt.folder + "/log/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".log")
+
 
 if not(opt.dat in sample_dict.keys()):
     print sample_dict.keys()

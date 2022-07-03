@@ -62,25 +62,31 @@ split = 50
 isWithSysts = False
 if "UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
-    scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+    scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
 else:
     scenarios = ["all"]
 
 def CondoredList(samplename):
     try:
-        condlist = [f for f in os.listdir(path+samplename) if "_part" in f]
+        condlist = os.listdir(path+samplename)
     except:
         condlist = []
 
     if len(condlist) > 0:
         toRel = False
         wrongex = False
+        StillCondoring = False
         for condfile in condlist:
+            logpath = "condor_" + opt.folder + "/ltau/output/" + condfile.split("_part")[0] + "_VTVLT_" + condfile.split(".root")[0].split("_")[-1] + ".out"
+            if not os.path.exists(logpath):
+                StillCondoring = True
+                condlist.remove(condfile)
+                continue
             if os.stat(path+samplename+"/"+condfile).st_size == 0.:
                 print("Condoring still not ended so far")
                 condlist.remove(condfile)
-            elif os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')
-                toRel =True
+            elif os.stat(path+samplename+"/"+condfile).st_size < 1024.:
+                toRel = True
                 condlist.remove(condfile)
                 if not opt.check:
                     os.system("rm -r "+ path + samplename + "/" + condfile)
@@ -99,30 +105,33 @@ def CondoredList(samplename):
                 for ids, scenario in enumerate(scenarios):
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
-                    except(AttributeError, ReferenceError):#, RuntimeWarning):
-                        condlist.remove(condfile)
+                    except(AttributeError, ReferenceError):#, RuntimeWarning):                                                                                                                                                                                                                                   
+                        try:
+                            condlist.remove(condfile)
+                        except:
+                            pass
                         wrongex = True
                         if not opt.check:
                             print("Removing files with damaged " + scenario + " tree...")
                             os.system("rm "+ path + samplename + "/" + condfile)
-                            break
                     else:
                         pass
-                    
+
                     if ids == 0 and (not isWithSysts or "Data" in samplename):
                         break
-                    
+
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")
             if not opt.check:
                 return CondoredList(samplename)
         elif wrongex:
-            print("Something when remapping rootfiles for ", samplename, "fix it and relaunch")
+            print("Something went wrong when remapping rootfiles for", samplename, "fix it and relaunch")
             if not opt.check:
                 return CondoredList(samplename)
-       
+        elif StillCondoring:
+            print(samplename, "not fully condored yet, please wait and have a coffee break...")
 
-    return condlist
+    return condlist, toRel, wrongex, StillCondoring
 
 def DoesSampleExist(samplename):
     if samplename+".txt" not in os.listdir(crabpath):
@@ -131,36 +140,39 @@ def DoesSampleExist(samplename):
         return True
 
 def AreAllCondored(crabname, condorname):
-    storelist = [line for line in open(crabpath+crabname+".txt")]
-    condoredlist = CondoredList(condorname)
-    #print(crabpath, crabname,".txt")
-    #print(len(storelist), (condoredlist))
-    if condorname+"_merged.root" in condoredlist:
-        condoredlist.remove(condorname+"_merged.root")
-    if condorname+".root" in condoredlist:
-        condoredlist.remove(condorname+".root")
+    toRel = False
+    condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
+    if not StillCondoring and (torel or wrongex):
+        toRel = True
+        storelist = [line for line in open("../../crab/macros/files/"+crabname+".txt")]
 
-    lenstore = len(storelist)
-    
-    if 'Data' in crabname:
-        remainder = int(lenstore%split)
-        lenstore = int(lenstore/split)
-        if remainder > 0:
-            lenstore += 1
+        if condorname+"_merged.root" in condoredlist:
+            condoredlist.remove(condorname+"_merged.root")
+        if condorname+".root" in condoredlist:
+            condoredlist.remove(condorname+".root")
 
-    IsThereMaximum = bool(opt.maxj) and bool(opt.maxj < lenstore) and bool("Data" not in crabname)
-    #print("IsThereMaximum", IsThereMaximum)
-    if IsThereMaximum and 'Data' not in crabname and len(condoredlist) < opt.maxj:
-        print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
-        return False
-    elif not IsThereMaximum and len(condoredlist) < (lenstore):
-        print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
-        return False
-    elif lenstore==0 and len(condoredlist)==0:
-        print("Warning for", condorname, "False flag for crabbed files! need to recrab them")
-        return False
+        lenstore = len(storelist)
+
+        if 'Data' in crabname:
+            remainder = int(lenstore%split)
+            lenstore = int(lenstore/split)
+            if remainder > 0:
+                lenstore += 1
+
+        if len(condoredlist) < lenstore:
+            print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
+            return False, toRel
+        elif lenstore==0 and len(condoredlist)==0:
+            print("Warning for", condorname, "False flag for crabbed files! need to recrab them")
+            return True, toRel
+        else:
+            return True, toRel
+
     else:
-        return True
+        if len(condoredlist)==0:
+            return False, toRel
+        else:
+            return True, toRel
 
 '''
 print("samples")
@@ -192,8 +204,8 @@ for k, v in merge_dict.items():
             continue
     
     if k.startswith('Fake'):
+        IsIncluded = False
         if opt.dat != "all":
-            IsIncluded = False
             for dat in datoprocess:
                 if dat.startswith("Fake"):
                     IsIncluded = True
@@ -244,7 +256,9 @@ for k, v in merge_dict.items():
                 print(c.label, "not crabbed yet")
                 continue
             cpath = path + c.label + "/"
-            if (not AreAllCondored(c.name, c.label) and not opt.override):
+            
+            AreCondored, toRel = AreAllCondored(c.name, c.label)
+            if not AreCondored and not opt.override:
                 print(c.label + " not condorly produced yet")
                 continue
 
@@ -322,7 +336,8 @@ for k, v in merge_dict.items():
             print(k + " not crabbed yet")
             continue
 
-        if not AreAllCondored(v.name, v.label) and not opt.override:
+        AreCondored, toRel = AreAllCondored(v.name, v.label)
+        if not AreCondored and not opt.override:
         #if not os.path.exists(kpath+k):
             print(k + " not condored at all yet")
             continue

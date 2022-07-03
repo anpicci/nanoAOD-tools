@@ -43,7 +43,13 @@ def CondoredList(samplename):
     if len(condlist) > 0:
         toRel = False
         wrongex = False
+        StillCondoring = False
         for condfile in condlist:
+            logpath = "condor_" + opt.fold + "/ltau/output/" + condfile.split("_part")[0] + "_VTVLT_" + condfile.split(".root")[0].split("_")[-1] + ".out"
+            if not os.path.exists(logpath):
+                StillCondoring = True
+                condlist.remove(condfile)
+                continue
             if os.stat(path+samplename+"/"+condfile).st_size == 0.:
                 print("Condoring still not ended so far")
                 condlist.remove(condfile)
@@ -90,9 +96,11 @@ def CondoredList(samplename):
             print("Something went wrong when remapping rootfiles for", samplename, "fix it and relaunch")
             if not opt.check:
                 return CondoredList(samplename)
-
-    return condlist
-
+        elif StillCondoring:
+            print(samplename, "not fully condored yet, please wait and have a coffee break...")
+    
+    return condlist, toRel, wrongex, StillCondoring
+    
 def DoesSampleExist(samplename):
     if samplename+".txt" not in os.listdir("../../crab/macros/files/"):
         return False
@@ -100,7 +108,13 @@ def DoesSampleExist(samplename):
         return True
                 
 def AreAllCondored(crabname, condorname):
-    condoredlist = CondoredList(condorname)
+    toRel = False
+    condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
+    #print(torel, wrongex, StillCondoring)
+    
+    if not StillCondoring and (torel or wrongex):
+        toRel = True
+    #print(toRel)
     if not opt.beff:
         storelist = [line for line in open("../../crab/macros/files/"+crabname+".txt")]
 
@@ -119,18 +133,18 @@ def AreAllCondored(crabname, condorname):
 
         if len(condoredlist) < lenstore:
             print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
-            return False
+            return False, toRel
         elif lenstore==0 and len(condoredlist)==0:
             print("Warning for", condorname, "False flag for crabbed files! need to recrab them")
-            return True
+            return True, toRel
         else:
-            return True
+            return True, toRel
 
     else:
         if len(condoredlist)==0:
-            return False
+            return False, toRel
         else:
-            return True
+            return True, toRel
         
 if not "UL" in opt.year:
     from samples.samples import *
@@ -246,7 +260,7 @@ for prname, proc in condor_dict.items():
             if opt.dat != 'all':
                 if not (str(sample.label).startswith(opt.dat) or prname.startswith(opt.dat)):
                     continue
-            
+
             if not DoesSampleExist(sample.name):
                 continue
                 #if sample.label in dirlist:
@@ -255,7 +269,9 @@ for prname, proc in condor_dict.items():
                     print('Relaunching all the jobs for', sample.label)
                     os.system("rm -r "+ path + sample.label + "/*")
 
-            if not AreAllCondored(sample.name, sample.label):
+            AreCondored, toRel = AreAllCondored(sample.name, sample.label)
+            #print(AreCondored, toRel)
+            if not AreCondored and toRel:
                 if opt.check:
                     print(sample.label, "not completely condored")
                     print("python " + subpy + " -d " + sample.label+ " " + optstring)
@@ -264,9 +280,9 @@ for prname, proc in condor_dict.items():
                         print("Setting jobs for missing condored files...")
                     print("Writing " + sample.label + " in csh...")
                     f.write("python " + subpy + " -d " + sample.label+ " " + optstring)
-            else:
+            elif AreCondored:
                 print(sample.label, " completely condored")
-
+        
     else:
         if opt.dat != 'all':
             if not prname.startswith(opt.dat):
@@ -274,12 +290,14 @@ for prname, proc in condor_dict.items():
 
         if not DoesSampleExist(proc.name):
             continue
-
+    
         if os.path.exists(path+proc.label):
             if opt.rw:
                 print('Relaunching all the jobs for', proc.label)
                 os.system("rm -f "+ path + proc.label + "/*")
-        if not AreAllCondored(proc.name, proc.label):
+        
+        AreCondored, toRel = AreAllCondored(sample.name, sample.label)
+        if not AreCondored and toRel:
             if opt.check:
                 print(proc.label, "not completely condored")
                 print("python " + subpy + " -d " + proc.label + " " + optstring)
@@ -290,11 +308,11 @@ for prname, proc in condor_dict.items():
                 print("Writing " + proc.label + " in csh...")  
                 f.write("python " + subpy + " -d " + proc.label+ " " + optstring)
 
-        else:
+        elif AreCondored:
             print(proc.label, " completely condored")
-
+    
 f.close()
-
+    
 if not opt.check:
     t = open("CutsAndValues_" + str(opt.year) + ".py", "w")
     t.write("# In this file values for cuts and constant will be stored and then recalled from the whole analysis function\n")

@@ -538,12 +538,20 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     deltaPhi_tauj2              =   array.array('f', [-999.])#
     deltaPhi_lepj1              =   array.array('f', [-999.])#
     deltaPhi_lepj2              =   array.array('f', [-999.])#
+    deltaPhi_METj1              =   array.array('f', [-999.])#
+    deltaPhi_METj2              =   array.array('f', [-999.])#
+    deltaPhi_METlep             =   array.array('f', [-999.])#
+    deltaPhi_METtau             =   array.array('f', [-999.])#
     var_list.append(deltaPhi_jj)#
     var_list.append(deltaPhi_taulep)#
     var_list.append(deltaPhi_tauj1)#
     var_list.append(deltaPhi_tauj2)#
     var_list.append(deltaPhi_lepj1)#
     var_list.append(deltaPhi_lepj2)#
+    var_list.append(deltaPhi_METj1)#
+    var_list.append(deltaPhi_METj2)#
+    var_list.append(deltaPhi_METlep)#
+    var_list.append(deltaPhi_METtau)#
 
     #deltaTheta
     deltaTheta_jj                 =   array.array('f', [-999.])#
@@ -645,7 +653,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "lepton_TightRegion",   outTreeFile, lepton_TightRegion)
     systTree.branchTreesSysts(trees, scenario, "lepton_LnTRegion",     outTreeFile, lepton_LnTRegion)
     systTree.branchTreesSysts(trees, scenario, "lepton_SFFake",        outTreeFile, lepton_SFFake)
-
+    systTree.branchTreesSysts(trees, scenario, "lepton_isPrompt",         outTreeFile, lepton_isPrompt)#
     #tau variables
     systTree.branchTreesSysts(trees, scenario, "tau_pt",               outTreeFile, tau_pt)
     systTree.branchTreesSysts(trees, scenario, "tau_eta",              outTreeFile, tau_eta)
@@ -732,6 +740,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "deltaPhi_tauj2",           outTreeFile, deltaPhi_tauj2)#
     systTree.branchTreesSysts(trees, scenario, "deltaPhi_lepj1",           outTreeFile, deltaPhi_lepj1)#
     systTree.branchTreesSysts(trees, scenario, "deltaPhi_lepj2",           outTreeFile, deltaPhi_lepj2)#
+    systTree.branchTreesSysts(trees, scenario, "deltaPhi_METj1",           outTreeFile, deltaPhi_METj1)#
+    systTree.branchTreesSysts(trees, scenario, "deltaPhi_METj2",           outTreeFile, deltaPhi_METj2)#
+    systTree.branchTreesSysts(trees, scenario, "deltaPhi_METlep",           outTreeFile, deltaPhi_METlep)#
+    systTree.branchTreesSysts(trees, scenario, "deltaPhi_METtau",           outTreeFile, deltaPhi_METtau)#
     #deltaEta#
     systTree.branchTreesSysts(trees, scenario, "deltaEta_jj",              outTreeFile, deltaEta_jj)#
     systTree.branchTreesSysts(trees, scenario, "deltaEta_taulep",          outTreeFile, deltaEta_taulep)#
@@ -1533,6 +1545,11 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         deltaPhi_tauj2[0]   =   deltaPhi(GoodTau, subleadjet)#
         deltaPhi_lepj1[0]   =   deltaPhi(GoodLep, leadjet)#
         deltaPhi_lepj2[0]   =   deltaPhi(GoodLep, subleadjet)#
+
+        deltaPhi_METj1[0]   =   deltaPhi(met, leadjet)#
+        deltaPhi_METj2[0]   =   deltaPhi(met, subleadjet)#
+        deltaPhi_METlep[0]   =   deltaPhi(met, GoodLep)#
+        deltaPhi_METtau[0]   =   deltaPhi(met, GoodTau)#
 
         #calculating deltaEta                                                                                                      
         deltaEta_jj[0]      =   leadjet.eta - subleadjet.eta#
