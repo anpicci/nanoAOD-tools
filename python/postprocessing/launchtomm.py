@@ -10,33 +10,33 @@ years = [
 ]
 
 branches = [
-    bdt_sm_branch,
-    bdt_cW_branch,
-    bdt_cHW_branch,
-    dnn_sm_branch,
-    dnn_cW_branch,
+    bdt_sm_branch_v2,
+    bdt_cW_branch_v2,
+    bdt_cHW_branch_v2,
+    dnn_sm_branch_v2,
+    dnn_cW_branch_v2,
     #bdt_pol_branch,
     #dnn_cHW_branch_bal,
     #dnn_pol_branch,
 ]
 
 paths = [
-    bdt_sm_path,
-    bdt_cW_path,
-    bdt_cHW_path,
-    dnn_sm_path,
-    dnn_cW_path,
+    bdt_sm_path_v2,
+    bdt_cW_path_v2,
+    bdt_cHW_path_v2,
+    dnn_sm_path_v2,
+    dnn_cW_path_v2,
     #bdt_pol_path,
     #dnn_cHW_path_bal,
     #dnn_pol_path,
 ]
 
 scalers = [
-    bdt_sm_scaler,
-    bdt_cW_scaler,
-    bdt_cHW_scaler,
-    dnn_sm_scaler,
-    dnn_cW_scaler,
+    bdt_sm_scaler_v2,
+    bdt_cW_scaler_v2,
+    bdt_cHW_scaler_v2,
+    dnn_sm_scaler_v2,
+    dnn_cW_scaler_v2,
     #bdt_pol_scaler,
     #dnn_cHW_scaler,
     #dnn_pol_scaler,
