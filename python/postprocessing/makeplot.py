@@ -17,6 +17,9 @@ from rwgcards.FromCardToDict import *
 
 rwgdict = CardToDict("dim8", "FT1_2p0")
 desiredop = [
+    "FT1_1p0",
+]
+'''
     "FS0_1p0",
     "FS1_1p0",
     "FM0_1p0",
@@ -27,6 +30,7 @@ desiredop = [
     "FT1_1p0",
     "FT2_0p9",
 ]
+'''
 wcoeff = []
 for opname, opdict in rwgdict.items():
     coeffstr = ""
@@ -34,7 +38,7 @@ for opname, opdict in rwgdict.items():
         coeffstr = opname + "_" + val
         if coeffstr in desiredop:
             wcoeff.append(coeffstr)
-print(wcoeff)
+
 typcontr = [
     "0",
     "SM",
@@ -295,14 +299,14 @@ systematicslist = [
     ["", True, ""],
     ["PFUp", True, "exp"],
     ["PFDown", True, "exp"],
+    ["lepUp", True, "exp"],
+    ["lepDown", True, "exp"],
     ["puUp", True, "exp"],
     ["puDown", True, "exp"],
     ["btagUp", True, "exp"],
     ["btagDown", True, "exp"],
     ["mistagUp", True, "exp"],
     ["mistagDown", True, "exp"],
-    ["lepUp", True, "exp"],
-    ["lepDown", True, "exp"],
     ["tau_vsjet_Up", True, "exp"],
     ["tau_vsjet_Down", True, "exp"],
     ["tau_vsele_Up", True, "exp"],
@@ -319,8 +323,8 @@ systematicslist = [
     ["FSRDown", True, "th"],
     ["jesUp", True, "en"],
     ["jesDown", True, "en"],
-    ["lepenUp", True, "en"],
-    ["lepenDown", True, "en"],
+    #["lepenUp", True, "en"],
+    #["lepenDown", True, "en"],
     ["jerUp", True, "en"],
     ["jerDown", True, "en"],
     ["TESUp", True, "en"],
@@ -352,6 +356,8 @@ elif opt.syst!="all" and opt.syst=="noSyst":
             continue
 else:
     for syst in systematicslist:
+        if "lepen" in syst[0]:
+            continue
         systematics.append(syst)
 if opt.plot or opt.stack:
     print("systematics to plot:")
@@ -458,7 +464,7 @@ def lumi_writer(dataset, lumi):
             os.popen("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
 
 
-def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)], sampletagg = "", dim8cut = ""):
+def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)], sampletagg = "", dim8cut = ""):
     syst = systlist[0]
     isSystCorr = systlist[1]
     systtype = systlist[2]
@@ -480,6 +486,7 @@ def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nom
 
     treename += systtree
 
+    print("\n", samplelab)
     if systtype == "exp":
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
         cutbase += '*(1./' + nominal + ')'
@@ -487,14 +494,13 @@ def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nom
         cutbase += '*(' + syst + ')'
 
     if syst != "":
+        print("hello", syst)
         histoname += "_" + syst.replace("_Up", "Up").replace("_Down", "Down")
         if not isSystCorr:
             histoname += "_" + str(opt.year).replace("UL", "")
         
-    #print("after syst applied\tcutbase", cutbase, "\nhistoname:", histoname, "\ttreename:", treename)
-
     cut = ''
-
+    '''
     if opt.count:
         if not "_aQGC_" in sample.label:
             samcountlab = sample.leglabel
@@ -504,14 +510,14 @@ def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nom
         countf.write(samcountlab)
         countf.write(';')
         #countf.write("\nBin\tContent\tError")
-
+    '''
     if opt.channel=="ltau":
         l1fstr = "lepton"
         l2fstr = "tau"
     elif opt.channel=="emu":
         l1fstr = "electron"
         l2fstr = "muon"
-
+    
     if 'Fake' in str(sample.label):
         if str(sample.label).startswith('FakeEle_') or str(sample.label).startswith('FakeMu_'):
             if opt.channel == 'ltau':
@@ -547,6 +553,7 @@ def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nom
              cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&(" + l2fstr + "_isPrompt==1||" + l2fstr + "_isPrompt==15))"
 
     if isdim8:
+        print("hello tehre")
         if not "_UL" in sample.label:
             cut = "(w_dim8[0])*" + cut
         else:
@@ -555,7 +562,8 @@ def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nom
     else:
         samplelab = sample.label
     
-    print("\nplotting ", variable._name, "\nsample:", samplelab, "\ncut:", cut_tag, "\nsyst applied:", syst)
+    print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
+    print("plotting ", variable._name, "\nsample:", samplelab, "\ncut:", cut_tag, "\nsyst applied:", syst)
     
     nbins = variable._nbins
 
@@ -599,11 +607,15 @@ def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nom
     h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
     h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
 
+    print("integral", h1.Integral())
+    
     tot = 0.
     terr = 0.
 
     for i in range(0, nbins+1):
         content = h1.GetBinContent(i)
+        print("content bin #" + str(i+1) + ":\t" + str(content))
+    '''
         if(content<0.):
             h1.SetBinContent(i, 0.)
 
@@ -631,7 +643,7 @@ def plot(f1, fout, samplelab,lep, reg, variable, sample, cut_tag, systlist=["nom
     
     fout.cd()
     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
-
+    '''
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
      #os.system('set LD_PRELOAD=libtcmalloc.so')
 
@@ -1134,13 +1146,26 @@ for year in years:
         
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
+        '''
         bin_m1T = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
         bin_mo1 = array("d", [0., 50., 100., 150., 200., 300.])#, 1000.])
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
-        
+        '''
+        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
+            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        elif opt.sr:
+            bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        else:
+            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        #variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
+        variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
+
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:

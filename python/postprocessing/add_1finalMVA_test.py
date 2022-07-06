@@ -653,29 +653,3 @@ for k, v in merge_dict.items():
         else:
             print("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
             os.system("python3 PrepareToPlot.py -f " + ofolder + " -y " + opt.year +" -d " + k + " --rw --or")
-
-
-'''
-if opt.dat=="all" or opt.dat.startswith("Fake"):
-        for kf, vf in mergefakes.items():
-            if k in vf.keys():
-                vf[k] = True
-
-if opt.dat=="all" or opt.dat.startswith("Fake"):
-    for kf, vf in mergefakes.items():
-        if False in vf.values():
-            continue
-
-        kfpath = path + kf + "/"
-        if os.path.exists(kfpath+k+".root"):
-            if Debug:
-                print("rm -f "+kfpath+kf+".root")
-            else:
-                os.system("rm -f "+kfpath+kf+".root")
-        if Debug:
-            print("python3 makeplot.py -y ", opt.year, " --mertree -d " + kf + " --folder "+ ofolder + " --ch " + opt.channel )
-        else:
-            os.system("python3 makeplot.py -y " + opt.year + " --mertree -d " + kf + " --folder " + ofolder + " --ch " + opt.channel )
-
-print(mergefakes)
-'''

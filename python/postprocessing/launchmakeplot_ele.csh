@@ -6,31 +6,31 @@ reset
 ######## year1 #######################
 set year = UL2016APV
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269"
-#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269"
-#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269"
-#python3 makeplot.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269" --bvetoL
+python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"
+python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"
+python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"
+python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269" 
 
 ######### year1bis #######################
 set year = UL2016
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year\_*
-#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269" 
-#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269" 
-#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269" 
-#python3 makeplot.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269" --bvetoL 
+python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269" 
+python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269" 
+python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269" 
+python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"  
 
 ######## year2 #######################
 set year = UL2017
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269"
-#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269" 
-#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269" 
-#python3 makeplot.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count --cut "DNN_pol_UL030_v2>0.3269" --bvetoL 
+python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"
+python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269" 
+python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269" 
+python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --wfake incl_vsjet4 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"  
 
 ####### year3 #######################
 set year = UL2018
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269"
-python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269"
-python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269"
-python3 makeplot.py -y $year --lep electron --wsdy -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count --cut "DNN_pol_UL030_v2>0.3269" --bvetoL 
+python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"
+python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"
+python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"
+python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --wfake incl_vsjet2 --count -d VBS_SSWW_aQGC_$year -v m_o1 #--cut "DNN_pol_UL030_v2>0.3269"  
