@@ -4262,6 +4262,7 @@ merge_dict = {
     "DataHT_UL2018":DataHT_UL2018,
 }
 
+merge_list = merge_dict.values()
 
 plot_list = [
     WpWpJJ_EWK_UL2016APV,

@@ -17,9 +17,6 @@ from rwgcards.FromCardToDict import *
 
 rwgdict = CardToDict("dim8", "FT1_2p0")
 desiredop = [
-    "FT1_1p0",
-]
-'''
     "FS0_1p0",
     "FS1_1p0",
     "FM0_1p0",
@@ -30,7 +27,7 @@ desiredop = [
     "FT1_1p0",
     "FT2_0p9",
 ]
-'''
+
 wcoeff = []
 for opname, opdict in rwgdict.items():
     coeffstr = ""
@@ -313,18 +310,18 @@ systematicslist = [
     ["tau_vsele_Down", True, "exp"],
     ["tau_vsmu_Up", True, "exp"],
     ["tau_vsmu_Down", True, "exp"],
-    ["pdf_totalUp", True, "th"],
-    ["pdf_totalDown", True, "th"],
-    ["QCDScaleUp", True, "th"],
-    ["QCDScaleDown", True, "th"],
+    ["pdf_totalUp", True, "exp"],
+    ["pdf_totalDown", True, "exp"],
+    ["QCDScaleUp", True, "exp"],
+    ["QCDScaleDown", True, "exp"],
     ["ISRUp", True, "th"],
     ["ISRDown", True, "th"],
     ["FSRUp", True, "th"],
     ["FSRDown", True, "th"],
     ["jesUp", True, "en"],
     ["jesDown", True, "en"],
-    #["lepenUp", True, "en"],
-    #["lepenDown", True, "en"],
+    ["lepenUp", True, "en"],
+    ["lepenDown", True, "en"],
     ["jerUp", True, "en"],
     ["jerDown", True, "en"],
     ["TESUp", True, "en"],
@@ -350,7 +347,7 @@ if opt.syst!="all" and opt.syst!="noSyst":
 elif opt.syst!="all" and opt.syst=="noSyst":
     for syst in systematicslist:
         if syst[0] == "":
-            print("hello", syst)
+            #print("hello", syst)
             systematics.append(syst)
         else:
             continue
@@ -486,22 +483,22 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
 
     treename += systtree
 
-    print("\n", samplelab)
+    print("\n" + samplelab)
     if systtype == "exp":
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
-        cutbase += '*(1./' + nominal + ')'
+        cutbase += '*(1./abs(' + nominal + '))'
     if systtype != "en" and syst != "":
         cutbase += '*(' + syst + ')'
 
     if syst != "":
-        print("hello", syst)
+        #print("hello", syst)
         histoname += "_" + syst.replace("_Up", "Up").replace("_Down", "Down")
         if not isSystCorr:
             histoname += "_" + str(opt.year).replace("UL", "")
         
     cut = ''
-    '''
-    if opt.count:
+    
+    if opt.count and syst == "":
         if not "_aQGC_" in sample.label:
             samcountlab = sample.leglabel
         else:
@@ -510,7 +507,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         countf.write(samcountlab)
         countf.write(';')
         #countf.write("\nBin\tContent\tError")
-    '''
+    
     if opt.channel=="ltau":
         l1fstr = "lepton"
         l2fstr = "tau"
@@ -553,7 +550,6 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
              cut = cut + "*((" + l1fstr + "_isPrompt==1||" + l1fstr + "_isPrompt==15)&&(" + l2fstr + "_isPrompt==1||" + l2fstr + "_isPrompt==15))"
 
     if isdim8:
-        print("hello tehre")
         if not "_UL" in sample.label:
             cut = "(w_dim8[0])*" + cut
         else:
@@ -562,7 +558,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     else:
         samplelab = sample.label
     
-    print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
+    #print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
     print("plotting ", variable._name, "\nsample:", samplelab, "\ncut:", cut_tag, "\nsyst applied:", syst)
     
     nbins = variable._nbins
@@ -607,16 +603,15 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
     h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
 
-    print("integral", h1.Integral())
+    print("Integral", h1.Integral())
     
     tot = 0.
     terr = 0.
 
     for i in range(0, nbins+1):
         content = h1.GetBinContent(i)
-        print("content bin #" + str(i+1) + ":\t" + str(content))
-    '''
-        if(content<0.):
+        #print("content bin #" + str(i+1) + ":\t" + str(content))
+        if content < 0. and not (isdim8 or "SSWW_c" in sample.label):
             h1.SetBinContent(i, 0.)
 
     for bidx in range(nbins):          
@@ -636,16 +631,16 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             terr += binerrcont**2.
             binerrcont = str(binerrcont)
 
-    if opt.count:
+    if opt.count and syst == "":
         terr = terr**0.5
         countf.write(str(bincont).replace(".",",") + ";" + str(binerrcont).replace(".",","))
         countf.write("\n")
-    
+        countf.close()
     fout.cd()
     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
-    '''
+    
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
-     #os.system('set LD_PRELOAD=libtcmalloc.so')
+    os.system('set LD_PRELOAD=libtcmalloc.so')
 
     if reg_ == 'ltau':
         if str(lep_).strip('[]') == "muon":
@@ -1012,8 +1007,12 @@ else:
 
 if opt.stack:
     class_list = stack_list
-else:
+else:# opt.plot:
     class_list = plot_list
+#else:
+    #class_list = merge_list
+
+#print(class_list)
 
 if(opt.dat != 'all'):
      print("opt.dat", opt.dat)
@@ -1118,9 +1117,9 @@ for year in years:
               
         
         if opt.channel == 'ltau':
-            wzero = 'w_nominal*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF'
+            wzero = 'w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF'
         elif opt.channel == 'emu':
-            wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF'
+            wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF*puIDSF*QCDScaleSF'
 
         cutbase = cut_dict[lep]
 
@@ -1133,39 +1132,29 @@ for year in years:
         nbin_bdtsm = len(bin_bdtsm) - 1
 
         
-        variables.append(variabile('DNN_SM_UL025_bal', 'Bal. SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-
-        #variables.append(variabile('DNN_cW_UL025_bal_v2', 'Bal. c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_cHW_UL025_bal', 'Bal. c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('DNN_SM_UL030_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('DNN_cW_UL030_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('DNN_cHW_UL030_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('DNN_aQGC_UL030_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
-        variables.append(variabile('BDT_SM_xgb_UL025_bal_noopt', 'Bal. SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_cW_xgb_UL025_bal_noopt', 'Bal. c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_cHW_xgb_UL025_bal_noopt', 'Bal. c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('BDT_SM_UL030_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('BDT_cW_UL030_v2', 'c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('BDT_cHW_UL030_v2', 'c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('BDT_aQGC_UL030_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
-        '''
+        
         bin_m1T = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
         bin_mo1 = array("d", [0., 50., 100., 150., 200., 300.])#, 1000.])
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
-        '''
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        elif opt.sr:
-            bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        else:
-            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        #variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-        variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-
+        
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:

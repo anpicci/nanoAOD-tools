@@ -113,7 +113,7 @@ def AreAllCondored(crabname, condorname):
     #condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
     condoredlist = CondoredList(condorname)
     #print(torel, wrongex, StillCondoring)
-    
+    print(condoredlist)
     #if not StillCondoring and (torel or wrongex):
         #toRel = True
     #print(toRel)
@@ -298,9 +298,8 @@ for prname, proc in condor_dict.items():
             if opt.rw:
                 print('Relaunching all the jobs for', proc.label)
                 os.system("rm -f "+ path + proc.label + "/*")
-        
-        #AreCondored, toRel = AreAllCondored(sample.name, sample.label)
-        AreCondored = AreAllCondored(sample.name, sample.label)
+        #AreCondored, toRel = AreAllCondored(proc.name, sample.label)
+        AreCondored = AreAllCondored(proc.name, proc.label)
         if not AreCondored:# and toRel:
             if opt.check:
                 print(proc.label, "not completely condored")
