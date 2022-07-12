@@ -5,8 +5,8 @@ set folder = vUL035 #### aQGC added, new fakes, systematics completed
 #######    2017   #######
 set year = 'UL2017'
 #reset
-python3 PrepareToPlot.py -f $folder -y $year --rw
-#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year --rw 
+#python3 PrepareToPlot.py -f $folder -y $year --rw
+python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year --rw 
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year --rw
 
 #######    2018   #######
@@ -20,7 +20,7 @@ set year = 'UL2018'
 set year = 'UL2016'
 #reset
 #python3 PrepareToPlot.py -f $folder -y $year -d VBS_SSWW_cHW_SM_$year --rw
-#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year --rw 
+python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year --rw 
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year --rw
 
 #######    2016APV   #######
