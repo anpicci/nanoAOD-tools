@@ -264,6 +264,9 @@ systTree.setWeightName("ISRDown", 1.)
 systTree.setWeightName("FSRSF", 1.)
 systTree.setWeightName("FSRUp", 1.)
 systTree.setWeightName("FSRDown", 1.)
+systTree.setWeightName("VBSSF", 1.)
+systTree.setWeightName("VBSUp", 1.)
+systTree.setWeightName("VBSDown", 1.)
 
 #++++++++++++++++++++++++++++++++++
 #++      taking MC weights       ++
@@ -806,7 +809,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
-            if True:#i > 1000:
+            if i > 100:
                 #continue
                 break
             print("\nevento n. " + str(i))
@@ -846,6 +849,12 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         PV          = Object(event, "PV")
         HLT         = Object(event, "HLT")
         Flag        = Object(event, 'Flag')
+        genjets     = Collection(event, "GenJet")
+        genparts = Collection(event, "GenPart")
+        chain.GetEntry(i)
+
+        if isMC and ("WpWp" in sample.label or (sample.label.startswith("VBS_SSWW_") and not "_aQGC" in sample.label and not "SSWW_c" in sample.label)):
+            sgenjets = SelectVBSQGenJet(genparts, genjets)
         #met        = Object(event, "PuppiMET")
         if isMC:
             met         = Object(event, "MET_T1Smear")
@@ -854,6 +863,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     
         genparts = None
         toprwg = 1.
+        #vbsrwg = 1.
         #h_eff_mu.Fill('Total', 1)
         #h_eff_ele.Fill('Total', 1)
 
@@ -879,8 +889,18 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 
             if Isttbar:
                 toprwg = TopPtReweighter(genparts)
-   
-        chain.GetEntry(i)
+            if ("WpWp" in sample.label or (sample.label.startswith("VBS_SSWW_") and not "_aQGC" in sample.label and not "SSWW_c" in sample.label)):
+                sgenjets = SelectVBSQGenJet(genparts, genjets)
+                if not None in sgenjets:
+                    genmjj = (sgenjets[0].p4() + sgenjets[1].p4()).M()
+                    modelvbs = "EWK"
+                    if "_QCD_" in sample.label:
+                        modelvbs = "QCD"
+                    vbssf, vbsup, vbsdown = VBSNLO(genmjj, modelvbs)
+                    systTree.setWeightName("VBSSF", copy.deepcopy(vbssf))
+                    systTree.setWeightName("VBSUp", copy.deepcopy(vbsup))
+                    systTree.setWeightName("VBSDown", copy.deepcopy(vbsdown))
+        
 
         pdf_totalUp = 1.
         pdf_totalDown = 1.
