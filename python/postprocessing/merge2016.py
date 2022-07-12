@@ -3,7 +3,7 @@ os.system("reset")
 from samples.samplesUL import *
 from rwgcards.FromCardToDict import *
 
-folder = "vUL030"
+folder = "vUL035"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot/"
 leptons = ["electron", "muon"]
 

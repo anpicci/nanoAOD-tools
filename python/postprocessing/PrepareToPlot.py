@@ -62,7 +62,19 @@ split = 50
 isWithSysts = False
 if "UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     isWithSysts = True
-    scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+    scenarios = [
+        "nominal",
+        "lepenUp", 
+        "lepenDown", 
+        "jesUp",
+        "jesDown",
+        "jerUp",
+        "jerDown",
+        "TESUp", 
+        "TESDown",
+        "FESUp",
+        "FESDown"
+    ]
 else:
     scenarios = ["all"]
 
@@ -72,10 +84,10 @@ def CondoredList(samplename):
     except:
         condlist = []
 
-    if len(condlist) > 0:
-        toRel = False
-        wrongex = False
+    toRel = False
+    wrongex = False
  
+    if len(condlist) > 0:
         for condfile in condlist:
             logpath = "condor_" + opt.folder + "/ltau/output/" + condfile.split("_part")[0] + "_VTVLT_" + condfile.split(".root")[0].split("_")[-1] + ".out"
             if os.stat(path+samplename+"/"+condfile).st_size == 0.:

@@ -90,7 +90,12 @@ h_puid = {}
 infile = ROOT.TFile.Open("PUID_SFs.root")
 for yearr in years:
     h_puid[yearr] = [copy.deepcopy(infile.Get("h2_eff_sf" + str(yearr) + "_T")), copy.deepcopy(infile.Get("h2_eff_sf" + str(yearr) + "_T_Systuncty"))]
+infile.Close()
 
+h_vbs = {}
+infile = ROOT.TFile.Open("VV_NLO_LO_CMS_mjj.root")
+h_vbs["QCD"] = [copy.deepcopy(infile.Get("hWWQCD_KF_CMS")), copy.deepcopy(infile.Get("hWWQCD_KF_CMS")), copy.deepcopy(infile.Get("hWWQCD_KF_CMS"))]
+h_vbs["EWK"] = [copy.deepcopy(infile.Get("hWW_KF_CMS")), copy.deepcopy(infile.Get("hWW_KF_CMSUp")), copy.deepcopy(infile.Get("hWW_KF_CMSDown"))]
 infile.Close()
 
 #with open('/afs/cern.ch/user/t/ttedesch/public/VBSTagger_XGB.p', 'rb') as file:
@@ -334,6 +339,10 @@ def getweightfromhisto(histogram, eta, pt):
     biny = max(1, min(histogram.GetNbinsY(), histogram.GetYaxis().FindBin(abs(eta))))
     return histogram.GetBinContent(binx,biny)
 
+def getweightvbs(histogram, mjj):
+    binx = max(1, min(histogram.GetNbinsX(), histogram.GetXaxis().FindBin(mjj)))
+    return histogram.GetBinContent(binx)
+
 def efficiency(flv, eta, pt, yearr):
     year = str(yearr)#.replace("UL", "").replace("APV", "")
     if(flv == 5):
@@ -394,55 +403,58 @@ def PUJetIDSF(jet, year):
     else:
         sf, errsf = getweightfromhisto(h_puid[year][0], jet.eta, jet.pt), getweightfromhisto(h_puid[year][1], jet.eta, jet.pt)
         return (sf, sf + errsf, sf - errsf)
-    
 
+def VBSNLO(mjj, model):
+    if not(model == "QCD" or model == "EWK"):
+        raise ValueError("Model can be either QCD or EWK!")
+   
+    nominal, up, down = getweightvbs(h_vbs[model][0], mjj), getweightvbs(h_vbs[model][1], mjj), getweightvbs(h_vbs[model][2], mjj)
+
+    return (nominal, up, down)
+    
 def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
     return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
 
 def SelectVBSQGenJet(genparts, genjets):
     fs_genparts = list(filter(lambda x : x.genPartIdxMother==0 and abs(x.pdgId)>0 and abs(x.pdgId)<10, genparts))
+    #print("fs_genparts:", fs_genparts)
+    finalgenjets = ["we", "we"]
+    
+    
     if len(fs_genparts) < 1:
         return [None, None]
-
+    
     genpart1 = fs_genparts[0]
     genpart2 = fs_genparts[1]
-    if genpart1.pt == genpart2.pt and genpart1.eta == genpart2.eta:
-        return[None, None]
-
+    #if genpart1.pt == genpart2.pt and genpart1.eta == genpart2.eta:
+        #return[None, None]
+    
     qflav1 = genpart1.pdgId
     qflav2 = genpart2.pdgId
-    print(genpart1, qflav1, genpart2, qflav2)
-    light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10 and (x.partonFlavour==qflav1 or x.partonFlavour==qflav2), genjets))
-    if len(light_genjets) < 2:
-        #light_genjets = list(filter(lambda x : abs(x.partonFlavour)>0 and abs(x.partonFlavour)<10, genjets))
-        return[None, None]
-
-    print(light_genjets)
-    #if len(light_genjets) > 2:
-    discrim1 = 1000000.
-    discrim2 = 1000000.
-    idx_genjet1 = -1
-    idx_genjet2 = -1
-    for k, lgenjet in enumerate(light_genjets):
-        tmpdiscr1 = abs(lgenjet.eta - genpart1.eta) + abs(lgenjet.pt - genpart1.pt)
-        tmpdiscr2 = abs(lgenjet.eta - genpart2.eta) + abs(lgenjet.pt - genpart2.pt)
-        if tmpdiscr1 < discrim1:
-            discrim1 = copy.deepcopy(tmpdiscr1)
-            idx_genjet1 = copy.deepcopy(k)
-        if tmpdiscr2 < discrim2:
-            discrim2 = copy.deepcopy(tmpdiscr2)
-            idx_genjet2 = copy.deepcopy(k)
+    #print("fs_genparts:", genpart1, qflav1, genpart1.pt, genpart1.eta, genpart2, qflav2, genpart2.pt, genpart2.eta)
     
-    discrim_thr = 10.
-    if(idx_genjet1 == -1 or idx_genjet2 == -1) or (idx_genjet1 == idx_genjet2) or (discrim1 > discrim_thr or discrim2 > discrim_thr):
-        return [None, None]
-
-    print("idx_genjet1:", idx_genjet1, "idx_genjet2:", idx_genjet2)
-    if light_genjets[idx_genjet1].pt > light_genjets[idx_genjet2].pt:
-        finalgenjets = [light_genjets[idx_genjet1], light_genjets[idx_genjet2]]
-    else:
-        finalgenjets = [light_genjets[idx_genjet2], light_genjets[idx_genjet1]]
-              
+    light_genjets = list(filter(lambda x : abs(x.partonFlavour)<10 and (x.partonFlavour==qflav1 or x.partonFlavour==qflav2), genjets))
+    if len(light_genjets) < 2:
+        light_genjets = list(filter(lambda x : abs(x.partonFlavour)<10, genjets))    
+    
+    #print(str(len(light_genjets)), "light_genjets:")
+    #for lg in light_genjets:
+        #print("\t" + str(lg) + " " + str(lg.partonFlavour) + " " + str(lg.pt) + " " + str(deltaR(lg, genpart1)) + " " + str(deltaR(lg, genpart2)))   
+  
+    for idg, genpart in enumerate(fs_genparts):
+        discrim = 1000000.
+        idx_genjet = -1
+        
+        for k, lgenjet in enumerate(light_genjets):
+            tmpdiscr = abs(deltaR(lgenjet, genpart)) + abs(lgenjet.pt - genpart.pt)/genpart.pt
+            if tmpdiscr < discrim:
+                discrim = copy.deepcopy(tmpdiscr)
+                idx_genjet = copy.deepcopy(k)
+        finalgenjets[idg] = light_genjets[idx_genjet]
+        light_genjets.remove(light_genjets[idx_genjet])
+    
+    if finalgenjets[0] == finalgenjets[1]:
+        raise ValueError("two selected VBS genjets cannot be the same!")
     return finalgenjets
 
 def SelectVBSJets(jets, useMassCrit = False, applyDeltaEtaCut = True, lep1 = None, lep2 = None):
@@ -1474,6 +1486,9 @@ class systWeights(object):
             self.weightedNames[34] = "puIDSF"
             self.weightedNames[35] = "puIDUp"
             self.weightedNames[36] = "puIDDown"
+            self.weightedNames[37] = "VBSSF"
+            self.weightedNames[38] = "VBSUp"
+            self.weightedNames[39] = "VBSDown"
                         
             '''
             self.weightedNames[10] = "btagSF"
@@ -1506,10 +1521,10 @@ class systWeights(object):
             #self.weightedNames[10] = "isoDown"
             #self.weightedNames[11] = "trigUp"
             #self.weightedNames[12] = "trigDown"
-            self.setMax(36)
-            self.setMaxNonPDF(35)
+            self.setMax(40)
+            self.setMaxNonPDF(39)
             self.weightedNames[self.maxSysts] = ""
-
+            print(self.weightedNames)
         if addQ2: 
             self.weightedNames[self.maxSysts] = "QCDScaleUp"
             self.weightedNames[self.maxSysts+1] = "QCDScaleDown"

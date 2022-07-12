@@ -113,7 +113,7 @@ def AreAllCondored(crabname, condorname):
     #condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
     condoredlist = CondoredList(condorname)
     #print(torel, wrongex, StillCondoring)
-    print(condoredlist)
+    #print(condoredlist)
     #if not StillCondoring and (torel or wrongex):
         #toRel = True
     #print(toRel)

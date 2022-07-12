@@ -128,6 +128,8 @@ else:
 
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
+epdgstr = ""
+mpdgstr = ""
 if opt.channel=="ltau":
     epdgstr = "lepton"
     mpdgstr = "lepton"
@@ -300,6 +302,8 @@ systematicslist = [
     ["lepDown", True, "exp"],
     ["puUp", True, "exp"],
     ["puDown", True, "exp"],
+    ["puIDUp", True, "exp"],
+    ["puIDDown", True, "exp"],
     ["btagUp", True, "exp"],
     ["btagDown", True, "exp"],
     ["mistagUp", True, "exp"],
@@ -1115,11 +1119,12 @@ for year in years:
             lep2 = ["muon", "#mu"]
             lep12 = ["electronmuon", "e #mu"]
               
-        
+        wzero = ""
         if opt.channel == 'ltau':
             wzero = 'w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF'
         elif opt.channel == 'emu':
             wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF*puIDSF*QCDScaleSF'
+        print("wxero", wzero)
 
         cutbase = cut_dict[lep]
 
@@ -1147,14 +1152,26 @@ for year in years:
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
+        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
+            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        elif opt.sr:
+            bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        else:
+            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            nbin_m1 = len(bin_m1) - 1 
+        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
+        variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
         
+        '''
         bin_m1T = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
         bin_mo1 = array("d", [0., 50., 100., 150., 200., 300.])#, 1000.])
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
-        
+        '''
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
