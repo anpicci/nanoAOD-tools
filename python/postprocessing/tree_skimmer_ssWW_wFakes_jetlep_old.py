@@ -806,7 +806,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
-            if i > 1000:
+            if True:#i > 1000:
                 #continue
                 break
             print("\nevento n. " + str(i))
