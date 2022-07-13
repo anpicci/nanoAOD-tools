@@ -617,7 +617,7 @@ def SelectGenMatchedLep(leptons, genlepton, genparticles):
     if len(gmleps) > 0:
         gmlep = gmleps[0]
 
-    print(gmlep)
+    #print(gmlep)
     return gmlep
 
 def get_ptrel(lepton, jet, taucorr=1.):
@@ -1524,7 +1524,7 @@ class systWeights(object):
             self.setMax(40)
             self.setMaxNonPDF(39)
             self.weightedNames[self.maxSysts] = ""
-            print(self.weightedNames)
+            #print(self.weightedNames)
         if addQ2: 
             self.weightedNames[self.maxSysts] = "QCDScaleUp"
             self.weightedNames[self.maxSysts+1] = "QCDScaleDown"

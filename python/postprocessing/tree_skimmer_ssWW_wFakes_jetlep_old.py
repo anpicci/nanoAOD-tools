@@ -849,10 +849,12 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         PV          = Object(event, "PV")
         HLT         = Object(event, "HLT")
         Flag        = Object(event, 'Flag')
-        genjets     = Collection(event, "GenJet")
-        genparts = Collection(event, "GenPart")
         chain.GetEntry(i)
-
+        
+        genjets = None
+        if isMC:
+            genjets     = Collection(event, "GenJet")
+            
         if isMC and ("WpWp" in sample.label or (sample.label.startswith("VBS_SSWW_") and not "_aQGC" in sample.label and not "SSWW_c" in sample.label)):
             sgenjets = SelectVBSQGenJet(genparts, genjets)
         #met        = Object(event, "PuppiMET")
