@@ -302,7 +302,7 @@ def OpenAndRun(st, file_path):
         print(file_path, "does not exist!")
         return False
     print("\n\nProcessing " + file_path)
-    tmpdir = path + "tmpML_" + opt.folder
+    tmpdir = "./tmpML_" + opt.folder
     #file_path_cp = stpath+st+"_cp.root"
     if os.path.exists(tmpdir):
         pass

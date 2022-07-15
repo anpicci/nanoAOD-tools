@@ -452,7 +452,7 @@ def lumi_writer(dataset, lumi):
                     tree.GetEntry(event)
                     perc = (event+1)/(tree.GetEntries())*100000
                     if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
-                        sys.stdout.write("\rProcessing event {0}     complete {1:.3f} percent".format(event, 100*event/tree.GetEntries()))
+                        sys.stdout.write("\rProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
 
                     w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
                     tree_new.Fill()
@@ -483,8 +483,13 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
   
     ROOT.TH1.SetDefaultSumw2()
     cutbase = variable._taglio
-    histoname = "h_" + variable._name + "_" + cut_tag
-
+    histag = variable._name
+    if variable._name.startswith("min"):
+        histag = "min_deltaPhi_MET"
+    if variable._name.startswith("max"):
+        histag = "max_deltaPhi_MET"
+ 
+    histoname = "h_" + histag + "_" + cut_tag
     treename += systtree
 
     print("\n" + samplelab)
@@ -645,6 +650,11 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     os.system('set LD_PRELOAD=libtcmalloc.so')
+    histag = variable._name
+    if variabile_._name.startswith("min"):
+        histag = "min_deltaPhi_MET"
+    if variabile_._name.startswith("max"):
+        histag = "max_deltaPhi_MET"
 
     if reg_ == 'ltau':
         if str(lep_).strip('[]') == "muon":
@@ -676,13 +686,13 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     ROOT.gStyle.SetOptStat(0)
     ROOT.TH1.SetDefaultSumw2()
     if(cut_tag_ == ""):
-        histoname = "h_" + variabile_._name
-        stackname = "stack_" + reg_ + "_" + variabile_._name
-        canvasname = "stack_" + reg_ + "_" + variabile_._name + "_" + lep_ + "_" + year
+        histoname = "h_" + histag #variabile_._name
+        stackname = "stack_" + reg_ + "_" + histag
+        canvasname = "stack_" + reg_ + "_" + histag + "_" + lep_ + "_" + year
     else:
-        histoname = "h_" + variabile_._name + "_" + cut_tag_
-        stackname = "stack_" + reg_ + "_" + variabile_._name + "_" + cut_tag_
-        canvasname = "stack_" + reg_ + "_" + variabile_._name+ "_" + cut_tag_ + "_" + lep_ + "_" + year
+        histoname = "h_" + histag + "_" + cut_tag_ #variabile_._name +
+        stackname = "stack_" + reg_ + "_" + histag + "_" + cut_tag_
+        canvasname = "stack_" + reg_ + "_" + histag+ "_" + cut_tag_ + "_" + lep_ + "_" + year
     if opt.wfake != 'nofake':
         stackname += "_wFakes"
         canvasname += "_wFakes"
@@ -693,7 +703,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 
     if opt.sr:
         blind = True
-    stack = ROOT.THStack(stackname, variabile_._name)
+    stack = ROOT.THStack(stackname, histag)
     leg_stack = ROOT.TLegend(0.32,0.58,0.93,0.87)
     signal = False
 
@@ -1019,7 +1029,7 @@ else:# opt.plot:
 #print(class_list)
 
 if(opt.dat != 'all'):
-     print("opt.dat", opt.dat)
+     #print("opt.dat", opt.dat)
      #print(opt.dat)
      if 'DataMET' in str(opt.dat):
           raise Exception("Not interesting dataset")
@@ -1121,7 +1131,7 @@ for year in years:
               
         wzero = ""
         if opt.channel == 'ltau':
-            wzero = 'w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF'
+            wzero = 'w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF'
         elif opt.channel == 'emu':
             wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF*puIDSF*QCDScaleSF'
         print("wxero", wzero)
@@ -1388,6 +1398,8 @@ for year in years:
         variables.append(variabile('deltaPhi_METj2', '#Delta #phi (p_{T}^{miss} j_{2})',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METlep', '#Delta #phi (p_{T}^{miss} lep)',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METtau', '#Delta #phi (p_{T}^{miss} #tau)',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
+        variables.append(variabile('min(min(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),min(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'minimum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 14, 0., 3.5))
+        variables.append(variabile('max(max(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),max(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'maximum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 14, 0., 3.5))
         
         bin_deltaeta_ll = array("d", [-5., -3., -2., -1.5, -1., -0.5, 0., 0.5, 1., 1.5, 2., 3., 5.])
         nbin_deltaeta_ll = len(bin_deltaeta_ll) - 1
@@ -1467,17 +1479,28 @@ for year in years:
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
                     fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    
+                    f1name = ""
                     if 'Fake' in str(sample.label):
                         if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
-                            f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
+                            #f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
+                            f1name = filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root"
                         elif opt.removePrompt:
-                            f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+                            #f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+                            f1name = filerepo + sample.label + "/"  + sample.label + ".root"
                         else:
-                            f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
+                            #f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
+                            f1name = filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root"
    
                     else:
-                        f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
-        
+                        #f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
+                        f1name = filerepo + sample.label + "/"  + sample.label + ".root"
+                    if os.path.exists(f1name):
+                        f1 = ROOT.TFile.Open(f1name)
+                    else:
+                        print(samplelab + " not ready to be plotted, skipping")
+                        continue
+                    
                     for ids, syst in enumerate(systematics):
                         if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
                             continue

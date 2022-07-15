@@ -9,6 +9,7 @@ parser.add_option('-f', dest='folder', type=str, default = 'v20', help='Please e
 parser.add_option('-c', dest='check', default = False, action = 'store_true', help='Default runs makeplot')
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
+parser.add_option('-v', dest='veto', type=str, default = 'none', help='Default is none')
 parser.add_option('--max', dest='maxj', type=int, default = 0, help='Please enter maximum!')
 parser.add_option('--fake', dest='isfake', default = False, action = 'store_true', help='Default runs for analysis, true for fake ratio')
 parser.add_option('--or', dest='override', default = False, action = 'store_true', help='Default does not override AreAllCondored')
@@ -19,6 +20,7 @@ parser.add_option('--nodata', dest='nodata', default = False, action='store_true
 (opt, args) = parser.parse_args()
 
 #print("UL" in opt.year, opt.year)
+condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 
 if "UL" in opt.year:
     print("Processing UL samples")
@@ -29,6 +31,33 @@ else:
 
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])
+
+notAll = False
+if opt.dat != "all":
+    mergesamp = opt.dat.split(",")
+    notAll = True
+    print("Samples to do:", mergesamp)
+
+toVeto = False
+vetosamp = []
+if opt.veto != "none":
+    vetosamp = opt.veto.split(",")
+
+for line in condorstatus:
+    idjob = line.split(" 1 ")[-1]
+    sample = ""
+    try:
+        sample = os.popen("condor_ssh_to_job " + idjob + " \"head snfile.txt\" ").readlines()[0]
+    except:
+        continue
+
+    if sample != "" and sample.endswith(opt.year):
+        if not sample in vetosamp:
+            vetosamp.append(sample)
+
+if len(vetosamp) > 0:
+    toVeto = True
+    print("Samples to veto:", vetosamp)
 
 crabpath = ''
 if opt.ct == 'HT':
@@ -88,19 +117,17 @@ def CondoredList(samplename):
         toRel = False
         wrongex = False
         for condfile in condlist:
-            if os.stat(path+samplename+"/"+condfile).st_size == 0.:
-                print("Condoring still not ended so far")
+            if os.stat(path+samplename+"/"+condfile).st_size < 10.*1024.:#not samplename.startswith('DY')
+                print("Condoring still not ended so far")                
                 condlist.remove(condfile)
-            elif os.stat(path+samplename+"/"+condfile).st_size < 1024.:#not samplename.startswith('DY')
-                toRel =True
-                condlist.remove(condfile)
-                if not opt.check:
-                    os.system("rm -r "+ path + samplename + "/" + condfile)
+                #if not opt.check:
+                    #os.system("rm -r "+ path + samplename + "/" + condfile)
             else:
                 try:
                     tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
                 except(RuntimeWarning):
                     condlist.remove(condfile)
+                    toRel = True
                     wrongex = True
                     if not opt.check:
                         print("Removing damaged files...")
@@ -133,7 +160,6 @@ def CondoredList(samplename):
             if not opt.check:
                 return CondoredList(samplename)
        
-
     return condlist
 
 def DoesSampleExist(samplename):
@@ -180,7 +206,7 @@ for k, v in merge_dict.items():
     print(k, v)
 '''
 
-datoprocess = opt.dat.split(",")
+#datoprocess = opt.dat.split(",")
 
 for k, v in merge_dict.items():
     
@@ -206,7 +232,7 @@ for k, v in merge_dict.items():
     if k.startswith('Fake'):
         if opt.dat != "all":
             IsIncluded = False
-            for dat in datoprocess:
+            for dat in mergesamp:
                 if dat.startswith("Fake"):
                     IsIncluded = True
                     break
@@ -238,20 +264,44 @@ for k, v in merge_dict.items():
         else:
             print(k, "not mergable")
         continue
-    
+
     if hasattr(v, 'components') and v.components is not None:
-        for c in v.components:
-            if opt.dat != 'all':
-                IsIncluded = False
-                for dat in datoprocess:
-                    if str(c.label).startswith(dat) or k.startswith(dat):
-                        IsIncluded = True
+        if toVeto:
+            toContinue = False
+            for vs in vetosamp:
+                if v.label.startswith(vs):
+                    toContinue = True
+                    break
+                else:
+                    for c in v.components:
+                        if c.label.startswith(vs):
+                            toContinue = True
+                            break
+                    if toContinue:
                         break
 
-                if not IsIncluded:
-                    continue
+            if toContinue:
+                continue        
 
-            elif opt.nodata and 'Data' in c.label:
+        if notAll:
+            toPass = False
+            for ms in mergesamp:
+                if v.label.startswith(ms):
+                    toPass = True
+                    break
+                else:
+                    for c in v.components:
+                        if c.label.startswith(ms):
+                            toPass = True
+                            break
+                    if toPass:
+                        break
+
+            if not toPass:
+                continue
+
+        for c in v.components:
+            if opt.nodata and 'Data' in c.label:
                 continue
             
             if not DoesSampleExist(c.name):
@@ -322,6 +372,7 @@ for k, v in merge_dict.items():
         
         
     else:
+        '''
         if opt.dat != 'all':
             IsIncluded = False
             for dat in datoprocess:
@@ -330,6 +381,25 @@ for k, v in merge_dict.items():
                     break
             
             if not IsIncluded:
+                continue
+        '''
+        
+        if toVeto:
+            toContinue = False
+            for vs in vetosamp:
+                if k.startswith(vs):
+                    toContinue = True
+                    break
+            if toContinue:
+                continue
+
+        if notAll:
+            toPass = False
+            for ms in mergesamp:
+                if k.startswith(ms):
+                    toPass = True
+                    break
+            if not toPass:
                 continue
 
         if not DoesSampleExist(v.name):

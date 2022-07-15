@@ -15,6 +15,7 @@ parser.add_option('-f', dest='fold', type=str, default = 'v30', help='Please ent
 parser.add_option('--max', dest='maxj', type=int, default = 0, help='Please enter a maximum for number of condor jobs')
 parser.add_option('-c', dest='check', default = False, action='store_true', help='Default executes condorrun')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
+parser.add_option('-v', dest='veto', type=str, default = 'none', help='Default is none')
 parser.add_option('--rw', dest='rw', default = False, action='store_true', help='Rewrite the files if not are all condored for a specific sample')
 parser.add_option('--try', dest='tryy', default = False, action='store_true', help='Rewrite the files if not are all condored for a specific sample')
 parser.add_option('--nodata', dest='nodata', default = False, action='store_true', help='Not processing Data files')
@@ -26,6 +27,8 @@ parser.add_option('--deltaeta', dest='deta', default = False, action='store_true
 parser.add_option('--reco', dest='reco', type=str, default = "not", help='Launching specified reco analysis, default does not')
 
 (opt, args) = parser.parse_args()
+
+condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 
 isWithSysts = False
 if "UL" in opt.fold and int(opt.fold.split("UL")[-1]) > 9:
@@ -182,8 +185,35 @@ vsEle_dict = {"VVVL": '1',
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])
 
-print(username)
-print(opt.dat)
+#print(username)
+#print(opt.dat)
+
+notAll = False
+if opt.dat != "all":
+    mergesamp = opt.dat.split(",")
+    notAll = True
+    print("Samples to do:", mergesamp)
+
+toVeto = False
+vetosamp = []
+if opt.veto != "none":
+    vetosamp = opt.veto.split(",")
+    
+for line in condorstatus:
+    idjob = line.split(" 1 ")[-1]
+    sample = ""
+    try:
+        sample = os.popen("condor_ssh_to_job " + idjob + " \"head snfile.txt\" ").readlines()[0]
+    except:
+        continue
+    
+    if sample != "" and sample.endswith(opt.year):
+        if not sample in vetosamp:
+            vetosamp.append(sample)
+
+if len(vetosamp) > 0:
+    toVeto = True
+    print("Samples to veto:", vetosamp)
 
 if opt.fold == '':
     folder = "Eff_Jet" + opt.jetwp + "_Mu" + opt.muwp + "_Ele" + opt.elewp
@@ -254,14 +284,45 @@ for prname, proc in condor_dict.items():
     toLaunch = True
     
     if hasattr(proc, 'components') and proc.components is not None:
+        if toVeto:
+            toContinue = False
+            for vs in vetosamp:
+                if proc.label.startswith(vs):
+                    toContinue = True
+                    break
+                else:
+                    for c in proc.components:
+                        if c.label.startswith(vs):
+                            toContinue = True
+                            break
+                    if toContinue:
+                        break
+
+            if toContinue:
+                continue
+
+        if notAll:
+            toPass = False
+            for ms in mergesamp:
+                if proc.label.startswith(ms):
+                    toPass = True
+                    break
+                else:
+                    for c in proc.components:
+                        if c.label.startswith(ms):
+                            toPass = True
+                            break
+                        if toPass:
+                            break
+
+            if not toPass:
+                continue
+
         for sample in proc.components:
             if "Fake" in sample.label:
                 continue
             elif opt.nodata and 'Data' in sample.label:
                 continue
-            if opt.dat != 'all':
-                if not (str(sample.label).startswith(opt.dat) or prname.startswith(opt.dat)):
-                    continue
 
             if not DoesSampleExist(sample.name):
                 continue
@@ -287,9 +348,27 @@ for prname, proc in condor_dict.items():
                 print(sample.label, " completely condored")
         
     else:
-        if opt.dat != 'all':
-            if not prname.startswith(opt.dat):
+        if toVeto:
+            toContinue = False
+            for vs in vetosamp:
+                if prname.startswith(vs):
+                    toContinue = True
+                    break
+            if toContinue:
                 continue
+
+        if notAll:
+            toPass = False
+            for ms in mergesamp:
+                if prname.startswith(ms):
+                    toPass = True
+                    break
+            if not toPass:
+                continue
+
+        #if opt.dat != 'all':
+            #if not prname.startswith(opt.dat):
+                #continue
 
         if not DoesSampleExist(proc.name):
             continue

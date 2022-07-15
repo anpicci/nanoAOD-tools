@@ -1,11 +1,14 @@
 import os
 from ML.MLmodels import *
+import optparse
+from samples.samplesUL import *
+
 os.system("reset")
 
-usage = 'python submit_condor.py -d dataset_name -f destination_folder --wp working_point'
+usage = 'python3 BranchCondor.py -d dataset_name -f destination_folder -y year'
 parser = optparse.OptionParser(usage)
-parser.add_option('-d', '--dat', dest='dataset', type=str, default = '', help='Please enter a dataset name')
-parser.add_option('-v', '--veto', dest='veto', type=str, default = '', help='Please enter a dataset name to veto')
+parser.add_option('-d', '--dat', dest='dataset', type=str, default = 'all', help='Please enter a dataset name')
+parser.add_option('-v', '--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
 parser.add_option('-y', '--year', dest='years', type=str, default = '', help='Please enter year(s)')
 (opt, args) = parser.parse_args()
@@ -61,8 +64,11 @@ branches = [
     bdt_sm_branch_v2,
     bdt_cW_branch_v2,
     bdt_cHW_branch_v2,
+    bdt_aQGC_branch_v2,
     dnn_sm_branch_v2,
     dnn_cW_branch_v2,
+    dnn_cHW_branch_v2,
+    dnn_aQGC_branch_v2,
     #bdt_pol_branch,
     #dnn_cHW_branch_bal,
     #dnn_pol_branch,
@@ -72,8 +78,11 @@ paths = [
     bdt_sm_path_v2,
     bdt_cW_path_v2,
     bdt_cHW_path_v2,
+    bdt_aQGC_path_v2,
     dnn_sm_path_v2,
     dnn_cW_path_v2,
+    dnn_cHW_path_v2,
+    dnn_aQGC_path_v2,
     #bdt_pol_path,
     #dnn_cHW_path_bal,
     #dnn_pol_path,
@@ -83,8 +92,11 @@ scalers = [
     bdt_sm_scaler_v2,
     bdt_cW_scaler_v2,
     bdt_cHW_scaler_v2,
+    bdt_aQGC_scaler_v2,
     dnn_sm_scaler_v2,
     dnn_cW_scaler_v2,
+    dnn_cHW_scaler_v2,
+    dnn_aQGC_scaler_v2,
     #bdt_pol_scaler,
     #dnn_cHW_scaler,
     #dnn_pol_scaler,
@@ -93,9 +105,9 @@ scalers = [
 folder = opt.folder
 exe = "add_1finalMVA_condor.py"
 
-branchstr = "\""
-pathstr = "\""
-scalerstr = "\""
+branchstr = "\'"
+pathstr = "\'"
+scalerstr = "\'"
 
 for idb, branch in enumerate(branches):
     if idb > 0:
@@ -106,36 +118,46 @@ for idb, branch in enumerate(branches):
     pathstr += paths[idb]
     scalerstr += scalers[idb]
 
-branchstr += "\""
-pathstr += "\""
-scalerstr += "\""
+branchstr += "\'"
+pathstr += "\'"
+scalerstr += "\'"
 
-args = " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr
+arg0 = "\" -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr
 
-
-
- +  + " -d WZ_" + year + " --ov")
+print("toplot", toplot)
+print("toveto", toveto)
 
 for year in years:
-    args += " -y " + year 
+    arg1 = " -y " + year 
     for dat in plot_list:
-        
+        args = arg0 + arg1
         if dat.year != year:
             continue
 
-        if dal.label.startswith("Fake"):
+        if dat.label.startswith("Fake"):
             continue
 
-        if len(toplot) > 0:
-            for dtp in toplot:
-                if dat.label != dtp:
-                    continue
-        
-        if len(toveto) > 0:
-            for dtp in toveto:
-                if dat.label == dtp:
-                    continue
-        
-        args += " -d " + sample.label
+        toPlot = False
+        toVeto = False
 
-        submitter(dar, args, folder)
+        if opt.dataset != "all":
+            for dtp in toplot:
+                if dat.label.startswith(dtp):
+                    toPlot = True
+                    break
+            
+            if not toPlot:
+                continue
+        print(toPlot)
+        
+        if opt.veto != "none":
+            for dtp in toveto:
+                if dat.label.startswith(dtp):
+                    toVeto = True
+                    break
+            if toVeto:
+                continue
+        
+        args += " -d " + dat.label
+        args += " \""
+        submitter(dat, args, folder)

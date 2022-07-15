@@ -72,6 +72,11 @@ else:
     Debug = True
 
 sample = sample_dict[sys.argv[1]]
+
+snfile = open("snfile.txt", "w") 
+snfile.write(sample.label)
+snfile.close()
+
 part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))
 print(file_list)
@@ -809,7 +814,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
-            if i > 100:
+            if i > 9000:
+            #if i != 8631:
                 #continue
                 break
             print("\nevento n. " + str(i))
@@ -851,8 +857,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         Flag        = Object(event, 'Flag')
         chain.GetEntry(i)
         
+        genparts = None
         genjets = None
         if isMC:
+            genparts = Collection(event, "GenPart")
             genjets     = Collection(event, "GenJet")
             
         if isMC and ("WpWp" in sample.label or (sample.label.startswith("VBS_SSWW_") and not "_aQGC" in sample.label and not "SSWW_c" in sample.label)):
@@ -863,14 +871,13 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         else:
             met         = Object(event, "MET_T1")
     
-        genparts = None
+        
         toprwg = 1.
         #vbsrwg = 1.
         #h_eff_mu.Fill('Total', 1)
         #h_eff_ele.Fill('Total', 1)
 
         if isMC:
-            genparts = Collection(event, "GenPart")
             gen = Object(event, "Generator")
             #if not ("WZ" in sample.label or "WWTo2L2Nu_DoubleScattering"):
                 #LHE = Collection(event, "LHEPart")
@@ -1745,6 +1752,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         print("Number of events in output tree " + str(scenario) + ": " + str(trees[idxs].GetEntries()))
 
 for ids, scenario in enumerate(scenarios):
+    if Debug and ids > 0:
+        break
     print("starting reco events for scenario", scenario)
     reco(ids, scenario, isMC, addPDF, MCReco)
 

@@ -35,7 +35,5 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/VBS_SSWW_aQGC_UL2017/220520_074419/0000/tree_hadd_35.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/VBS_SSWW_aQGC_UL2017/220520_074419/0000/tree_hadd_36.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/VBS_SSWW_aQGC_UL2017/220520_074419/0000/tree_hadd_37.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/VBS_SSWW_aQGC_UL2017/220520_074419/0000/tree_hadd_38.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/VBS_SSWW_aQGC_UL2017/220520_074419/0000/tree_hadd_39.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/VBS_SSWW_aQGC_UL2017/220520_074419/0000/tree_hadd_40.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSUL/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/VBS_SSWW_aQGC_UL2017/220520_074419/0000/tree_hadd_41.root

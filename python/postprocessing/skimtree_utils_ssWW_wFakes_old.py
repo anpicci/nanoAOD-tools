@@ -448,10 +448,15 @@ def SelectVBSQGenJet(genparts, genjets):
         for k, lgenjet in enumerate(light_genjets):
             tmpdiscr = abs(deltaR(lgenjet, genpart)) + abs(lgenjet.pt - genpart.pt)/genpart.pt
             if tmpdiscr < discrim:
+                #print(k, genpart, tmpdiscr, discrim)
                 discrim = copy.deepcopy(tmpdiscr)
                 idx_genjet = copy.deepcopy(k)
-        finalgenjets[idg] = light_genjets[idx_genjet]
-        light_genjets.remove(light_genjets[idx_genjet])
+        #print("idx_genjet:", idx_genjet)
+        if idx_genjet > -1:
+            finalgenjets[idg] = light_genjets[idx_genjet]
+            light_genjets.remove(light_genjets[idx_genjet])
+        else:
+            finalgenjets[idg] = fs_genparts[idg]
     
     if finalgenjets[0] == finalgenjets[1]:
         raise ValueError("two selected VBS genjets cannot be the same!")
