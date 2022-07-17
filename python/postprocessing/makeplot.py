@@ -1162,6 +1162,7 @@ for year in years:
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
+        '''
         if opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
             nbin_m1 = len(bin_m1) - 1 
@@ -1173,15 +1174,15 @@ for year in years:
             nbin_m1 = len(bin_m1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-        
         '''
+
         bin_m1T = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
         bin_mo1 = array("d", [0., 50., 100., 150., 200., 300.])#, 1000.])
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
-        '''
+        
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
@@ -1350,9 +1351,9 @@ for year in years:
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', True, nbin_metpt, bin_metpt))
 
         if opt.sr:
-            bin_invm = array("d", [600., 800., 1000., 1200., 1400., 1800., 2000.])
+            bin_invm = array("d", [600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2400.])
         else:
-            bin_invm = array("d", [0., 200., 400., 800., 1200., 1400., 1800., 2000., 2500.])
+            bin_invm = array("d", [0., 400., 600., 800., 1000., 1200., 1600., 2000., 2400., 2800.])
        
         nbin_invm = len(bin_invm) - 1 
 
@@ -1361,7 +1362,7 @@ for year in years:
         elif opt.channel == 'emu':
             variables.append(variabile('m_jjleps', 'invariant mass j_{1} j_{2} ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', False, nbin_invm, bin_invm))
 
-        bin_invmtl = array("d", [0., 50., 100., 150., 200., 250., 300.])
+        bin_invmtl = array("d", [0., 50., 100., 150., 200., 250., 300., 350.])
         nbin_invmtl = len(bin_invmtl) - 1 
           
         variables.append(variabile('m_' + lep12[0], 'invariant mass ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', True, nbin_invmtl, bin_invmtl))

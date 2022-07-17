@@ -110,6 +110,8 @@ if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
     if opt.scenario == "all":
         scenarios = [
             "nominal",
+            "lepenUp",
+            "lepenDown",
             "jesUp",
             "jesDown",
             "jerUp",
@@ -119,8 +121,7 @@ if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
             "FESUp",
             "FESDown",
         ]
-        #"lepenUp",
-        #"lepenDown",
+      
     else:
         scenarios = opt.scenario.split(",")
 else:
