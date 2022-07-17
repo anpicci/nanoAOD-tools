@@ -29,13 +29,10 @@ errcore = "condorbranch_" + opt.folder + "/error/"
 logcore = "condorbranch_" + opt.folder + "/log/"
 
 if not os.path.exists(outcore):
-    print("hello")
     os.system("mkdir -p " + outcore)
 if not os.path.exists(errcore):
-    print("hello")
     os.system("mkdir -p " + errcore)
 if not os.path.exists(logcore):
-    print("hello")
     os.system("mkdir -p " + logcore)
 
 def submitter(sample, argsin, folder):
@@ -189,7 +186,6 @@ for year in years:
             
             if not toPlot:
                 continue
-        print(toPlot)
         
         if opt.veto != "none":
             for dtp in toveto:
