@@ -650,7 +650,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     os.system('set LD_PRELOAD=libtcmalloc.so')
-    histag = variable._name
+    histag = variabile_._name
     if variabile_._name.startswith("min"):
         histag = "min_deltaPhi_MET"
     if variabile_._name.startswith("max"):
