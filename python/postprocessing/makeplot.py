@@ -730,7 +730,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 
     i = 0
 
-    print("infile:", infile)
+    #print("infile:", infile)
 
     for s in samples_:
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label) and not str(s.year) in s.label:
