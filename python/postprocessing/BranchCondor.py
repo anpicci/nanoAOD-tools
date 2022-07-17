@@ -24,7 +24,27 @@ elif username == 'ttedesch':
 
 condorsub = "condorbranch"
 
+outcore = "condorbranch_" + opt.folder + "/output/"
+errcore = "condorbranch_" + opt.folder + "/error/"
+logcore = "condorbranch_" + opt.folder + "/log/"
+
+if not os.path.exists(outcore):
+    print("hello")
+    os.system("mkdir -p " + outcore)
+if not os.path.exists(errcore):
+    print("hello")
+    os.system("mkdir -p " + errcore)
+if not os.path.exists(logcore):
+    print("hello")
+    os.system("mkdir -p " + logcore)
+
 def submitter(sample, argsin, folder):
+    exesh = exe + "_" + sample.label + ".sh"
+    fsh = open(exesh, "w")
+    fsh.write("#!/bin/bash\n")
+    fsh.write("source /afs/cern.ch/work/a/apiccine/benv/bin/activate\n")
+    fsh.write("python3 " + pymacro + " " + argsin + "\n")
+    fsh.close()
     condorsubb = condorsub + "_" + str(sample.year) + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
@@ -35,23 +55,26 @@ def submitter(sample, argsin, folder):
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
     tagyear = str(sample.year)
-    inputfiles = "transfer_input_files    = $(Proxy_path), ./samples, ./ML, PrepareToPlot.py, makeplot.py"
+    inputfiles = "transfer_input_files    = $(Proxy_path), ./samples, ./ML, PrepareToPlot.py, makeplot.py, " + pymacro+ "\n"
     f.write(inputfiles)
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
-    f.write("executable              = " + exe + "\n")
-    f.write("arguments               = " + argsin + "\n")
+    f.write("executable              = " + exesh + "\n")
+    f.write("arguments               = \'\'") # + argsin + "\n")
     f.write("request_disk            = 50MB\n")
-    f.write("output                  = condor_" + folder + "/output/"+ sample.label + ".out \n")
-    f.write("error                   = condor_" + folder + "/error/"+ sample.label + ".err \n")
-    f.write("log                     = condor_" + folder + "/log/"+ sample.label + ".log \n")
+    output = outcore + sample.label + ".out"
+    log = logcore + sample.label + ".log"
+    error = errcore + sample.label + ".err"
+    f.write("output                  = " + output + "\n")
+    f.write("error                   = " + error + "\n")
+    f.write("log                     = " + log + "\n")
     f.write("queue\n")
     f.close()
-    if os.path.exists("condor_" + folder + "/output/"+ sample.label + ".out"):
-        os.system("rm condor_" + folder + "/output/"+ sample.label + ".out")
-    if os.path.exists("condor_" + folder + "/error/"+ sample.label + ".err"):
-        os.system("rm condor_" + folder + "/error/"+ sample.label + ".err")
-    if os.path.exists("condor_" + folder + "/log/"+ sample.label + ".log"):
-        os.system("rm condor_" + folder + "/log/"+ sample.label + ".log")
+    if os.path.exists(output):
+        os.system("rm " + output)
+    if os.path.exists(log):
+        os.system("rm " + log)
+    if os.path.exists(error):
+        os.system("rm " + error)
 
     os.system("condor_submit " + condorsubb)
 
@@ -62,11 +85,16 @@ toveto = opt.veto.split(",")
 
 branches = [
     bdt_sm_branch_v2,
+    bdt_sm_branch_35_v2,
     bdt_cW_branch_v2,
+    bdt_cW_branch_35_v2,
     bdt_cHW_branch_v2,
+    bdt_cHW_branch_35_v2,
     bdt_aQGC_branch_v2,
     dnn_sm_branch_v2,
+    dnn_sm_branch_35_v2,
     dnn_cW_branch_v2,
+    dnn_cW_branch_35_v2,
     dnn_cHW_branch_v2,
     dnn_aQGC_branch_v2,
     #bdt_pol_branch,
@@ -76,11 +104,16 @@ branches = [
 
 paths = [
     bdt_sm_path_v2,
+    bdt_sm_path_35_v2,
     bdt_cW_path_v2,
+    bdt_cW_path_35_v2,
     bdt_cHW_path_v2,
+    bdt_cHW_path_35_v2,
     bdt_aQGC_path_v2,
     dnn_sm_path_v2,
+    dnn_sm_path_35_v2,
     dnn_cW_path_v2,
+    dnn_cW_path_35_v2,
     dnn_cHW_path_v2,
     dnn_aQGC_path_v2,
     #bdt_pol_path,
@@ -90,11 +123,16 @@ paths = [
 
 scalers = [
     bdt_sm_scaler_v2,
+    bdt_sm_scaler_35_v2,
     bdt_cW_scaler_v2,
+    bdt_cW_scaler_35_v2,
     bdt_cHW_scaler_v2,
+    bdt_cHW_scaler_35_v2,
     bdt_aQGC_scaler_v2,
     dnn_sm_scaler_v2,
+    dnn_sm_scaler_35_v2,
     dnn_cW_scaler_v2,
+    dnn_cW_scaler_35_v2,
     dnn_cHW_scaler_v2,
     dnn_aQGC_scaler_v2,
     #bdt_pol_scaler,
@@ -103,8 +141,8 @@ scalers = [
 ]
 
 folder = opt.folder
-exe = "add_1finalMVA_condor.py"
-
+pymacro = "add_1finalMVA_condor.py"
+exe = "branchcondor"
 branchstr = "\'"
 pathstr = "\'"
 scalerstr = "\'"
@@ -122,14 +160,17 @@ branchstr += "\'"
 pathstr += "\'"
 scalerstr += "\'"
 
-arg0 = "\" -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr
+arg0 = " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr
 
 print("toplot", toplot)
 print("toveto", toveto)
 
 for year in years:
     arg1 = " -y " + year 
-    for dat in plot_list:
+    for dat in condor_list:
+        if dat.label.startswith("TT_") or dat.label.startswith("WJets"):
+            continue
+
         args = arg0 + arg1
         if dat.year != year:
             continue
@@ -159,5 +200,5 @@ for year in years:
                 continue
         
         args += " -d " + dat.label
-        args += " \""
         submitter(dat, args, folder)
+

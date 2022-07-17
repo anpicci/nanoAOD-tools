@@ -4263,6 +4263,7 @@ merge_dict = {
 }
 
 merge_list = merge_dict.values()
+condor_list = condor_dict.values()
 
 plot_list = [
     WpWpJJ_EWK_UL2016APV,

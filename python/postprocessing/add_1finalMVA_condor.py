@@ -1,6 +1,6 @@
 #!/bin/env python3
 import os
-os.system("source /afs/cern.ch/work/a/apiccine/benv/bin/activate")
+#os.system("source /afs/cern.ch/work/a/apiccine/benv/bin/activate")
 
 import tensorflow
 import optparse
