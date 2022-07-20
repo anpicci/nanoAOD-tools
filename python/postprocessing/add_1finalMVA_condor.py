@@ -72,6 +72,10 @@ if opt.dat != "all":
     mergesamp = opt.dat.split(",")
     notAll = True
     print("Samples to do:", mergesamp)
+    for sampmm in mergesamp:
+        snfile = open("snfile.txt", "w")
+        snfile.write(sampmm)
+        snfile.close()
 
 toVeto = False
 if opt.veto != "none":
@@ -89,6 +93,7 @@ for ib, branch in enumerate(branches):
         for word in line.split(","):
             features[ib].append(word)
 
+print("features:", features)
 models = []
 scalers = []
 for idm, modelpath in enumerate(modelpaths):
@@ -130,7 +135,6 @@ else:
 print(scenarios)
 
 def CondoredList(samplename):
-
     try:
         condlist = os.listdir(path+samplename)
     except:
@@ -143,7 +147,7 @@ def CondoredList(samplename):
     if len(condlist) > 0:
         toRel = False
         wrongex = False
-        print("condlist", condlist)
+        
         for condfile in condlist:
             logpath = "condor_" + opt.folder + "/ltau/output/" + condfile.split("_part")[0] + "_VTVLT_" + condfile.split(".root")[0].split("_")[-1] + ".out"
             if os.stat(path+samplename+"/"+condfile).st_size == 0.:
@@ -515,7 +519,8 @@ print("year", opt.year)
     #str("FakeEle_"+str(opt.year)): {comp.label:False for comp in merge_dict["FakeEle_"+str(opt.year)].components},
 #}
 
-for k, v in merge_dict.items():
+#for k, v in merge_dict.items():
+for k, v in condor_dict.items():
     if not k.endswith(str(opt.year)):
         continue
 
@@ -570,6 +575,7 @@ for k, v in merge_dict.items():
 
     doesexist = []
     if hascomp:
+        '''
         if opt.dat != 'all':
             IsIncluded = False
             for dat in mergesamp:
@@ -579,7 +585,7 @@ for k, v in merge_dict.items():
                 
             if not IsIncluded:
                     continue
-
+        '''
         print("with components")
         print("Sample: ", k)
 
@@ -619,6 +625,7 @@ for k, v in merge_dict.items():
             print(k + " not to be merged")
             
     else:
+        '''
         if opt.dat != 'all':
             IsIncluded = False
             for dat in mergesamp:
@@ -627,7 +634,7 @@ for k, v in merge_dict.items():
                     break
             if not IsIncluded:
                 continue
-
+        '''
         if not os.path.exists(kpath+k+".root") or opt.rw:
             if not DoesSampleExist(v.name) and not opt.ovride:
                 print(k + " not crabbed yet")

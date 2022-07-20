@@ -16,6 +16,7 @@ import xgboost
 from rwgcards.FromCardToDict import *
 
 rwgdict = CardToDict("dim8", "FT1_2p0")
+'''
 desiredop = [
     "FS0_1p0",
     "FS1_1p0",
@@ -27,7 +28,10 @@ desiredop = [
     "FT1_1p0",
     "FT2_0p9",
 ]
-
+'''
+desiredop = [
+    "FT1_1p0",
+]
 wcoeff = []
 for opname, opdict in rwgdict.items():
     coeffstr = ""
@@ -318,6 +322,8 @@ systematicslist = [
     ["pdf_totalDown", True, "exp"],
     ["QCDScaleUp", True, "exp"],
     ["QCDScaleDown", True, "exp"],
+    ["VBSUp", True, "exp"],
+    ["VBSDown", True, "exp"],
     ["ISRUp", True, "th"],
     ["ISRDown", True, "th"],
     ["FSRUp", True, "th"],
@@ -1147,37 +1153,38 @@ for year in years:
         nbin_bdtsm = len(bin_bdtsm) - 1
 
         
-        #variables.append(variabile('DNN_SM_UL030_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_cW_UL030_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_cHW_UL030_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_aQGC_UL030_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_cW_UL035_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('DNN_cHW_UL035_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('DNN_aQGC_UL035_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
-        #variables.append(variabile('BDT_SM_UL030_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('BDT_cW_UL030_v2', 'c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('BDT_cHW_UL030_v2', 'c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('BDT_aQGC_UL030_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_SM_UL035_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_cW_UL035_v2', 'c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_cHW_UL035_v2', 'c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        #variables.append(variabile('BDT_aQGC_UL035_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        
-        '''
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        elif opt.sr:
-            bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        else:
-            bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            nbin_m1 = len(bin_m1) - 1 
-        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-        variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-        '''
+       
+        #if opt.wjets or opt.qcd or opt.fakes or opt.dy:
+            #bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            #nbin_m1 = len(bin_m1) - 1 
+        #elif opt.sr:
+            #bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+            #nbin_m1 = len(bin_m1) - 1 
+        #else:
+            #bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
+            #nbin_m1 = len(bin_m1) - 1 
+        #variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
+        #variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
 
         bin_m1T = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
-        bin_mo1 = array("d", [0., 50., 100., 150., 200., 300.])#, 1000.])
+        #if not opt.sr:
+        bin_mo1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+        #else:
+            #bin_mo1 = array("d", [0., 100., 150., 200., 300.])
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
@@ -1205,12 +1212,8 @@ for year in years:
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', True, 10, -2.5, 2.5))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', False, 7, -3.50, 3.50))
 
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
-            bin_lepton_pt = array("d", [30., 45., 60., 80., 100., 150, 250.])
-            nbin_lepton_pt = len(bin_lepton_pt)-1
-        else:
-            bin_lepton_pt = array("d", [30., 45., 60., 80., 100., 125., 150, 200., 250.])#, 300.])#, 500.])
-            nbin_lepton_pt = len(bin_lepton_pt)-1
+        bin_lepton_pt = array("d", [30., 50., 75., 100., 125., 150, 200.])
+        nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_lepton_pt, bin_lepton_pt))
 
         #variables.append(variabile(lep1[0] + '_pdgid', lep1[1] + ' pdgid',  wzero+'*('+cutbase+')', False, 31, -15.5, 15.5))
@@ -1282,12 +1285,8 @@ for year in years:
             #variables.append(variabile('tau_DeepTauVsMu_WP', '#tau DeepTauVsMu WP',  wzero+'*('+cutbase+')', False,  11, -0.5, 10.5))
             #variables.append(variabile('tau_DeepTauVsJet_WP', '#tau DeepTauVsJet WP',  wzero+'*('+cutbase+')', False,  11, -0.5, 10.5))
 
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
-            bin_leadjet_pt = array("d", [0., 50., 100., 150., 250., 400.])
-            nbin_leadjet_pt = len(bin_leadjet_pt)-1
-        else:
-            bin_leadjet_pt = array("d", [0., 50., 100., 150., 200., 250., 300., 400., 500., 600.])
-            nbin_leadjet_pt = len(bin_leadjet_pt)-1
+        bin_leadjet_pt = array("d", [0., 50., 100., 150., 250., 400.])
+        nbin_leadjet_pt = len(bin_leadjet_pt)-1
         variables.append(variabile('leadjet_pt',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_leadjet_pt, bin_leadjet_pt))
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', True, 10, -5., 5.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')', False,  7, -3.50, 3.50))
@@ -1344,9 +1343,9 @@ for year in years:
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_metpt = array("d", [0., 10., 20., 30., 40., 50.])
         elif opt.ttbar:
-            bin_metpt = array("d", [50., 100., 150., 200., 300., 500.])
+            bin_metpt = array("d", [50., 100., 150., 200., 300.])
         else:
-            bin_metpt = array("d", [0., 50., 100., 150., 200., 300.])
+            bin_metpt = array("d", [0., 50., 100., 150., 200.])
         nbin_metpt = len(bin_metpt) - 1
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', True, nbin_metpt, bin_metpt))
 
@@ -1496,6 +1495,7 @@ for year in years:
                     else:
                         #f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
                         f1name = filerepo + sample.label + "/"  + sample.label + ".root"
+                        print(f1name)
                     if os.path.exists(f1name):
                         f1 = ROOT.TFile.Open(f1name)
                     else:

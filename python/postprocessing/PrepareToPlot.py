@@ -230,6 +230,7 @@ for k, v in merge_dict.items():
             continue
     
     if k.startswith('Fake'):
+        continue
         if opt.dat != "all":
             IsIncluded = False
             for dat in mergesamp:
@@ -253,8 +254,6 @@ for k, v in merge_dict.items():
             else:
                 mergable = False
             
-        
-        
         if mergable:
             cmdstring = "python3 makeplot.py -y " + opt.year +  " --mertree -d " + k + " --folder "+ ofolder + " --ch " + opt.channel
             if Debug:

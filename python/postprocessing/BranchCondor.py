@@ -73,7 +73,7 @@ def submitter(sample, argsin, folder):
     if os.path.exists(error):
         os.system("rm " + error)
 
-    os.system("condor_submit " + condorsubb)
+    #os.system("condor_submit " + condorsubb)
 
 
 years = opt.years.split(",")
@@ -81,60 +81,36 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    bdt_sm_branch_v2,
     bdt_sm_branch_35_v2,
-    bdt_cW_branch_v2,
     bdt_cW_branch_35_v2,
-    bdt_cHW_branch_v2,
     bdt_cHW_branch_35_v2,
-    bdt_aQGC_branch_v2,
-    dnn_sm_branch_v2,
+    bdt_aQGC_branch_35_v2,
     dnn_sm_branch_35_v2,
-    dnn_cW_branch_v2,
     dnn_cW_branch_35_v2,
-    dnn_cHW_branch_v2,
-    dnn_aQGC_branch_v2,
-    #bdt_pol_branch,
-    #dnn_cHW_branch_bal,
-    #dnn_pol_branch,
+    dnn_cHW_branch_35_v2,
+    dnn_aQGC_branch_35_v2,
 ]
 
 paths = [
-    bdt_sm_path_v2,
     bdt_sm_path_35_v2,
-    bdt_cW_path_v2,
     bdt_cW_path_35_v2,
-    bdt_cHW_path_v2,
     bdt_cHW_path_35_v2,
-    bdt_aQGC_path_v2,
-    dnn_sm_path_v2,
+    bdt_aQGC_path_35_v2,
     dnn_sm_path_35_v2,
-    dnn_cW_path_v2,
     dnn_cW_path_35_v2,
-    dnn_cHW_path_v2,
-    dnn_aQGC_path_v2,
-    #bdt_pol_path,
-    #dnn_cHW_path_bal,
-    #dnn_pol_path,
+    dnn_cHW_path_35_v2,
+    dnn_aQGC_path_35_v2,
 ]
 
 scalers = [
-    bdt_sm_scaler_v2,
     bdt_sm_scaler_35_v2,
-    bdt_cW_scaler_v2,
     bdt_cW_scaler_35_v2,
-    bdt_cHW_scaler_v2,
     bdt_cHW_scaler_35_v2,
-    bdt_aQGC_scaler_v2,
-    dnn_sm_scaler_v2,
+    bdt_aQGC_scaler_35_v2,
     dnn_sm_scaler_35_v2,
-    dnn_cW_scaler_v2,
     dnn_cW_scaler_35_v2,
-    dnn_cHW_scaler_v2,
-    dnn_aQGC_scaler_v2,
-    #bdt_pol_scaler,
-    #dnn_cHW_scaler,
-    #dnn_pol_scaler,
+    dnn_cHW_scaler_35_v2,
+    dnn_aQGC_scaler_35_v2,
 ]
 
 folder = opt.folder
@@ -143,6 +119,8 @@ exe = "branchcondor"
 branchstr = "\'"
 pathstr = "\'"
 scalerstr = "\'"
+
+print(branches, paths, scalers)
 
 for idb, branch in enumerate(branches):
     if idb > 0:
@@ -175,6 +153,7 @@ for year in years:
         if dat.label.startswith("Fake"):
             continue
 
+        
         toPlot = False
         toVeto = False
 
@@ -194,7 +173,7 @@ for year in years:
                     break
             if toVeto:
                 continue
-        
+
         args += " -d " + dat.label
         submitter(dat, args, folder)
-
+        
