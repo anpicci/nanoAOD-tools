@@ -996,10 +996,11 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
 
     elif(year == "UL2017"):
         mutrig = HLT.IsoMu27
-        if True:#flag != "test":
-            eletrig = HLT.Ele35_WPTight_Gsf
-        else:# flag == "test":
-            eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200 
+        #if True:#flag != "test":
+            #eletrig = HLT.Ele35_WPTight_Gsf
+        #else:# flag == "test":
+            #eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200
+        eletrig = (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40))
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if eletrig:# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)
