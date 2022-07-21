@@ -1149,7 +1149,8 @@ for year in years:
         
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
         
-        bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 1.])
+        #bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 1.])
+        bin_bdtsm = array("d", [0., 0.2, 0.4, 0.6, 0.8, 1.])
         nbin_bdtsm = len(bin_bdtsm) - 1
 
         
@@ -1478,8 +1479,17 @@ for year in years:
                     dimcut = dimcuts[idsl]
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
-                    fout = ROOT.TFile.Open(foutput, "UPDATE")
-                    
+                    isfoutOpen = False
+                    while not isfoutOpen:
+                        try:
+                            fout = ROOT.TFile.Open(foutput, "UPDATE")
+                        except:
+                            print(foutput, " not opened, retrying...")
+                            continue
+                        else:
+                            isfoutOpen = True
+                            continue
+
                     f1name = ""
                     if 'Fake' in str(sample.label):
                         if (not opt.folder.startswith('CTHT') and not opt.removePrompt):

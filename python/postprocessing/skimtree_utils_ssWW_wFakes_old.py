@@ -667,8 +667,8 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
         if lepflav == 11:
             IsLooseID = lep.mvaFall17V2Iso_WPL
             IsTightID = lep.mvaFall17V2Iso_WP90
-            IsTightIso = bool(lep.jetRelIso<ISO_CUT_ELE and lep.jetRelIso>=0.)
-            IsLooseIso = bool(lep.jetRelIso<1. and lep.jetRelIso>=0.)
+            IsTightIso = bool(lep.pfRelIso03_all<ISO_CUT_ELE and lep.pfRelIso03_all>=0.)
+            IsLooseIso = bool(lep.pfRelIso03_all<1. and lep.pfRelIso03_all>=0.)
             IsInEtaRegion = bool(abs(lep.eta)<ETA_CUT_ELE and not (abs(lep.eta)>1.4442 and abs(lep.eta)<1.566))
             IsInPtRegion = lep.pt > PT_CUT_ELE
 
@@ -714,7 +714,7 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
 #new
 
 def LepVeto(sellep, electrons, muons):
-    VetoEles = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.mvaFall17V2Iso_WPL and x.pt > PT_CUT_LEP_VETO_ELE and abs(x.eta) < ETA_CUT_LEP_VETO_ELE and not (abs(x.eta)>1.4442 and abs(x.eta)<1.566) and x.jetRelIso < REL_ISO_CUT_LEP_VETO_ELE, electrons))
+    VetoEles = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.mvaFall17V2Iso_WPL and x.pt > PT_CUT_LEP_VETO_ELE and abs(x.eta) < ETA_CUT_LEP_VETO_ELE and not (abs(x.eta)>1.4442 and abs(x.eta)<1.566) and x.pfRelIso03_all < REL_ISO_CUT_LEP_VETO_ELE, electrons))
     VetoMus = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.looseId and x.corrected_pt > PT_CUT_LEP_VETO_MU and abs(x.eta) < ETA_CUT_LEP_VETO_MU and x.pfRelIso04_all < REL_ISO_CUT_LEP_VETO_MU, muons))
 
     IsEleVetoPassed = (len(VetoEles) == 0)
@@ -996,11 +996,11 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
 
     elif(year == "UL2017"):
         mutrig = HLT.IsoMu27
-        #if True:#flag != "test":
-            #eletrig = HLT.Ele35_WPTight_Gsf
+        if True:#flag != "test":
+            eletrig = HLT.Ele35_WPTight_Gsf
         #else:# flag == "test":
             #eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200
-        eletrig = (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40))
+        #eletrig = (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40))
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if eletrig:# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)
