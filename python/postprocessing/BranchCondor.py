@@ -73,7 +73,7 @@ def submitter(sample, argsin, folder):
     if os.path.exists(error):
         os.system("rm " + error)
 
-    #os.system("condor_submit " + condorsubb)
+    os.system("condor_submit " + condorsubb)
 
 
 years = opt.years.split(",")
@@ -143,7 +143,7 @@ print("toveto", toveto)
 for year in years:
     arg1 = " -y " + year 
     for dat in condor_list:
-        if dat.label.startswith("TT_") or dat.label.startswith("WJets"):
+        if dat.label.startswith("TT_") or dat.label.startswith("WJets") or dat.label.startswith("DataHT"):
             continue
 
         args = arg0 + arg1

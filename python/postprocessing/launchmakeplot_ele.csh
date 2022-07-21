@@ -6,8 +6,8 @@ reset
 ######## year1 #######################
 set year = UL2016APV
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
-python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
+#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
+#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
 python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
 python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
 
@@ -30,7 +30,7 @@ python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch 
 ####### year3 #######################
 set year = UL2018
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
-python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
-python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt 
-python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt 
+#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
+#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt
+#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt 
+#python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,DNN_cW_UL035_v2,BDT_SM_UL035_v2,BDT_cW_UL035_v2,BDT_cHW_UL035_v2,leadjet_pt,lepton_pt,MET_pt 

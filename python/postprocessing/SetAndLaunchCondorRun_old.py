@@ -39,7 +39,7 @@ else:
 
 def CondoredList(samplename):
     try:
-        condlist = os.listdir(path+samplename)
+        condlist = [f for f in os.listdir(path+samplename) if "_part" in f]
     except:
         condlist = []
         

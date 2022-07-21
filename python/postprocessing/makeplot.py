@@ -1519,7 +1519,16 @@ for year in years:
                                 if not os.path.exists(pathplot + 'countings/' + cut_tag):
                                     os.makedirs(pathplot + 'countings/' + cut_tag)
                                 if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0].replace("_Up", "Up").replace("_Down", "Down") + ".csv"):
-                                    tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
+                                    isOk = False
+                                    while not isOk:
+                                        try:
+                                            tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
+                                        except:
+                                            print(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv" + " not open, retrying...")
+                                            continue
+                                        else:
+                                            isOk = True
+                                            pass
                                     tmp_f.write("Process,yields,error\n")
                                     tmp_f.close()
                             if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:

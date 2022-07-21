@@ -136,7 +136,7 @@ print(scenarios)
 
 def CondoredList(samplename):
     try:
-        condlist = os.listdir(path+samplename)
+        condlist = [f for f in os.listdir(path+samplename) if "_part" in f]
     except:
         print("Warning! " + path+samplename + " does not exist!")
         condlist = []
@@ -314,6 +314,7 @@ def OpenAndRun(st, file_path):
         #os.system("rm -rf " + tmpdir + "/*")
     else:
         os.system("mkdir " + tmpdir)
+    print(tmpdir, "exists?", os.path.exists(tmpdir))
     fname = file_path.split("/")[-1].replace(".root", "")
     #file_path_cp = tmpdir + "/"+st+"_cp.root"
     file_path_cp = tmpdir + "/"+fname+"_cp.root"
@@ -349,8 +350,25 @@ def OpenAndRun(st, file_path):
                 isDamaged1 = False
                 isDamaged2 = False
                 isDamaged3 = False
-                os.system("cp " + file_path + " " + file_path_cp)
-                myfile = ROOT.TFile(file_path_cp, 'update')
+                isCopyOk = False
+                while not isCopyOk:
+                    try:
+                        os.system("cp " + file_path + " " + file_path_cp)
+                    except:
+                        print("First copy not fine, retrying...")
+                        continue
+                    else:
+                        isCopyOk = True
+                        pass
+                try:
+                    myfile = ROOT.TFile(file_path_cp, 'update')
+                except:
+                    print("Problems with copying " + file_path + ", retrying...")
+                    myfile.Close()
+                    os.system("rm " + file_path_cp)
+                    continue
+                else:
+                    pass
                 try:
                     myfile.Get("events_"+scenario).GetListOfBranches()
                 except:
@@ -369,7 +387,8 @@ def OpenAndRun(st, file_path):
                 else:
                     print("branch", branch, "will be created for sample", st)
                     pass
-
+                
+                print("scenario:", scenario)
                 mytree = myfile.Get("events_"+scenario)
                 to_keep = features[idbr]
          
@@ -427,7 +446,7 @@ def OpenAndRun(st, file_path):
                 mytree.Write("", ROOT.TFile.kOverwrite)
                 myfile.Close()
 
-                file_path_bu = file_path.replace(".root", "_bu.root")
+                file_path_bu = file_path_cp.replace("_cp.root", "_bu.root")
                 os.system("mv " + file_path + " " + file_path_bu)
                 os.system("mv " + file_path_cp + " " + file_path)
                 #os.system("rm " + file_path_cp)
@@ -436,7 +455,17 @@ def OpenAndRun(st, file_path):
                     checkfile = ROOT.TFile(file_path, 'update')
                 except:
                     print("Warning! " + file_path + " corrupted afer copy, retrying the branching " + branch)
-                    os.system("mv " + file_path_bu + " " + file_path)
+                    isOk = False
+                    while not isOk:
+                        try:
+                            os.system("cp " + file_path_bu + " " + file_path)
+                        except:
+                            print("backup copy failed, retrying...")
+                            continue
+                        else:
+                            isOk = True
+                            os.system("rm " + file_path_bu)
+                            pass
                     isDamaged1 = True
                 else:
                     pass
@@ -448,7 +477,18 @@ def OpenAndRun(st, file_path):
                         checknum = checkfile.Get("events_"+chscen).GetEntries()
                     except:
                         print("Warning! " + file_path + " " + chscen + " corrupted after copy, retrying the branching " + branch)
-                        os.system("mv " + file_path_bu + " " + file_path)
+                        isOk = False
+                        while not isOk:
+                            try:
+                                os.system("cp " + file_path_bu + " " + file_path)
+                            except:
+                                print("backup copy failed, retrying...")
+                                continue
+                            else:
+                                isOk = True
+                                os.system("rm " + file_path_bu)
+                                pass                        
+                            
                         isDamaged2 = True
                         break
                     else:
@@ -457,13 +497,33 @@ def OpenAndRun(st, file_path):
                                 IsBranched = branch in checkfile.Get("events_"+scenario).GetListOfBranches()
                             except:
                                 print("Warning! " + file_path + " " + chscen + " corrupted after copy, retrying the branching " + branch)
-                                os.system("mv " + file_path_bu + " " + file_path)
+                                isOk = False
+                                while not isOk:
+                                    try:
+                                        os.system("cp " + file_path_bu + " " + file_path)
+                                    except:
+                                        print("backup copy failed, retrying...")
+                                        continue
+                                    else:
+                                        isOk = True
+                                        os.system("rm " + file_path_bu)
+                                        pass   
                                 isDamaged3 = True
                                 break
                             else:
                                 if not IsBranched:
                                     print("Warning! " + file_path + " " + chscen + " corrupted after copy, retrying the branching " + branch)
-                                    os.system("mv " + file_path_bu + " " + file_path)
+                                    isOk = False
+                                    while not isOk:
+                                        try:
+                                            os.system("cp " + file_path_bu + " " + file_path)
+                                        except:
+                                            print("backup copy failed, retrying...")
+                                            continue
+                                        else:
+                                            isOk = True
+                                            os.system("rm " + file_path_bu)
+                                            pass                        
                                     isDamaged3 = True
                                     break
                                 else:
@@ -471,11 +531,11 @@ def OpenAndRun(st, file_path):
                         pass
                     pass
                 
-                print("isDamaged?", (isDamaged1 or isDamaged2))
+                print("isDamaged?", (isDamaged1 or isDamaged2 or isDamaged3))
 
                 if isDamaged1 or isDamaged2 or isDamaged3:
                     print("Branching damaged file! Avoid to save and relaunching "  + branch + "...")
-                    if isDamaged2:
+                    if isDamaged2 or isDamaged3:
                         checkfile.Close()
                     continue
                 else:
@@ -592,9 +652,10 @@ for k, v in condor_dict.items():
         for c in v.components:
             cpath = path + c.label +"/"
             if not os.path.exists(cpath+c.label+".root") or opt.rw:
-                if not DoesSampleExist(c.name) and not opt.ovride:
-                    print(c.label, "not crabbed yet")
-                    continue
+
+                #if not DoesSampleExist(c.name) and not opt.ovride:
+                    #print(c.label, "not crabbed yet")
+                    #continue
 
                 AreCondored, toRel = AreAllCondored(c.name, c.label)
                 if not AreCondored and not opt.ovride:
