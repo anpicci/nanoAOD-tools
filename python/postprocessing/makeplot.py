@@ -1540,6 +1540,10 @@ for year in years:
 
         if(opt.stack):
             for var in variables:
+                if not "all" in vartoplot:
+                    if not var._name in vartoplot:
+                        continue
+                            
                 print(var._xmax)
                 os.system('set LD_PRELOAD=libtcmalloc.so')
                 print("channel", opt.channel)
