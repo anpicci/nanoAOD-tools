@@ -23,7 +23,7 @@ set year = UL2016
 set year = UL2017
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year\_*
 #python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
-#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
+python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2 -d ZZtoLep_UL2017
 #python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
 #python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
 
@@ -33,4 +33,4 @@ set year = UL2018
 #python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
 #python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
 #python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
-python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2
+#python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count -v m_o1,DNN_SM_UL035_v2,BDT_SM_UL035_v2

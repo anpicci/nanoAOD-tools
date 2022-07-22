@@ -1042,7 +1042,7 @@ if(opt.dat != 'all'):
      elif not opt.folder.startswith('CTHT') and 'DataHT' in str(opt.dat) and (opt.plot or opt.stack):
           raise Exception("Not interesting dataset")
      dataset_names = opt.dat.strip('[]').split(',')
-     print("dataset_names", dataset_names)
+     #print("dataset_names", dataset_names)
      for dat in dataset_names:
           if not(dat in sample_dict.keys()):
               raise Exception("dataset not found!")
