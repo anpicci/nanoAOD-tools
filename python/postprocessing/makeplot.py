@@ -114,8 +114,8 @@ if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco"
     folder += "/" + opt.channel
 pfolder = opt.folder + opt.plot_tag
 
-filerepo = '/eos/home-'+opt.user[0]+'/'+opt.user+'/VBS/nosynch/' + folder + '/'
-plotrepo = '/eos/home-'+opt.user[0]+'/'+opt.user+'/VBS/nosynch/' + pfolder + '/'
+filerepo = '/eos/home-a/apiccine/VBS/nosynch/' + folder + '/'
+plotrepo = '/eos/home-a/apiccine/VBS/nosynch/' + pfolder + '/'
 
 #print(filerepo, plotrepo)
 
