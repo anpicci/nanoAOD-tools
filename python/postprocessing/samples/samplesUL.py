@@ -3226,7 +3226,7 @@ VBS_SSWW_SM_ULRunII.components = [
     VBS_SSWW_SM_UL2018,
 ]
 
-VBS_SSWW_LL_SM_ULRunII = sample(VBScolor, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_ULRunII")
+VBS_SSWW_LL_SM_ULRunII = sample(VBSLLcolor, 1, 1001, "VBS ssWW LL", "VBS_SSWW_LL_SM_ULRunII")
 VBS_SSWW_LL_SM_ULRunII.year = "ULRunII"
 VBS_SSWW_LL_SM_ULRunII.components = [
     VBS_SSWW_LL_SM_UL2016APV,
@@ -3235,7 +3235,7 @@ VBS_SSWW_LL_SM_ULRunII.components = [
     VBS_SSWW_LL_SM_UL2018,
 ]
 
-VBS_SSWW_TL_SM_ULRunII = sample(VBScolor, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_ULRunII")
+VBS_SSWW_TL_SM_ULRunII = sample(VBSTLcolor, 1, 1001, "VBS ssWW TL", "VBS_SSWW_TL_SM_ULRunII")
 VBS_SSWW_TL_SM_ULRunII.year = "ULRunII"
 VBS_SSWW_TL_SM_ULRunII.components = [
     VBS_SSWW_TL_SM_UL2016APV,
@@ -3244,7 +3244,7 @@ VBS_SSWW_TL_SM_ULRunII.components = [
     VBS_SSWW_TL_SM_UL2018,
 ]
 
-VBS_SSWW_TT_SM_ULRunII = sample(VBScolor, 1, 1001, "VBS ssWW TT", "VBS_SSWW_TT_SM_ULRunII")
+VBS_SSWW_TT_SM_ULRunII = sample(VBSTTcolor, 1, 1001, "VBS ssWW TT", "VBS_SSWW_TT_SM_ULRunII")
 VBS_SSWW_TT_SM_ULRunII.year = "ULRunII"
 VBS_SSWW_TT_SM_ULRunII.components = [
     VBS_SSWW_TT_SM_UL2016APV,
@@ -3324,7 +3324,7 @@ VBS_SSWW_cHW_ULRunII.components = [
     VBS_SSWW_cHW_UL2018,
 ]
 
-VBS_SSWW_cHW_SM_UL2018 = sample(ROOT.kGreen+2, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2018")
+VBS_SSWW_cHW_SM_UL2018 = sample(CHWcolor, 1, 1001, "VBS ssWW c_{HW} + SM", "VBS_SSWW_cHW_SM_UL2018")
 VBS_SSWW_cHW_SM_UL2018.year = "UL2018"
 VBS_SSWW_cHW_SM_UL2018.components = [
     VBS_SSWW_cHW_BSM_UL2018,
