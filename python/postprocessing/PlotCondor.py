@@ -5,12 +5,13 @@ from samples.samplesUL import *
 
 os.system("reset")
 
-usage = 'python3 BranchCondor.py -d dataset_name -f destination_folder -y year'
+usage = 'python3 PlotCondor.py -d dataset_name -f destination_folder -y year'
 parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dataset', type=str, default = 'all', help='Please enter a dataset name')
 parser.add_option('-v', '--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
-parser.add_option('-y', '--year', dest='years', type=str, default = '', help='Please enter year(s)')
+parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,UL2016,UL2017,UL2018', help='Please enter year(s)')
+parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please enter variable(s)')
 (opt, args) = parser.parse_args()
 
 username = str(os.environ.get('USER'))
@@ -22,15 +23,22 @@ elif username == 'apiccine':
 elif username == 'ttedesch':
     uid = 103343
 
-subfold = "branchcondor"
+subfold = "plotcondor"
 if not os.path.exists(subfold):
     os.system("mkdir " + subfold)
 
-condorsub = "condorbranch"
+condorsub = "condorplot"
 
-outcore = "condorbranch_" + opt.folder + "/output/"
-errcore = "condorbranch_" + opt.folder + "/error/"
-logcore = "condorbranch_" + opt.folder + "/log/"
+regions = [
+    "sr",
+    "ttbar",
+    "fakes",
+    "wsdy",
+]
+
+outcore = "condorplot_" + opt.folder + "/output/"
+errcore = "condorplot_" + opt.folder + "/error/"
+logcore = "condorplot_" + opt.folder + "/log/"
 
 if not os.path.exists(outcore):
     os.system("mkdir -p " + outcore)
@@ -39,13 +47,14 @@ if not os.path.exists(errcore):
 if not os.path.exists(logcore):
     os.system("mkdir -p " + logcore)
 
-def submitter(sample, argsin, folder):
+def submitter(sample, argsins, folder):
     exesh = subfold + "/" + exe + "_" + sample.label + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
-    fsh.write("source /afs/cern.ch/work/a/apiccine/benv/bin/activate\n")
-    fsh.write("python3 " + pymacro + " " + argsin + "\n")
+    for argsin in argsins:
+        fsh.write("python3 " + pymacro + " " + argsin + "\n")
     fsh.close()
+    
     condorsubb = condorsub + "_" + str(sample.year) + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
@@ -56,7 +65,7 @@ def submitter(sample, argsin, folder):
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
     tagyear = str(sample.year)
-    inputfiles = "transfer_input_files    = $(Proxy_path), ./samples, ./ML, PrepareToPlot.py, makeplot.py, " + pymacro+ "\n"
+    inputfiles = "transfer_input_files    = $(Proxy_path), ./rwgcards, ./samples, CMS_lumi.py, variabile.py, " + pymacro+ "\n"
     f.write(inputfiles)
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
@@ -83,83 +92,43 @@ def submitter(sample, argsin, folder):
 years = opt.years.split(",")
 toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
-
-branches = [
-    bdt_sm_branch_35_v2,
-    bdt_cW_branch_35_v2,
-    bdt_cHW_branch_35_v2,
-    bdt_aQGC_branch_35_v2,
-    dnn_sm_branch_35_v2,
-    dnn_cW_branch_35_v2,
-    dnn_cHW_branch_35_v2,
-    dnn_aQGC_branch_35_v2,
-]
-
-paths = [
-    bdt_sm_path_35_v2,
-    bdt_cW_path_35_v2,
-    bdt_cHW_path_35_v2,
-    bdt_aQGC_path_35_v2,
-    dnn_sm_path_35_v2,
-    dnn_cW_path_35_v2,
-    dnn_cHW_path_35_v2,
-    dnn_aQGC_path_35_v2,
-]
-
-scalers = [
-    bdt_sm_scaler_35_v2,
-    bdt_cW_scaler_35_v2,
-    bdt_cHW_scaler_35_v2,
-    bdt_aQGC_scaler_35_v2,
-    dnn_sm_scaler_35_v2,
-    dnn_cW_scaler_35_v2,
-    dnn_cHW_scaler_35_v2,
-    dnn_aQGC_scaler_35_v2,
-]
+variables = []
+if opt.vars != "all":
+    variables = opt.vars.split(",")
 
 folder = opt.folder
-pymacro = "add_1finalMVA_condor.py"
-exe = "branchcondor"
-branchstr = "\'"
-pathstr = "\'"
-scalerstr = "\'"
+pymacro = "makeplot.py"
+exe = "branchplot"
 
-print(branches, paths, scalers)
-
-for idb, branch in enumerate(branches):
-    if idb > 0:
-        branchstr += ","
-        pathstr += ","
-        scalerstr += ","
-    branchstr += branches[idb]
-    pathstr += paths[idb]
-    scalerstr += scalers[idb]
-
-branchstr += "\'"
-pathstr += "\'"
-scalerstr += "\'"
-
-arg0 = " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " --scalers " + scalerstr
+arg0 = " -p -f " + folder
 
 print("toplot", toplot)
 print("toveto", toveto)
 
 for year in years:
     arg1 = " -y " + year 
-    for dat in condor_list:
+    for dat in plot_list:
+        argss = []
         if dat.label.startswith("TT_") or dat.label.startswith("WJets") or dat.label.startswith("DataHT"):
             continue
 
-        args = arg0 + arg1
         if dat.year != year:
             continue
 
         if dat.label.startswith("Fake"):
             continue
 
-        
         toPlot = False
         toVeto = False
+
+        lepss = []
+        if dat.label.startswith("DataEle_") or dat.label.startswith("FakeEle_"):
+            lepss = ["electron"]
+        elif dat.label.startswith("DataMu_") or dat.label.startswith("FakeMu_"):
+            lepss = ["muon"]
+        else:
+            lepss = ["muon", "electron"]
+        
 
         if opt.dataset != "all":
             for dtp in toplot:
@@ -178,6 +147,18 @@ for year in years:
             if toVeto:
                 continue
 
-        args += " -d " + dat.label
-        submitter(dat, args, folder)
+        arg2 = arg0 + arg1 + " --ch ltau --count -d " + dat.label
+        for region in regions:
+            arg3 = arg2 + " --" + region
+            if len(variables) > 0:
+                arg3 += " -v "
+                for idv, variab in enumerate(variables):
+                    if idv > 1:
+                        arg3 += ","
+                    arg3 += variab
+
+            for lepn in lepss:
+                argss.append(arg3 + " --lep " + lepn)
+            
+        submitter(dat, argss, folder)
         

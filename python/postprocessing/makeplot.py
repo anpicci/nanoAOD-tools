@@ -7,12 +7,12 @@ from variabile import variabile
 import copy as copy
 from CMS_lumi import CMS_lumi
 from array import array
-import pandas as pd
-import uproot
-import pickle
-import numpy as np
-import sklearn
-import xgboost
+#import pandas as pd
+#import uproot
+#import pickle
+#import numpy as np
+#import sklearn
+#import xgboost
 from rwgcards.FromCardToDict import *
 
 rwgdict = CardToDict("dim8", "FT1_2p0")
@@ -93,10 +93,15 @@ parser.add_option('--bvetoL', dest='bvetoL', default = False, action='store_true
 
 (opt, args) = parser.parse_args()
 
+#if "UL" in opt.year:
+    #from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+#else:
+    #from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+
 if "UL" in opt.year:
-    from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
+    from samples.samplesUL import *
 else:
-    from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+    from samples.samples import *
 
 
 def cutToTag(cut):
@@ -1156,31 +1161,19 @@ for year in years:
         
         variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_cW_UL035_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_cHW_UL035_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_aQGC_UL035_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_cHW_UL035_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_aQGC_UL035_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         variables.append(variabile('BDT_SM_UL035_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cW_UL035_v2', 'c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cHW_UL035_v2', 'c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('BDT_aQGC_UL035_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_aQGC_UL035_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
        
-        #if opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            #bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            #nbin_m1 = len(bin_m1) - 1 
-        #elif opt.sr:
-            #bin_m1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
-            #nbin_m1 = len(bin_m1) - 1 
-        #else:
-            #bin_m1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-            #nbin_m1 = len(bin_m1) - 1 
-        #variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-        #variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1, bin_m1))
-
         bin_m1T = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
         #if not opt.sr:
         bin_mo1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
@@ -1194,9 +1187,9 @@ for year in years:
         if opt.sr:
             bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_mjj = array("d", [0., 300., 500., 700., 1000., 1500., 2000.])
+            bin_mjj = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1800.])
         else:
-            bin_mjj = array("d", [0., 300., 500., 700., 1000., 1500., 2000.])
+            bin_mjj = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mjj, bin_mjj))
         
@@ -1211,15 +1204,14 @@ for year in years:
         #variables.append(variabile('lepBDT_output', 'lepBDT output', wzero+'*('+cutbase+')', 8, -2., 2.))
         
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', True, 10, -2.5, 2.5))
-        variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', False, 7, -3.50, 3.50))
+        variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', True, 7, -3.50, 3.50))
 
-        bin_lepton_pt = array("d", [30., 50., 75., 100., 125., 150, 200.])
+        bin_lepton_pt = array("d", [30., 50., 75., 100., 125., 150.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_lepton_pt, bin_lepton_pt))
 
         #variables.append(variabile(lep1[0] + '_pdgid', lep1[1] + ' pdgid',  wzero+'*('+cutbase+')', False, 31, -15.5, 15.5))
-        variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' pfRelIso04',  wzero+'*('+cutbase+')', False, 15, 0, 0.15))
-
+        #variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' pfRelIso04',  wzero+'*('+cutbase+')', False, 15, 0, 0.15))
         
         if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
             bin_zepp = array("d", [-1., -0.7, -0.4, -0.2, 0., 0.2, 0.4, 0.7, 1.])
@@ -1232,9 +1224,9 @@ for year in years:
         
 
         if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
-            bin_taupt = array("d", [30., 45., 60., 80., 100.])
+            bin_taupt = array("d", [30., 45., 60., 80., 100., 150.])
         else:
-            bin_taupt = array("d", [30., 45., 60., 80., 100., 125., 150, 175., 200., 250.])
+            bin_taupt = array("d", [30., 45., 60., 80., 100., 125., 150, 175., 200.])
         nbin_taupt = len(bin_taupt) - 1
         variables.append(variabile(lep2[0] + '_pt',  lep2[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_taupt, bin_taupt))
         
@@ -1246,19 +1238,15 @@ for year in years:
         #variables.append(variabile(lep2[0] + '_Zeppenfeld', lep2[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', False, 20, -5, 5))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{#tau}',  wzero+'*('+cutbase+')', False, 12, -1.5, 1.5))
 
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
-            variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')', False,  7, -3.50, 3.50))
-        else:
-            variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')', False,  14, -3.50, 3.50))
-
+        variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')', True,  7, -3.50, 3.50))
 
         if opt.channel == "ltau":
             #variables.append(variabile(lep2[0] + '_DecayMode', '#tau decay mode',  wzero+'*('+cutbase+')', False, 12, -0.5, 11.5))
             
-            variables.append(variabile('tauleadTk_ptOverTau',  '#tau LeadTk relative p_{T}',  wzero+'*('+cutbase+')', False, 10, 0, 1))
-            variables.append(variabile('tauleadTk_deltaPhi',  '#tau LeadTk relative #Delta#phi',  wzero+'*('+cutbase+')', False, 8, -0.1, 0.1))
-            variables.append(variabile('tauleadTk_deltaEta',  '#tau LeadTk relative #Delta#eta',  wzero+'*('+cutbase+')', False, 8, -0.1, 0.1))
-            variables.append(variabile('tauleadTk_Gamma',  '#tau LeadTk #Upsilon',  wzero+'*('+cutbase+')', False, 10, -1., 1.))
+            variables.append(variabile('tauleadTk_ptOverTau',  '#tau LeadTk relative p_{T}',  wzero+'*('+cutbase+')', True, 10, 0, 1))
+            #variables.append(variabile('tauleadTk_deltaPhi',  '#tau LeadTk relative #Delta#phi',  wzero+'*('+cutbase+')', False, 8, -0.1, 0.1))
+            #variables.append(variabile('tauleadTk_deltaEta',  '#tau LeadTk relative #Delta#eta',  wzero+'*('+cutbase+')', False, 8, -0.1, 0.1))
+            variables.append(variabile('tauleadTk_Gamma',  '#tau LeadTk #Upsilon',  wzero+'*('+cutbase+')', True, 10, -1., 1.))
             
             #bin_taujetrelpt = array("d", [0.85, 0.9, 0.92, 0.94, 0.96, 0.98, 1.])
             #nbin_taujetrelpt = len(bin_taujetrelpt) - 1
@@ -1278,8 +1266,8 @@ for year in years:
 
             #variables.append(variabile('taujet_HEGamma',  '#tau jet had.+em. #Upsilon',  wzero+'*('+cutbase+')', False, 8, -1., 1.))
 
-            #variables.append(variabile('tau_DeepTauVsEle_raw', '#tau DeepTauVsEle raw',  wzero+'*('+cutbase+')', False,  10, 0.35, 1.35))
-            #variables.append(variabile('tau_DeepTauVsMu_raw', '#tau DeepTauVsMu raw',  wzero+'*('+cutbase+')', False,  10, 0.2, 1.2))
+            variables.append(variabile('tau_DeepTauVsEle_raw', '#tau DeepTauVsEle raw',  wzero+'*('+cutbase+')', True, 7, 0.3, 1.))
+            variables.append(variabile('tau_DeepTauVsMu_raw', '#tau DeepTauVsMu raw',  wzero+'*('+cutbase+')', True, 7, 0.3, 1.))
             #variables.append(variabile('tau_DeepTauVsJet_raw', '#tau DeepTauVsJet raw',  wzero+'*('+cutbase+')', False,  10, 0., 1.))
 
             #variables.append(variabile('tau_DeepTauVsEle_WP', '#tau DeepTauVsEle WP',  wzero+'*('+cutbase+')', False,  11, -0.5, 10.5))
@@ -1289,12 +1277,15 @@ for year in years:
         bin_leadjet_pt = array("d", [0., 50., 100., 150., 250., 400.])
         nbin_leadjet_pt = len(bin_leadjet_pt)-1
         variables.append(variabile('leadjet_pt',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_leadjet_pt, bin_leadjet_pt))
-        variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', True, 10, -5., 5.))
-        variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')', False,  7, -3.50, 3.50))
+        variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', True, 8, -4., 4.))
+        variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')', True,  7, -3.50, 3.50))
 
         variables.append(variabile('leadjet_qgl', 'Lead jet QGL',  wzero+'*('+cutbase+')', False,  8, 0., 1.))
         variables.append(variabile('subleadjet_qgl', 'Sublead jet QGL',  wzero+'*('+cutbase+')', False,  8, 0., 1.))
 
+        bin_leadjet_mass = array("d", [0., 10., 20., 30., 50.])
+        nbin_leadjet_mass = len(bin_leadjet_mass)-1
+        variables.append(variabile('leadjet_mass',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_leadjet_mass, bin_leadjet_mass))
         #bin_ak8leadjet_pt = array("d", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         #nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
         #variables.append(variabile('AK8leadjet_pt',  'AK8 Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', False, nbin_ak8leadjet_pt, bin_ak8leadjet_pt))#30, 1500))
@@ -1329,12 +1320,12 @@ for year in years:
             bin_subleadjet_pt = array("d", [0., 50., 100., 150., 250.])
         nbin_subleadjet_pt = len(bin_subleadjet_pt) - 1
         variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_subleadjet_pt, bin_subleadjet_pt))
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
-            variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', True, 10, -5., 5.))
-            variables.append(variabile('subleadjet_phi', 'Sublead jet #Phi',  wzero+'*('+cutbase+')', False,  7, -3.50, 3.50))
-        else:
-            variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', True, 10, -5., 5.))
-            variables.append(variabile('subleadjet_phi', 'Sublead jet #Phi',  wzero+'*('+cutbase+')', False,  7, -3.50, 3.50))
+        variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', True, 10, -5., 5.))
+        variables.append(variabile('subleadjet_phi', 'Sublead jet #Phi',  wzero+'*('+cutbase+')', True,  7, -3.50, 3.50))
+        
+        bin_subleadjet_mass = array("d", [0., 5., 10., 15., 25.])
+        nbin_subleadjet_mass = len(bin_subleadjet_mass)-1
+        variables.append(variabile('subleadjet_mass',  'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_subleadjet_mass, bin_subleadjet_mass))
         
         variables.append(variabile('nJets', 'n jets',  wzero+'*('+cutbase+')', True,  11, -0.5, 10.5))
         variables.append(variabile('nBJets', 'n bjets (DeepJet M)',  wzero+'*('+cutbase+')', True,  6, -0.5, 5.5))
@@ -1342,27 +1333,31 @@ for year in years:
         if opt.sr:
             bin_metpt = array("d", [50., 100., 150., 200., 300.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_metpt = array("d", [0., 10., 20., 30., 40., 50.])
+            bin_metpt = array("d", [0., 10., 15., 20., 25., 30., 35., 40., 45., 50.])
         elif opt.ttbar:
-            bin_metpt = array("d", [50., 100., 150., 200., 300.])
-        else:
-            bin_metpt = array("d", [0., 50., 100., 150., 200.])
+            bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 250., 300.])
+        elif opt.wsdy:
+            bin_metpt = array("d", [0., 25., 50., 75., 100., 125., 150., 200.])
         nbin_metpt = len(bin_metpt) - 1
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', True, nbin_metpt, bin_metpt))
 
         if opt.sr:
             bin_invm = array("d", [600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2400.])
+        elif opt.fakes or opt.wsdy:
+            bin_invm = array("d", [0., 400., 600., 800., 1000., 1200., 1440., 1600., 2000., 2400.])
         else:
-            bin_invm = array("d", [0., 400., 600., 800., 1000., 1200., 1600., 2000., 2400., 2800.])
+            bin_invm = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1440., 1600., 2000., 2400., 2800.])
        
         nbin_invm = len(bin_invm) - 1 
 
         if opt.channel == 'ltau':
-            variables.append(variabile('m_jj' + lep12[0], 'invariant mass j_{1} j_{2} ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', False, nbin_invm, bin_invm))
+            variables.append(variabile('m_jj' + lep12[0], 'invariant mass j_{1} j_{2} ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', True, nbin_invm, bin_invm))
         elif opt.channel == 'emu':
-            variables.append(variabile('m_jjleps', 'invariant mass j_{1} j_{2} ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', False, nbin_invm, bin_invm))
+            variables.append(variabile('m_jjleps', 'invariant mass j_{1} j_{2} ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', True, nbin_invm, bin_invm))
 
-        bin_invmtl = array("d", [0., 50., 100., 150., 200., 250., 300., 350.])
+        variables.append(variabile('m_jj' + lep2[0], 'invariant mass j_{1} j_{2} ' + lep2[1] + ' [GeV]',  wzero+'*('+cutbase+')', True, nbin_invm, bin_invm))
+
+        bin_invmtl = array("d", [0., 50., 100., 150., 200., 250., 300.])
         nbin_invmtl = len(bin_invmtl) - 1 
           
         variables.append(variabile('m_' + lep12[0], 'invariant mass ' + lep12[1] + ' [GeV]',  wzero+'*('+cutbase+')', True, nbin_invmtl, bin_invmtl))
@@ -1370,37 +1365,37 @@ for year in years:
         if opt.sr:
             bin_mTs = array("d", [0., 25., 50., 75., 100., 150., 200.])
             nbin_mTs = len(bin_mTs) - 1
-        elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_mTs = array("d", [0., 25., 50., 75., 100., 125., 150., 200.])
+        elif opt.fakes:
+            bin_mTs = array("d", [0., 25., 50., 75., 100., 125., 150.])
             nbin_mTs = len(bin_mTs) - 1
         else:
-            bin_mTs = array("d", [0., 25., 50., 75., 100., 125., 150., 200., 250., 300.])
+            bin_mTs = array("d", [0., 25., 50., 75., 100., 125., 150., 200., 250.])
             nbin_mTs = len(bin_mTs) - 1
 
-        variables.append(variabile('mT_' + lep1[0].split("to")[0] + '_MET', 'M_{T}(' + lep1[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
-        variables.append(variabile('mT_' + lep2[0] + '_MET', 'M_{T}(' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
+        variables.append(variabile('mT_' + lep1[0].split("to")[0] + '_MET', 'M_{T}(' + lep1[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', True, nbin_mTs, bin_mTs))
+        variables.append(variabile('mT_' + lep2[0] + '_MET', 'M_{T}(' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', True, nbin_mTs, bin_mTs))
         if opt.channel == "ltau":
-            variables.append(variabile('mT_leptau_MET', 'M_{T}(l,  ' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
-        elif opt.channel == "emu":
-            variables.append(variabile('mT_' + lep12[0] + '_MET', 'M_{T}(' + lep12[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
+            variables.append(variabile('mT_leptau_MET', 'M_{T}(l,  ' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', True, nbin_mTs, bin_mTs))
+        #elif opt.channel == "emu":
+            #variables.append(variabile('mT_' + lep12[0] + '_MET', 'M_{T}(' + lep12[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
 
 
         bin_deltaeta_jj = array("d", [-8., -5., -3.5, -2.5, 2.5, 3.5, 5., 8.])
         nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
         variables.append(variabile('deltaEta_jj', '#Delta #eta_{jj}',  wzero+'*('+cutbase+')', True, nbin_deltaeta_jj, bin_deltaeta_jj))
 
-        variables.append(variabile('deltaPhi_jj', '#Delta #phi_{jj}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep12[0], '#Delta #phi_{' + lep12[1] + '}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep2[0] + 'j1', '#Delta #phi_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep2[0] + 'j2', '#Delta #phi_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j1', '#Delta #phi_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j2', '#Delta #phi_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_jj', '#Delta #phi_{jj}',  wzero+'*('+cutbase+')', True,  14, -3.5, 3.5))
+        #variables.append(variabile('deltaPhi_' + lep12[0], '#Delta #phi_{' + lep12[1] + '}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep2[0] + 'j1', '#Delta #phi_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')', True,  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep2[0] + 'j2', '#Delta #phi_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', True,  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j1', '#Delta #phi_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', True, 14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j2', '#Delta #phi_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', True, 14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METj1', '#Delta #phi (p_{T}^{miss} j_{1})',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METj2', '#Delta #phi (p_{T}^{miss} j_{2})',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METlep', '#Delta #phi (p_{T}^{miss} lep)',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METtau', '#Delta #phi (p_{T}^{miss} #tau)',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
-        variables.append(variabile('min(min(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),min(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'minimum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 14, 0., 3.5))
-        variables.append(variabile('max(max(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),max(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'maximum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 14, 0., 3.5))
+        variables.append(variabile('min(min(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),min(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'minimum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 12, 0., 3))
+        variables.append(variabile('max(max(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),max(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'maximum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 12, 0., 3))
         
         bin_deltaeta_ll = array("d", [-5., -3., -2., -1.5, -1., -0.5, 0., 0.5, 1., 1.5, 2., 3., 5.])
         nbin_deltaeta_ll = len(bin_deltaeta_ll) - 1
@@ -1415,34 +1410,47 @@ for year in years:
         #variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_lj, bin_deltaeta_lj))
 
 
-        #bin_deltatheta_jj = array("d", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
-        #nbin_deltatheta_jj = len(bin_deltatheta_jj) - 1
+        bin_deltatheta_jj = array("d", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
+        nbin_deltatheta_jj = len(bin_deltatheta_jj) - 1
         #variables.append(variabile('deltaTheta_jj', 'cos(#Delta#theta_{jj})',  wzero+'*('+cutbase+')', False, nbin_deltatheta_jj, bin_deltatheta_jj))
-        #variables.append(variabile('deltaTheta_' + lep12[0], 'cos(#Delta#theta_{' + lep12[1] + '})',  wzero+'*('+cutbase+')', False,  nbin_deltatheta_jj, bin_deltatheta_jj))
+        variables.append(variabile('deltaTheta_' + lep12[0], 'cos(#Delta#theta_{' + lep12[1] + '})',  wzero+'*('+cutbase+')', True,  nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep2[0] + 'j1', 'cos(#Delta#theta_{' + lep2[1] + ' j_{1}})',  wzero+'*('+cutbase+')', False,  nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')', False,  nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', False, nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j2', 'cos(#Delta#theta_{' + lep1[1] + ' j_{2}})',  wzero+'*('+cutbase+')', False, nbin_deltatheta_jj, bin_deltatheta_jj))
 
-        if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
-            bin_ptRel = array("d", [0., 50., 75., 100., 125., 150., 175., 200., 250.])
-            bin_ptRel_2 = array("d", [0., 25., 50., 75., 100., 125., 150., 200.])
-        else:
-            bin_ptRel = array("d", [0., 50., 75., 100., 125, 150., 175., 200., 225., 250., 275., 300., 350.])
-            bin_ptRel_2 = array("d", [0., 50., 75., 100., 125, 150., 175., 200., 250.])
-        nbin_ptRel = len(bin_ptRel) - 1
+        bin_ptRel_2 = array("d", [0., 50., 75., 100., 125, 150., 175., 200., 225., 250.])
         nbin_ptRel_2 = len(bin_ptRel_2) - 1    
-        variables.append(variabile('ptRel_jj', 'relative p_{T} j_{1} j_{2}',  wzero+'*('+cutbase+')', False, nbin_ptRel, bin_ptRel))
-        variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
+        #variables.append(variabile('ptRel_jj', 'relative p_{T} j_{1} j_{2}',  wzero+'*('+cutbase+')', False, nbin_ptRel, bin_ptRel))
+        #variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
         
-        variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', False, 20, 0., 4.))
+        if opt.fakes or opt.wsdy:
+            bin_rt = array("d", [0., 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.4, 2.8, 3.2, 3.6, 4.4, 5.])
+            nbin_rt = len(bin_rt) - 1    
+        elif opt.ttbar:
+            bin_rt = array("d", [0., 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.8, 3.2, 3.6, 4.4, 5.])
+            nbin_rt = len(bin_rt) - 1    
+        else:
+            bin_rt = array("d", [0., 0.2, 0.4, 0.6, 0.8, 1.0, 1.4, 1.8, 2.4, 5.])
+            nbin_rt = len(bin_rt) - 1    
+        variables.append(variabile('event_RT', 'R_{T}',  wzero+'*('+cutbase+')', True, nbin_rt, bin_rt))
 
-        variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False,  5, 0., 1.))
-        variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, 5, 0., 1.))
+        if opt.fakes or opt.ttbar:
+            bin_df = array("d", [0., 0.1, 0.2, 0.4, 0.6, 0.8, 0.9, 1.0])
+            nbin_df = len(bin_df) - 1    
+        elif opt.wsdy:
+            bin_df = array("d", [0., 0.05, 0.1, 0.15, 0.2])
+            nbin_df = len(bin_df) - 1    
+        else:
+            bin_df = array("d", [0., 0.1, 0.2, 0.4])
+            nbin_df = len(bin_df) - 1    
+        
+        variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', True, nbin_df, bin_df))
+        variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', True, nbin_df, bin_df))
 
         for sample in dataset_new:
             print(sample.label, sample.name)
