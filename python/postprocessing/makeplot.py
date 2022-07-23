@@ -1336,7 +1336,7 @@ for year in years:
             bin_metpt = array("d", [0., 10., 15., 20., 25., 30., 35., 40., 45., 50.])
         elif opt.ttbar:
             bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 250., 300.])
-        elif opt.wsdy:
+        else:
             bin_metpt = array("d", [0., 25., 50., 75., 100., 125., 150., 200.])
         nbin_metpt = len(bin_metpt) - 1
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', True, nbin_metpt, bin_metpt))

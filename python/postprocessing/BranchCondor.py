@@ -10,7 +10,7 @@ parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dataset', type=str, default = 'all', help='Please enter a dataset name')
 parser.add_option('-v', '--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
-parser.add_option('-y', '--year', dest='years', type=str, default = '', help='Please enter year(s)')
+parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2018,UL2017,UL2016APV,UL2016', help='Please enter year(s)')
 (opt, args) = parser.parse_args()
 
 username = str(os.environ.get('USER'))
@@ -77,6 +77,7 @@ def submitter(sample, argsin, folder):
     if os.path.exists(error):
         os.system("rm " + error)
 
+    print(condorsubb)
     os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
@@ -85,37 +86,46 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    bdt_sm_branch_35_v2,
-    bdt_cW_branch_35_v2,
-    bdt_cHW_branch_35_v2,
-    bdt_aQGC_branch_35_v2,
-    dnn_sm_branch_35_v2,
-    dnn_cW_branch_35_v2,
-    dnn_cHW_branch_35_v2,
-    dnn_aQGC_branch_35_v2,
+    bdt_sm_branch_T,
+    dnn_sm_branch_T,
 ]
+    #bdt_sm_branch_35_v2,
+    #bdt_cW_branch_35_v2,
+    #bdt_cHW_branch_35_v2,
+    #bdt_aQGC_branch_35_v2,
+    #dnn_sm_branch_35_v2,
+    #dnn_cW_branch_35_v2,
+    #dnn_cHW_branch_35_v2,
+    #dnn_aQGC_branch_35_v2,
+    #]
 
 paths = [
-    bdt_sm_path_35_v2,
-    bdt_cW_path_35_v2,
-    bdt_cHW_path_35_v2,
-    bdt_aQGC_path_35_v2,
-    dnn_sm_path_35_v2,
-    dnn_cW_path_35_v2,
-    dnn_cHW_path_35_v2,
-    dnn_aQGC_path_35_v2,
+    bdt_sm_path_T,
+    dnn_sm_path_T,
 ]
+    #bdt_sm_path_35_v2,
+    #bdt_cW_path_35_v2,
+    #bdt_cHW_path_35_v2,
+    #bdt_aQGC_path_35_v2,
+    #dnn_sm_path_35_v2,
+    #dnn_cW_path_35_v2,
+    #dnn_cHW_path_35_v2,
+    #dnn_aQGC_path_35_v2,
+    #]
 
 scalers = [
-    bdt_sm_scaler_35_v2,
-    bdt_cW_scaler_35_v2,
-    bdt_cHW_scaler_35_v2,
-    bdt_aQGC_scaler_35_v2,
-    dnn_sm_scaler_35_v2,
-    dnn_cW_scaler_35_v2,
-    dnn_cHW_scaler_35_v2,
-    dnn_aQGC_scaler_35_v2,
+    bdt_sm_scaler_T,
+    dnn_sm_scaler_T,
 ]
+    #bdt_sm_scaler_35_v2,
+    #bdt_cW_scaler_35_v2,
+    #bdt_cHW_scaler_35_v2,
+    #bdt_aQGC_scaler_35_v2,
+    #dnn_sm_scaler_35_v2,
+    #dnn_cW_scaler_35_v2,
+    #dnn_cHW_scaler_35_v2,
+    #dnn_aQGC_scaler_35_v2,
+#]
 
 folder = opt.folder
 pymacro = "add_1finalMVA_condor.py"
@@ -143,17 +153,18 @@ arg0 = " -f " + folder + " --paths " + pathstr + " --branches " + branchstr + " 
 
 print("toplot", toplot)
 print("toveto", toveto)
-
+#print(years)
 for year in years:
     arg1 = " -y " + year 
     for dat in condor_list:
+        
         if dat.label.startswith("TT_") or dat.label.startswith("WJets") or dat.label.startswith("DataHT"):
             continue
-
+        
         args = arg0 + arg1
         if dat.year != year:
             continue
-
+        
         if dat.label.startswith("Fake"):
             continue
 
@@ -180,4 +191,3 @@ for year in years:
 
         args += " -d " + dat.label
         submitter(dat, args, folder)
-        
