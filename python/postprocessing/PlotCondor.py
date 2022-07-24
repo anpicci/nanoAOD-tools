@@ -33,7 +33,7 @@ regions = [
     "sr",
     "ttbar",
     "fakes",
-    "wsdy",
+    "wsdy --bvetoL",
 ]
 
 outcore = "condorplot_" + opt.folder + "/output/"
@@ -48,14 +48,14 @@ if not os.path.exists(logcore):
     os.system("mkdir -p " + logcore)
 
 def submitter(sample, argsins, folder):
-    exesh = subfold + "/" + exe + "_" + sample.label + ".sh"
+    exesh = subfold + "/" + exe + "_" + sample.label + "_" + folder + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
     for argsin in argsins:
         fsh.write("python3 " + pymacro + " " + argsin + "\n")
     fsh.close()
     
-    condorsubb = condorsub + "_" + str(sample.year) + ".sub"
+    condorsubb = condorsub + "_" + str(sample.year) + "_" + folder + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
@@ -115,9 +115,6 @@ for year in years:
         if dat.year != year:
             continue
 
-        if dat.label.startswith("Fake"):
-            continue
-
         toPlot = False
         toVeto = False
 
@@ -128,7 +125,6 @@ for year in years:
             lepss = ["muon"]
         else:
             lepss = ["muon", "electron"]
-        
 
         if opt.dataset != "all":
             for dtp in toplot:
@@ -147,7 +143,8 @@ for year in years:
             if toVeto:
                 continue
 
-        arg2 = arg0 + arg1 + " --ch ltau --count -d " + dat.label
+        #arg2 = arg0 + arg1 + " --ch ltau --count -d " + dat.label
+        arg2 = arg0 + arg1 + " --ch ltau -d " + dat.label
         for region in regions:
             arg3 = arg2 + " --" + region
             if len(variables) > 0:

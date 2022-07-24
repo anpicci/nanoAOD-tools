@@ -16,6 +16,8 @@ for lepton in leptons:
     os.system("rm " + compath +"*ULRunII*root")
 
     for sample in samples:
+        if sample.label.startswith("VBS_SSWW_aQGC_"):
+            continue
         sampletag = sample.label.split("_UL")[0]
         infiles = [f for f in os.listdir(path + lepton) if f.startswith(sampletag+"_UL") and not "2016M" in f]
 

@@ -16,7 +16,7 @@ from array import array
 from rwgcards.FromCardToDict import *
 
 rwgdict = CardToDict("dim8", "FT1_2p0")
-'''
+
 desiredop = [
     "FS0_1p0",
     "FS1_1p0",
@@ -28,10 +28,7 @@ desiredop = [
     "FT1_1p0",
     "FT2_0p9",
 ]
-'''
-desiredop = [
-    "FT1_1p0",
-]
+
 wcoeff = []
 for opname, opdict in rwgdict.items():
     coeffstr = ""
@@ -1487,17 +1484,8 @@ for year in years:
                     dimcut = dimcuts[idsl]
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
-                    isfoutOpen = False
-                    while not isfoutOpen:
-                        try:
-                            fout = ROOT.TFile.Open(foutput, "UPDATE")
-                        except:
-                            print(foutput, " not opened, retrying...")
-                            continue
-                        else:
-                            isfoutOpen = True
-                            continue
-
+                    fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    
                     f1name = ""
                     if 'Fake' in str(sample.label):
                         if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
@@ -1536,17 +1524,8 @@ for year in years:
                                     os.makedirs(pathplot + 'countings/')
                                 if not os.path.exists(pathplot + 'countings/' + cut_tag):
                                     os.makedirs(pathplot + 'countings/' + cut_tag)
-                                if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + syst[0].replace("_Up", "Up").replace("_Down", "Down") + ".csv"):
-                                    isOk = False
-                                    while not isOk:
-                                        try:
-                                            tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
-                                        except:
-                                            print(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv" + " not open, retrying...")
-                                            continue
-                                        else:
-                                            isOk = True
-                                            pass
+                                if not os.path.exists(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv"):
+                                    tmp_f = open(pathplot + 'countings/' + cut_tag + "/" + var._name + "_" + str(opt.year) + ".csv", "w")
                                     tmp_f.write("Process,yields,error\n")
                                     tmp_f.close()
                             if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
