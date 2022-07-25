@@ -20,7 +20,7 @@ parser.add_option('--nodata', dest='nodata', default = False, action='store_true
 (opt, args) = parser.parse_args()
 
 #print("UL" in opt.year, opt.year)
-condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
+#condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 
 if "UL" in opt.year:
     print("Processing UL samples")
@@ -43,6 +43,7 @@ vetosamp = []
 if opt.veto != "none":
     vetosamp = opt.veto.split(",")
 
+'''
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
     sample = ""
@@ -54,7 +55,7 @@ for line in condorstatus:
     if sample != "" and sample.endswith(opt.year):
         if not sample in vetosamp:
             vetosamp.append(sample)
-
+'''
 if len(vetosamp) > 0:
     toVeto = True
     print("Samples to veto:", vetosamp)
@@ -139,7 +140,10 @@ def CondoredList(samplename):
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
                     except(AttributeError, ReferenceError):#, RuntimeWarning):
-                        condlist.remove(condfile)
+                        try:
+                            condlist.remove(condfile)
+                        except:
+                            pass
                         wrongex = True
                         if not opt.check:
                             print("Removing files with damaged " + scenario + " tree...")

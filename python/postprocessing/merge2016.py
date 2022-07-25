@@ -38,6 +38,7 @@ class_list = plot_list
 
 samples2016 = [cl.label for cl in class_list if "UL2016" == cl.year]
 
+'''
 for sample in samples2016:
     if not "aQGC" in sample:
         continue
@@ -47,7 +48,7 @@ for sample in samples2016:
             dim8sample = sample.replace("aQGC", dimtag + "_" + typ)
             samples2016.append(dim8sample)
     break
-
+'''
 #print([sample for sample in samples2016])
 
 for lepton in leptons:
@@ -57,7 +58,9 @@ for lepton in leptons:
 
     for sample in samples2016:
         labelsample = sample.split("_UL")[0]
-        infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and ("2016." in f or "2016APV" in f)]
+        infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and ("2016_" in f or "2016APV" in f)]
+        #print(infiles)
+
         if len(infiles) == 0:
             continue
         #print(infiles)
@@ -67,8 +70,9 @@ for lepton in leptons:
             haddcommand += compath + infile + " "
         print("Merging 2016 samples for " + labelsample + "...")
         os.system(haddcommand)
+        #print(haddcommand)
         
     print(lepton, "ended")
-
+    
 print("That's all!")
 

@@ -28,7 +28,7 @@ parser.add_option('--reco', dest='reco', type=str, default = "not", help='Launch
 
 (opt, args) = parser.parse_args()
 
-condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
+#condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 
 isWithSysts = False
 if "UL" in opt.fold and int(opt.fold.split("UL")[-1]) > 9:
@@ -199,6 +199,7 @@ vetosamp = []
 if opt.veto != "none":
     vetosamp = opt.veto.split(",")
     
+'''
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
     sample = ""
@@ -210,7 +211,7 @@ for line in condorstatus:
     if sample != "" and sample.endswith(opt.year):
         if not sample in vetosamp:
             vetosamp.append(sample)
-
+'''
 if len(vetosamp) > 0:
     toVeto = True
     print("Samples to veto:", vetosamp)

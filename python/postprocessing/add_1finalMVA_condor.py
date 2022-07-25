@@ -697,9 +697,9 @@ for k, v in condor_dict.items():
                 continue
         '''
         if not os.path.exists(kpath+k+".root") or opt.rw:
-            if not DoesSampleExist(v.name) and not opt.ovride:
-                print(k + " not crabbed yet")
-                continue
+            #if not DoesSampleExist(v.name) and not opt.ovride:
+                #print(k + " not crabbed yet")
+                #continue
        
             AreCondored, toRel = AreAllCondored(v.name, k)
             if not AreCondored and not opt.ovride:

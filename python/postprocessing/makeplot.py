@@ -375,7 +375,8 @@ if opt.plot or opt.stack:
 
 print("\ncut_tag:\t", cut_tag)
 
-pathplot = plotrepo + lepstr  + "/" 
+pathplot = plotrepo + lepstr  + "/"
+print(pathplot) 
 pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 
 if opt.plot:
@@ -1282,7 +1283,7 @@ for year in years:
 
         bin_leadjet_mass = array("d", [0., 10., 20., 30., 50.])
         nbin_leadjet_mass = len(bin_leadjet_mass)-1
-        variables.append(variabile('leadjet_mass',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_leadjet_mass, bin_leadjet_mass))
+        variables.append(variabile('leadjet_mass',  'Lead jet mass [GeV]',  wzero+'*('+cutbase+')', True, nbin_leadjet_mass, bin_leadjet_mass))
         #bin_ak8leadjet_pt = array("d", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         #nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
         #variables.append(variabile('AK8leadjet_pt',  'AK8 Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', False, nbin_ak8leadjet_pt, bin_ak8leadjet_pt))#30, 1500))
@@ -1322,7 +1323,7 @@ for year in years:
         
         bin_subleadjet_mass = array("d", [0., 5., 10., 15., 25.])
         nbin_subleadjet_mass = len(bin_subleadjet_mass)-1
-        variables.append(variabile('subleadjet_mass',  'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_subleadjet_mass, bin_subleadjet_mass))
+        variables.append(variabile('subleadjet_mass',  'Sublead jet mass [GeV]',  wzero+'*('+cutbase+')', True, nbin_subleadjet_mass, bin_subleadjet_mass))
         
         variables.append(variabile('nJets', 'n jets',  wzero+'*('+cutbase+')', True,  11, -0.5, 10.5))
         variables.append(variabile('nBJets', 'n bjets (DeepJet M)',  wzero+'*('+cutbase+')', True,  6, -0.5, 5.5))

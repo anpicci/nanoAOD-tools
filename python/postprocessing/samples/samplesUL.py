@@ -1297,7 +1297,7 @@ WZ_UL2016.year = "UL2016"
 WZ_UL2016.dataset = "/WZ_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
 WZ_UL2016.sigma = 27.59
 
-WZ_UL2016M = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2016")
+WZ_UL2016M = sample(WZcolor, 1, 1001, "WZ", "WZ_UL2016M")
 WZ_UL2016M.year = "UL2016M"
 WZ_UL2016M.components = [
     WZ_UL2016APV,

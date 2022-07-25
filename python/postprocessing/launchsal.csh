@@ -5,28 +5,29 @@ set folder = vUL035 #### aQGC added, new fakes, systematics completed
 #######    2017   #######
 set year = 'UL2017'
 #reset
-python3 PrepareToPlot.py -f $folder -y $year -d DataEle_ --rw
-#python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d DataEle_
+#python3 PrepareToPlot.py -f $folder -y $year -d VBS_SSWW_aQGC_ --or
+#python3 PrepareToPlot.py -f $folder -y $year -v VBS_SSWW_aQGC_ --rw
+python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d VBS_SSWW_aQGC_
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2018   #######
 set year = 'UL2018'
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year --rw -d VBS_SSWW_aQGC_
+#python3 PrepareToPlot.py -f $folder -y $year --rw -v TT_,WJets_
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -c -d WpWpJJ_$year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2016   #######
 set year = 'UL2016'
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year --rw -d VBS_SSWW_
+#python3 PrepareToPlot.py -f $folder -y $year --rw -v TT_,WJets_
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d ZZtoLep_$year,TTTo2L2Nu_$year,TVX_$year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2016APV   #######
 set year = 'UL2016APV'
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year --rw -d VBS_SSWW_
+#python3 PrepareToPlot.py -f $folder -y $year --rw -v TT_,WJets_
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -c -d DYJets
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
