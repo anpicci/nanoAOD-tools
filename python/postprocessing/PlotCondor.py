@@ -159,7 +159,7 @@ for year in years:
             if len(variables) > 0:
                 arg3 += " -v "
                 for idv, variab in enumerate(variables):
-                    if idv > 1:
+                    if idv > 0:
                         arg3 += ","
                     arg3 += variab
 
@@ -170,6 +170,6 @@ for year in years:
                 if opt.nosyst:
                     arg4 += " --syst noSyst"
                 argss.append(arg4)
-            
+                
         submitter(dat, argss, folder, opt.cut)
         
