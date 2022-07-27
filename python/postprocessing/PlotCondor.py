@@ -8,7 +8,7 @@ from samples.samplesUL import *
 usage = 'python3 PlotCondor.py -d dataset_name -f destination_folder -y year'
 parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dataset', type=str, default = 'all', help='Please enter a dataset name')
-parser.add_option('-v', '--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
+parser.add_option('--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
 parser.add_option('-c', '--cuts', dest='cut', type=str, default = 'not', help='Please enter a cut')
 parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,UL2016,UL2017,UL2018', help='Please enter year(s)')
@@ -79,7 +79,7 @@ def submitter(sample, argsins, folder, cut):
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 6\n")
+    f.write("request_cpus            = 10\n")
     #f.write("+AccountingGroup        = \"group_u_BE.ABP.SLAP\"\n")
     output = outcore + sample.label + cuttag + ".out"
     log = logcore + sample.label + cuttag + ".log"

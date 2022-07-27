@@ -855,6 +855,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         PV          = Object(event, "PV")
         HLT         = Object(event, "HLT")
         Flag        = Object(event, 'Flag')
+        TrigObj        = Object(event, 'TrigObj')
         chain.GetEntry(i)
         
         genparts = None
@@ -1148,7 +1149,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             if not Flag.eeBadScFilter:
                 continue
 
-        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, sys.argv[4])
+        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, sys.argv[4], TrigObj)
         
         if noTrigger:
             continue

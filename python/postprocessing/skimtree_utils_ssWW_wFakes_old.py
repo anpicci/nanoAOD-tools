@@ -1009,8 +1009,6 @@ def trig_map(HLT, PV, yearr, runPeriod, flag, trigobj):
     elif(year == "UL2018"):
         mutrig = HLT.IsoMu24
         eletrig = HLT.Ele32_WPTight_Gsf
-        else:#if flag == "test":
-            eletrig = HLT.Ele32_WPTight_Gsf or HLT.Photon200 
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if eletrig:# or HLT.Photon200)
