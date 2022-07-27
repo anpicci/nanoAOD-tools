@@ -226,8 +226,8 @@ else:
         opt.channel = 'bjet'
 
 print(opt.fold, opt.channel, folder)
-path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/"
-#path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/"
+#path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/"
+path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/"
 print("output path:", path, "\n")
 
 subpy = ""
