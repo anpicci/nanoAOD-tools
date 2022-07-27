@@ -92,6 +92,14 @@ branches = [
     dnn_sm_branch_T_DYL,
     dnn_cW_branch_novar,
     dnn_cW_branch_T_DYL_novar,
+    dnn_sm_branch_v2,
+    dnn_cW_branch_v2,
+    dnn_cHW_branch_v2,
+    dnn_aQGC_branch_v2,
+    bdt_sm_branch_v2,
+    bdt_cW_branch_v2,
+    bdt_cHW_branch_v2,
+    bdt_aQGC_branch_v2,
 ]
 
 paths = [
@@ -101,6 +109,14 @@ paths = [
     dnn_sm_path_T_DYL,
     dnn_cW_path_novar,
     dnn_cW_path_T_DYL_novar,
+    dnn_sm_path_v2,
+    dnn_cW_path_v2,
+    dnn_cHW_path_v2,
+    dnn_aQGC_path_v2,
+    bdt_sm_path_v2,
+    bdt_cW_path_v2,
+    bdt_cHW_path_v2,
+    bdt_aQGC_path_v2,
 ]
 
 scalers = [
@@ -110,6 +126,14 @@ scalers = [
     dnn_sm_scaler_T_DYL,
     dnn_cW_scaler_novar,
     dnn_cW_scaler_T_DYL_novar,
+    dnn_sm_scaler_v2,
+    dnn_cW_scaler_v2,
+    dnn_cHW_scaler_v2,
+    dnn_aQGC_scaler_v2,
+    bdt_sm_scaler_v2,
+    bdt_cW_scaler_v2,
+    bdt_cHW_scaler_v2,
+    bdt_aQGC_scaler_v2,
 ]
 
 folder = opt.folder

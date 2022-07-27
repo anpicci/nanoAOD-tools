@@ -274,7 +274,7 @@ def MLRun(st, stpath):
                 else:
                     pass
                     
-                if bran in finaltree.GetListOfBranches():
+                if False:#bran in finaltree.GetListOfBranches():
                     print(bran + " already there in " + st + " for scenario " + scen)
                     IsThere.append(True)
                 else:
@@ -329,15 +329,25 @@ def OpenAndRun(st, file_path):
             continue
 
         #print("Processing events for scenario", scenario)
-        try:
-            tmpfile = ROOT.TFile.Open(file_path)
-            tmptree = tmpfile.Get("events_"+scenario)
-            tmpentr = tmptree.GetEntries()
-        except:
-            print("Problems with opening " + file_path + ", retrying...")
-            continue
-        else:
-            pass
+        toexit = False
+        idw = 0
+        while not toexit:
+            if idw > 10:
+                raise RuntimeError("Problem with EOS, relaunch")
+                break
+                
+            try:
+                tmpfile = ROOT.TFile.Open(file_path)
+                tmptree = tmpfile.Get("events_"+scenario)
+                tmpentr = tmptree.GetEntries()
+            except:
+                print("Problems with opening " + file_path + ", retrying...")
+                idw += 1
+                continue
+            else:
+                toexit = True
+                pass
+        
         ids += 1
         tmpfile.Close()
 

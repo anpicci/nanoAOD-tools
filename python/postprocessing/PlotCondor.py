@@ -3,16 +3,22 @@ from ML.MLmodels import *
 import optparse
 from samples.samplesUL import *
 
-os.system("reset")
+#os.system("reset")
 
 usage = 'python3 PlotCondor.py -d dataset_name -f destination_folder -y year'
 parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dataset', type=str, default = 'all', help='Please enter a dataset name')
 parser.add_option('-v', '--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
+parser.add_option('-c', '--cut', dest='cut', type=str, default = 'not', help='Please enter a cut')
 parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,UL2016,UL2017,UL2018', help='Please enter year(s)')
 parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please enter variable(s)')
+parser.add_option('--nosyst', dest='nosyst', default = False, action='store_true', help='no syst applied')
 (opt, args) = parser.parse_args()
+
+def cutToTag(cut):
+    newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
+    return newstring
 
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])
@@ -47,15 +53,18 @@ if not os.path.exists(errcore):
 if not os.path.exists(logcore):
     os.system("mkdir -p " + logcore)
 
-def submitter(sample, argsins, folder):
-    exesh = subfold + "/" + exe + "_" + sample.label + "_" + folder + ".sh"
+def submitter(sample, argsins, folder, cut):
+    cuttag = ""
+    if cut != "not":
+        cuttag = "_" + cutToTag(cut)
+    exesh = subfold + "/" + exe + "_" + sample.label + "_" + folder + cuttag + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
     for argsin in argsins:
         fsh.write("python3 " + pymacro + " " + argsin + "\n")
     fsh.close()
     
-    condorsubb = condorsub + "_" + str(sample.year) + "_" + folder + ".sub"
+    condorsubb = condorsub + "_" + str(sample.year) + "_" + folder + cuttag + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
@@ -71,9 +80,9 @@ def submitter(sample, argsins, folder):
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
     f.write("request_disk            = 50MB\n")
-    output = outcore + sample.label + ".out"
-    log = logcore + sample.label + ".log"
-    error = errcore + sample.label + ".err"
+    output = outcore + sample.label + cuttag + ".out"
+    log = logcore + sample.label + cuttag + ".log"
+    error = errcore + sample.label + cuttag + ".err"
     f.write("output                  = " + output + "\n")
     f.write("error                   = " + error + "\n")
     f.write("log                     = " + log + "\n")
@@ -155,7 +164,12 @@ for year in years:
                     arg3 += variab
 
             for lepn in lepss:
-                argss.append(arg3 + " --lep " + lepn)
+                arg4 = arg3 + " --lep " + lepn
+                if opt.cut != "not":
+                    arg4 += " --cut \"" + opt.cut + "\""
+                if opt.nosyst:
+                    arg4 += " --syst noSyst"
+                argss.append(arg4)
             
-        submitter(dat, argss, folder)
+        submitter(dat, argss, folder, opt.cut)
         
