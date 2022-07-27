@@ -1089,7 +1089,7 @@ else:
 
           dataset_dict[str(v.year)].append(v)
 
-print("dataset_dict", dataset_dict)
+#print("dataset_dict", dataset_dict)
 
 years = []
 if(opt.year!='all'):
@@ -1539,17 +1539,17 @@ for year in years:
                     fout.Close()
                     f1.Close()
 
-        if(opt.stack):
+        if opt.stack:
             for var in variables:
                 if not "all" in vartoplot:
                     if not var._name in vartoplot:
                         continue
                             
                 print("var to stack", var._name)
-                #os.system('set LD_PRELOAD=libtcmalloc.so')
-                #print("channel", opt.channel)
-                #makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)], year)
-                #os.system('set LD_PRELOAD=libtcmalloc.so')
+                os.system('set LD_PRELOAD=libtcmalloc.so')
+                print("channel", opt.channel)
+                makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)], year)
+                os.system('set LD_PRELOAD=libtcmalloc.so')
 
         if lep == 'muon':
             dataset_new.append(sample_dict['DataEle_'+str(year)])
