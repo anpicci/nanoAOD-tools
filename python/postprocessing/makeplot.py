@@ -760,6 +760,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
           
         infile[s.label].cd()
         print("opening file: ", infile[s.label].GetName())
+        print("isthere?", histoname, infile[s.label].Get(histoname))
         if('Data' in s.label):
             if ("GenPart" in variabile_._name) or ("MC_" in variabile_._name):
                 continue
