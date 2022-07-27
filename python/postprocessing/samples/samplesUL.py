@@ -1379,7 +1379,7 @@ WpWpJJ_UL2016.components = [
     WpWpJJ_QCD_UL2016,
 ]
 
-WpWpJJ_EWK_UL2016M = sample(WWJJcolor, 1, 1001, "EW+QCD VBS ssWW", "WpWpJJ_EWK_UL2016M")
+WpWpJJ_EWK_UL2016M = sample(EWVBScolor, 1, 1001, "EW VBS ssWW", "WpWpJJ_EWK_UL2016M")
 WpWpJJ_EWK_UL2016M.year = "UL2016M"
 WpWpJJ_EWK_UL2016M.components = [
     WpWpJJ_EWK_UL2016APV,

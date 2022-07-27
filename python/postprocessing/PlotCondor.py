@@ -10,7 +10,7 @@ parser = optparse.OptionParser(usage)
 parser.add_option('-d', '--dat', dest='dataset', type=str, default = 'all', help='Please enter a dataset name')
 parser.add_option('-v', '--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
-parser.add_option('-c', '--cut', dest='cut', type=str, default = 'not', help='Please enter a cut')
+parser.add_option('-c', '--cuts', dest='cut', type=str, default = 'not', help='Please enter a cut')
 parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,UL2016,UL2017,UL2018', help='Please enter year(s)')
 parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please enter variable(s)')
 parser.add_option('--nosyst', dest='nosyst', default = False, action='store_true', help='no syst applied')
@@ -95,7 +95,7 @@ def submitter(sample, argsins, folder, cut):
     if os.path.exists(error):
         os.system("rm " + error)
 
-    os.system("condor_submit " + condorsubb)
+    #os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 years = opt.years.split(",")
@@ -104,6 +104,10 @@ toveto = opt.veto.split(",")
 variables = []
 if opt.vars != "all":
     variables = opt.vars.split(",")
+
+cuts = []
+if opt.cut != "not":
+    cuts = opt.cut.split(",")
 
 folder = opt.folder
 pymacro = "makeplot.py"
@@ -154,6 +158,7 @@ for year in years:
 
         #arg2 = arg0 + arg1 + " --ch ltau --count -d " + dat.label
         arg2 = arg0 + arg1 + " --ch ltau -d " + dat.label
+        
         for region in regions:
             arg3 = arg2 + " --" + region
             if len(variables) > 0:
@@ -165,11 +170,15 @@ for year in years:
 
             for lepn in lepss:
                 arg4 = arg3 + " --lep " + lepn
-                if opt.cut != "not":
-                    arg4 += " --cut \"" + opt.cut + "\""
                 if opt.nosyst:
                     arg4 += " --syst noSyst"
-                argss.append(arg4)
+                if opt.cut != "not":
+                    arg5 = ""
+                    for cut in cuts: 
+                        arg5 = arg4 + " --cut \"" + cut + "\""
+                        argss.append(arg5)
+                else:
+                    argss.append(arg4)
                 
         submitter(dat, argss, folder, opt.cut)
         
