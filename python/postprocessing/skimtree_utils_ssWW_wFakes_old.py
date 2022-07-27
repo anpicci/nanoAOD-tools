@@ -164,7 +164,7 @@ effLumi_2017 = {
             },
         "Ele" : {
             "Ele35_WPTight_Gsf"                     : 41.48,
-            #"Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
+            "Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
             "Photon200"                             : 41.48,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
@@ -261,8 +261,8 @@ def trig_finder(HLT, yearr, samplename):
         #if HLT.TkMu100:                                 vTrigMu.append("TkMu100")
         #if HLT.Mu8_TrkIsoVVL:                           vTrigMu.append("Mu8_TrkIsoVVL")
         #if HLT.Mu17_TrkIsoVVL:                          vTrigMu.append("Mu17_TrkIsoVVL")
-        if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
-        #if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
+        #if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
+        if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
         #if not ('DataMuB' in samplename or 'DataEleB' in samplename or 'DataHTB' in samplename):
             #if HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30:     vTrigEle.append("Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30")
             #if HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30")
@@ -945,7 +945,7 @@ def get_HT(jets):
         HT += jet.pt
     return HT
 
-def trig_map(HLT, PV, yearr, runPeriod, flag):
+def trig_map(HLT, PV, yearr, runPeriod, flag, trigobj):
     isGoodPV = True#copy.deepcopy(pass_MET(flag)) #(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passMu = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passEle = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
@@ -996,11 +996,7 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
 
     elif(year == "UL2017"):
         mutrig = HLT.IsoMu27
-        if True:#flag != "test":
-            eletrig = HLT.Ele35_WPTight_Gsf
-        #else:# flag == "test":
-            #eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200
-        #eletrig = (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40))
+        eletrig = HLT.Ele32_WPTight_Gsf_L1DoubleEG and trigobj.filterBits == 1024
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if eletrig:# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)
@@ -1012,8 +1008,7 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
 
     elif(year == "UL2018"):
         mutrig = HLT.IsoMu24
-        if True:#flag != "test":
-            eletrig = HLT.Ele32_WPTight_Gsf
+        eletrig = HLT.Ele32_WPTight_Gsf
         else:#if flag == "test":
             eletrig = HLT.Ele32_WPTight_Gsf or HLT.Photon200 
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
