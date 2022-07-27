@@ -97,7 +97,7 @@ def sub_writer(sample, n, files, folder):
     f.write("executable              = " + executpy + "\n")
     f.write("arguments               = " + args + "\n")
     #f.write("input                   = input.txt\n")
-    f.write("request_disk                   = 50MB\n")
+    f.write("request_cpus            = 8\n")
     f.write("output                  = condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_" + opt.folder + "/error/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".err\n")
     f.write("log                     = condor_" + opt.folder + "/log/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".log\n")

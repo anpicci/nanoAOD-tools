@@ -79,7 +79,8 @@ def submitter(sample, argsins, folder, cut):
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_disk            = 50MB\n")
+    f.write("request_cpus            = 6\n")
+    #f.write("+AccountingGroup        = \"group_u_BE.ABP.SLAP\"\n")
     output = outcore + sample.label + cuttag + ".out"
     log = logcore + sample.label + cuttag + ".log"
     error = errcore + sample.label + cuttag + ".err"
@@ -95,7 +96,7 @@ def submitter(sample, argsins, folder, cut):
     if os.path.exists(error):
         os.system("rm " + error)
 
-    #os.system("condor_submit " + condorsubb)
+    os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 years = opt.years.split(",")

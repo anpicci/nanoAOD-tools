@@ -1161,14 +1161,18 @@ for year in years:
 
         
         variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_SM_UL035_T_DYL', 'SM DNN output (T DY_L)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_cW_UL035_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_cW_UL035_novar', 'c_{W} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_cHW_UL035_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_aQGC_UL035_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         variables.append(variabile('BDT_SM_UL035_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_SM_UL035_T_DYL', 'SM BDT output (T DY_L)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cW_UL035_v2', 'c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_cW_UL035_novar', 'c_{W} BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cHW_UL035_v2', 'c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_aQGC_UL035_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
