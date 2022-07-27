@@ -56,15 +56,18 @@ for sample in samples:
         os.makedirs(dirpath)
 
     #url = os.popen('crab getoutput --xrootd --jobids 1 -d ' + path + crabdir).readlines()
+    print 'crab getoutput --xrootd -d ' + path + crabdir
     url = os.popen('crab getoutput --xrootd -d ' + path + crabdir).readlines()
 
     print "Printing out crabbed files for "+str(sample.label)
 
     url_dict = {}
     for u in url:
+        if u.startswith("Your"):
+            continue
+        
         if 'root' not in u:
             print "Let's split requests to make crab getoutput happy..."
-
             try:
                 npaths = int(u.split("for ")[-1].split(" ")[0])
             except:
@@ -80,7 +83,8 @@ for sample in samples:
 
                 print 'Finding rootfile produced by jobs', str(crabgo), "..."
                 print 'crab getoutput --xrootd --jobids=' + str(crabgo) + ' -d ' + path + crabdir
-                curl = os.popen('crab getoutput --xrootd --jobids=' + str(crabgo) + ' -d ' + path + crabdir).readlines()
+                curl = [cc for cc in os.popen('crab getoutput --xrootd --jobids=' + str(crabgo) + ' -d ' + path + crabdir).readlines() if not cc.startswith("Your")]
+    
                 if 'files to retrieve' in curl:
                     print 'Files not reachable with xrootd, relaunch jobs with another remote output folder.'
                     finished = True
@@ -111,11 +115,12 @@ for sample in samples:
                     finished = True
                 t+=1
             break
-
+    
+                    
         else:
             idx = int(u.split("hadd_")[-1].split(".")[0])
             url_dict[idx] = u
-
+    
     print len(url_dict), "paths found for", sample.label
     pr = 0
     if len(url_dict)>0:
@@ -128,4 +133,3 @@ for sample in samples:
         print pr, "paths saved for", sample.label
     else:
         print "No path saved for", sample.label
-
