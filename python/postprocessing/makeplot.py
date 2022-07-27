@@ -135,6 +135,7 @@ else:
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
 print("To plot:", vartoplot)
+
 epdgstr = ""
 mpdgstr = ""
 if opt.channel=="ltau":
@@ -1544,13 +1545,14 @@ for year in years:
                     if not var._name in vartoplot:
                         continue
                             
-                print(var._xmax)
-                os.system('set LD_PRELOAD=libtcmalloc.so')
-                print("channel", opt.channel)
-                makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)], year)
-                os.system('set LD_PRELOAD=libtcmalloc.so')
+                print("var to stack", var._name)
+                #os.system('set LD_PRELOAD=libtcmalloc.so')
+                #print("channel", opt.channel)
+                #makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)], year)
+                #os.system('set LD_PRELOAD=libtcmalloc.so')
 
         if lep == 'muon':
             dataset_new.append(sample_dict['DataEle_'+str(year)])
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
+
