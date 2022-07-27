@@ -134,6 +134,7 @@ else:
 
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
+print("To plot:", vartoplot)
 epdgstr = ""
 mpdgstr = ""
 if opt.channel=="ltau":
