@@ -65,6 +65,9 @@ for lepton in leptons:
             continue
         #print(infiles)
 
+        if sample.startswith("VBS_SSWW_F"):
+            continue
+
         haddcommand = "hadd -f " + compath + sample +"M_" + lepton + ".root "
         for infile in infiles:
             haddcommand += compath + infile + " "
