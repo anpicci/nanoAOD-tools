@@ -14,6 +14,7 @@ parser.add_option('-c', '--cuts', dest='cut', type=str, default = 'not', help='P
 parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,UL2016,UL2017,UL2018', help='Please enter year(s)')
 parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please enter variable(s)')
 parser.add_option('--nosyst', dest='nosyst', default = False, action='store_true', help='no syst applied')
+parser.add_option('--count', dest='count', default = False, action='store_true', help='no syst applied')
 (opt, args) = parser.parse_args()
 
 def cutToTag(cut):
@@ -79,7 +80,7 @@ def submitter(sample, argsins, folder, cut):
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 16\n")
+    f.write("request_cpus            = 10\n")
     #f.write("+AccountingGroup        = \"group_u_BE.ABP.SLAP\"\n")
     output = outcore + sample.label + cuttag + ".out"
     log = logcore + sample.label + cuttag + ".log"
@@ -168,6 +169,9 @@ for year in years:
                     if idv > 0:
                         arg3 += ","
                     arg3 += variab
+
+            if opt.count:
+                arg3 += " --count"
 
             for lepn in lepss:
                 arg4 = arg3 + " --lep " + lepn

@@ -1242,7 +1242,7 @@ for year in years:
         variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', True, 10, -2.5, 2.5))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld', lep2[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', False, 20, -5, 5))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{#tau}',  wzero+'*('+cutbase+')', False, 12, -1.5, 1.5))
-
+        variables.append(variabile('tau_DecayMode', '#tau Decay Mode',  wzero+'*('+cutbase+')', True, 12, -0.5, 11.5))
         variables.append(variabile(lep2[0] + '_phi', lep2[1] + ' #Phi',  wzero+'*('+cutbase+')', True,  7, -3.50, 3.50))
 
         if opt.channel == "ltau":
