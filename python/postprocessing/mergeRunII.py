@@ -37,7 +37,6 @@ typcontr = [
 samples = [cl.label for cl in plot_list if "UL2016" == cl.year]
 #print([sample for sample in samples])
 
-'''
 for sample in samples:
     if not "aQGC" in sample:
         continue
@@ -47,7 +46,6 @@ for sample in samples:
             dim8sample = sample.replace("aQGC", dimtag + "_" + typ)
             samples.append(dim8sample)
     break
-'''
 
 for lepton in leptons:
     compath = path + lepton + "/"
