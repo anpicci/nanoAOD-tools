@@ -4733,7 +4733,7 @@ stack_list = [
     #VBS_SSWW_DIM6_ULRunII,
     #VBS_SSWW_aQGC_ULRunII,
     WpWpJJ_QCD_ULRunII,
-    WpWpJJ_ULRunII,
+    #WpWpJJ_ULRunII,
     ZZtoLep_ULRunII,
     Triboson_ULRunII,
     TVX_ULRunII,
