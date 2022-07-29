@@ -55,8 +55,10 @@ for lepton in leptons:
     for sample in samples:
         sampletag = sample.split("_UL")[0]
         infiles = [f for f in os.listdir(path + lepton) if f.startswith(sampletag+"_UL") and not "2016M" in f]
-        print(infiles)
+        #print(infiles)
    
+        if sample.startswith("VBS_SSWW_F"):
+            continue
         if len(infiles) == 0:
             continue
 

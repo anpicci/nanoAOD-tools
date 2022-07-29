@@ -15,6 +15,7 @@ parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,U
 parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please enter variable(s)')
 parser.add_option('--nosyst', dest='nosyst', default = False, action='store_true', help='no syst applied')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='no syst applied')
+parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 (opt, args) = parser.parse_args()
 
 def cutToTag(cut):
@@ -172,6 +173,9 @@ for year in years:
 
             if opt.count:
                 arg3 += " --count"
+
+            if opt.tDMcut:
+                arg3 += " --tDMcut"
 
             for lepn in lepss:
                 arg4 = arg3 + " --lep " + lepn

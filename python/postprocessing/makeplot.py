@@ -70,6 +70,7 @@ parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v7'
 parser.add_option('-d', '--dat', dest='dat', type='string', default = 'all', help="")
 parser.add_option('--user', dest='user', type='string', default=str(os.environ.get('USER')), help='User')
 parser.add_option('--ttbar', dest='ttbar', default = False, action='store_true', help='Enable ttbar CR, default disabled')
+parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='Enable countings')
 parser.add_option('--HT', dest='HT', default = False, action='store_true', help='Enable CTHT')
 parser.add_option('--wfake', dest='wfake', type='string', default = 'fake', help='Enable stackplots with data-driven fake leptons, default disabled')
@@ -114,12 +115,15 @@ else:
 folder = opt.folder 
 if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco" in opt.folder and int(opt.folder.split("mcreco")[-1].split("v")[-1]) >= 80) or not "mcreco" in opt.folder):
     folder += "/" + opt.channel
-pfolder = opt.folder + opt.plot_tag
+plot_tag = opt.plot_tag
+if opt.tDMcut:
+    plot_tag = "_tDM"
+pfolder = opt.folder #+ opt.plot_tag
 
 filerepo = '/eos/home-a/apiccine/VBS/nosynch/' + folder + '/'
 plotrepo = '/eos/home-a/apiccine/VBS/nosynch/' + pfolder + '/'
-
-#print(filerepo, plotrepo)
+print(pfolder)
+print(filerepo, plotrepo)
 
 FRtag = opt.wfake.split("_")[-1]
 
@@ -131,6 +135,8 @@ else:
         lepstr = 'plot/' + opt.channel
     else:
         lepstr = 'plot/' + opt.lep
+if opt.tDMcut:
+    lepstr = lepstr.replace("plot", "plot_tDM")
 
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
@@ -284,6 +290,11 @@ if opt.bdt or opt.ebdt or opt.mubdt:
     elif opt.ebdt or opt.mubdt:
         cut_tag = cut_tag + "_lepBDTcut"        
 
+if opt.tDMcut:
+    for k, v in cut_dict.items():
+        cut_dict[k] = v + "*(tau_DecayMode<5||tau_DecayMode>6)"
+
+print(cut_dict)
 
 lumi = {'2016': 35.9, 'UL2016M': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.5, "2018": 59.7, 'UL2018':59.8, "ULRunII":137.1}
 
@@ -378,8 +389,11 @@ if opt.plot or opt.stack:
 print("\ncut_tag:\t", cut_tag)
 
 pathplot = plotrepo + lepstr  + "/"
-print(pathplot) 
+
 pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
+if opt.tDMcut:
+    pathstack = pathstack.replace("stack", "stack_tDM")
+print(lepstr, pathplot, pathstack) 
 
 if opt.plot:
     if not os.path.exists(pathplot) and cut_tag != "1p":
@@ -518,7 +532,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         
     cut = ''
     
-    if opt.count and syst == "":
+    if opt.count and syst == "":# and variable._name == "countings":
         if not "_aQGC_" in sample.label:
             samcountlab = sample.leglabel
         else:
@@ -639,7 +653,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
             h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
 
-        if not opt.count:
+        if not (opt.count):# and variable._name == "countings"):
             continue
         else:
             minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
@@ -651,7 +665,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             terr += binerrcont**2.
             binerrcont = str(binerrcont)
 
-    if opt.count and syst == "":
+    if opt.count and syst == "":# and variable._name == "countings":
         terr = terr**0.5
         countf.write(str(bincont).replace(".",",") + ";" + str(binerrcont).replace(".",","))
         countf.write("\n")
@@ -1560,3 +1574,4 @@ for year in years:
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
 
+ 
