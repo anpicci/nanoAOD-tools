@@ -5,7 +5,7 @@ from rwgcards.FromCardToDict import *
 os.system("reset")
 
 folder = "vUL035"
-path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot/"
+path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot_tDM/"
 leptons = ["electron", "muon"]
 
 rwgdict = CardToDict("dim8", "FT1_2p0")

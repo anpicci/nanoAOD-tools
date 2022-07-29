@@ -61,6 +61,9 @@ for lepton in leptons:
         infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and ("2016_" in f or "2016APV" in f)]
         #print(infiles)
 
+        if sample.startswith("VBS_SSWW_F"):
+            continue
+
         if len(infiles) == 0:
             continue
         #print(infiles)

@@ -1170,7 +1170,7 @@ for year in years:
         variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
         
         #bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 1.])
-        bin_bdtsm = array("d", [0., 0.2, 0.4, 0.6, 0.8, 1.])
+        bin_bdtsm = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         nbin_bdtsm = len(bin_bdtsm) - 1
 
         
@@ -1193,9 +1193,9 @@ for year in years:
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
        
-        bin_m1T = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+        bin_m1T = array("d", [0., 50., 100., 150., 200., 300., 400., 500.])#, 1000.])
         #if not opt.sr:
-        bin_mo1 = array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+        bin_mo1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
         #else:
             #bin_mo1 = array("d", [0., 100., 150., 200., 300.])
         nbin_m1T = len(bin_m1T) - 1 
@@ -1204,9 +1204,9 @@ for year in years:
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
         
         if opt.sr:
-            bin_mjj = array("d", [500., 700., 1000., 1500., 2500.])
+            bin_mjj = array("d", [500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_mjj = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1800.])
+            bin_mjj = array("d", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 1800., 2000.])
         else:
             bin_mjj = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000.])
         nbin_mjj = len(bin_mjj) - 1 
@@ -1225,7 +1225,7 @@ for year in years:
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', True, 10, -2.5, 2.5))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', True, 7, -3.50, 3.50))
 
-        bin_lepton_pt = array("d", [30., 50., 75., 100., 125., 150.])
+        bin_lepton_pt = array("d", [30., 40., 50., 60., 70., 80., 100., 120., 140., 160., 200.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_lepton_pt, bin_lepton_pt))
 
@@ -1354,18 +1354,18 @@ for year in years:
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_metpt = array("d", [0., 10., 15., 20., 25., 30., 35., 40., 45., 50.])
         elif opt.ttbar:
-            bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 250., 300.])
+            bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 225., 250., 275., 300.])
         else:
-            bin_metpt = array("d", [0., 25., 50., 75., 100., 125., 150., 200.])
+            bin_metpt = array("d", [0., 25., 50., 75., 100., 125., 150., 175., 200., 225., 250.])
         nbin_metpt = len(bin_metpt) - 1
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', True, nbin_metpt, bin_metpt))
 
         if opt.sr:
-            bin_invm = array("d", [600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2400.])
+            bin_invm = array("d", [600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400.])
         elif opt.fakes or opt.wsdy:
-            bin_invm = array("d", [0., 400., 600., 800., 1000., 1200., 1440., 1600., 2000., 2400.])
+            bin_invm = array("d", [0., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
         else:
-            bin_invm = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1440., 1600., 2000., 2400., 2800.])
+            bin_invm = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
        
         nbin_invm = len(bin_invm) - 1 
 
