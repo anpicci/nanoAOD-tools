@@ -249,7 +249,7 @@ for sample in samples:
                     presel += " && (HLT_PFHT250 || HLT_PFHT300)"
             elif year == 'UL2017':# and sample.runP != 'B':
                 if 'DataHT' not in sample.label:
-                    presel += " && (HLT_IsoMu27 || HLT_Mu50 || HLT_Ele35_WPTight_Gsf || (HLT_Ele32_WPTight_Gsf_L1DoubleEG && (L1_SingleIsoEG30er2p1 || L1_SingleIsoEG32 || L1_SingleEG40)) || HLT_Photon200)"
+                    presel += " && (HLT_IsoMu27 || HLT_Mu50 || HLT_Ele35_WPTight_Gsf || HLT_Ele32_WPTight_Gsf_L1DoubleEG || HLT_Photon200)"
                 else:
                     presel += " && (HLT_PFHT250 || HLT_PFHT350)"# || HLT_PFHT370 || HLT_PFHT430 || HLT_PFHT510 || HLT_PFHT590 || HLT_PFHT680 || HLT_PFHT780 || HLT_PFHT890)"
             elif year == 'UL2018':

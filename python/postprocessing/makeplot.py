@@ -1204,11 +1204,9 @@ for year in years:
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
         
         if opt.sr:
-            bin_mjj = array("d", [500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
-        elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
-            bin_mjj = array("d", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1400., 1600., 1800., 2000.])
+            bin_mjj = array("d", [500., 600., 700., 800., 900., 1000., 1100., 1200., 1300., 1400., 1500., 1600., 1700., 1800., 2000., 2200., 2400., 2600., 2800.])
         else:
-            bin_mjj = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000.])
+            bin_mjj = array("d", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1300., 1400., 1500., 1600., 1700., 1800., 1900., 2000., 2100., 2200., 2400.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mjj, bin_mjj))
         
@@ -1354,16 +1352,16 @@ for year in years:
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_metpt = array("d", [0., 10., 15., 20., 25., 30., 35., 40., 45., 50.])
         elif opt.ttbar:
-            bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 225., 250., 275., 300.])
+            bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 225., 250., 275., 300., 325., 350.,])
         else:
-            bin_metpt = array("d", [0., 25., 50., 75., 100., 125., 150., 175., 200., 225., 250.])
+            bin_metpt = array("d", [0., 25., 50., 75., 100., 125., 150., 175., 200., 225., 250., 275., 300.])
         nbin_metpt = len(bin_metpt) - 1
         variables.append(variabile('MET_pt', 'p_{T}^{miss} [GeV]',  wzero+'*('+cutbase+')', True, nbin_metpt, bin_metpt))
 
         if opt.sr:
             bin_invm = array("d", [600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400.])
         elif opt.fakes or opt.wsdy:
-            bin_invm = array("d", [0., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
+            bin_invm = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
         else:
             bin_invm = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
        
