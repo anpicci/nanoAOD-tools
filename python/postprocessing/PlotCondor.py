@@ -16,6 +16,7 @@ parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please 
 parser.add_option('--nosyst', dest='nosyst', default = False, action='store_true', help='no syst applied')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='no syst applied')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
+parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
 (opt, args) = parser.parse_args()
 
 def cutToTag(cut):
@@ -81,7 +82,7 @@ def submitter(sample, argsins, folder, cut):
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 16\n")
+    f.write("request_cpus            = 8\n")
     #f.write("+AccountingGroup        = \"group_u_BE.ABP.SLAP\"\n")
     output = outcore + sample.label + cuttag + ".out"
     log = logcore + sample.label + cuttag + ".log"
@@ -176,6 +177,8 @@ for year in years:
 
             if opt.tDMcut:
                 arg3 += " --tDMcut"
+            elif opt.test:
+                arg3 += " --test"
 
             for lepn in lepss:
                 arg4 = arg3 + " --lep " + lepn

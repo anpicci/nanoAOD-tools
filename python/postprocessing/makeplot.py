@@ -71,6 +71,7 @@ parser.add_option('-d', '--dat', dest='dat', type='string', default = 'all', hel
 parser.add_option('--user', dest='user', type='string', default=str(os.environ.get('USER')), help='User')
 parser.add_option('--ttbar', dest='ttbar', default = False, action='store_true', help='Enable ttbar CR, default disabled')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
+parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='Enable countings')
 parser.add_option('--HT', dest='HT', default = False, action='store_true', help='Enable CTHT')
 parser.add_option('--wfake', dest='wfake', type='string', default = 'fake', help='Enable stackplots with data-driven fake leptons, default disabled')
@@ -118,11 +119,13 @@ if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco"
 plot_tag = opt.plot_tag
 if opt.tDMcut:
     plot_tag = "_tDM"
+elif opt.test:
+    plot_tag = "_test"
 pfolder = opt.folder #+ opt.plot_tag
 
 filerepo = '/eos/home-a/apiccine/VBS/nosynch/' + folder + '/'
 plotrepo = '/eos/home-a/apiccine/VBS/nosynch/' + pfolder + '/'
-print(pfolder)
+print("pfolder", pfolder, opt.test)
 print(filerepo, plotrepo)
 
 FRtag = opt.wfake.split("_")[-1]
@@ -137,6 +140,8 @@ else:
         lepstr = 'plot/' + opt.lep
 if opt.tDMcut:
     lepstr = lepstr.replace("plot", "plot_tDM")
+elif opt.test:
+    lepstr = lepstr.replace("plot", "plot_test")
 
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
@@ -393,6 +398,9 @@ pathplot = plotrepo + lepstr  + "/"
 pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
 if opt.tDMcut:
     pathstack = pathstack.replace("stack", "stack_tDM")
+elif opt.test:
+    pathstack = pathstack.replace("stack", "stack_test")
+
 print(lepstr, pathplot, pathstack) 
 
 if opt.plot:
@@ -1175,19 +1183,24 @@ for year in years:
 
         
         variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_SM_UL035_novar', 'SM DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_SM_UL035_T_DYL', 'SM DNN output (T DY_L)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_cW_UL035_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_cW_UL035_novar', 'c_{W} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_cHW_UL035_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('DNN_cHW_UL035_novar', 'c_{HW} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+
         variables.append(variabile('DNN_aQGC_UL035_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         variables.append(variabile('BDT_SM_UL035_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_SM_UL035_novar', 'SM BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_SM_UL035_T_DYL', 'SM BDT output (T DY_L)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cW_UL035_v2', 'c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cW_UL035_novar', 'c_{W} BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_cHW_UL035_v2', 'c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
+        variables.append(variabile('BDT_cHW_UL035_novar', 'c_{HW} BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_aQGC_UL035_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
@@ -1571,5 +1584,3 @@ for year in years:
             dataset_new.append(sample_dict['DataEle_'+str(year)])
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
-
- 

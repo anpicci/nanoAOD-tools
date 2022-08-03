@@ -61,7 +61,7 @@ def submitter(sample, argsin, folder):
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 10\n")
+    f.write("request_cpus            = 8\n")
     output = outcore + sample.label + ".out"
     log = logcore + sample.label + ".log"
     error = errcore + sample.label + ".err"
@@ -86,54 +86,21 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    bdt_sm_branch_T_DYL,
-    bdt_cW_branch_novar,
-    bdt_cW_branch_T_DYL_novar,
-    dnn_sm_branch_T_DYL,
-    dnn_cW_branch_novar,
-    dnn_cW_branch_T_DYL_novar,
-    dnn_sm_branch_v2,
-    dnn_cW_branch_v2,
-    dnn_cHW_branch_v2,
-    dnn_aQGC_branch_v2,
-    bdt_sm_branch_v2,
-    bdt_cW_branch_v2,
-    bdt_cHW_branch_v2,
-    bdt_aQGC_branch_v2,
+    bdt_sm_branch_novar_SR,
+    bdt_aQGC_branch_novar,
+    dnn_aQGC_branch_novar,
 ]
 
 paths = [
-    bdt_sm_path_T_DYL,
-    bdt_cW_path_novar,
-    bdt_cW_path_T_DYL_novar,
-    dnn_sm_path_T_DYL,
-    dnn_cW_path_novar,
-    dnn_cW_path_T_DYL_novar,
-    dnn_sm_path_v2,
-    dnn_cW_path_v2,
-    dnn_cHW_path_v2,
-    dnn_aQGC_path_v2,
-    bdt_sm_path_v2,
-    bdt_cW_path_v2,
-    bdt_cHW_path_v2,
-    bdt_aQGC_path_v2,
+    bdt_sm_path_novar_SR,
+    bdt_aQGC_path_novar,
+    dnn_aQGC_path_novar,
 ]
 
 scalers = [
-    bdt_sm_scaler_T_DYL,
-    bdt_cW_scaler_novar,
-    bdt_cW_scaler_T_DYL_novar,
-    dnn_sm_scaler_T_DYL,
-    dnn_cW_scaler_novar,
-    dnn_cW_scaler_T_DYL_novar,
-    dnn_sm_scaler_v2,
-    dnn_cW_scaler_v2,
-    dnn_cHW_scaler_v2,
-    dnn_aQGC_scaler_v2,
-    bdt_sm_scaler_v2,
-    bdt_cW_scaler_v2,
-    bdt_cHW_scaler_v2,
-    bdt_aQGC_scaler_v2,
+    bdt_sm_scaler_novar_SR,
+    bdt_aQGC_scaler_novar,
+    dnn_aQGC_scaler_novar,
 ]
 
 folder = opt.folder

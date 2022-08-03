@@ -54,14 +54,14 @@ for sample in samples2016:
 for lepton in leptons:
     compath = path + lepton + "/"
     print("Lepton considered:", lepton)
-    os.system("rm " + compath +"*UL2016M*root")
+    #os.system("rm " + compath +"*UL2016M*root")
 
     for sample in samples2016:
         labelsample = sample.split("_UL")[0]
         infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and ("2016_" in f or "2016APV" in f)]
         #print(infiles)
 
-        if sample.startswith("VBS_SSWW_F"):
+        if not sample.startswith("VBS_SSWW_F"):
             continue
 
         if len(infiles) == 0:
