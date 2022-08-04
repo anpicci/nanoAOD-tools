@@ -39,6 +39,8 @@ if not os.path.exists(errcore):
 if not os.path.exists(logcore):
     os.system("mkdir -p " + logcore)
 
+os.popen("cp /tmp/x509up_u" + str(uid) + " /afs/cern.ch/user/" + inituser + "/" + username + "/private/x509up")
+
 def submitter(sample, argsin, folder):
     exesh = subfold + "/" + exe + "_" + sample.label + ".sh"
     fsh = open(exesh, "w")
@@ -87,19 +89,31 @@ toveto = opt.veto.split(",")
 
 branches = [
     bdt_sm_branch_novar_SR,
+    bdt_sm_branch_novar,
+    bdt_cHW_branch_novar,
     bdt_aQGC_branch_novar,
+    dnn_sm_branch_novar,
+    dnn_cHW_branch_novar,
     dnn_aQGC_branch_novar,
 ]
 
 paths = [
     bdt_sm_path_novar_SR,
+    bdt_sm_path_novar,
+    bdt_cHW_path_novar,
     bdt_aQGC_path_novar,
+    dnn_sm_path_novar,
+    dnn_cHW_path_novar,
     dnn_aQGC_path_novar,
 ]
 
 scalers = [
     bdt_sm_scaler_novar_SR,
+    bdt_sm_scaler_novar,
+    bdt_cHW_scaler_novar,
     bdt_aQGC_scaler_novar,
+    dnn_sm_scaler_novar,
+    dnn_cHW_scaler_novar,
     dnn_aQGC_scaler_novar,
 ]
 

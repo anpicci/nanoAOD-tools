@@ -56,6 +56,8 @@ if not os.path.exists(errcore):
 if not os.path.exists(logcore):
     os.system("mkdir -p " + logcore)
 
+os.popen("cp /tmp/x509up_u" + str(uid) + " /afs/cern.ch/user/" + inituser + "/" + username + "/private/x509up")
+
 def submitter(sample, argsins, folder, cut):
     cuttag = ""
     if cut != "not":
