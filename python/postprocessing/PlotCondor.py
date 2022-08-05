@@ -45,9 +45,15 @@ regions = [
     "wsdy --bvetoL",
 ]
 
-outcore = "condorplot_" + opt.folder + "/output/"
-errcore = "condorplot_" + opt.folder + "/error/"
-logcore = "condorplot_" + opt.folder + "/log/"
+tagf = ""
+if opt.tDMcut:
+    tagf += "_tdmcut"
+elif opt.test:
+    tagf += "_test"
+
+outcore = "condorplot_" + opt.folder + tagf + "/output/"
+errcore = "condorplot_" + opt.folder + tagf + "/error/"
+logcore = "condorplot_" + opt.folder + tagf + "/log/"
 
 if not os.path.exists(outcore):
     os.system("mkdir -p " + outcore)
@@ -117,7 +123,7 @@ if opt.cut != "not":
 
 folder = opt.folder
 pymacro = "makeplot.py"
-exe = "branchplot"
+exe = "branchplot" + tagf
 
 arg0 = " -p -f " + folder
 
