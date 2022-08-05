@@ -487,6 +487,11 @@ def lumi_writer(dataset, lumi):
                         sys.stdout.write("\rProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
 
                     w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
+                    if sample.year == "UL2016APV":
+                        w_nom[0] *= 0.5373
+                    elif sample.year == "UL2016":
+                        w_nom[0] *= 0.4627
+                    
                     tree_new.Fill()
                 tree_new.Write()
                 print("\n")
@@ -576,6 +581,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     else:
         cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
 
+    '''
     if not ("Data" in sample.label):
         if sample.year == "UL2016APV":
             cut += "*(0.5373)"
@@ -583,6 +589,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             cut += "*(0.4627)"
         else:
             cut += "*(1.)"
+    '''
 
     if not ('Fake' in str(sample.label) or 'Data' in str(sample.label)):
         if opt.channel == 'ltau':
@@ -599,7 +606,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     else:
         samplelab = sample.label
     
-    print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
+    #print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
     print("plotting ", variable._name, "\nsample:", samplelab, "\ncut:", cut_tag, "\nsyst applied:", syst)
     
     nbins = variable._nbins
@@ -637,14 +644,12 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
 
     foutput = pathplot + sample.label + "_" + lep + ".root"
+    #print("at project", histoname,vartoproject,cut)
     f1.Get(treename).Project(histoname,vartoproject,cut)
-
     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
     h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
     h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
     h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
-
-    print("Integral", h1.Integral())
     
     tot = 0.
     terr = 0.
