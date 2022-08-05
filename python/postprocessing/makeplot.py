@@ -599,7 +599,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     else:
         samplelab = sample.label
     
-    #print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
+    print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
     print("plotting ", variable._name, "\nsample:", samplelab, "\ncut:", cut_tag, "\nsyst applied:", syst)
     
     nbins = variable._nbins
@@ -1196,7 +1196,7 @@ for year in years:
         variables.append(variabile('DNN_aQGC_UL035_novar', 'aQGC DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        '''
+        
         variables.append(variabile('BDT_SM_UL035_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_SM_UL035_novar', 'SM BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_SM_UL035_novar_SR', 'SM BDT output (novar SR)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
@@ -1207,7 +1207,7 @@ for year in years:
         variables.append(variabile('BDT_cHW_UL035_novar', 'c_{HW} BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_aQGC_UL035_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('BDT_aQGC_UL035_novar', 'aQGC BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        '''
+        
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
        
