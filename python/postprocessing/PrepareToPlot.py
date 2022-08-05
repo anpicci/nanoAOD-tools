@@ -275,13 +275,13 @@ for k, v in merge_dict.items():
                 if v.label.startswith(vs):
                     toContinue = True
                     break
-                else:
-                    for c in v.components:
-                        if c.label.startswith(vs):
-                            toContinue = True
-                            break
-                    if toContinue:
-                        break
+                #else:
+                    #for c in v.components:
+                        #if c.label.startswith(vs):
+                            #toContinue = True
+                            #break
+                    #if toContinue:
+                        #break
 
             if toContinue:
                 continue        
@@ -292,13 +292,13 @@ for k, v in merge_dict.items():
                 if v.label.startswith(ms):
                     toPass = True
                     break
-                else:
-                    for c in v.components:
-                        if c.label.startswith(ms):
-                            toPass = True
-                            break
-                    if toPass:
-                        break
+                #else:
+                    #for c in v.components:
+                        #if c.label.startswith(ms):
+                            #toPass = True
+                            #break
+                    #if toPass:
+                        #break
 
             if not toPass:
                 continue
@@ -336,7 +336,7 @@ for k, v in merge_dict.items():
                     else:
                         os.system("rm -f " + cpath + c.label + ".root")
 
-                print("Merging and luming " + c.label + "...")
+                print("Merging and luming " + c.label + "... compon")
                 merging.append(True)
                 cmdstring = "python3 makeplot.py -y " + opt.year + " --merpart --lumi -d " + c.label + " --folder " + ofolder + " --ch " + opt.channel
                 if Debug:
