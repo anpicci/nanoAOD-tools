@@ -307,13 +307,14 @@ for k, v in merge_dict.items():
             if opt.nodata and 'Data' in c.label:
                 continue
             
-            if not DoesSampleExist(c.name):
+            if not DoesSampleExist(c.name) and not opt.year == "UL2016M":
                 print(c.label, "not crabbed yet")
                 continue
             cpath = path + c.label + "/"
-            if (not AreAllCondored(c.name, c.label) and not opt.override):
-                print(c.label + " not condorly produced yet")
-                continue
+            if not opt.year == "UL2016M":
+                if (not AreAllCondored(c.name, c.label) and not opt.override):
+                    print(c.label + " not condorly produced yet")
+                    continue
 
             doesexist.append(True)
         

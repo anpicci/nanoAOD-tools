@@ -299,8 +299,6 @@ if opt.tDMcut:
     for k, v in cut_dict.items():
         cut_dict[k] = v + "*(tau_DecayMode<5||tau_DecayMode>6)"
 
-print(cut_dict)
-
 lumi = {'2016': 35.9, 'UL2016M': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.5, "2018": 59.7, 'UL2018':59.8, "ULRunII":137.1}
 
 scenarios = [
@@ -414,6 +412,7 @@ if opt.stack:
         os.system("mkdir -p " + pathstack)
 
 def mergepart(dataset):
+    print("\nhello babe\n")
     samples = []
     hascomp = False
     if "UL" in opt.year:
@@ -1120,14 +1119,14 @@ else:
      years = ['UL2016APV','UL2016', "UL2016M", 'UL2017','UL2018']
 
 for year in years:
-    if year == "UL2016M":
-        continue
+    #if year == "UL2016M":
+        #continue
     for sample in dataset_dict[year]:
-        if(opt.merpart):
+        if opt.merpart:
             mergepart(sample)
-        if(opt.lumi):
+        if opt.lumi:
             lumi_writer(sample, lumi[year])
-        if(opt.mertree):
+        if opt.mertree:
             mergetree(sample)
 
 print("\nStarting")
