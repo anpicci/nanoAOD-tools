@@ -10,8 +10,10 @@ errpaths = [
 years = [
     "UL2016",
     "UL2016APV",
+    "UL2016M",
     "UL2017",
     "UL2018",
+    "ULRunII",
 ]
 
 for errpath in errpaths:

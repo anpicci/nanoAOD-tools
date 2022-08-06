@@ -1121,7 +1121,7 @@ years = []
 if(opt.year!='all'):
      years = opt.year.strip('[]').split(',')
 else:
-     years = ['UL2016APV','UL2016', "UL2016M", 'UL2017','UL2018']
+     years = ['UL2016APV','UL2016', "UL2016M", 'UL2017','UL2018', 'ULRunII']
 
 for year in years:
     #if year == "UL2016M":
@@ -1529,27 +1529,31 @@ for year in years:
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
                     fout = ROOT.TFile.Open(foutput, "UPDATE")
-                    
+                    print(samplelab)
                     f1name = ""
-                    if 'Fake' in str(sample.label):
-                        if (not opt.folder.startswith('CTHT') and not opt.removePrompt):
+                    if 'Fake' in str(samplelab):
+                        if sample.year == "UL2016M" or sample.year == "ULRunII":
+                            f1name = filerepo + sample.label.replace("Fake", "Data") + "/"  + sample.label.replace("Fake", "Data") + ".root"
+                        elif (not opt.folder.startswith('CTHT') and not opt.removePrompt):
                             #f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
                             f1name = filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root"
                         elif opt.removePrompt:
                             #f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
                             f1name = filerepo + sample.label + "/"  + sample.label + ".root"
+                        
                         else:
                             #f1 = ROOT.TFile.Open(filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root")
                             f1name = filerepo + sample.components[1].label + "/"  + sample.components[1].label + ".root"
-   
+                       
                     else:
                         #f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
                         f1name = filerepo + sample.label + "/"  + sample.label + ".root"
-                        print(f1name)
+                    print(f1name)
+                    
                     if os.path.exists(f1name):
                         f1 = ROOT.TFile.Open(f1name)
                     else:
-                        print(samplelab + " not ready to be plotted, skipping")
+                        raise ValueError(samplelab + " not ready to be plotted, skipping")
                         continue
                     
                     for ids, syst in enumerate(systematics):

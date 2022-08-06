@@ -303,15 +303,16 @@ for k, v in merge_dict.items():
             if not toPass:
                 continue
 
+        print(v.label)
         for c in v.components:
             if opt.nodata and 'Data' in c.label:
                 continue
             
-            if not DoesSampleExist(c.name) and not opt.year == "UL2016M":
+            if not DoesSampleExist(c.name) and not (opt.year == "UL2016M" or opt.year == "ULRunII"):
                 print(c.label, "not crabbed yet")
                 continue
             cpath = path + c.label + "/"
-            if not opt.year == "UL2016M":
+            if not (opt.year == "UL2016M" or opt.year == "ULRunII"):
                 if (not AreAllCondored(c.name, c.label) and not opt.override):
                     print(c.label + " not condorly produced yet")
                     continue
