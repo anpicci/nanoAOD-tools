@@ -4,7 +4,7 @@ from samples.samplesUL import *
 from rwgcards.FromCardToDict import *
 
 folder = "vUL035"
-path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot_test/"
+path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/plot_tDM/"
 leptons = ["electron", "muon"]
 
 rwgdict = CardToDict("dim8", "FT1_2p0")
@@ -61,7 +61,7 @@ for lepton in leptons:
         infiles = [f for f in os.listdir(path + lepton) if f.startswith(labelsample+"_UL") and ("2016_" in f or "2016APV" in f)]
         #print(infiles)
 
-        if sample.startswith("VBS_SSWW_c"):
+        if not (sample.startswith("Data") or sample.startswith("Fake")):
             continue
 
         if len(infiles) == 0:

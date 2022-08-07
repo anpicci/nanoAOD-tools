@@ -483,15 +483,22 @@ def lumi_writer(dataset, lumi):
                 for event in range(0, tree.GetEntries()):
                     tree.GetEntry(event)
                     perc = (event+1)/(tree.GetEntries())*100000
-                    if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
-                        sys.stdout.write("\rProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
 
                     w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
+                    if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
+                        sys.stdout.write("\nProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
+                        print("\nw_nom before:", w_nom[0])
                     if sample.year == "UL2016APV":
                         w_nom[0] *= 0.5373
+                        if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
+                            print("0.5373 added")
                     elif sample.year == "UL2016":
                         w_nom[0] *= 0.4627
-                    
+                        if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
+                            print("0.4627 added")
+
+                    if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
+                        print("w_nom after:", w_nom[0])
                     tree_new.Fill()
                 tree_new.Write()
                 print("\n")
@@ -1128,6 +1135,7 @@ for year in years:
         #continue
     for sample in dataset_dict[year]:
         if opt.merpart:
+            print("\n")
             mergepart(sample)
         if opt.lumi:
             lumi_writer(sample, lumi[year])
@@ -1548,7 +1556,6 @@ for year in years:
                     else:
                         #f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
                         f1name = filerepo + sample.label + "/"  + sample.label + ".root"
-                    print(f1name)
                     
                     if os.path.exists(f1name):
                         f1 = ROOT.TFile.Open(f1name)

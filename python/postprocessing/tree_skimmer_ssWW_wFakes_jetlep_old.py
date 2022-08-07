@@ -1149,7 +1149,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             if not Flag.eeBadScFilter:
                 continue
 
-        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, sys.argv[4], TrigObj)
+        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, sys.argv[4])#, TrigObj)
         
         if noTrigger:
             continue

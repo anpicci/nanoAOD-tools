@@ -164,7 +164,7 @@ effLumi_2017 = {
             },
         "Ele" : {
             "Ele35_WPTight_Gsf"                     : 41.48,
-            "Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
+            #"Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
             "Photon200"                             : 41.48,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
@@ -261,8 +261,8 @@ def trig_finder(HLT, yearr, samplename):
         #if HLT.TkMu100:                                 vTrigMu.append("TkMu100")
         #if HLT.Mu8_TrkIsoVVL:                           vTrigMu.append("Mu8_TrkIsoVVL")
         #if HLT.Mu17_TrkIsoVVL:                          vTrigMu.append("Mu17_TrkIsoVVL")
-        #if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
-        if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
+        if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
+        #if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
         #if not ('DataMuB' in samplename or 'DataEleB' in samplename or 'DataHTB' in samplename):
             #if HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30:     vTrigEle.append("Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30")
             #if HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30")
@@ -667,8 +667,8 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
         if lepflav == 11:
             IsLooseID = lep.mvaFall17V2Iso_WPL
             IsTightID = lep.mvaFall17V2Iso_WP90
-            IsTightIso = bool(lep.pfRelIso03_all<ISO_CUT_ELE and lep.pfRelIso03_all>=0.)
-            IsLooseIso = bool(lep.pfRelIso03_all<1. and lep.pfRelIso03_all>=0.)
+            IsTightIso = bool(lep.jetRelIso<ISO_CUT_ELE and lep.jetRelIso>=0.)
+            IsLooseIso = bool(lep.jetRelIso<1. and lep.jetRelIso>=0.)
             IsInEtaRegion = bool(abs(lep.eta)<ETA_CUT_ELE and not (abs(lep.eta)>1.4442 and abs(lep.eta)<1.566))
             IsInPtRegion = lep.pt > PT_CUT_ELE
 
@@ -714,7 +714,7 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
 #new
 
 def LepVeto(sellep, electrons, muons):
-    VetoEles = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.mvaFall17V2Iso_WPL and x.pt > PT_CUT_LEP_VETO_ELE and abs(x.eta) < ETA_CUT_LEP_VETO_ELE and not (abs(x.eta)>1.4442 and abs(x.eta)<1.566) and x.pfRelIso03_all < REL_ISO_CUT_LEP_VETO_ELE, electrons))
+    VetoEles = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.mvaFall17V2Iso_WPL and x.pt > PT_CUT_LEP_VETO_ELE and abs(x.eta) < ETA_CUT_LEP_VETO_ELE and not (abs(x.eta)>1.4442 and abs(x.eta)<1.566) and x.jetRelIso < REL_ISO_CUT_LEP_VETO_ELE, electrons))
     VetoMus = list(filter(lambda x : IsNotTheSameObject(x, sellep) and x.looseId and x.corrected_pt > PT_CUT_LEP_VETO_MU and abs(x.eta) < ETA_CUT_LEP_VETO_MU and x.pfRelIso04_all < REL_ISO_CUT_LEP_VETO_MU, muons))
 
     IsEleVetoPassed = (len(VetoEles) == 0)
@@ -764,7 +764,7 @@ def SelectAndVetoTaus(year, taus, sellep, jet1 = None, jet2 = None):
             #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU
 
-        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU and (tau.decayMode < 5 or tau.decayMode > 6):
+        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU:
             nTau+=1
 
             isAtLeastLoose = False
@@ -945,7 +945,7 @@ def get_HT(jets):
         HT += jet.pt
     return HT
 
-def trig_map(HLT, PV, yearr, runPeriod, flag, trigobj):
+def trig_map(HLT, PV, yearr, runPeriod, flag):
     isGoodPV = True#copy.deepcopy(pass_MET(flag)) #(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passMu = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passEle = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
@@ -996,7 +996,11 @@ def trig_map(HLT, PV, yearr, runPeriod, flag, trigobj):
 
     elif(year == "UL2017"):
         mutrig = HLT.IsoMu27
-        eletrig = HLT.Ele32_WPTight_Gsf_L1DoubleEG and trigobj.filterBits == 1024
+        if True:#flag != "test":
+            eletrig = HLT.Ele35_WPTight_Gsf
+        #else:# flag == "test":
+            #eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200
+        #eletrig = (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40))
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if eletrig:# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)
@@ -1008,7 +1012,10 @@ def trig_map(HLT, PV, yearr, runPeriod, flag, trigobj):
 
     elif(year == "UL2018"):
         mutrig = HLT.IsoMu24
-        eletrig = HLT.Ele32_WPTight_Gsf
+        if True:#flag != "test":
+            eletrig = HLT.Ele32_WPTight_Gsf
+        else:#if flag == "test":
+            eletrig = HLT.Ele32_WPTight_Gsf or HLT.Photon200 
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if eletrig:# or HLT.Photon200)
