@@ -88,31 +88,22 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    bdt_sm_branch_novar_SR,
-    bdt_sm_branch_novar,
-    bdt_cHW_branch_novar,
-    bdt_aQGC_branch_novar,
     dnn_sm_branch_novar,
+    dnn_cW_branch_novar,
     dnn_cHW_branch_novar,
     dnn_aQGC_branch_novar,
 ]
 
 paths = [
-    bdt_sm_path_novar_SR,
-    bdt_sm_path_novar,
-    bdt_cHW_path_novar,
-    bdt_aQGC_path_novar,
     dnn_sm_path_novar,
+    dnn_cW_path_novar,
     dnn_cHW_path_novar,
     dnn_aQGC_path_novar,
 ]
 
 scalers = [
-    bdt_sm_scaler_novar_SR,
-    bdt_sm_scaler_novar,
-    bdt_cHW_scaler_novar,
-    bdt_aQGC_scaler_novar,
     dnn_sm_scaler_novar,
+    dnn_cW_scaler_novar,
     dnn_cHW_scaler_novar,
     dnn_aQGC_scaler_novar,
 ]
