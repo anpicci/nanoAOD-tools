@@ -1199,6 +1199,7 @@ for year in years:
         
         #variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_UL035_novar', 'SM DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_UL035_novar_sr', 'SM DNN output (novar SR)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         #variables.append(variabile('DNN_SM_UL035_T_DYL', 'SM DNN output (T DY_L)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_cW_UL035_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_cW_UL035_novar', 'c_{W} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1207,6 +1208,9 @@ for year in years:
 
         #variables.append(variabile('DNN_aQGC_UL035_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         variables.append(variabile('DNN_aQGC_UL035_novar', 'aQGC DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_FS_UL035_novar', 'aQGC DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_FM_UL035_novar', 'aQGC DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_FT_UL035_novar', 'aQGC DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         '''
@@ -1236,9 +1240,9 @@ for year in years:
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
         
         if opt.sr:
-            bin_mjj = array("d", [500., 600., 700., 800., 900., 1000., 1100., 1200., 1300., 1400., 1500., 1600., 1700., 1800., 2000., 2200., 2400., 2600., 2800.])
+            bin_mjj = array("d", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600., 2800.])
         else:
-            bin_mjj = array("d", [0., 100., 200., 300., 400., 500., 600., 700., 800., 900., 1000., 1100., 1200., 1300., 1400., 1500., 1600., 1700., 1800., 1900., 2000., 2100., 2200., 2400.])
+            bin_mjj = array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mjj, bin_mjj))
         
