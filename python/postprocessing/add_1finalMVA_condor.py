@@ -23,7 +23,7 @@ parser.add_option('-y', dest='year', type=str, default = '2017', help='Please en
 parser.add_option('-f', dest='folder', type=str, default = 'v20', help='Please enter a folder, default is v4')
 parser.add_option('-c', dest='check', default = False, action = 'store_true', help='Default runs makeplot')
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
-parser.add_option('--ov', dest='ovride', default = False, action = 'store_true', help='Override check for completed condorization')
+parser.add_option('--or', dest='ovride', default = False, action = 'store_true', help='Override check for completed condorization')
 parser.add_option('-d', dest='dat', type=str, default = 'all', help='Default is all')
 parser.add_option('-v', dest='veto', type=str, default = 'none', help='Default is none')
 parser.add_option('-s', dest='scenario', type=str, default = 'all', help='Default is all')

@@ -11,6 +11,9 @@ parser.add_option('-d', '--dat', dest='dataset', type=str, default = 'all', help
 parser.add_option('-v', '--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help='Please enter a destination folder')
 parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2018,UL2017,UL2016APV,UL2016', help='Please enter year(s)')
+parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
+parser.add_option('--or', dest='override', default = False, action = 'store_true', help='Default does not override AreAllCondored')
+
 (opt, args) = parser.parse_args()
 
 username = str(os.environ.get('USER'))
@@ -88,24 +91,15 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    dnn_sm_branch_novar,
-    dnn_cW_branch_novar,
-    dnn_cHW_branch_novar,
-    dnn_aQGC_branch_novar,
+    dnn_aQGC_branch_v2,
 ]
 
 paths = [
-    dnn_sm_path_novar,
-    dnn_cW_path_novar,
-    dnn_cHW_path_novar,
-    dnn_aQGC_path_novar,
+    dnn_aQGC_path_v2,  
 ]
 
 scalers = [
-    dnn_sm_scaler_novar,
-    dnn_cW_scaler_novar,
-    dnn_cHW_scaler_novar,
-    dnn_aQGC_scaler_novar,
+    dnn_aQGC_scaler_v2,
 ]
 
 folder = opt.folder
@@ -138,7 +132,6 @@ print("toveto", toveto)
 for year in years:
     arg1 = " -y " + year 
     for dat in condor_list:
-        
         if dat.label.startswith("TT_") or dat.label.startswith("WJets") or dat.label.startswith("DataHT"):
             continue
         
@@ -149,7 +142,6 @@ for year in years:
         if dat.label.startswith("Fake"):
             continue
 
-        
         toPlot = False
         toVeto = False
 
@@ -171,4 +163,9 @@ for year in years:
                 continue
 
         args += " -d " + dat.label
+        if opt.rw:
+            args += " --rw"
+        if opt.override:
+            args += " --or"
+
         submitter(dat, args, folder)
