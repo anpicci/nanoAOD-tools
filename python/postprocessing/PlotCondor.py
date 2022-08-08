@@ -149,7 +149,10 @@ for year in years:
         elif dat.label.startswith("DataMu_") or dat.label.startswith("FakeMu_"):
             lepss = ["muon"]
         else:
-            lepss = ["muon", "electron"]
+            lepss = [
+                "muon",
+                "electron",
+            ]
 
         if opt.dataset != "all":
             for dtp in toplot:

@@ -91,15 +91,24 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    dnn_aQGC_branch_v2,
+    bdt_sm_branch_v2,
+    bdt_cW_branch_v2,
+    bdt_cHW_branch_v2,
+    bdt_aQGC_branch_v2,
 ]
 
 paths = [
-    dnn_aQGC_path_v2,  
+    bdt_sm_path_v2,
+    bdt_cW_path_v2,
+    bdt_cHW_path_v2,
+    bdt_aQGC_path_v2,
 ]
 
 scalers = [
-    dnn_aQGC_scaler_v2,
+    bdt_sm_scaler_v2,
+    bdt_cW_scaler_v2,
+    bdt_cHW_scaler_v2,
+    bdt_aQGC_scaler_v2,
 ]
 
 folder = opt.folder
