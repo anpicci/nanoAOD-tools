@@ -32,4 +32,4 @@ set year = 'UL2016APV'
 
 #set year = 'UL2016M'
 set year = 'ULRunII'
-python3 PrepareToPlot.py -f $folder -y $year -d WpWpJJ_EWK_
+python3 PrepareToPlot.py -f $folder -y $year -d WpWpJJ_

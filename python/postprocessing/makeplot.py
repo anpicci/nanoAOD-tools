@@ -20,6 +20,7 @@ rwgdict = CardToDict("dim8", "FT1_2p0")
 desiredop = [
     "FS0_1p0",
     "FS1_1p0",
+    "FS2_1p0",
     "FM0_1p0",
     "FM1_0p9",
     "FM6_1p0",
@@ -482,7 +483,7 @@ def lumi_writer(dataset, lumi):
                 print("Calculating renormalization weights for scenario", key)
                 for event in range(0, tree.GetEntries()):
                     tree.GetEntry(event)
-                    perc = (event+1)/(tree.GetEntries())*100000
+                    perc = (event+1)/(tree.GetEntries())*100
 
                     w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
                     if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
