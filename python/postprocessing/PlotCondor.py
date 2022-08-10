@@ -39,10 +39,11 @@ if not os.path.exists(subfold):
 condorsub = "condorplot"
 
 regions = [
-    "sr",
-    "ttbar",
-    "fakes",
-    "wsdy --bvetoL",
+    #"sr",
+    #"ttbar",
+    #"fakes",
+    #"wsdy --bvetoL",
+    "presel"
 ]
 
 tagf = ""

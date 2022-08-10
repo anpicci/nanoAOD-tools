@@ -1027,6 +1027,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         ratio.GetYaxis().SetRangeUser(0.5, 1.5)
     elif "OS_" in cut_tag_:
         ratio.GetYaxis().SetRangeUser(0.5, 1.5)
+    else:
+        ratio.GetYaxis().SetRangeUser(0.5, 1.5)
     ratio.GetXaxis().SetTitle(variabile_._title)
     ratio.GetXaxis().SetLabelOffset(0.04)
     ratio.GetYaxis().SetLabelOffset(0.02)
