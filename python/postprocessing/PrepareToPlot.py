@@ -269,6 +269,7 @@ for k, v in merge_dict.items():
         continue
 
     if hasattr(v, 'components') and v.components is not None:
+       
         if toVeto:
             toContinue = False
             for vs in vetosamp:
@@ -303,7 +304,7 @@ for k, v in merge_dict.items():
             if not toPass:
                 continue
 
-        print(v.label)
+        print("hello", v.label)
         for c in v.components:
             if opt.nodata and 'Data' in c.label:
                 continue
@@ -320,9 +321,9 @@ for k, v in merge_dict.items():
             doesexist.append(True)
         
             partmerge = False
-            if not os.path.exists(cpath+c.label+".root") or opt.rw:
+            if (not os.path.exists(cpath+c.label+".root") or opt.rw) and not (opt.year == "UL2016M" or opt.year == "ULRunII"):
                 partmerge = True
-                if os.path.exists(cpath+c.label+"_merged.root") or opt.rw:
+                if (os.path.exists(cpath+c.label+"_merged.root") or opt.rw):
                     if Debug:
                         print("rm -f " + cpath + c.label + "_merged.root")
                     else:
