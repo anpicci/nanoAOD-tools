@@ -210,7 +210,7 @@ elif opt.presel:
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1)*(" + cut + ")", 
                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0)*(" + cut + ")", 
             }
-    cut_tag = 'ttbar_CR'
+    cut_tag = 'presel'
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)           
 
