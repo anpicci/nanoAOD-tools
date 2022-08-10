@@ -108,7 +108,7 @@ def submitter(model, srvar, crvar, argsins, folder):
     os.system("mv " + condorsubb + " " + subfold)
 
 folder = opt.folder
-pymacro = "FitAndPlot.py"
+pymacro = "FitAndPlot_dev.py"
 exe = "branchcombine"
 
 arg0 = " --folder " + folder 
