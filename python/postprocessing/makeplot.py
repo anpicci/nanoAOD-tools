@@ -1387,7 +1387,7 @@ for year in years:
             bin_subleadjet_pt = array("d", [0., 50., 100., 150., 250.])
         nbin_subleadjet_pt = len(bin_subleadjet_pt) - 1
         variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_subleadjet_pt, bin_subleadjet_pt))
-        variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', True, 10, -5., 5.))
+        variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', True, 16, -4., 4.))
         variables.append(variabile('subleadjet_phi', 'Sublead jet #Phi',  wzero+'*('+cutbase+')', True,  7, -3.50, 3.50))
         
         bin_subleadjet_mass = array("d", [0., 5., 10., 15., 25.])
