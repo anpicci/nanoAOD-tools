@@ -1181,7 +1181,7 @@ for year in years:
             wzero = 'w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF'
         elif opt.channel == 'emu':
             wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF*puIDSF*QCDScaleSF'
-        print("wxero", wzero)
+        #print("wzero", wzero)
 
         cutbase = cut_dict[lep]
 
