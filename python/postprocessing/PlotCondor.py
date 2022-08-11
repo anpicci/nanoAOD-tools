@@ -108,7 +108,7 @@ def submitter(sample, argsins, folder, cut):
     if os.path.exists(error):
         os.system("rm " + error)
 
-    os.system("condor_submit " + condorsubb)
+    #os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 years = opt.years.split(",")
