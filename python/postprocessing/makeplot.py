@@ -1215,6 +1215,8 @@ for year in years:
         variables.append(variabile('DNN_SM_UL035_novar_sr_allbkg', 'SM DNN output (novar SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg', 'SM DNN output (novar true SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
         
+        variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_nomet_256bs', 'SM DNN output (novar SR allbkg nomet 256bs)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_nomet', 'SM DNN output (novar SR allbkg nomet)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
 
         #variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_UL035_novar', 'SM DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1230,6 +1232,9 @@ for year in years:
         variables.append(variabile('DNN_FS_UL035_novar', 'f_{S} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_FM_UL035_novar', 'f_{M} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_FT_UL035_novar', 'f_{T} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_FS_UL035_novar_fix', 'f_{S} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_FM_UL035_novar_fix', 'f_{M} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_FT_UL035_novar_fix', 'f_{T} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         '''

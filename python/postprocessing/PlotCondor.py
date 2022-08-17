@@ -101,14 +101,13 @@ def submitter(sample, argsins, folder, cut):
     f.write("log                     = " + log + "\n")
     f.write("queue\n")
     f.close()
-    if os.path.exists(output):
-        os.system("rm " + output)
+    if os.path.exists(output):        os.system("rm " + output)
     if os.path.exists(log):
         os.system("rm " + log)
     if os.path.exists(error):
         os.system("rm " + error)
 
-    #os.system("condor_submit " + condorsubb)
+    os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 years = opt.years.split(",")
@@ -144,7 +143,7 @@ for year in years:
         toPlot = False
         toVeto = False
 
-        lepss = []
+        lepss = []    
         if dat.label.startswith("DataEle_") or dat.label.startswith("FakeEle_"):
             lepss = ["electron"]
         elif dat.label.startswith("DataMu_") or dat.label.startswith("FakeMu_"):

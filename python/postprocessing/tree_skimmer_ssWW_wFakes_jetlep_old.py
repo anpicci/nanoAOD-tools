@@ -814,7 +814,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
-            if i > 100:
+            if i > 10000:
             #if i != 8631:
                 #continue
                 break
@@ -1728,7 +1728,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
 
                         w_coeff = (wpos + wsign * wneg) / kpow
                         wcoeff[coeffstr][idwc] = w_coeff
-        
+                    if Debug:
+                        print("wcoeff[", coeffstr, "]:", wcoeff[coeffstr])
+
         w_nominal_all[0] *= pdf_totalSF*toprwg
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         systTree.fillTreesSysts(trees, scenario)
