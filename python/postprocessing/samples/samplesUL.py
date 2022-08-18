@@ -469,7 +469,7 @@ DYJetsToLL_UL2016APV.components = [
     #DYJetsToLL_M50_UL2016APV_ext,
 ]
 
-DYJetsToLL_M50_FxFx_UL2016APV = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
+DYJetsToLL_M50_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
 DYJetsToLL_M50_FxFx_UL2016APV.year = "UL2016APV"
 DYJetsToLL_M50_FxFx_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
 DYJetsToLL_M50_FxFx_UL2016APV.sigma = 7181.0 #6077.22 #6529.0
@@ -480,6 +480,12 @@ DYJetsToLL_FxFx_UL2016APV.components = [
     #DYJetsToLL_M10to50_UL2016APV,
     DYJetsToLL_M50_FxFx_UL2016APV,
 ]
+
+DYJetsToTauTau_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + jets --> #tau#tau", "DYJetsToTauTau_FxFx_UL2016APV")
+DYJetsToTauTau_FxFx_UL2016APV.year = "UL2016APV"
+DYJetsToTauTau_FxFx_UL2016APV.dataset = "/DYJetsToTauTau_TauToMuEle_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+DYJetsToTauTau_FxFx_UL2016APV.sigma = 7181.0 #6077.22 #6529.0
+
 
 ### WpWp EWK ###
 

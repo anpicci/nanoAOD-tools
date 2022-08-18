@@ -1217,6 +1217,7 @@ for year in years:
         
         variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_nomet_256bs', 'SM DNN output (novar SR allbkg nomet 256bs)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_nomet', 'SM DNN output (novar SR allbkg nomet)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_moresteps_1', 'SM DNN output (novar trueSR allbkg moresteps)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
 
         #variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_UL035_novar', 'SM DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
