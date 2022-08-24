@@ -43,6 +43,6 @@ set year = UL2018
 #python3 makeplot.py -y $year --lep muon --wsdy --bvetoL -f $folder0 -p --ch $channel --count --tDMcut -v countings --syst noSyst
 
 set year = ULRunII
-python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel -v leadjet_eta,subleadjet_eta --syst noSyst 
+python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel -v m_jj --syst noSyst 
 #set year = UL2016M
 #python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel -v m_o1 --tDMcut -d FakeMu_$year --syst noSyst
