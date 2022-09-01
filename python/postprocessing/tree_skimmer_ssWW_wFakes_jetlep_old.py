@@ -135,7 +135,21 @@ if ('Data' in sample.name):
 else:
     isMC = True
     if "UL" in str(sample.year):
-        scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+        scenarios = [
+            "nominal",
+            "lepenUp",
+            "lepenDown", 
+            "jesUp", 
+            "jesDown", 
+            "jerUp", 
+            "jerDown",
+            "metUnclustUp",
+            "metUnclustDown",
+            "TESUp", 
+            "TESDown",
+            "FESUp",
+            "FESDown"
+        ]
     else:
         scenarios = ["all"]
 if "/vUL001/" in outpath:
@@ -345,6 +359,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     lepton_isPrompt           =   array.array('i', [-999])
     lepton_Zeppenfeld           =   array.array('f', [-999])
     lepton_Zeppenfeld_over_deltaEta_jj           =   array.array('f', [-999])
+    lepton_EGML1seedOR           =   array.array('i', [0])
     var_list.append(lepton_pt)
     var_list.append(lepton_eta)
     var_list.append(lepton_phi)
@@ -357,6 +372,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(lepton_isPrompt)
     var_list.append(lepton_Zeppenfeld)
     var_list.append(lepton_Zeppenfeld_over_deltaEta_jj)
+    var_list.append(lepton_EGML1seedOR)
 
     #tau#
     tau_pt                  =   array.array('f', [-999.])
@@ -662,6 +678,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "lepton_LnTRegion",     outTreeFile, lepton_LnTRegion)
     systTree.branchTreesSysts(trees, scenario, "lepton_SFFake",        outTreeFile, lepton_SFFake)
     systTree.branchTreesSysts(trees, scenario, "lepton_isPrompt",         outTreeFile, lepton_isPrompt)#
+    systTree.branchTreesSysts(trees, scenario, "lepton_EGML1seedOR",         outTreeFile, lepton_EGML1seedOR)#
     #tau variables
     systTree.branchTreesSysts(trees, scenario, "tau_pt",               outTreeFile, tau_pt)
     systTree.branchTreesSysts(trees, scenario, "tau_eta",              outTreeFile, tau_eta)
@@ -814,10 +831,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
-            if i > 10000:
+            #if i > 100:#00:
             #if i != 8631:
                 #continue
-                break
+                #break
             print("\nevento n. " + str(i))
         else:
             if (i+1)%1000 == 0 and i!=0:
@@ -854,6 +871,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         HT          = Object(event, "HT")
         PV          = Object(event, "PV")
         HLT         = Object(event, "HLT")
+        L1         = Object(event, "L1")
         Flag        = Object(event, 'Flag')
         TrigObj        = Object(event, 'TrigObj')
         chain.GetEntry(i)
@@ -1061,7 +1079,29 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     fatjet.pt = fatjet.pt_jerDown
                     fatjet.mass = fatjet.mass_jerDown 
                     fatjet.msoftdrop = fatjet.msoftdrop_jerDown
-
+        
+        elif scenario.startswith("metUnclust"):
+            for jet in jets:
+                jet.pt = jet.pt_nom
+                jet.mass = jet.mass_nom 
+            for fatjet in fatjets:
+                fatjet.pt = fatjet.pt_nom
+                fatjet.mass = fatjet.mass_nom 
+                fatjet.msoftdrop = fatjet.msoftdrop_nom
+            for mu in muons:
+                mu.pt = mu.corrected_pt
+            for tau in taus:
+                tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
+                fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
+                tau.pt = tau.pt*tes*fes
+                tau.mass = tau.mass*tes*fes
+            if scenario.endswith("Up"):
+                met.pt = met.pt_unclustEnUp
+                met.phi = met.phi_unclustEnUp
+            elif scenario.endswith("Down"):
+                met.pt = met.pt_unclustEnDown
+                met.phi = met.phi_unclustEnDown
+            
         elif scenario.startswith("TES") or scenario.startswith("FES"):
             for jet in jets:
                 jet.pt = jet.pt_nom
@@ -1149,7 +1189,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             if not Flag.eeBadScFilter:
                 continue
 
-        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, sys.argv[4])#, TrigObj)
+        passMu, passEle, passHT, noTrigger = trig_map(HLT, PV, year, runPeriod, sys.argv[4], TrigObj)
         
         if noTrigger:
             continue
@@ -1351,10 +1391,20 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             lepton_pfRelIso04[0]        =   GoodLep.jetRelIso
 
         #if not isMC:
+    
         if abs(GoodLep.pdgId)==11:
             lepton_SFFake[0] = SFFakeRatio_ele_calc(lepton_pt[0], lepton_eta[0], str(sample.year), sys.argv[4])
+            if year == "UL2017":
+                if L1.SingleIsoEG24er2p1 or L1.SingleIsoEG26er2p1 or L1.SingleIsoEG28er2p1 or L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32er2p1:
+                    lepton_EGML1seedOR[0] = 1
+                else:
+                    lepton_EGML1seedOR[0] = 0
+            else:
+                lepton_EGML1seedOR[0] = 1
+
         elif abs(GoodLep.pdgId)==13:
             lepton_SFFake[0] = SFFakeRatio_mu_calc(lepton_pt[0], lepton_eta[0], str(sample.year), sys.argv[4])
+            lepton_EGML1seedOR[0] = 1
         if isMC:
             lepton_isPrompt[0] = GoodLep.genPartFlav
     
@@ -1422,6 +1472,13 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             #GoodLep_SF = Lepton_IDIso_SF(GoodLep)
             GoodLep_SFUp = abs(GoodLep.effSF_errUp)
             GoodLep_SFDown = abs(GoodLep.effSF_errDown)
+            if GoodLep.pdgId == 11:
+                print("before:", GoodLep_SF, GoodLep_SFUp, GoodLep_SFDown)
+                addSF, addSF_Up, addSF_Down = EGM_SFs(GoodLep, year)
+                GoodLep_SF *= addSF
+                GoodLep_SFUp = (GoodLep_SFUp**2. + addSF_Up**2.)**0.5
+                GoodLep_SFDown = (GoodLep_SFDown**2. + addSF_Down**2.)**0.5
+                print("after:", GoodLep_SF, GoodLep_SFUp, GoodLep_SFDown)
             systTree.setWeightName("lepSF", copy.deepcopy(GoodLep_SF))
             systTree.setWeightName("lepUp", copy.deepcopy(GoodLep_SFUp))
             systTree.setWeightName("lepDown", copy.deepcopy(GoodLep_SFDown))
@@ -1755,8 +1812,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         print("Number of events in output tree " + str(scenario) + ": " + str(trees[idxs].GetEntries()))
 
 for ids, scenario in enumerate(scenarios):
-    if Debug and ids > 0:
-        break
+    if Debug and not (scenario == "nominal"):# or scenario.startswith("met")):
+        continue
     print("starting reco events for scenario", scenario)
     reco(ids, scenario, isMC, addPDF, MCReco)
 

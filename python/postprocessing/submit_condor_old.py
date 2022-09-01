@@ -75,7 +75,7 @@ def sub_writer(sample, n, files, folder):
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
     tagyear = str(sample.year)
-    inputfiles = "transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues_" + tagyear + ".py, ./FRs, ./data/leptonSF/Muon_RunBCDEF_SF_ID_2017.root, PUID_SFs.root, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_UL2016APV.root, Btag_eff_UL2016.root, Btag_eff_UL2017.root, Btag_eff_UL2018.root, VV_NLO_LO_CMS_mjj.root, __init__.py, ./data, ./rwgcards\n"
+    inputfiles = "transfer_input_files    = $(Proxy_path), samples/samples.py, samples/samplesUL.py, skimtree_utils_ssWW_wFakes_old.py, CutsAndValues_" + tagyear + ".py, ./FRs, TauIDSFTool.py, EFTOperator_dict.py, Btag_eff_UL2016APV.root, Btag_eff_UL2016.root, Btag_eff_UL2017.root, Btag_eff_UL2018.root, VV_NLO_LO_CMS_mjj.root, __init__.py, ./data, ./rwgcards, PUID_SFs.root\n"
     f.write(inputfiles)
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-a/apiccine/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
@@ -97,7 +97,7 @@ def sub_writer(sample, n, files, folder):
     f.write("executable              = " + executpy + "\n")
     f.write("arguments               = " + args + "\n")
     #f.write("input                   = input.txt\n")
-    f.write("request_cpus            = 10\n")
+    f.write("request_cpus            = 6\n")
     f.write("output                  = condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_" + opt.folder + "/error/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".err\n")
     f.write("log                     = condor_" + opt.folder + "/log/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".log\n")

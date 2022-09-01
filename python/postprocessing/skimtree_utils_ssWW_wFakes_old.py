@@ -163,9 +163,9 @@ effLumi_2017 = {
             "PFHT350"                       : 0.17,
             },
         "Ele" : {
-            "Ele35_WPTight_Gsf"                     : 41.48,
-            #"Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
-            "Photon200"                             : 41.48,
+            #"Ele35_WPTight_Gsf"                     : 41.48,
+            "Ele32_WPTight_Gsf_L1DoubleEG"          : 41.48,
+            #"Photon200"                             : 41.48,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
             #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
@@ -195,7 +195,7 @@ effLumi_2018 = {
         "Ele" : {
             #"Ele35_WPTight_Gsf"                     : 59.83,
             "Ele32_WPTight_Gsf"                     : 59.83,
-            "Photon200"                             : 59.83,
+            #"Photon200"                             : 59.83,
             #"Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30"   : 0.0038,
             #"Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0276,
             #"Ele23_CaloIdL_TrackIdL_IsoVL_PFJet30"  : 0.0434,
@@ -261,8 +261,8 @@ def trig_finder(HLT, yearr, samplename):
         #if HLT.TkMu100:                                 vTrigMu.append("TkMu100")
         #if HLT.Mu8_TrkIsoVVL:                           vTrigMu.append("Mu8_TrkIsoVVL")
         #if HLT.Mu17_TrkIsoVVL:                          vTrigMu.append("Mu17_TrkIsoVVL")
-        if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
-        #if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
+        #if HLT.Ele35_WPTight_Gsf:                       vTrigEle.append("Ele35_WPTight_Gsf")
+        if HLT.Ele32_WPTight_Gsf_L1DoubleEG:            vTrigEle.append("Ele32_WPTight_Gsf_L1DoubleEG")
         #if not ('DataMuB' in samplename or 'DataEleB' in samplename or 'DataHTB' in samplename):
             #if HLT.Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30:     vTrigEle.append("Ele8_CaloIdL_TrackIdL_IsoVL_PFJet30")
             #if HLT.Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30:    vTrigEle.append("Ele12_CaloIdL_TrackIdL_IsoVL_PFJet30")
@@ -667,8 +667,8 @@ def SelectLepton(leptons, jet1 = None, jet2 = None):
         if lepflav == 11:
             IsLooseID = lep.mvaFall17V2Iso_WPL
             IsTightID = lep.mvaFall17V2Iso_WP90
-            IsTightIso = bool(lep.jetRelIso<ISO_CUT_ELE and lep.jetRelIso>=0.)
-            IsLooseIso = bool(lep.jetRelIso<1. and lep.jetRelIso>=0.)
+            IsTightIso = bool(lep.pfRelIso03_all<ISO_CUT_ELE and lep.pfRelIso03_all>=0.)
+            IsLooseIso = bool(lep.pfRelIso03_all<1. and lep.pfRelIso03_all>=0.)
             IsInEtaRegion = bool(abs(lep.eta)<ETA_CUT_ELE and not (abs(lep.eta)>1.4442 and abs(lep.eta)<1.566))
             IsInPtRegion = lep.pt > PT_CUT_ELE
 
@@ -945,7 +945,7 @@ def get_HT(jets):
         HT += jet.pt
     return HT
 
-def trig_map(HLT, PV, yearr, runPeriod, flag):
+def trig_map(HLT, PV, yearr, runPeriod, flag, TrigObj):
     isGoodPV = True#copy.deepcopy(pass_MET(flag)) #(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passMu = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
     passEle = False#(PV.ndof>4 and abs(PV.z)<20 and math.hypot(PV.x, PV.y)<2) #basic requirements on the PV's goodness
@@ -996,11 +996,8 @@ def trig_map(HLT, PV, yearr, runPeriod, flag):
 
     elif(year == "UL2017"):
         mutrig = HLT.IsoMu27
-        if True:#flag != "test":
-            eletrig = HLT.Ele35_WPTight_Gsf
-        #else:# flag == "test":
-            #eletrig = HLT.Ele35_WPTight_Gsf or HLT.Photon200
-        #eletrig = (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40))
+        eletrig = HLT.Ele32_WPTight_Gsf_L1DoubleEG #*int(TrigObj.filterBits == 1024)) 
+        #eletrig = HLT.Ele35_WPTight_Gsf
         if mutrig:# or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100)
             passMu = True
         if eletrig:# or (HLT.Ele32_WPTight_Gsf_L1DoubleEG and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)
@@ -2045,6 +2042,88 @@ def Lepton_IDIso_SF(lepton):
     else:
         print("I dunno what to do with this particle :/")
         return -1.
+
+def EGM_SFs(lepton, year):
+    if abs(lepton.pdgId)==11:
+        f_trig = ROOT.TFile.Open("./data/leptonSF/EleTRIG_" + str(year)  + "_EGM2D.root", "READ")
+        f_iso = ROOT.TFile.Open("./data/leptonSF/EleISO_" + str(year)  + "_EGM2D.root", "READ")
+        
+        h_trig = ROOT.TH2F(f_trig.Get("EGamma_SF2D"))
+        h_iso = ROOT.TH2F(f_iso.Get("EGamma_SF2D"))
+
+        h_trig_errs = [
+            ROOT.TH2F(f_trig.Get("statData")),
+            ROOT.TH2F(f_trig.Get("statMC")),
+            ROOT.TH2F(f_trig.Get("altBkgModel")),
+            ROOT.TH2F(f_trig.Get("altSignalModel")),
+            ROOT.TH2F(f_trig.Get("altMCEff")),
+            ROOT.TH2F(f_trig.Get("altTagSelection")),
+        ]
+
+        h_iso_errs = [
+            ROOT.TH2F(f_iso.Get("statData")),
+            ROOT.TH2F(f_iso.Get("statMC")),
+            ROOT.TH2F(f_iso.Get("altBkgModel")),
+            ROOT.TH2F(f_iso.Get("altSignalModel")),
+            ROOT.TH2F(f_iso.Get("altMCEff")),
+            ROOT.TH2F(f_iso.Get("altTagSelection")),
+        ]
+        
+        pt = lepton.pt
+        abseta = lepton.eta
+        binx_trig = h_trig.GetXaxis().FindBin(abseta)
+        biny_trig = h_trig.GetYaxis().FindBin(pt)
+        nxbins_trig = h_trig.GetXaxis().GetNbins()
+        nybins_trig = h_trig.GetYaxis().GetNbins()
+        if binx_trig > nxbins_trig:
+            binx_trig = copy.deepcopy(nxbins_trig)
+        elif binx_trig <= 0:
+            binx_trig = 1
+        if biny_trig > nybins_trig:
+            biny_trig = copy.deepcopy(nybins_trig)
+        elif biny_trig <= 0:
+            biny_trig = 1
+
+        binx_iso = h_iso.GetXaxis().FindBin(abseta)
+        biny_iso = h_iso.GetYaxis().FindBin(pt)
+        nxbins_iso = h_iso.GetXaxis().GetNbins()
+        nybins_iso = h_iso.GetYaxis().GetNbins()
+        if binx_iso > nxbins_iso:
+            binx_iso = copy.deepcopy(nxbins_iso)
+        elif binx_iso <= 0:
+            binx_iso = 1
+        if biny_iso > nybins_iso:
+            biny_iso = copy.deepcopy(nybins_iso)
+        elif biny_iso <= 0:
+            biny_iso = 1
+        
+        SF_trig = copy.deepcopy(h_trig.GetBinContent(binx_trig, biny_trig))
+        SF_iso = copy.deepcopy(h_iso.GetBinContent(binx_iso, biny_iso))
+
+        SF_trig_err = 0.
+        SF_iso_err = 0.
+
+        for iderr in range(len(h_trig_errs)):
+            SF_trig_err += copy.deepcopy(h_trig_errs[iderr].GetBinContent(binx_trig, biny_trig))**2.
+            SF_iso_err += copy.deepcopy(h_iso_errs[iderr].GetBinContent(binx_iso, biny_iso))**2.
+            
+        SF_trig_err = SF_trig_err
+        SF_iso_err = SF_iso_err
+        
+        SF = SF_trig*SF_iso
+        SF_err = (SF_trig_err + SF_iso_err)**0.5
+        SF_up = SF + SF_err
+        SF_down = SF - SF_err
+
+        f_trig.Close()
+        f_iso.Close()
+
+        return SF, SF_up, SF_down
+
+    else:
+        print("I dunno what to do with this particle :/")
+        return -1.
+
 
 def SFFakeRatio_ele_calc(pT, eta, year='2017', folder = "remote", wp = 'vsjet' + str(ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE)):
     histo = ROOT.TH2F()

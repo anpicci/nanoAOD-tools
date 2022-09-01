@@ -411,7 +411,7 @@ if not opt.check:
     if "UL2016" in opt.year:
         t.write("PT_CUT_ELE=  30\n")
     elif "UL2017" in opt.year:
-        t.write("PT_CUT_ELE=  38\n")
+        t.write("PT_CUT_ELE=  35\n")
     elif "UL2018" in opt.year:
         t.write("PT_CUT_ELE=  35\n")
     else:
