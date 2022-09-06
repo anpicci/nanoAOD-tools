@@ -1,6 +1,6 @@
 import os
 os.system("reset")
-folder = "vUL035"
+folder = "vUL040"
 errpaths = [
     "condorplot_" + folder + "_tdmcut/error/",
     "condorbranch_" + folder + "/error/",
@@ -17,7 +17,10 @@ years = [
 ]
 
 for errpath in errpaths:
-    errfiles = os.listdir(errpath)
+    try:
+        errfiles = os.listdir(errpath)
+    except:
+        continue
     dimzeros = []
     print("\n" + errpath)
     

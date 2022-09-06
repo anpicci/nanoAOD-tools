@@ -131,7 +131,21 @@ if ('Data' in sample.name):
 else:
     isMC = True
     if "UL" in str(sample.year):
-        scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+        scenarios = [
+            "nominal",
+            "lepenUp",
+            "lepenDown",
+            "jesUp",
+            "jesDown",
+            "jerUp",
+            "jerDown",
+            "metUnclustUp",
+            "metUnclustDown",
+            "TESUp",
+            "TESDown",
+            "FESUp",
+            "FESDown"
+        ]
     else:
         scenarios = ["all"]
 if "/vUL001/" in outpath:
@@ -1020,6 +1034,28 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     fatjet.pt = fatjet.pt_jerDown
                     fatjet.mass = fatjet.mass_jerDown 
                     fatjet.msoftdrop = fatjet.msoftdrop_jerDown
+
+        elif scenario.startswith("metUnclust"):
+            for jet in jets:
+                jet.pt = jet.pt_nom
+                jet.mass = jet.mass_nom
+            for fatjet in fatjets:
+                fatjet.pt = fatjet.pt_nom
+                fatjet.mass = fatjet.mass_nom
+                fatjet.msoftdrop = fatjet.msoftdrop_nom
+            for mu in muons:
+                mu.pt = mu.corrected_pt
+            for tau in taus:
+                tes_Down, tes, tes_Up = tesTool.getTES(tau.pt, tau.decayMode, tau.genPartFlav, unc='All')
+                fes_Down, fes, fes_Up = fesTool.getFES(tau.eta, tau.decayMode, tau.genPartFlav, unc='All')
+                tau.pt = tau.pt*tes*fes
+                tau.mass = tau.mass*tes*fes
+            if scenario.endswith("Up"):
+                met.pt = met.pt_unclustEnUp
+                met.phi = met.phi_unclustEnUp
+            elif scenario.endswith("Down"):
+                met.pt = met.pt_unclustEnDown
+                met.phi = met.phi_unclustEnDown
 
         elif scenario.startswith("TES") or scenario.startswith("FES"):
             for jet in jets:

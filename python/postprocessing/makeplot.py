@@ -1210,6 +1210,7 @@ for year in years:
         bin_bdtsm_dev = array("d", [0., 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
         
+        '''
         variables.append(variabile('BDT_SM_UL035_novar_sr_allbkg', 'SM BDT output (novar SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('BDT_SM_UL035_novar_truesr_allbkg', 'SM BDT output (novar true SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
         variables.append(variabile('DNN_SM_UL035_novar_sr_allbkg', 'SM DNN output (novar SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1236,7 +1237,7 @@ for year in years:
         variables.append(variabile('DNN_FS_UL035_novar_fix', 'f_{S} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_FM_UL035_novar_fix', 'f_{M} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_FT_UL035_novar_fix', 'f_{T} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        
+        '''
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         '''
         variables.append(variabile('BDT_SM_UL035_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
@@ -1413,7 +1414,7 @@ for year in years:
         elif opt.wjets or opt.qcd or opt.fakes or opt.dy:
             bin_metpt = array("d", [0., 10., 15., 20., 25., 30., 35., 40., 45., 50.])
         elif opt.ttbar:
-            bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 225., 250., 275., 300., 325., 350.,])
+            bin_metpt = array("d", [50., 75., 100., 125., 150., 175., 200., 225., 250., 275., 300., 325., 350.,400.,450.,500.])
         else:
             bin_metpt = array("d", [0., 25., 50., 75., 100., 125., 150., 175., 200., 225., 250., 275., 300.])
         nbin_metpt = len(bin_metpt) - 1
