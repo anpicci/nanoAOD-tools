@@ -14,6 +14,7 @@ parser.add_option('-c', '--cuts', dest='cut', type=str, default = 'not', help='P
 parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,UL2016,UL2017,UL2018', help='Please enter year(s)')
 parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please enter variable(s)')
 parser.add_option('--nosyst', dest='nosyst', default = False, action='store_true', help='no syst applied')
+parser.add_option('--systs', dest='systs', type=str, default = 'all', help='Systs to plot')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='no syst applied')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
@@ -107,7 +108,7 @@ def submitter(sample, argsins, folder, cut):
     if os.path.exists(error):
         os.system("rm " + error)
 
-    os.system("condor_submit " + condorsubb)
+    #os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 years = opt.years.split(",")
@@ -195,6 +196,8 @@ for year in years:
                 arg4 = arg3 + " --lep " + lepn
                 if opt.nosyst:
                     arg4 += " --syst noSyst"
+                elif opt.systs != "all":
+                    arg4 += " --syst " + str(opt.systs)
                 if opt.cut != "not":
                     arg5 = ""
                     for cut in cuts: 

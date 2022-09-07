@@ -324,7 +324,9 @@ scenarios = [
     "TESUp", 
     "TESDown",
     "FESUp", 
-    "FESDown"
+    "FESDown",
+    "metUnclustUp",
+    "metUnclustDown",
 ]
 nomtag = "nominal"
 
