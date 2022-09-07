@@ -1,6 +1,7 @@
 import os
 import optparse
 import sys
+import ROOT
 
 cshname = "condorrun_tauwp.csh"
 split = 50
@@ -76,7 +77,7 @@ def CondoredList(samplename):
                 for ids, scenario in enumerate(scenarios):
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
-                    except(AttributeError, ReferenceError):#, RuntimeWarning):
+                    except:#(AttributeError, ReferenceError):#, RuntimeWarning):
                         try:
                             condlist.remove(condfile)
                         except:
@@ -85,6 +86,10 @@ def CondoredList(samplename):
                         if not opt.check:
                             print("Removing files with damaged " + scenario + " tree...")
                             os.system("rm "+ path + samplename + "/" + condfile)
+                        else:
+                            print("To remove files with damaged " + scenario + " tree...")
+                        break
+
                     else:
                         pass
 
@@ -199,7 +204,7 @@ vetosamp = []
 if opt.veto != "none":
     vetosamp = opt.veto.split(",")
     
-
+'''
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
     sample = ""
@@ -211,7 +216,7 @@ for line in condorstatus:
     if sample != "" and sample.endswith(opt.year):
         if not sample in vetosamp:
             vetosamp.append(sample)
-
+'''
 if len(vetosamp) > 0:
     toVeto = True
     print("Samples to veto:", vetosamp)

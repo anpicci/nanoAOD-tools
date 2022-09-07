@@ -368,6 +368,9 @@ systematicslist = [
     ["TESDown", True, "en"],
     ["FESUp", True, "en"],
     ["FESDown", True, "en"],
+    ["metUnclustUp", True, "en"],
+    ["metUnclustDown", True, "en"],
+
 ]
 
 #["trigUp", False, "exp"],
@@ -1566,7 +1569,10 @@ for year in years:
                     dimcut = dimcuts[idsl]
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
-                    fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    if os.path.exists(foutput):
+                        fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    else:
+                        fout = ROOT.TFile.Open(foutput, "RECREATE")
                     print(samplelab)
                     f1name = ""
                     if 'Fake' in str(samplelab):
