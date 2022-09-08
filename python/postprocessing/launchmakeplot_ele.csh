@@ -1,5 +1,5 @@
 set LD_PRELOAD=libtcmalloc.so
-set folder0 = vUL035
+set folder0 = vUL040
 set channel = "ltau" 
 reset
 
@@ -40,6 +40,7 @@ set year = UL2018
 python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count --tDMcut -d Triboson_UL2018 #-v countings --syst noSyst
 python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count --tDMcut -d Triboson_UL2018 #-v countings --syst noSyst
 python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count --tDMcut -d Triboson_UL2018 #-v countings --syst noSyst
+python3 makeplot.py -y $year --lep electron --presel -f $folder0 -p --ch $channel --count --tDMcut -d Triboson_UL2018 #-v countings --syst noSyst
 python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count --tDMcut -d Triboson_UL2018 #-v countings --syst noSyst
 
 
