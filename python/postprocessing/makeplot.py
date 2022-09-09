@@ -530,7 +530,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     syst = systlist[0]
     isSystCorr = systlist[1]
     systtype = systlist[2]
-
+    print("begin:", fout)
     if systtype == "en":
         systtree = syst
     else:
@@ -706,6 +706,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         countf.write(str(bincont).replace(".",",") + ";" + str(binerrcont).replace(".",","))
         countf.write("\n")
         countf.close()
+    print(fout)
     fout.cd()
     h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
     
@@ -819,7 +820,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             if 'DataMET' in s.label:# or 'DataHT' in s.label:
                 continue
 
-        tmp = (ROOT.TH1F)(infile[s.label].Get(histoname))
+        tmp = copy.deepcopy(infile[s.label].Get(histoname))
+        tmp.Scale("width")
         tmp.SetLineColor(ROOT.kBlack)
         tmp.SetName(s.leglabel)
         if('Data' in s.label):
@@ -1290,12 +1292,12 @@ for year in years:
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', True, 10, -2.5, 2.5))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', True, 14, -3.50, 3.50))
 
-        bin_lepton_pt = array("d", [30., 40., 50., 60., 70., 80., 90., 100., 110., 120., 140., 160., 180., 200., 220., 250.])
+        bin_lepton_pt = array("d", [30., 40., 50., 60., 70., 80., 90., 100., 110., 120., 130., 140., 150., 160., 170., 180., 200., 220., 240., 260., 300.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
         variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_lepton_pt, bin_lepton_pt))
 
         #variables.append(variabile(lep1[0] + '_pdgid', lep1[1] + ' pdgid',  wzero+'*('+cutbase+')', False, 31, -15.5, 15.5))
-        #variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' pfRelIso04',  wzero+'*('+cutbase+')', False, 15, 0, 0.15))
+        variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' pfRelIso04',  wzero+'*('+cutbase+')', False, 15, 0, 0.15))
         
         if opt.wjets or opt.qcd or opt.fakes or opt.dy or opt.sr:
             bin_zepp = array("d", [-1., -0.7, -0.4, -0.2, 0., 0.2, 0.4, 0.7, 1.])
@@ -1571,8 +1573,15 @@ for year in years:
                     dimcut = dimcuts[idsl]
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
-                    #if os.path.exists(foutput):
-                    fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    #print(foutput, "exists?", os.path.exists(foutput))
+                    try:
+                        fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    except:
+                        #fout.Close()
+                        os.system("rm " + foutput)
+                        fout = ROOT.TFile.Open(foutput, "UPDATE")
+                    else:
+                        pass
                     #else:
                         #fout = ROOT.TFile.Open(foutput, "RECREATE")
                     print(samplelab)

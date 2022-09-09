@@ -19,12 +19,13 @@ set year = UL2016
 #python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count --tDMcut -v countings --syst noSyst
 #python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count --tDMcut -v countings --syst noSyst
 
-#set year = UL2016M
+set year = UL2016M
 ##rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year\_*
-#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count --tDMcut -v countings --syst noSyst
-#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count --tDMcut -v countings --syst noSyst
-#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count --tDMcut -v countings --syst noSyst
-#python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count --tDMcut -v countings --syst noSyst
+#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count --tDMcut -d WpWpJJ_QCD_$year,WpWpJJ_EWK_$year
+#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count --tDMcut -d WpWpJJ_QCD_$year,WpWpJJ_EWK_$year
+#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count --tDMcut -d WpWpJJ_QCD_$year,WpWpJJ_EWK_$year
+#python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count --tDMcut -d WpWpJJ_QCD_$year,WpWpJJ_EWK_$year
+#python3 makeplot.py -y $year --lep electron --presel -f $folder0 -p --ch $channel --count --tDMcut -d WpWpJJ_QCD_$year,WpWpJJ_EWK_$year
 
 #################### year2 #################
 set year = UL2017
@@ -47,3 +48,11 @@ python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch 
 
 #set year = UL2016M
 #python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel -v m_o1 --tDMcut -d FakeMu_$year --syst noSyst
+
+set year = ULRunII
+#rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year\_*
+#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --count --tDMcut -d DataEle_$year
+#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --count --tDMcut -d DataEle_$year
+#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --count --tDMcut -d DataEle_$year
+#python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --count --tDMcut -d DataEle_$year
+#python3 makeplot.py -y $year --lep electron --presel -f $folder0 -p --ch $channel --count --tDMcut -d DataEle_$year

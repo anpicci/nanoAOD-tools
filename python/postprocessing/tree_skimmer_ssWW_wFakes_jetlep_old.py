@@ -1388,7 +1388,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if SingleMu==1:
             lepton_pfRelIso04[0]        =   GoodLep.pfRelIso04_all
         elif SingleEle==1:
-            lepton_pfRelIso04[0]        =   GoodLep.jetRelIso
+            lepton_pfRelIso04[0]        =   GoodLep.pfRelIso03_all
 
         #if not isMC:
     
