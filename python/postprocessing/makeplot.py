@@ -821,7 +821,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
                 continue
 
         tmp = copy.deepcopy(infile[s.label].Get(histoname))
-        tmp.Scale("width")
+        tmp.Scale(1, "width")
         tmp.SetLineColor(ROOT.kBlack)
         tmp.SetName(s.leglabel)
         if('Data' in s.label):
