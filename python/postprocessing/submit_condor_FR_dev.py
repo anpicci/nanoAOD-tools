@@ -47,6 +47,7 @@ def sub_writer(sample, n, files, folder):
     #f.write("arguments               = " + sample.label + " " + str(n) + " " + str(files) + " remote " + str(opt.trig) + " " + str(opt.wpvsJet) + "\n")
     f.write("arguments               = " + args)
     #f.write("input                   = input.txt\n")
+    #f.write("request_cpus            = 6\n")
     f.write("output                  = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/output/"+ sample.label + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/error/"+ sample.label +  "_part" + str(n) + ".err\n")
     f.write("log                     = condor_"+str(opt.folder)+ "_" + str(opt.wpvsJet) + "/log/"+ sample.label + "_part" + str(n) + ".log\n")
@@ -92,7 +93,7 @@ else:
 #Writing the configuration file
 for sample in samples:
     isMC = True
-
+    
     if('Data' in sample.label):
         if opt.nodata:
             continue
@@ -103,10 +104,8 @@ for sample in samples:
         os.makedirs(opath)
     f = open("../../crab/macros/files/" + infold + "/" + sample.label + ".txt", "r")
     files_list = f.read().splitlines()
-
-    #print(str(len(files_list)))
+    
     if(isMC):
-        print sample.label, len(files_list)
         for i, files in enumerate(files_list):
             if opt.maxj > 0:
                 if i > opt.maxj: break
@@ -120,7 +119,10 @@ for sample in samples:
     else:
         for i in range(len(files_list)/split+1):
             if os.path.exists(opath + sample.label + "_part" + str(i) + ".root"):
+                #print("hello", opath + sample.label + "_part" + str(i) + ".root")
                 continue
+    
+
             extmax = int(min([split*(i+1), len(files_list)]))
             sub_writer(sample, i,  ",".join( e for e in files_list[split*i:extmax]), folder)
             print('condor_submit condor.sub')

@@ -18,16 +18,23 @@ from rwgcards.FromCardToDict import *
 rwgdict = CardToDict("dim8", "FT1_2p0")
 
 desiredop = [
-    "FS0_1p0",
-    "FS1_1p0",
-    "FS2_1p0",
-    "FM0_1p0",
-    "FM1_0p9",
-    "FM6_1p0",
-    "FM7_1p0",
-    "FT0_1p0",
-    "FT1_1p0",
-    "FT2_0p9",
+    ##"FS0_1p0",
+    #"FS0_20",
+    ##"FS1_1p0",
+    #"FS1_450",
+    ##"FS2_1p0",
+    #"FS2_50",
+    ##"FM0_1p0",
+    #"FM0_15",
+    ##"FM1_0p9",
+    #"FM1_30",
+    ##"FM6_1p0",
+    #"FM6_60",
+    ##"FM7_1p0",
+    #"FM7_40",
+    ##"FT0_1p0",
+    ##"FT1_1p0",
+    ##"FT2_0p9",
 ]
 
 wcoeff = []
@@ -313,7 +320,10 @@ if opt.tDMcut:
 
 lumi = {'2016': 35.9, 'UL2016M': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.5, "2018": 59.7, 'UL2018':59.8, "ULRunII":137.1}
 
-scenarios = [
+if folder.startswith("FR_"):
+    scenarios = ["all"]
+else:
+    scenarios = [
     "nominal",
     "lepenUp",
     "lepenDown",
@@ -327,7 +337,7 @@ scenarios = [
     "FESDown",
     "metUnclustUp",
     "metUnclustDown",
-]
+    ]
 nomtag = "nominal"
 
 systematicslist = [
@@ -370,8 +380,8 @@ systematicslist = [
     ["TESDown", True, "en"],
     ["FESUp", True, "en"],
     ["FESDown", True, "en"],
-    #["metUnclustUp", True, "en"],
-    #["metUnclustDown", True, "en"],
+    ["metUnclustUp", True, "en"],
+    ["metUnclustDown", True, "en"],
 
 ]
 

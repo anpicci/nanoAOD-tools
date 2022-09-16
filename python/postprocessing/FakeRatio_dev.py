@@ -713,7 +713,7 @@ for i in range(tree.GetEntries()):
             idx_lep = idx_list_m[0]
         #print leptons[idx_lep].pdgId
         #if len(leptons)>0 and isEle != None:
-        print("lepquantities")
+        #print("lepquantities")
         lepGood=None
         lepGood_p4 = ROOT.TLorentzVector()
         lepGood = leptons[idx_lep]
@@ -772,13 +772,14 @@ for i in range(tree.GetEntries()):
             countfj = 0
 
             if min(lenfatjet, len(list(fatjets)))>0:
-                print("FatJet are here!")
+                #print("FatJet are here!")
+                pass
             while countfj < min(lenfatjet, len(list(fatjets))):
                 fj = fatjets[countfj]
                 if fj.pt>30 and deltaR(fj.eta, fj.phi, FakeLepton_eta[0], FakeLepton_phi[0])>0.8:
                     FatJet_numberSeparate[0]+=1
                 FatJet_number[0]+=1
-                print(fj.msoftdrop, fj.msoftdrop_corr_PUPPI)
+                #print(fj.msoftdrop, fj.msoftdrop_corr_PUPPI)
                 FatJet_pt[countfj] = copy.deepcopy(fj.pt)
                 FatJet_eta[countfj] = copy.deepcopy(fj.eta)
                 FatJet_phi[countfj] = copy.deepcopy(fj.phi)
@@ -804,7 +805,7 @@ for i in range(tree.GetEntries()):
                 FakeLepton_isTight[0]       =   lepGood.tightId
             if isMC:
                 FakeLepton_isPrompt[0]      =   lepGood.genPartFlav
-    print("event selected")
+    #print("event selected")
     systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
     systTree.fillTreesSysts(trees, "all")
 

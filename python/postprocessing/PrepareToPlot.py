@@ -90,7 +90,7 @@ Debug = opt.check # True # False #
 split = 50
 
 isWithSysts = False
-if "UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
+if opt.ct != "HT" and ("UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[-1]) > 9):
     isWithSysts = True
     scenarios = [
         "nominal", 
@@ -103,7 +103,9 @@ if "UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[
         "TESUp",
         "TESDown",
         "FESUp",
-        "FESDown"
+        "FESDown",
+        "metUnclustUp",
+        "metUnclustDown",
     ]
 else:
     scenarios = ["all"]
@@ -118,15 +120,21 @@ def CondoredList(samplename):
         toRel = False
         wrongex = False
         for condfile in condlist:
-            if os.stat(path+samplename+"/"+condfile).st_size < 10.*1024.:#not samplename.startswith('DY')
+            #print(path+samplename+"/"+condfile)
+            if opt.ct != "HT" and os.stat(path+samplename+"/"+condfile).st_size < 10.*1024.:#not samplename.startswith('DY')
                 print("Condoring still not ended so far")                
                 condlist.remove(condfile)
                 #if not opt.check:
                     #os.system("rm -r "+ path + samplename + "/" + condfile)
+            elif opt.ct == "HT" and os.stat(path+samplename+"/"+condfile).st_size <= 0:
+                condlist.remove(condfile)
+                if not opt.check:
+                    os.system("rm -r "+ path + samplename + "/" + condfile)
+            
             else:
                 try:
                     tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
-                except(RuntimeWarning):
+                except:#(RuntimeWarning):
                     condlist.remove(condfile)
                     toRel = True
                     wrongex = True
@@ -137,16 +145,21 @@ def CondoredList(samplename):
                     pass
 
                 for ids, scenario in enumerate(scenarios):
+                    if opt.ct == "HT":
+                        break
                     try:
                         tempentr = tempf.Get(str("events_" + scenario)).GetEntries()
                     except(AttributeError, ReferenceError):#, RuntimeWarning):
                         try:
                             condlist.remove(condfile)
+                            tempf.Close()
                         except:
+                            tempf.Close()
                             pass
                         wrongex = True
                         if not opt.check:
                             print("Removing files with damaged " + scenario + " tree...")
+                            tempf.Close()
                             os.system("rm "+ path + samplename + "/" + condfile)
                             break
                     else:
@@ -154,6 +167,17 @@ def CondoredList(samplename):
                     
                     if ids == 0 and (not isWithSysts or "Data" in samplename):
                         break
+                try:
+                    tempf.Close()
+                except:
+                    condlist.remove(condfile)
+                    toRel = True
+                    wrongex = True
+                    if not opt.check:
+                        print("Removing damaged files...")
+                        os.system("rm "+ path + samplename + "/" + condfile)
+                else:
+                    pass
                     
         if toRel:
             print("Something went wrong during condoring", samplename, "fix it and relaunch")

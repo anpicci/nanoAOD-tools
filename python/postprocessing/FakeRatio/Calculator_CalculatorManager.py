@@ -43,16 +43,16 @@ class FakeCalculator_manager:
         if isData and onlybkg:
             print ('the sample: ', sample, 'is tagged as data sample, while you are running in only bkg mode, jumping the sample')
         '''
-        cut_ele_l = "abs(FakeLepton_pdgid)==11&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&abs(FakeLepton_eta)<2.4&&(abs(FakeLepton_eta)<1.4442||abs(FakeLepton_eta)>1.566)&&FakeLepton_pt>=0&&FakeLepton_jetRelIso>=0"#&&Jet_numberSeparateLep>0
-        cut_ele_t = "FakeLepton_jetRelIso<0.08&&FakeLepton_isTight"
+        cut_ele_l = "abs(FakeLepton_pdgid)==11&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&abs(FakeLepton_eta)<2.4&&(abs(FakeLepton_eta)<1.4442||abs(FakeLepton_eta)>1.566)&&FakeLepton_pt>=0&&FakeLepton_pfRelIso04>=0"#&&Jet_numberSeparateLep>0
+        cut_ele_t = "FakeLepton_pfRelIso04<0.08&&FakeLepton_isTight"
         cut_mu_l =  "abs(FakeLepton_pdgid)==13&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&abs(FakeLepton_eta)<2.4&&FakeLepton_pt>=0&&FakeLepton_pfRelIso04>=0"#&&Jet_numberSeparateLep>0
         cut_mu_t = "FakeLepton_pfRelIso04<0.15&&FakeLepton_isTight"
         cut_tau_l = "FakeTau_pt>=0&&abs(FakeTau_eta)<=2.4&&Veto_TauLeptons!=1"
         cut_tau_t = "FakeTau_DeepTauWP>=64"
         region = "(MET_pt>=0.&&MET_pt<=" + str(met_cut) + ")&&(mT_lepMET>=0.&&mT_lepMET<="+ str(mt_lepMET_cut) + ")"
         '''
-        cut_ele_l = "abs(FakeLepton_pdgid)==11&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&abs(FakeLepton_eta)<2.4&&(abs(FakeLepton_eta)<1.4442||abs(FakeLepton_eta)>1.566)&&FakeLepton_pt>=0&&FakeLepton_jetRelIso>=0"#&&Jet_numberSeparate>0"
-        cut_ele_t = "FakeLepton_jetRelIso<0.08&&FakeLepton_isTight"
+        cut_ele_l = "abs(FakeLepton_pdgid)==11&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&abs(FakeLepton_eta)<2.4&&(abs(FakeLepton_eta)<1.4442||abs(FakeLepton_eta)>1.566)&&FakeLepton_pt>=0&&FakeLepton_pfRelIso04>=0"#&&Jet_numberSeparate>0"
+        cut_ele_t = "FakeLepton_pfRelIso04<0.08&&FakeLepton_isTight"
         cut_mu_l =  "abs(FakeLepton_pdgid)==13&&nLeps_LightLeptons>0&&nLeps_LightLeptons<=2&&abs(FakeLepton_eta)<2.4&&FakeLepton_pt>=0&&FakeLepton_pfRelIso04>=0"#&&Jet_numberSeparate>0"
         cut_mu_t = "FakeLepton_pfRelIso04<0.15&&FakeLepton_isTight"
         cut_tau_l = "FakeTau_pt>=0&&abs(FakeTau_eta)<=2.4"#&&Veto_TauLeptons!=1"
