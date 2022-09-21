@@ -1,14 +1,24 @@
 import os
 from collections import OrderedDict
 
-def CardToDict(dim, op):
+def CardToDict(dim, op = ""):
     coeffdict = OrderedDict()
     
     if not "rwgcard" in os.getcwd():
-        rwgcard = open("rwgcards/" + dim + "_" + op + ".txt", "r")
+        cardpath = "rwgcards/" + dim
+        #rwgcard = open("rwgcards/" + dim + "_" + op + ".txt", "r")
     else:
-        rwgcard = open(dim + "_" + op + ".txt", "r")
-    interlines = [line.replace("\n","").replace("\t", "") for line in rwgcard.readlines() if line.startswith("launch") or line.startswith("\t")]
+        cardpath = dim + ""
+    if op != "":
+        cardpath += "_" + op
+    cardpath += ".txt"
+    rwgcard = open(cardpath, "r")
+    
+    if dim == "dim8":
+        interlines = [line.replace("\n","").replace("\t", "") for line in rwgcard.readlines() if line.startswith("launch") or line.startswith("\t")]
+    elif dim == "dim6":
+        interlines = [line.replace("\n","").replace("   set", "set") for line in rwgcard.readlines() if line.startswith("# c")]
+    
     coeff = ""
     valstr = ""
     sign = ""
@@ -17,7 +27,7 @@ def CardToDict(dim, op):
     for idl, line in enumerate(interlines):
         line = interlines[idl]
 
-        if line.startswith("launch"):
+        if dim == "dim8" and line.startswith("launch"):
             flag = line.split("=")[-1]
             if flag.endswith("_0p0"):
                 flag = flag.replace("_0p0", "_0")
@@ -30,7 +40,7 @@ def CardToDict(dim, op):
             else:
                 pass
 
-        elif line.startswith("set ano"):
+        elif dim == "dim8" and line.startswith("set ano"):
             value = float(line.split("anoinputs")[-1].split(" ")[-1].split("e")[0])
 
             if (value != 0 and val != "0"):
@@ -57,12 +67,58 @@ def CardToDict(dim, op):
                     idc += 1
                 else:
                     pass
-  
-    return coeffdict
+        
+        elif dim == "dim6":
+            coeff = ""
+            val = ""
 
+            rline = line.replace("#", "")
+            coeffs = [rl.replace(",", "") for rl in rline.split(" ") if rl.startswith("c")]
+            IsSingle = False
+            if len(coeffs) == 1:
+                IsSingle = True
+            
+            for ecoeff in coeffs:
+                if IsSingle:
+                    coeff, val = ecoeff.split("=")
+                    value = float(val)
+                    val = val.replace("-", "").replace(".", "p")
+                    
+                else:
+                    if coeff == "":
+                        coeff += ecoeff.split("=")[0]
+                        val += ecoeff.split("=")[1]
+                    else:
+                        coeff += "_" + ecoeff.split("=")[0]
+                        val += "_" + ecoeff.split("=")[1]
+                    
+                try:
+                    coeffdict[coeff] is None
+                except KeyError:
+                    coeffdict[coeff] = OrderedDict()
+                    coeffdict[coeff]['0'] = [0, 0]
+                    if idc == 0:
+                        idc += 1
+                else:
+                    pass
+
+            if val not in coeffdict[coeff].keys():
+                coeffdict[coeff][val] = [None, None]
+            if value < 0.:
+                coeffdict[coeff][val][0] = idc
+            elif value > 0.:
+                coeffdict[coeff][val][1] = idc
+            idc += 1
+    
+    return coeffdict
+    
 '''
-for k, v in CardToDict("dim8", "FT1_2p0").items():
+#for k, v in CardToDict("dim8", "FT1_2p0").items():
+for k, v in CardToDict("dim6").items():
     print("\ncoeff\t", k)
     for kv in v.keys():
         print(kv)
+    #print(k, v)
+#CardToDict("dim8", "FT1_2p0")
+#CardToDict("dim6")
 '''

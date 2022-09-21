@@ -1811,6 +1811,27 @@ FakeEle_UL2016.components = [
     TT_UL2016,
 ]
 
+FakeElePromptTau_UL2016M = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2016M")
+FakeElePromptTau_UL2016M.year = "UL2016M"
+FakeElePromptTau_UL2016M.components = [
+    FakeElePromptTau_UL2016APV,
+    FakeElePromptTau_UL2016,
+]
+
+PromptEleFakeTau_UL2016M = sample(ROOT.kGray+2, 1, 1001, "Prompt e Fake #tau", "PromptEleFakeTau_UL2016M")
+PromptEleFakeTau_UL2016M.year = "UL2016M"
+PromptEleFakeTau_UL2016M.components = [
+    PromptEleFakeTau_UL2016APV,
+    PromptEleFakeTau_UL2016,
+]
+
+FakeEleFakeTau_UL2016M = sample(ROOT.kGray+3, 1, 1001, "Fake e Fake #tau", "FakeEleFakeTau_UL2016M")
+FakeEleFakeTau_UL2016M.year = "UL2016M"
+FakeEleFakeTau_UL2016M.components = [
+    FakeEleFakeTau_UL2016APV,
+    FakeEleFakeTau_UL2016,
+]
+
 FakeEle_UL2016M = sample(ROOT.kGray, 1, 1001, "Fake Leptons", "FakeEle_UL2016M")
 FakeEle_UL2016M.year = "UL2016M"
 FakeEle_UL2016M.components = [
@@ -1860,6 +1881,27 @@ FakeMu_UL2016M.year = "UL2016M"
 FakeMu_UL2016M.components = [
     FakeMu_UL2016APV,
     FakeMu_UL2016,
+]
+
+FakeMuPromptTau_UL2016M = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016M")
+FakeMuPromptTau_UL2016M.year = "UL2016M"
+FakeMuPromptTau_UL2016M.components = [
+    FakeMuPromptTau_UL2016APV,
+    FakeMuPromptTau_UL2016,
+]
+
+PromptMuFakeTau_UL2016M = sample(ROOT.kGray+2, 1, 1001, "Prompt #mu Fake #tau", "PromptMuFakeTau_UL2016M")
+PromptMuFakeTau_UL2016M.year = "UL2016M"
+PromptMuFakeTau_UL2016M.components = [
+    PromptMuFakeTau_UL2016APV,
+    PromptMuFakeTau_UL2016,
+]
+
+FakeMuFakeTau_UL2016M = sample(ROOT.kGray+3, 1, 1001, "Fake #mu Fake #tau", "FakeMuFakeTau_UL2016M")
+FakeMuFakeTau_UL2016M.year = "UL2016M"
+FakeMuFakeTau_UL2016M.components = [
+    FakeMuFakeTau_UL2016APV,
+    FakeMuFakeTau_UL2016,
 ]
 
 SampleHTFake_UL2016 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2016")
@@ -3748,6 +3790,34 @@ FakeEle_ULRunII.components = [
     FakeEle_UL2018,
 ]
 
+FakeElePromptTau_ULRunII = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_ULRunII")
+FakeElePromptTau_ULRunII.year = "ULRunII"
+FakeElePromptTau_ULRunII.components = [
+    FakeElePromptTau_UL2016APV,
+    FakeElePromptTau_UL2016,
+    FakeElePromptTau_UL2017,
+    FakeElePromptTau_UL2018,
+]
+
+PromptEleFakeTau_ULRunII = sample(ROOT.kGray+2, 1, 1001, "Prompt e Fake #tau", "PromptEleFakeTau_ULRunII")
+PromptEleFakeTau_ULRunII.year = "ULRunII"
+PromptEleFakeTau_ULRunII.components = [
+    PromptEleFakeTau_UL2016APV,
+    PromptEleFakeTau_UL2016,
+    PromptEleFakeTau_UL2017,
+    PromptEleFakeTau_UL2018,
+]
+
+FakeEleFakeTau_ULRunII = sample(ROOT.kGray+3, 1, 1001, "Fake e Fake #tau", "FakeEleFakeTau_ULRunII")
+FakeEleFakeTau_ULRunII.year = "ULRunII"
+FakeEleFakeTau_ULRunII.components = [
+    FakeEleFakeTau_UL2016APV,
+    FakeEleFakeTau_UL2016,
+    FakeEleFakeTau_UL2017,
+    FakeEleFakeTau_UL2018,
+]
+
+
 FakeMuPromptTau_UL2018 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2018")
 FakeMuPromptTau_UL2018.year = "UL2018"
 FakeMuPromptTau_UL2018.components = [
@@ -3792,6 +3862,33 @@ FakeMu_ULRunII.components = [
     FakeMu_UL2016,
     FakeMu_UL2017,
     FakeMu_UL2018,
+]
+
+FakeMuPromptTau_ULRunII = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_ULRunII")
+FakeMuPromptTau_ULRunII.year = "ULRunII"
+FakeMuPromptTau_ULRunII.components = [
+    FakeMuPromptTau_UL2016APV,
+    FakeMuPromptTau_UL2016,
+    FakeMuPromptTau_UL2017,
+    FakeMuPromptTau_UL2018,
+]
+
+PromptMuFakeTau_ULRunII = sample(ROOT.kGray+2, 1, 1001, "Prompt #mu Fake #tau", "PromptMuFakeTau_ULRunII")
+PromptMuFakeTau_ULRunII.year = "ULRunII"
+PromptMuFakeTau_ULRunII.components = [
+    PromptMuFakeTau_UL2016APV,
+    PromptMuFakeTau_UL2016,
+    PromptMuFakeTau_UL2017,
+    PromptMuFakeTau_UL2018,
+]
+
+FakeMuFakeTau_ULRunII = sample(ROOT.kGray+3, 1, 1001, "Fake #mu Fake #tau", "FakeMuFakeTau_ULRunII")
+FakeMuFakeTau_ULRunII.year = "ULRunII"
+FakeMuFakeTau_ULRunII.components = [
+    FakeMuFakeTau_UL2016APV,
+    FakeMuFakeTau_UL2016,
+    FakeMuFakeTau_UL2017,
+    FakeMuFakeTau_UL2018,
 ]
 
 SampleHTFake_UL2018 = sample(ROOT.kBlack, 1, 1001, "Sample for FR", "SampleHTFake_UL2018")
@@ -4044,6 +4141,9 @@ sample_dict={
     "FakeMuPromptTau_UL2016":FakeMuPromptTau_UL2016,
     "PromptMuFakeTau_UL2016":PromptMuFakeTau_UL2016,
     "FakeMuFakeTau_UL2016":FakeMuFakeTau_UL2016,
+    "FakeMuPromptTau_UL2016M":FakeMuPromptTau_UL2016M,
+    "PromptMuFakeTau_UL2016M":PromptMuFakeTau_UL2016M,
+    "FakeMuFakeTau_UL2016M":FakeMuFakeTau_UL2016M,
     "FakeMu_UL2017":FakeMu_UL2017,
     "FakeMuPromptTau_UL2017":FakeMuPromptTau_UL2017,
     "PromptMuFakeTau_UL2017":PromptMuFakeTau_UL2017,
@@ -4053,7 +4153,10 @@ sample_dict={
     "PromptMuFakeTau_UL2018":PromptMuFakeTau_UL2018,
     "FakeMuFakeTau_UL2018":FakeMuFakeTau_UL2018,
     "FakeMu_ULRunII":FakeMu_ULRunII,
-
+    "FakeMuPromptTau_ULRunII":FakeMuPromptTau_ULRunII,
+    "PromptMuFakeTau_ULRunII":PromptMuFakeTau_ULRunII,
+    "FakeMuFakeTau_ULRunII":FakeMuFakeTau_ULRunII,
+    
     ################### FakeEle ###################
     "FakeEle_UL2016APV":FakeEle_UL2016APV,
     "FakeElePromptTau_UL2016APV":FakeElePromptTau_UL2016APV,
@@ -4064,6 +4167,9 @@ sample_dict={
     "FakeElePromptTau_UL2016":FakeElePromptTau_UL2016,
     "PromptEleFakeTau_UL2016":PromptEleFakeTau_UL2016,
     "FakeEleFakeTau_UL2016":FakeEleFakeTau_UL2016,
+    "FakeElePromptTau_UL2016M":FakeElePromptTau_UL2016M,
+    "PromptEleFakeTau_UL2016M":PromptEleFakeTau_UL2016M,
+    "FakeEleFakeTau_UL2016M":FakeEleFakeTau_UL2016M,
     "FakeEle_UL2017":FakeEle_UL2017,
     "FakeElePromptTau_UL2017":FakeElePromptTau_UL2017,
     "PromptEleFakeTau_UL2017":PromptEleFakeTau_UL2017,
@@ -4072,6 +4178,9 @@ sample_dict={
     "FakeElePromptTau_UL2018":FakeElePromptTau_UL2018,
     "PromptEleFakeTau_UL2018":PromptEleFakeTau_UL2018,
     "FakeEleFakeTau_UL2018":FakeEleFakeTau_UL2018,
+    "FakeElePromptTau_ULRunII":FakeElePromptTau_ULRunII,
+    "PromptEleFakeTau_ULRunII":PromptEleFakeTau_ULRunII,
+    "FakeEleFakeTau_ULRunII":FakeEleFakeTau_ULRunII,
     "FakeEle_ULRunII":FakeEle_ULRunII,
     ################### DataHT ###################
     "DataHT_UL2016APV":DataHT_UL2016APV,
@@ -4293,7 +4402,7 @@ condor_dict = {
     "VBS_SSWW_DIM6_SM_UL2016APV":VBS_SSWW_DIM6_SM_UL2016APV,
     #"VBS_SSWW_SM_UL2016APV":VBS_SSWW_SM_UL2016APV,
     "VBS_SSWW_aQGC_UL2016APV":VBS_SSWW_aQGC_UL2016APV,
-    #"VBS_SSWW_aTGC_UL2016APV":VBS_SSWW_aTGC_UL2016APV,
+    "VBS_SSWW_aTGC_UL2016APV":VBS_SSWW_aTGC_UL2016APV,
     "DataMu_UL2016APV":DataMu_UL2016APV,
     "DataEle_UL2016APV":DataEle_UL2016APV,
     "DataHT_UL2016APV":DataHT_UL2016APV,
@@ -4317,7 +4426,7 @@ condor_dict = {
     "VBS_SSWW_DIM6_SM_UL2016":VBS_SSWW_DIM6_SM_UL2016,
     #"VBS_SSWW_SM_UL2016":VBS_SSWW_SM_UL2016,
     "VBS_SSWW_aQGC_UL2016":VBS_SSWW_aQGC_UL2016,
-    #"VBS_SSWW_aTGC_UL2016":VBS_SSWW_aTGC_UL2016,
+    "VBS_SSWW_aTGC_UL2016":VBS_SSWW_aTGC_UL2016,
     "DataMu_UL2016":DataMu_UL2016,
     "DataEle_UL2016":DataEle_UL2016,
     "DataHT_UL2016":DataHT_UL2016,
@@ -4341,7 +4450,7 @@ condor_dict = {
     "VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
     #"VBS_SSWW_SM_UL2017":VBS_SSWW_SM_UL2017,
     "VBS_SSWW_aQGC_UL2017":VBS_SSWW_aQGC_UL2017,
-    #"VBS_SSWW_aTGC_UL2017":VBS_SSWW_aTGC_UL2017,
+    "VBS_SSWW_aTGC_UL2017":VBS_SSWW_aTGC_UL2017,
     "DataMu_UL2017":DataMu_UL2017,
     "DataEle_UL2017":DataEle_UL2017,
     "DataHT_UL2017":DataHT_UL2017,
@@ -4396,7 +4505,7 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2016APV":VBS_SSWW_cW_cHW_UL2016APV,
     #"VBS_SSWW_DIM6_SM_UL2016APV":VBS_SSWW_DIM6_SM_UL2016APV,
     "VBS_SSWW_aQGC_UL2016APV":VBS_SSWW_aQGC_UL2016APV,
-    #"VBS_SSWW_aTGC_UL2016APV":VBS_SSWW_aTGC_UL2016APV,
+    "VBS_SSWW_aTGC_UL2016APV":VBS_SSWW_aTGC_UL2016APV,
     "DataMu_UL2016APV":DataMu_UL2016APV,
     "FakeMu_UL2016APV":FakeMu_UL2016APV,
     "DataEle_UL2016APV":DataEle_UL2016APV,
@@ -4427,7 +4536,7 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2016":VBS_SSWW_cW_cHW_UL2016,
     #"VBS_SSWW_DIM6_SM_UL2016":VBS_SSWW_DIM6_SM_UL2016,
     "VBS_SSWW_aQGC_UL2016":VBS_SSWW_aQGC_UL2016,
-    #"VBS_SSWW_aTGC_UL2016":VBS_SSWW_aTGC_UL2016,
+    "VBS_SSWW_aTGC_UL2016":VBS_SSWW_aTGC_UL2016,
     "DataMu_UL2016":DataMu_UL2016,
     "FakeMu_UL2016":FakeMu_UL2016,
     "DataEle_UL2016":DataEle_UL2016,
@@ -4447,7 +4556,7 @@ merge_dict = {
     "VBS_SSWW_cHW_BSM_UL2016M":VBS_SSWW_cHW_BSM_UL2016M,
     "VBS_SSWW_cW_cHW_UL2016M":VBS_SSWW_cW_cHW_UL2016M,
     "VBS_SSWW_aQGC_UL2016M":VBS_SSWW_aQGC_UL2016M,
-    #"VBS_SSWW_aTGC_UL2016M":VBS_SSWW_aTGC_UL2016M,
+    "VBS_SSWW_aTGC_UL2016M":VBS_SSWW_aTGC_UL2016M,
     "WpWpJJ_QCD_UL2016M":WpWpJJ_QCD_UL2016M,
     "WpWpJJ_UL2016M":WpWpJJ_UL2016M,
     "ZZtoLep_UL2016M":ZZtoLep_UL2016M,
@@ -4491,7 +4600,7 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2017":VBS_SSWW_cW_cHW_UL2017,
     #"VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
     "VBS_SSWW_aQGC_UL2017":VBS_SSWW_aQGC_UL2017,
-    #"VBS_SSWW_aTGC_UL2017":VBS_SSWW_aTGC_UL2017,
+    "VBS_SSWW_aTGC_UL2017":VBS_SSWW_aTGC_UL2017,
     "DataMu_UL2017":DataMu_UL2017,
     "FakeMu_UL2017":FakeMu_UL2017,
     "DataEle_UL2017":DataEle_UL2017,
@@ -4522,7 +4631,7 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2018":VBS_SSWW_cW_cHW_UL2018,
     #"VBS_SSWW_DIM6_SM_UL2018":VBS_SSWW_DIM6_SM_UL2018,
     "VBS_SSWW_aQGC_UL2018":VBS_SSWW_aQGC_UL2018,
-    #"VBS_SSWW_aTGC_UL2018":VBS_SSWW_aTGC_UL2018,
+    "VBS_SSWW_aTGC_UL2018":VBS_SSWW_aTGC_UL2018,
     "DataMu_UL2018":DataMu_UL2018,
     "FakeMu_UL2018":FakeMu_UL2018,
     "DataEle_UL2018":DataEle_UL2018,
@@ -4541,7 +4650,7 @@ merge_dict = {
     "VBS_SSWW_cHW_BSM_ULRunII":VBS_SSWW_cHW_BSM_ULRunII,
     "VBS_SSWW_cW_cHW_ULRunII":VBS_SSWW_cW_cHW_ULRunII,
     "VBS_SSWW_aQGC_ULRunII":VBS_SSWW_aQGC_ULRunII,
-    #"VBS_SSWW_aTGC_ULRunII":VBS_SSWW_aTGC_ULRunII,
+    "VBS_SSWW_aTGC_ULRunII":VBS_SSWW_aTGC_ULRunII,
     "WpWpJJ_EWK_ULRunII":WpWpJJ_EWK_ULRunII,
     "WpWpJJ_QCD_ULRunII":WpWpJJ_QCD_ULRunII,
     "WpWpJJ_ULRunII":WpWpJJ_ULRunII,
@@ -4636,9 +4745,9 @@ plot_list = [
     #TT_UL2016,
     #WJets_UL2016,
     FakeMu_UL2016,
-    #FakeMuPromptTau_UL2016,
-    #PromptMuFakeTau_UL2016,
-    #FakeMuFakeTau_UL2016,
+    FakeMuPromptTau_UL2016,
+    PromptMuFakeTau_UL2016,
+    FakeMuFakeTau_UL2016,
     DataMu_UL2016,
     FakeEle_UL2016,
     FakeElePromptTau_UL2016,
@@ -4676,14 +4785,14 @@ plot_list = [
     #TT_UL2016M,
     #WJets_UL2016M,
     FakeMu_UL2016M,
-    #FakeMuPromptTau_UL2016M,
-    #PromptMuFakeTau_UL2016M,
-    #FakeMuFakeTau_UL2016M,
+    FakeMuPromptTau_UL2016M,
+    PromptMuFakeTau_UL2016M,
+    FakeMuFakeTau_UL2016M,
     DataMu_UL2016M,
     FakeEle_UL2016M,
-    #FakeElePromptTau_UL2016M,
-    #PromptEleFakeTau_UL2016M,
-    #FakeEleFakeTau_UL2016M,
+    FakeElePromptTau_UL2016M,
+    PromptEleFakeTau_UL2016M,
+    FakeEleFakeTau_UL2016M,
     DataEle_UL2016M,
 
     WpWpJJ_EWK_UL2017,
@@ -4716,9 +4825,9 @@ plot_list = [
     #TT_UL2017,
     #WJets_UL2017,
     FakeMu_UL2017,
-    #FakeMuPromptTau_UL2017,
-    #PromptMuFakeTau_UL2017,
-    #FakeMuFakeTau_UL2017,
+    FakeMuPromptTau_UL2017,
+    PromptMuFakeTau_UL2017,
+    FakeMuFakeTau_UL2017,
     DataMu_UL2017,
     FakeEle_UL2017,
     FakeElePromptTau_UL2017,
@@ -4775,9 +4884,9 @@ plot_list = [
     #TT_UL2018,
     #WJets_UL2018,
     FakeMu_UL2018,
-    #FakeMuPromptTau_UL2018,
-    #PromptMuFakeTau_UL2018,
-    #FakeMuFakeTau_UL2018,
+    FakeMuPromptTau_UL2018,
+    PromptMuFakeTau_UL2018,
+    FakeMuFakeTau_UL2018,
     DataMu_UL2018,
     FakeEle_UL2018,
     FakeElePromptTau_UL2018,
@@ -4815,14 +4924,14 @@ plot_list = [
     #TT_ULRunII,
     #WJets_ULRunII,
     FakeMu_ULRunII,
-    #FakeMuPromptTau_ULRunII,
-    #PromptMuFakeTau_ULRunII,
-    #FakeMuFakeTau_ULRunII,
+    FakeMuPromptTau_ULRunII,
+    PromptMuFakeTau_ULRunII,
+    FakeMuFakeTau_ULRunII,
     DataMu_ULRunII,
     FakeEle_ULRunII,
-    #FakeElePromptTau_ULRunII,
-    #PromptEleFakeTau_ULRunII,
-    #FakeEleFakeTau_ULRunII,
+    FakeElePromptTau_ULRunII,
+    PromptEleFakeTau_ULRunII,
+    FakeEleFakeTau_ULRunII,
     DataEle_ULRunII,
 
 ]

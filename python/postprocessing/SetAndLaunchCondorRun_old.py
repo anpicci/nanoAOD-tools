@@ -217,6 +217,7 @@ for line in condorstatus:
         if not sample in vetosamp:
             vetosamp.append(sample)
 '''
+
 if len(vetosamp) > 0:
     toVeto = True
     print("Samples to veto:", vetosamp)

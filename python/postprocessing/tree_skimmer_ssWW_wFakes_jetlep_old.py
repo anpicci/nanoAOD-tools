@@ -158,9 +158,12 @@ if "/vUL001/" in outpath:
 MCReco = MCReco * isMC
 
 IsDim8 = False
+IsDim6 = False
 Isttbar = False
 if 'aQGC' in sample.name:
     IsDim8 = True
+elif 'aTGC' in sample.name:
+    IsDim6 = True
 elif "TTTo2L2Nu" in sample.name or sample.name.startswith("TT_"):
     Isttbar = True
 
@@ -189,7 +192,8 @@ print("isPDFHessian", isPDFHessian)
 
 if "aQGC" in sample.label:
     rwgdict = CardToDict("dim8", "FT1_2p0")
-
+elif "aTGC" in sample.label:
+    rwgdict = CardToDict("dim6")
 #Cut_dict = {}
 
 #if Debug:
@@ -333,13 +337,16 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     print("scenario:", scenario)
 
     wcoeff = OrderedDict()
-    if IsDim8:
+    if IsDim8 or IsDim6:
         for opname, opdict in rwgdict.items():
+            #print(opname, opdict)
             for val in opdict.keys():
-                coeffstr = opname + "_" + val
+                coeffstr = opname
+                #if not "_" in opname:
+                coeffstr += "_" + val
                 wcoeff[coeffstr] = array.array('f', [-999.]*6)
                 var_list.append(wcoeff[coeffstr])
-
+    
     #++++++++++++++++++++++++++++++++++
     #++         All category         ++
     #++++++++++++++++++++++++++++++++++
@@ -662,7 +669,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     w_nominal_all = array.array('f', [0.])
 
     #w_dim8
-    if IsDim8:
+    if IsDim8 or IsDim6:
         for coeffname, coeffarray in wcoeff.items():
             systTree.branchTreesSysts(trees, scenario, coeffname, outTreeFile, coeffarray)
             
@@ -831,7 +838,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
-            #if i > 100:#00:
+            #if i > 10:#00:
             #if i != 8631:
                 #continue
                 #break
@@ -900,7 +907,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             gen = Object(event, "Generator")
             #if not ("WZ" in sample.label or "WWTo2L2Nu_DoubleScattering"):
                 #LHE = Collection(event, "LHEPart")
-            if IsDim8:
+            if IsDim8 or IsDim6:
                 LHEDim8 = Collection(event, "LHEReweightingWeight")
             if addPDF:
                 try:
@@ -1388,7 +1395,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if SingleMu==1:
             lepton_pfRelIso04[0]        =   GoodLep.pfRelIso04_all
         elif SingleEle==1:
-            lepton_pfRelIso04[0]        =   GoodLep.jetRelIso#GoodLep.pfRelIso03_all
+            lepton_pfRelIso04[0]        =   GoodLep.pfRelIso03_all
 
         #if not isMC:
     
@@ -1476,9 +1483,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 print("before:", GoodLep_SF, GoodLep_SFUp, GoodLep_SFDown)
                 addSF, addSF_Up, addSF_Down = EGM_SFs(GoodLep, year)
                 GoodLep_SF *= addSF
-                GoodLep_SFUp = (GoodLep_SFUp**2. + addSF_Up**2.)**0.5
-                GoodLep_SFDown = (GoodLep_SFDown**2. + addSF_Down**2.)**0.5
-                print("after:", GoodLep_SF, GoodLep_SFUp, GoodLep_SFDown)
+                GoodLep_SFUp = (GoodLep_SFUp*addSF_Up)
+                GoodLep_SFDown = (GoodLep_SFDown*addSF_Down)
+                #print("after:", GoodLep_SF, GoodLep_SFUp, GoodLep_SFDown)
             systTree.setWeightName("lepSF", copy.deepcopy(GoodLep_SF))
             systTree.setWeightName("lepUp", copy.deepcopy(GoodLep_SFUp))
             systTree.setWeightName("lepDown", copy.deepcopy(GoodLep_SFDown))
@@ -1744,7 +1751,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             elif(isMC):
                 w_nominal_all[0] *= 0.354
     
-        if IsDim8:
+        if IsDim8 or IsDim6:
             #pass
             for opname, opdict in rwgdict.items():
                 for val in opdict.keys():
@@ -1757,9 +1764,12 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     idxneg = opdict[val][0]#int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
                     idxzero = opdict["0"][0]#int((EFT_operator[opn]["idx"] - 1)*11 + 5)
 
-                    wpos = LHEitem(LHEDim8[idxpos]) if idxpos >= 0 else 1.
-                    wneg = LHEitem(LHEDim8[idxneg]) if idxneg >= 0 else 1.
-                    wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
+                    try:
+                        wpos = LHEitem(LHEDim8[idxpos]) if idxpos >= 0 else 1.
+                        wneg = LHEitem(LHEDim8[idxneg]) if idxneg >= 0 else 1.
+                        wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
+                    except:
+                        continue
                     #print('idxneg:', idxneg, 'wneg:', wneg)
                     #print('idxpos:', idxpos, 'wpos:', wpos)
                     #print('idxzero:', idxzero, 'wzero:', wzero)
@@ -1772,13 +1782,14 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     kpow = 0
 
                     for idwc in range(3, 6):
-                        if idwc == 3:
-                            wsign = +1.
-                            kpow = +2.
-                        elif idwc == 4:
+                        if idwc == 3: ###only-SM
+                            wpos = 1.*wzero
+                            wsign = 0.
+                            kpow = 1.
+                        elif idwc == 4:#### lin term
                             wsign = -1.
                             kpow = 2.*epoint
-                        elif idwc == 5:
+                        elif idwc == 5: #### quad term
                             wsign = +1.
                             wpos += -2.*wzero
                             kpow = 2.*(epoint**2.)

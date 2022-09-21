@@ -18,20 +18,21 @@ from rwgcards.FromCardToDict import *
 rwgdict = CardToDict("dim8", "FT1_2p0")
 
 desiredop = [
-    ##"FS0_1p0",
+    #"FS0_1p0",
     #"FS0_20",
-    ##"FS1_1p0",
+    #"FS1_1p0",
     #"FS1_450",
+    #"FS1_0p5",
     ##"FS2_1p0",
     #"FS2_50",
-    ##"FM0_1p0",
-    #"FM0_15",
-    ##"FM1_0p9",
-    #"FM1_30",
-    ##"FM6_1p0",
-    #"FM6_60",
-    ##"FM7_1p0",
-    #"FM7_40",
+    "FM0_1p0",
+    "FM0_15",
+    "FM1_0p9",
+    "FM1_30",
+    "FM6_1p0",
+    "FM6_60",
+    "FM7_1p0",
+    "FM7_40",
     ##"FT0_1p0",
     ##"FT1_1p0",
     ##"FT2_0p9",
@@ -380,8 +381,8 @@ systematicslist = [
     ["TESDown", True, "en"],
     ["FESUp", True, "en"],
     ["FESDown", True, "en"],
-    ["metUnclustUp", True, "en"],
-    ["metUnclustDown", True, "en"],
+    #["metUnclustUp", True, "en"],
+    #["metUnclustDown", True, "en"],
 
 ]
 
@@ -691,7 +692,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     for i in range(0, nbins+1):
         content = h1.GetBinContent(i)
         #print("content bin #" + str(i+1) + ":\t" + str(content))
-        if content < 0. and not (isdim8 or "SSWW_c" in sample.label):
+        if content < 0. and not (isdim8 or "SSWW_c" in sample.label or sample.label.startswith("Fake")):
             h1.SetBinContent(i, 0.)
 
     for bidx in range(nbins):          
@@ -1567,11 +1568,13 @@ for year in years:
                     for cstr in wcoeff:
                         dimtag = cstr
                         for idt, typ in enumerate(typcontr):
-                            if idt != 1:
-                                idarray = str(idt + 3)
-                                dimcut = dimtag + "[" + idarray + "]"
-                            else:
-                                dimcut = dimtag + "[3]+" + dimtag + "[4]+" + dimtag + "[5]"
+                            if idt == 0:
+                                #idarray = str(idt + 3)
+                                dimcut = dimtag + "[0]"#" + idarray + "]"
+                            elif idt == 1:
+                                dimcut = dimtag + "[0]+" + dimtag + "[4]+" + dimtag + "[5]"
+                            elif idt == 2:
+                                dimcut = dimtag + "[5]"
                             dimcuts.append(dimcut)
                             dimsamplenames.append(sample.label.replace("aQGC", dimtag + "_" + typ))
                             samplelabs.append(sample.label.replace("aQGC", dimtag + "_" + typ))
@@ -1598,7 +1601,13 @@ for year in years:
                     f1name = ""
                     if 'Fake' in str(samplelab):
                         if sample.year == "UL2016M" or sample.year == "ULRunII":
-                            f1name = filerepo + sample.label.replace("Fake", "Data") + "/"  + sample.label.replace("Fake", "Data") + ".root"
+                            newlab = "Data"
+                            if "Ele" in sample.label:
+                                newlab += "Ele"
+                            elif "Mu" in sample.label:
+                                newlab += "Mu"
+                            oldlab = sample.label.split("_")[0]
+                            f1name = filerepo + sample.label.replace(oldlab, newlab) + "/"  + sample.label.replace(oldlab, newlab) + ".root"
                         elif (not opt.folder.startswith('CTHT') and not opt.removePrompt):
                             #f1 = ROOT.TFile.Open(filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root")
                             f1name = filerepo + sample.components[0].label + "/"  + sample.components[0].label + ".root"
@@ -1615,6 +1624,7 @@ for year in years:
                         f1name = filerepo + sample.label + "/"  + sample.label + ".root"
                     
                     if os.path.exists(f1name):
+                        print(f1name)
                         f1 = ROOT.TFile.Open(f1name)
                     else:
                         raise ValueError(samplelab + " not ready to be plotted, skipping")
