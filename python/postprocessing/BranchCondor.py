@@ -3,7 +3,7 @@ from ML.MLmodels import *
 import optparse
 from samples.samplesUL import *
 
-os.system("reset")
+#os.system("reset")
 
 usage = 'python3 BranchCondor.py -d dataset_name -f destination_folder -y year'
 parser = optparse.OptionParser(usage)
@@ -91,24 +91,30 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    bdt_sm_branch_v2,
-    bdt_cW_branch_v2,
-    bdt_cHW_branch_v2,
-    bdt_aQGC_branch_v2,
+    dnn_sm_ACAT_branch,
+    dnn_cW_50I_TV0_branch,
+    dnn_fS_50I_TV1_branch,
+    dnn_fT_50I_TV1_branch,
+    dnn_fM_50I_TV1_branch,
+    dnn_POL_50I_TV_branch,
 ]
 
 paths = [
-    bdt_sm_path_v2,
-    bdt_cW_path_v2,
-    bdt_cHW_path_v2,
-    bdt_aQGC_path_v2,
+    dnn_sm_ACAT_path,
+    dnn_cW_50I_TV0_path,
+    dnn_fS_50I_TV1_path,
+    dnn_fT_50I_TV1_path,
+    dnn_fM_50I_TV1_path,
+    dnn_POL_50I_TV_path,
 ]
 
 scalers = [
-    bdt_sm_scaler_v2,
-    bdt_cW_scaler_v2,
-    bdt_cHW_scaler_v2,
-    bdt_aQGC_scaler_v2,
+    dnn_sm_ACAT_scaler,
+    dnn_cW_50I_TV0_scaler,
+    dnn_fS_50I_TV1_scaler,
+    dnn_fT_50I_TV1_scaler,
+    dnn_fM_50I_TV1_scaler,
+    dnn_POL_50I_TV_scaler,
 ]
 
 folder = opt.folder
@@ -141,16 +147,20 @@ print("toveto", toveto)
 for year in years:
     arg1 = " -y " + year 
     for dat in condor_list:
+        #print(dat.label)
         if dat.label.startswith("TT_") or dat.label.startswith("WJets") or dat.label.startswith("DataHT"):
+            #print("hello1")
             continue
         
         args = arg0 + arg1
         if dat.year != year:
+            #print("hello2")
             continue
         
         if dat.label.startswith("Fake"):
+            #print("hello3")
             continue
-
+        
         toPlot = False
         toVeto = False
 
@@ -161,6 +171,7 @@ for year in years:
                     break
             
             if not toPlot:
+                #print("hello4")
                 continue
         
         if opt.veto != "none":
