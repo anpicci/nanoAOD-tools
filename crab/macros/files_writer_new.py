@@ -40,6 +40,7 @@ else:
 path = ".."
 
 for sample in samples:
+    url = ""
     dirpath = "./files/"
     crabdir = "/crab_" + str(sample.label)
     if opt.fake:
@@ -94,8 +95,9 @@ for sample in samples:
                 cidx = 0
                 while cidx < len(curl):
                     cu = curl[cidx]
-                    #print cu
+                 
                     if cu.startswith('The job with id '):
+                        #print cu
                         cu_err = int(cu.split('The job with id ')[-1].split(' is not')[0])
                         print cu_err, " is missing, retrying without considering it..."
                         crabgo_err = str(intmin) + "-" + str(cu_err-1) + "," + str(cu_err+1) + "-" + str(intmax)

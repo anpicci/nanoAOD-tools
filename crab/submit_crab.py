@@ -89,8 +89,9 @@ def cfg_writer(sample, isMC, outdir):
     f.write("config.Data.publication = False\n")
     f.write("config.Data.outputDatasetTag = '"+sample.label+"'\n")
     f.write("config.section_('Site')\n")
-    #f.write("config.Site.ignoreGlobalBlacklist = True\n")
-    f.write("config.Site.storageSite = 'T2_IT_Pisa'\n")
+    f.write("config.Site.ignoreGlobalBlacklist = True\n")
+    #f.write("config.Site.storageSite = 'T2_IT_Pisa'\n")
+    f.write("config.Site.storageSite = 'T2_IT_Legnaro'\n")
     #f.write("config.Site.storageSite = "T2_CH_CERN"
     #f.write("config.section_("User")
     #f.write("config.User.voGroup = 'dcms'
@@ -269,7 +270,8 @@ for sample in samples:
         if "UL" in str(year):
             #cfg_writer(sample, isMC, "ULVBS_PG")
             #cfg_writer(sample, isMC, "ULVBS")
-            cfg_writer(sample, isMC, "VBSUL")
+            #cfg_writer(sample, isMC, "VBSUL")
+            cfg_writer(sample, isMC, "VBSLegnaro")
             #cfg_writer(sample, isMC, "RDFprova")
             #cfg_writer(sample, isMC, "ULVBSPG")
         else:

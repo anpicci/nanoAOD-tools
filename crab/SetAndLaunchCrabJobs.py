@@ -16,7 +16,8 @@ def PrintOutput(readlines):
 usage = 'python3 SetAndLaunchCrabJobs.py'
 parser = optparse.OptionParser(usage)
 parser.add_option('-y', dest='year', type=str, default = 'UL2017', help='Please enter a year, default is UL2017')
-parser.add_option('-d', '--dat', dest='dat', type=str, default = '', help='Please enter a dataset name')
+parser.add_option('-d', '--dat', dest='dat', type=str, default = 'all', help='Please enter a dataset name')
+parser.add_option('--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('--save', dest = 'save', default = False, action = 'store_true', help = 'Default do not check the save')
 parser.add_option('--resave', dest = 'resave', default = False, action = 'store_true', help = 'Default do not resave')
 #parser.add_option('--verb', dest = 'verb', default = False, action = 'store_true', help = 'Default do not verbosely check the status')
@@ -42,10 +43,11 @@ if opt.sampleFlag:
     #raise ValueError("This macro is intended to be use ONLY with UL samples!")
 
 year = str(opt.year)
+toproc = opt.dat.split(",")
+toveto = opt.veto.split(",")
 
-if opt.dat != "" and year not in opt.dat:
-    print "Overriding year..."
-    year = opt.dat.split("_")[1]
+print "toproc:", toproc
+print "toveto:", toveto
 
 crabdirs = [cdir.replace("crab_", "") for cdir in os.listdir(".") if os.path.isdir("./" + cdir) and cdir != "macros"]
 
@@ -63,27 +65,78 @@ else:
     crabc = "python submit_crab.py"
 
 complist = []
-print "wanted:", opt.dat
-for samp in samlist:
+
+for samp in samlist:    
+    if year not in samp.label:
+        print "Overriding year..."
+        year = opt.samp.split("_")[1]
+
+
     if "UL" in opt.year:
         hascomp = hasattr(samp, "components")
     else:
         hascomp = samp.components is not None
-    if hascomp:#hasattr(samp, "components") and samp.components is not None:
-        #print("I'm in components")
-        for c in samp.components:
-            if c.dataset != "" and ((opt.dat != "" and (opt.dat == c.label or opt.dat == samp.label)) or opt.dat == ""):
-                complist.append(copy.deepcopy(c))
-            else:
-                if not c.dataset != "":
-                    print "Skipping " + c.label + ", its dataset is missing up to now"
-    else:
-        if samp.dataset != "" and ((opt.dat != "" and opt.dat == samp.label) or opt.dat == ""):
-            complist.append(copy.deepcopy(samp))
-        else:
-            if not samp.dataset != "":
-                print "Skipping " + samp.label + ", its dataset is missing up to now"
 
+    if hascomp:#hasattr(samp, "components") and samp.components is not None:
+        for c in samp.components:
+            toProc = False
+            toVeto = False
+
+            if opt.dat != "all":
+                #print samp.label 
+                for dtp in toproc:
+                    if samp.label.startswith(dtp) or c.label.startswith(dtp):
+                        toProc = True
+                        break
+                    
+                if not toProc:
+                    continue
+        
+            if opt.veto != "none":
+                for dtv in toveto:
+                    if samp.label.startswith(dtv) or c.label.startswith(dtv):
+                        toVeto = True
+                        break
+        
+                if toVeto:
+                    continue
+
+            if c.dataset == "":
+                print "Skipping " + c.label + ", its dataset is missing up to now"
+                continue
+            
+            complist.append(copy.deepcopy(c))
+            
+            
+    else:
+        toProc = False
+        toVeto = False
+
+        if opt.dat != "all":
+            #print samp.label 
+            for dtp in toproc:
+                if samp.label.startswith(dtp):
+                    toProc = True
+                    break
+                    
+            if not toProc:
+                continue
+        
+        if opt.veto != "none":
+            for dtv in toveto:
+                if samp.label.startswith(dtv):
+                    toVeto = True
+                    break
+        
+            if toVeto:
+                continue
+
+        if samp.dataset == "":
+            print "Skipping " + c.label + ", its dataset is missing up to now"
+            continue
+            
+        complist.append(copy.deepcopy(samp))
+        
 for s in complist:
     print "\n\nConsidering " + s.label + " sample..."
     crabcommand = crabc + " -d " + str(s.label)
@@ -106,15 +159,6 @@ for s in complist:
                 
 
             for i, outline in enumerate(crabout):
-
-                #if "Jobs status" in outline:
-                    #print "\t" + outline.replace("\n", "")
-                    #j = i + 1
-                    #while j < len(crabout) and crabout[j].startswith("\t"):
-                        #print "\t" + crabout[j].replace("\n", "")
-                       #j += 1
-
-
                 if "COMPLETED" in outline:
                     sstatus = "COMPLETED"
                     break
@@ -137,8 +181,8 @@ for s in complist:
 
                 printpath += s.label + ".txt"
 
-                if not os.path.exists(printpath):
-                    toPrint = True #str(raw_input("\tWould you like to print out the file paths? (type Y or N)\t"))
+                #if not os.path.exists(printpath):
+                toPrint = True #str(raw_input("\tWould you like to print out the file paths? (type Y or N)\t"))
 
             elif sstatus == "FAILED":
                 print "\t" + s.label + " is FAILED, let's see what happened there..."
