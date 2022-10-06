@@ -91,6 +91,8 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
+    dnn_sm_50I_TV_branch,
+    dnn_sm_50I_TV1_branch,
     dnn_sm_ACAT_branch,
     dnn_cW_50I_TV0_branch,
     dnn_fS_50I_TV1_branch,
@@ -100,6 +102,8 @@ branches = [
 ]
 
 paths = [
+    dnn_sm_50I_TV_path,
+    dnn_sm_50I_TV1_path,
     dnn_sm_ACAT_path,
     dnn_cW_50I_TV0_path,
     dnn_fS_50I_TV1_path,
@@ -109,6 +113,8 @@ paths = [
 ]
 
 scalers = [
+    dnn_sm_50I_TV_scaler,
+    dnn_sm_50I_TV1_scaler,
     dnn_sm_ACAT_scaler,
     dnn_cW_50I_TV0_scaler,
     dnn_fS_50I_TV1_scaler,

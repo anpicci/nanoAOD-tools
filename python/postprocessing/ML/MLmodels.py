@@ -36,8 +36,8 @@ dnn_fM_50I_TV1_path = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_fM
 dnn_fM_50I_TV1_scaler = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_fM_vUL040_v3_bkgQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_1.p"
 
 dnn_POL_50I_TV_branch = "DNN_POL_50I_TV"
-dnn_POL_50I_TV_path = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_pol_vUL040_v3_bkgQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval.h5"
-dnn_POL_50I_TV_scaler = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_pol_vUL040_v3_bkgQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval.p"
+dnn_POL_50I_TV_path = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_pol_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval.h5"
+dnn_POL_50I_TV_scaler = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_pol_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval.p"
 
 ############
 
