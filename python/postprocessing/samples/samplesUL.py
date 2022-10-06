@@ -3016,10 +3016,8 @@ TT_Mtt_1000toInf_UL2018.sigma = 16.38
 TT_Mtt_UL2018 = sample(TTcolor, 1, 1001, "t#bar{t} M_{tt} > 700 GeV", "TT_Mtt_UL2018")
 TT_Mtt_UL2018.year = "UL2018"
 TT_Mtt_UL2018.components = [
-    TT_Mtt_UL2016APV,
-    TT_Mtt_UL2016,
-    TT_Mtt_UL2017,
-    TT_Mtt_UL2018,
+    TT_Mtt_700to1000_UL2018,
+    TT_Mtt_1000toInf_UL2018,
 ]
 
 TT_Mtt_ULRunII = sample(TTcolor, 1, 1001, "t#bar{t} M_{tt} > 700 GeV", "TT_Mtt_ULRunII")
