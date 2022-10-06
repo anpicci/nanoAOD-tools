@@ -55,6 +55,7 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_Tu
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/DYJetsToLL_0J_FxFx_UL2016APV/221004_192857/0000/tree_hadd_55.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/DYJetsToLL_0J_FxFx_UL2016APV/221004_192857/0000/tree_hadd_56.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/DYJetsToLL_0J_FxFx_UL2016APV/221004_192857/0000/tree_hadd_57.root
+root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/DYJetsToLL_0J_FxFx_UL2016APV/221004_192857/0000/tree_hadd_58.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/DYJetsToLL_0J_FxFx_UL2016APV/221004_192857/0000/tree_hadd_59.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/DYJetsToLL_0J_FxFx_UL2016APV/221004_192857/0000/tree_hadd_60.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/DYJetsToLL_0J_FxFx_UL2016APV/221004_192857/0000/tree_hadd_61.root

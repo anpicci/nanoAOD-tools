@@ -100,7 +100,7 @@ for samp in samlist:
         
                 if toVeto:
                     continue
-            print c.label
+            #print c.label
             if c.dataset == "":
                 print "Skipping " + c.label + ", its dataset is missing up to now"
                 continue
