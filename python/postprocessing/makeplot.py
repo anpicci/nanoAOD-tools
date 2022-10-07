@@ -317,19 +317,19 @@ if folder.startswith("FR_"):
     scenarios = ["all"]
 else:
     scenarios = [
-    #"nominal",
-    #"lepenUp",
-    #"lepenDown",
-    #"jesUp",
-    #"jesDown",
-    #"jerUp",
-    #"jerDown",
-    #"TESUp", 
-    #"TESDown",
-    #"FESUp", 
-    #"FESDown",
-    "metUnclustUp",
-    "metUnclustDown",
+        "nominal",
+        "lepenUp",
+        "lepenDown",
+        "jesUp",
+        "jesDown",
+        "jerUp",
+        "jerDown",
+        "TESUp", 
+        "TESDown",
+        "FESUp", 
+        "FESDown",
+        "metUnclustUp",
+        "metUnclustDown",
     ]
 nomtag = "nominal"
 
