@@ -67,7 +67,7 @@ def submitter(model, srvar, crvar, argsins, folder):
     exesh = subfold + "/" + exe + "_" + folder + "_" + model + "_" + srvar + "_" + crvar + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
-    fsh.write("cd /afs/cern.ch/user/a/apiccine\n")
+    fsh.write("cd /afs/cern.ch/user/" + inituser + "/" + username + "\n")
     fsh.write("source setenv_combine.sh\n")
     fsh.write("cd Stat/Limits/test\n")
     for argsin in argsins:
@@ -108,8 +108,8 @@ def submitter(model, srvar, crvar, argsins, folder):
     os.system("mv " + condorsubb + " " + subfold)
 
 folder = opt.folder
-#pymacro = "FitAndPlot.py"
-pymacro = "FitAndPlot_dev.py"
+pymacro = "FitAndPlot.py"
+#pymacro = "FitAndPlot_dev.py"
 exe = "branchcombine"
 
 arg0 = " --folder " + folder 

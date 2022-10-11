@@ -29,8 +29,6 @@ parser.add_option('--reco', dest='reco', type=str, default = "not", help='Launch
 
 (opt, args) = parser.parse_args()
 
-condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
-
 isWithSysts = False
 if "UL" in opt.fold and int(opt.fold.split("UL")[-1]) > 9:
     isWithSysts = True
@@ -205,6 +203,7 @@ if opt.veto != "none":
     vetosamp = opt.veto.split(",")
     
 '''
+condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
     sample = ""
@@ -325,20 +324,26 @@ for prname, proc in condor_dict.items():
             if not toPass:
                 continue
 
+        print(proc.label)
+        
         for sample in proc.components:
+            
             if "Fake" in sample.label:
                 continue
             elif opt.nodata and 'Data' in sample.label:
                 continue
-
+            
             if not DoesSampleExist(sample.name):
+                print(sample.label + " does not exist")
                 continue
                 #if sample.label in dirlist:
+
             if os.path.exists(path+sample.label):
                 if opt.rw:
                     print('Relaunching all the jobs for', sample.label)
                     os.system("rm -r "+ path + sample.label + "/*")
-
+            
+            print(sample.label)
             #AreCondored, toRel = AreAllCondored(sample.name, sample.label)
             AreCondored = AreAllCondored(sample.name, sample.label)
             #print(AreCondored, toRel)

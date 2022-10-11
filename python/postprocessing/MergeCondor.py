@@ -55,7 +55,7 @@ def submitter(sample, argsins, folder):
     exesh = subfold + "/" + exe + "_" + sample.label + "_" + folder + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
-    fsh.write("cd /afs/cern.ch/user/a/apiccine\n")
+    fsh.write("cd /afs/cern.ch/user/" + inituser + "/" + username + "\n")
     fsh.write("source setenv_VBS_113.sh\n")
     fsh.write("cd PhysicsTools/NanoAODTools/python/postprocessing/\n")
     for argsin in argsins:
@@ -101,6 +101,19 @@ years = opt.years.split(",")
 tomerge = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
+condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
+for line in condorstatus:
+    idjob = line.split(" 1 ")[-1]
+    sample = ""
+    try:
+        sample = os.popen("condor_ssh_to_job " + idjob + " \"head snfile.txt\" ").readlines()[0]
+    except:
+        continue
+
+    if sample != "" and (True in [sample.endswith(year) for year in years]):
+        if not sample in toveto:
+            toveto.append(sample)
+
 folder = opt.folder
 pymacro = "PrepareToPlot.py"
 exe = "branchmerge"
@@ -109,6 +122,7 @@ arg0 = " -f " + folder
 
 print("tomerge", tomerge)
 print("toveto", toveto)
+
 '''
 for dat in merge_list:
     if dat.year == years[0]:

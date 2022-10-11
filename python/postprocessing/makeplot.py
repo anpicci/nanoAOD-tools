@@ -311,7 +311,7 @@ if opt.tDMcut:
     for k, v in cut_dict.items():
         cut_dict[k] = v + "*(tau_DecayMode<5||tau_DecayMode>6)"
 
-lumi = {'2016': 35.9, 'UL2016M': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.5, "2018": 59.7, 'UL2018':59.8, "ULRunII":137.1}
+lumi = {'2016': 35.9, 'UL2016M': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.5, "2018": 59.7, 'UL2018':59.8, "ULRunII":138}
 
 if folder.startswith("FR_"):
     scenarios = ["all"]
@@ -521,7 +521,9 @@ def lumi_writer(dataset, lumi):
                     tree_new.Fill()
                 tree_new.Write()
                 print("\n")
+            infile.Close()
             outfile.Close()
+            os.system("rm " + filerepo + sample.label + "/"  + sample.label + "_merged.root")
             print('\n')
 
         else:
@@ -1210,7 +1212,7 @@ for year in years:
 
         ######### with systematics ###########
         
-        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
+        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
         
         #bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 1.])
         bin_bdtsm = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
@@ -1220,9 +1222,18 @@ for year in years:
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
 
         variables.append(variabile('DNN_SM_50I_TV', 'SM DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_50I_TV1', 'SM DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_cHW_50I_TV1', 'c_{HW} DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_50I_TV1', 'SM DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_ACAT', 'SM DNN output (ACAT)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
 
+        variables.append(variabile('DNN_cHW_50I_TV2', 'c_{HW} DNN output (50I TV2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_cW_50I_TV0', 'c_{HW} DNN output (50I TV0)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+
+        variables.append(variabile('DNN_fS_50I_TV1', 'f_{S} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_fT_50I_TV1', 'f_{T} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_fM_50I_TV1', 'f_{M} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+
+        variables.append(variabile('DNN_POL_50I_TV', 'Pol. DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        
         '''
         variables.append(variabile('BDT_SM_UL035_novar_sr_allbkg', 'SM BDT output (novar SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('BDT_SM_UL035_novar_truesr_allbkg', 'SM BDT output (novar true SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
@@ -1266,7 +1277,7 @@ for year in years:
         '''
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-       
+        
         bin_m1T = array("d", [0., 100., 150., 200., 300., 400., 500.])#, 1000.])
         #if not opt.sr:
         #bin_mo1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
@@ -1543,7 +1554,7 @@ for year in years:
         
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', True, nbin_df, bin_df))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', True, nbin_df, bin_df))
-
+        
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
