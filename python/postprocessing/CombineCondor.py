@@ -104,7 +104,7 @@ def submitter(model, srvar, crvar, argsins, folder):
     if os.path.exists(error):
         os.system("rm " + error)
 
-    os.system("condor_submit " + condorsubb)
+    #os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 folder = opt.folder
