@@ -323,8 +323,6 @@ for prname, proc in condor_dict.items():
 
             if not toPass:
                 continue
-
-        print(proc.label)
         
         for sample in proc.components:
             
@@ -343,7 +341,6 @@ for prname, proc in condor_dict.items():
                     print('Relaunching all the jobs for', sample.label)
                     os.system("rm -r "+ path + sample.label + "/*")
             
-            print(sample.label)
             #AreCondored, toRel = AreAllCondored(sample.name, sample.label)
             AreCondored = AreAllCondored(sample.name, sample.label)
             #print(AreCondored, toRel)
