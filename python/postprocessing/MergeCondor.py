@@ -133,8 +133,9 @@ for year in years:
     arg1 = " -y " + year 
     for dat in merge_list:
         argss = []
-        #if dat.label.startswith("TT_") or dat.label.startswith("WJets_") or dat.label.startswith("DataHT"):
-            #continue
+        #if dat.label.startswith("TT_") or dat.label.startswith("WJets_") or 
+        if dat.label.startswith("DataHT"):
+            continue
 
         if dat.year != year:
             continue
