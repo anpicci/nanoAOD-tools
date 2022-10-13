@@ -1226,7 +1226,7 @@ for year in years:
         variables.append(variabile('DNN_SM_ACAT', 'SM DNN output (ACAT)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
 
         variables.append(variabile('DNN_cHW_50I_TV2', 'c_{HW} DNN output (50I TV2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_cW_50I_TV0', 'c_{HW} DNN output (50I TV0)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_cW_50I_TV0', 'c_{W} DNN output (50I TV0)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
 
         variables.append(variabile('DNN_fS_50I_TV1', 'f_{S} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_fT_50I_TV1', 'f_{T} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1277,7 +1277,7 @@ for year in years:
         '''
         #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        '''
+        
         bin_m1T = array("d", [0., 100., 150., 200., 300., 400., 500.])#, 1000.])
         #if not opt.sr:
         #bin_mo1 = array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
@@ -1554,7 +1554,7 @@ for year in years:
         
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', True, nbin_df, bin_df))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', True, nbin_df, bin_df))
-        '''
+        
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
