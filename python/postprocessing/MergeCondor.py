@@ -100,7 +100,7 @@ def submitter(sample, argsins, folder):
 years = opt.years.split(",")
 tomerge = opt.dataset.split(",")
 toveto = opt.veto.split(",")
-
+'''
 condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
@@ -113,7 +113,7 @@ for line in condorstatus:
     if sample != "" and (True in [sample.endswith(year) for year in years]):
         if not sample in toveto:
             toveto.append(sample)
-
+'''
 folder = opt.folder
 pymacro = "PrepareToPlot.py"
 exe = "branchmerge"
@@ -133,8 +133,8 @@ for year in years:
     arg1 = " -y " + year 
     for dat in merge_list:
         argss = []
-        if dat.label.startswith("TT_") or dat.label.startswith("WJets_") or dat.label.startswith("DataHT"):
-            continue
+        #if dat.label.startswith("TT_") or dat.label.startswith("WJets_") or dat.label.startswith("DataHT"):
+            #continue
 
         if dat.year != year:
             continue
