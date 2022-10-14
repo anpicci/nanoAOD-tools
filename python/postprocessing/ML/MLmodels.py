@@ -1,4 +1,48 @@
-############### vUL040 ###############
+############### vUL045 ###############
+dnn_sm_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_noangles_602020_moreDY_mindelta1e-3.h5"
+dnn_sm_branch_final_1 = "DNN_SM_final_1"
+dnn_sm_scaler_final_1 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_noangles_602020_moreDY_mindelta1e-3.p"
+
+bdt_sm_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/SM-BDT_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_cvfixed_XGB_trainval_nomjjtau_noangles_602020_moreDY_minchildweight.model"
+bdt_sm_branch_final_1 = "BDT_SM_final_1"
+bdt_sm_scaler_final_1 = ""
+
+dnn_sm_path_final_2   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL045_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_noangles_602020_moreDYWJets_lessSig_mindelta1e-3_.h5"
+dnn_sm_branch_final_2 = "DNN_SM_final_2"
+dnn_sm_scaler_final_2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL045_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_noangles_602020_moreDYWJets_lessSig_mindelta1e-3_.p"
+
+dnn_sm_path_final_3   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL045_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_noangles_602020_moreDYWJets_lessSig_mindelta1e-3_LCB.h5"
+dnn_sm_branch_final_3 = "DNN_SM_final_3"
+dnn_sm_scaler_final_3 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL045_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_noangles_602020_moreDYWJets_lessSig_mindelta1e-3_LCB.p"
+
+
+dnn_dim6_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim6_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3.h5"
+dnn_dim6_branch_final_1 = "DNN_dim6_final_1"
+dnn_dim6_scaler_final_1 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim6_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3.p"
+
+bdt_dim6_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/dim6_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_minchildweight.model"
+bdt_dim6_branch_final_1 = "BDT_dim6_final_1"
+bdt_dim6_scaler_final_1 = ""
+
+
+dnn_dim8_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim8_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3.h5"
+dnn_dim8_branch_final_1 = "DNN_dim8_final_1"
+dnn_dim8_scaler_final_1 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim8_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3.p"
+
+bdt_dim8_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/dim8_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_minchildweight.model"
+bdt_dim8_branch_final_1 = "BDT_dim8_final_1"
+bdt_dim8_scaler_final_1 = ""
+
+
+dnn_pol_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_pol_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_mindelta1e-3.h5"
+dnn_pol_branch_final_1 = "DNN_pol_final_1"
+dnn_pol_scaler_final_1 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_pol_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_mindelta1e-3.p"
+
+bdt_pol_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/pol_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_minchildweight.model"
+bdt_pol_branch_final_1 = "BDT_pol_final_1"
+bdt_pol_scaler_final_1 = ""
+
+############### vUL040 + vUL045 ###############
 dnn_sm_50I_TV_branch = "DNN_SM_50I_TV"
 dnn_sm_50I_TV_path = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval.h5"
 dnn_sm_50I_TV_scaler = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval.p"

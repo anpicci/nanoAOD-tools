@@ -100,6 +100,16 @@ branches = [
     dnn_fT_50I_TV1_branch,
     dnn_fM_50I_TV1_branch,
     dnn_POL_50I_TV_branch,
+    dnn_sm_branch_final_1,
+    bdt_sm_branch_final_1,
+    dnn_sm_branch_final_2,
+    dnn_sm_branch_final_3,
+    dnn_dim6_branch_final_1,
+    bdt_dim6_branch_final_1,
+    dnn_dim8_branch_final_1,
+    bdt_dim8_branch_final_1,
+    dnn_pol_branch_final_1,
+    bdt_pol_branch_final_1,
 ]
 
 paths = [
@@ -112,6 +122,16 @@ paths = [
     dnn_fT_50I_TV1_path,
     dnn_fM_50I_TV1_path,
     dnn_POL_50I_TV_path,
+    dnn_sm_path_final_1,
+    bdt_sm_path_final_1,
+    dnn_sm_path_final_2,
+    dnn_sm_path_final_3,
+    dnn_dim6_path_final_1,
+    bdt_dim6_path_final_1,
+    dnn_dim8_path_final_1,
+    bdt_dim8_path_final_1,
+    dnn_pol_path_final_1,
+    bdt_pol_path_final_1,
 ]
 
 scalers = [
@@ -124,6 +144,16 @@ scalers = [
     dnn_fT_50I_TV1_scaler,
     dnn_fM_50I_TV1_scaler,
     dnn_POL_50I_TV_scaler,
+    dnn_sm_scaler_final_1,
+    bdt_sm_scaler_final_1,
+    dnn_sm_scaler_final_2,
+    dnn_sm_scaler_final_3,
+    dnn_dim6_scaler_final_1,
+    bdt_dim6_scaler_final_1,
+    dnn_dim8_scaler_final_1,
+    bdt_dim8_scaler_final_1,
+    dnn_pol_scaler_final_1,
+    bdt_pol_scaler_final_1,
 ]
 
 folder = opt.folder
@@ -157,7 +187,7 @@ for year in years:
     arg1 = " -y " + year 
     for dat in condor_list:
         #print(dat.label)
-        if dat.label.startswith("TT_") or dat.label.startswith("WJets") or dat.label.startswith("DataHT"):
+        if dat.label.startswith("TT_") or dat.label.startswith("WJets") or "_Jbin_" in dat.label or dat.label.startswith("DataHT"):
             #print("hello1")
             continue
         
