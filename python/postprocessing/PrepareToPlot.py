@@ -134,7 +134,7 @@ def CondoredList(samplename):
             else:
                 try:
                     tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
-                except:#(RuntimeWarning):
+                except(OSError, RuntimeWarning):
                     condlist.remove(condfile)
                     toRel = True
                     wrongex = True

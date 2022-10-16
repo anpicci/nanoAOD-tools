@@ -163,7 +163,7 @@ def CondoredList(samplename):
             else:
                 try:
                     tempf = ROOT.TFile.Open(path+samplename+"/"+condfile, "READ")
-                except(RuntimeWarning):
+                except(OSError, RuntimeWarning):
                     condlist.remove(condfile)
                     wrongex = True
                     if not opt.check:
@@ -343,8 +343,8 @@ def OpenAndRun(st, file_path):
                 tmptree = tmpfile.Get("events_"+scenario)
                 tmpentr = tmptree.GetEntries()
             except:
-                print("Problems with opening " + file_path + ", retrying...")
                 idw += 1
+                print("Problems with opening " + file_path + ", retrying... " + idw)
                 continue
             else:
                 toexit = True
@@ -363,33 +363,44 @@ def OpenAndRun(st, file_path):
                 isDamaged2 = False
                 isDamaged3 = False
                 isCopyOk = False
+                idtc = 0
                 while not isCopyOk:
+                    if idtc > 10:
+                        raise RuntimeError("Too many attempts, relaunch")
                     try:
                         os.system("cp " + file_path + " " + file_path_cp)
                     except:
-                        print("First copy not fine, retrying...")
+                        idtc += 1
+                        print("First copy not fine, retrying... " + idtc)
                         continue
                     else:
-                        isCopyOk = True
+                        #isCopyOk = True
                         pass
-                try:
-                    myfile = ROOT.TFile(file_path_cp, 'update')
-                except:
-                    print("Problems with copying " + file_path + ", retrying...")
-                    myfile.Close()
-                    os.system("rm " + file_path_cp)
-                    continue
-                else:
-                    pass
-                try:
-                    myfile.Get("events_"+scenario).GetListOfBranches()
-                except:
-                    print("Problems with copying " + file_path + ", retrying...")
-                    myfile.Close()
-                    os.system("rm " + file_path_cp)
-                    continue
-                else:
-                    pass
+
+                    try:
+                        myfile = ROOT.TFile(file_path_cp, 'update')
+                    except:
+                        print("Problems with copying " + file_path + ", retrying... " + idtc)
+                        idtc += 1
+                        #myfile.Close()
+                        os.system("rm " + file_path_cp)
+                        continue
+                    else:
+                        pass
+                    try:
+                        myfile.Get("events_"+scenario).GetListOfBranches()
+                    except:
+                        idtc += 1
+                        print("Problems with copying " + file_path + ", retrying... " + idtc)
+                        #myfile.Close()
+                        os.system("rm " + file_path_cp)
+                        continue
+                    else:
+                        pass
+
+                    isCopyOk = True
+
+
                 if branch in myfile.Get("events_"+scenario).GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", st, "and then come back to us!")
                     myfile.Close()
