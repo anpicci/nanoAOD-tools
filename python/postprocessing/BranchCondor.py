@@ -110,6 +110,9 @@ branches = [
     bdt_dim8_branch_final_1,
     dnn_pol_branch_final_1,
     bdt_pol_branch_final_1,
+    dnn_sm_branch_5fold,
+    dnn_dim6_branch_5fold,
+    dnn_dim8_branch_5fold,
 ]
 
 paths = [
@@ -132,6 +135,9 @@ paths = [
     bdt_dim8_path_final_1,
     dnn_pol_path_final_1,
     bdt_pol_path_final_1,
+    dnn_sm_path_5fold,
+    dnn_dim6_path_5fold,
+    dnn_dim8_path_5fold,
 ]
 
 scalers = [
@@ -154,6 +160,9 @@ scalers = [
     bdt_dim8_scaler_final_1,
     dnn_pol_scaler_final_1,
     bdt_pol_scaler_final_1,
+    dnn_sm_scaler_5fold,
+    dnn_dim6_scaler_5fold,
+    dnn_dim8_scaler_5fold,
 ]
 
 folder = opt.folder
@@ -163,16 +172,30 @@ branchstr = "\'"
 pathstr = "\'"
 scalerstr = "\'"
 
-print(branches, paths, scalers)
+#print(branches, paths, scalers)
 
+MissAny = False
 for idb, branch in enumerate(branches):
     if idb > 0:
         branchstr += ","
         pathstr += ","
         scalerstr += ","
+    #try:
+    if not os.path.exists(paths[idb]):
+    #except:
+        MissAny = True
+        print("Missing " + paths[idb] + " for " + branches[idb])
+    if scalers[idb] != "":
+        if not os.path.exists(scalers[idb]):
+            MissAny = True
+            print("Missing " + scalers[idb] + " for " + branches[idb])
+
     branchstr += branches[idb]
     pathstr += paths[idb]
     scalerstr += scalers[idb]
+
+if MissAny:
+    raise ValueError("Check previous messages about missing models!")
 
 branchstr += "\'"
 pathstr += "\'"
