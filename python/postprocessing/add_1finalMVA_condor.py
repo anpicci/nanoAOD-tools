@@ -356,9 +356,13 @@ def OpenAndRun(st, file_path):
         if tmpentr > 0:
             print("\nStarting with " + scenario)
             idbr = 0
+            idtbu = 0
             #for idbr, branch in enumerate(branches):
             while idbr < len(branches):
+                if idtbu > 20:
+                    raise RuntimeError("Too many attempts in copying backup file, relaunch the job!")
                 branch = branches[idbr]
+                isDamaged0 = False
                 isDamaged1 = False
                 isDamaged2 = False
                 isDamaged3 = False
@@ -371,17 +375,18 @@ def OpenAndRun(st, file_path):
                         os.system("cp " + file_path + " " + file_path_cp)
                     except:
                         idtc += 1
-                        print("First copy not fine, retrying... " + idtc)
+                        print("#" + idtc + "copy not fine, retrying... " + idtc)
                         continue
                     else:
+                        idtc = 0
                         #isCopyOk = True
                         pass
-
+                    
                     try:
                         myfile = ROOT.TFile(file_path_cp, 'update')
                     except:
-                        print("Problems with copying " + file_path + ", retrying... " + idtc)
                         idtc += 1
+                        print("Problems with copying " + file_path + ", retrying... " + idtc)
                         #myfile.Close()
                         os.system("rm " + file_path_cp)
                         continue
@@ -399,7 +404,6 @@ def OpenAndRun(st, file_path):
                         pass
 
                     isCopyOk = True
-
 
                 if branch in myfile.Get("events_"+scenario).GetListOfBranches():
                     print("branch", branch, "already exists. If you want to reprocess it, please first remerge the sample", st, "and then come back to us!")
@@ -470,7 +474,40 @@ def OpenAndRun(st, file_path):
                 myfile.Close()
 
                 file_path_bu = file_path_cp.replace("_cp.root", "_bu.root")
-                os.system("mv " + file_path + " " + file_path_bu)
+                os.system("cp " + file_path + " " + file_path_bu)
+                
+                try:
+                    checkbu = ROOT.TFile(file_path_bu, "read")
+                except:
+                    print("Warning! " + file_path_bu + " corrupted after copy, retrying the backup copy " + branch)
+                    isOk = False
+                    idcb = 0
+                    while not isOk:
+                        os.system("rm " + file_path_bu)
+                        if idcb > 10:
+                            print("Too many attempts, retrying from scratch...")
+                            isDamaged0 = True
+                            break
+                        os.system("cp " + file_path + " " + file_path_bu)
+                        try:
+                            checkbu = ROOT.TFile(file_path_bu, "read")
+                        except:
+                            idcb += 1
+                            print("backup copy failed, retrying... " + idcb)
+                            continue
+                        else:
+                            checkbu.Close()
+                            isOk = True
+                            os.system("rm " + file_path_bu)
+                            pass
+
+                if isDamaged0:
+                    idtbu += 1
+                    print("Problems with saving backup, retrying from beginning "  + branch + "...")
+                    continue
+                else:
+                    idtbu = 0
+
                 os.system("mv " + file_path_cp + " " + file_path)
                 #os.system("rm " + file_path_cp)
                 
@@ -479,7 +516,11 @@ def OpenAndRun(st, file_path):
                 except:
                     print("Warning! " + file_path + " corrupted afer copy, retrying the branching " + branch)
                     isOk = False
+                    idcb = 0
                     while not isOk:
+                        if idcb > 10:
+                            print("Too many attempts, retrying from scratch...")
+                            break
                         try:
                             os.system("cp " + file_path_bu + " " + file_path)
                         except:

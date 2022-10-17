@@ -15,9 +15,10 @@ from array import array
 #import xgboost
 from rwgcards.FromCardToDict import *
 
-rwgdict = CardToDict("dim8", "FT1_2p0")
+rwgdict_dim8 = CardToDict("dim8", "FT1_2p0")
+rwgdict_dim6 = CardToDict("dim6")
 
-desiredop = [
+desiredop_dim8 = [
     "FS0_1p0",
     "FS1_1p0",
     "FS2_1p0",
@@ -30,13 +31,39 @@ desiredop = [
     "FT2_0p9",
 ]
 
-wcoeff = []
-for opname, opdict in rwgdict.items():
+desiredop_dim6 = [
+    "cW_1",
+    "cHW_1",
+    "cHWB_1",
+    "cHDD_1",
+    "cHbox_1",
+    "cHl1_1",
+    "cHl3_1",
+    "cHq1_1",
+    "cHq3_1",
+    "cll_1",
+    "cll1_1",
+    "cqq1_1",
+    "cqq11_1",
+    "cqq3_1",
+    "cqq31_1",
+]
+
+wcoeff_dim8 = []
+for opname, opdict in rwgdict_dim8.items():
     coeffstr = ""
     for val in opdict.keys():
         coeffstr = opname + "_" + val
         if coeffstr in desiredop:
-            wcoeff.append(coeffstr)
+            wcoeff_dim8.append(coeffstr)
+
+wcoeff_dim6 = []
+for opname, opdict in rwgdict_dim6.items():
+    coeffstr = ""
+    for val in opdict.keys():
+        coeffstr = opname + "_" + val
+        if coeffstr in desiredop:
+            wcoeff_dim6.append(coeffstr)
 
 typcontr = [
     "0",
@@ -544,7 +571,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     treename = "events_"
 
     isdim8 = False
-    if (not "_UL" in sample.label and sample.label.startswith("VBS_SSWW_F")) or ("_UL" in sample.label and sample.label.startswith("VBS_SSWW_aQGC")):
+    if (not "_UL" in sample.label and sample.label.startswith("VBS_SSWW_F")) or ("_UL" in sample.label and (sample.label.startswith("VBS_SSWW_aQGC") or sample.label.startswith("VBS_SSWW_aTGC"))):
         isdim8 = True
   
     ROOT.TH1.SetDefaultSumw2()
@@ -574,7 +601,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     cut = ''
     
     if opt.count and syst == "":# and variable._name == "countings":
-        if not "_aQGC_" in sample.label:
+        if not ("_aQGC_" in sample.label or "_aTGC_" in sample.label):
             samcountlab = sample.leglabel
         else:
             samcountlab = sampletagg.replace("VBS_SSWW_", "EFT ").replace("_", "=").replace("p", ".")
@@ -775,7 +802,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     signal = False
 
     for s in samples_:
-        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label) and not str(s.year) in s.label:
+        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
             print("not passed")
             continue
         if opt.wfake != 'nofake':
@@ -800,7 +827,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     #print("infile:", infile)
 
     for s in samples_:
-        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label) and not str(s.year) in s.label:
+        if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
             print("not passed")
             continue
         if opt.wfake != 'nofake':
@@ -1222,12 +1249,12 @@ for year in years:
 
         #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         #nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        
+        '''
         variables.append(variabile('DNN_SM_final_1', 'SM DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_1', 'dim6 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim8_final_1', 'dim8 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_pol_final_1', 'pol DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-
+        '''
         variables.append(variabile('BDT_SM_final_1', 'SM BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('BDT_dim6_final_1', 'dim6 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('BDT_dim8_final_1', 'dim8 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1575,15 +1602,18 @@ for year in years:
                 continue
 
             IsDim8 = False
+            IsDim6 = False
             if "_aQGC_" in sample.label:
                 IsDim8 = True
-
+            if "_aTGC_" in sample.label:
+                IsDim6 = True
+            
             if(opt.plot):
                 dimsamplenames = []
                 samplelabs = []
                 dimcuts = []
                 if IsDim8:
-                    for cstr in wcoeff:
+                    for cstr in wcoeff_dim8:
                         dimtag = cstr
                         for idt, typ in enumerate(typcontr):
                             if idt == 0:
@@ -1596,6 +1626,22 @@ for year in years:
                             dimcuts.append(dimcut)
                             dimsamplenames.append(sample.label.replace("aQGC", dimtag + "_" + typ))
                             samplelabs.append(sample.label.replace("aQGC", dimtag + "_" + typ))
+                elif IsDim6:
+                    for cstr in wcoeff_dim6:
+                        dimtag = cstr
+                        for idt, typ in enumerate(typcontr):
+                            if idt == 0:
+                                #idarray = str(idt + 3)
+                                dimcut = dimtag + "[0]"#" + idarray + "]"
+                            elif idt == 1:
+                                dimcut = dimtag + "[0]+" + dimtag + "[4]+" + dimtag + "[5]"
+                            elif idt == 2:
+                                dimcut = dimtag + "[5]"
+                            dimcuts.append(dimcut)
+                            dimsamplenames.append(sample.label.replace("aTGC", dimtag + "_" + typ))
+                            samplelabs.append(sample.label.replace("aTGC", dimtag + "_" + typ))
+
+
                 else:
                     dimcuts.append("")
                     dimsamplenames.append("")
