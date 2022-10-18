@@ -54,7 +54,7 @@ for opname, opdict in rwgdict_dim8.items():
     coeffstr = ""
     for val in opdict.keys():
         coeffstr = opname + "_" + val
-        if coeffstr in desiredop:
+        if coeffstr in desiredop_dim8:
             wcoeff_dim8.append(coeffstr)
 
 wcoeff_dim6 = []
@@ -62,7 +62,7 @@ for opname, opdict in rwgdict_dim6.items():
     coeffstr = ""
     for val in opdict.keys():
         coeffstr = opname + "_" + val
-        if coeffstr in desiredop:
+        if coeffstr in desiredop_dim6:
             wcoeff_dim6.append(coeffstr)
 
 typcontr = [
