@@ -114,9 +114,9 @@ def CardToDict(dim, op = ""):
     
 
 #for k, v in CardToDict("dim8", "FT1_2p0").items():
-for k, v in CardToDict("dim6").items():
+#for k, v in CardToDict("dim6").items():
     #print("\ncoeff\t", k)
-    print(k)
+    #print(k)
     #for kv in v.keys():
         #print(kv)
     #print(k, v)
