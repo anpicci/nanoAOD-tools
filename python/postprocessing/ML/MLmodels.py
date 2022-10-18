@@ -41,9 +41,9 @@ bdt_dim8_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/d
 bdt_dim8_branch_final_1 = "BDT_dim8_final_1"
 bdt_dim8_scaler_final_1 = ""
 
-dnn_dim8_path_5fold   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim8_vUL040_v3_noVar_rec_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_5rndEI_5fold_fix.h5"
+dnn_dim8_path_5fold   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim8_vUL040_v3_noVar_rec_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_5rndEI_5fold_mindelta1e-4train.h5"
 dnn_dim8_branch_5fold = "DNN_dim8_5fold"
-dnn_dim8_scaler_5fold = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim8_vUL040_v3_noVar_rec_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_5rndEI_5fold_fix.p"
+dnn_dim8_scaler_5fold = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim8_vUL040_v3_noVar_rec_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_5rndEI_5fold_mindelta1e-4train.p"
 
 
 dnn_pol_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_pol_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_mindelta1e-3.h5"

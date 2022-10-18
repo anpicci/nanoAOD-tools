@@ -1243,24 +1243,26 @@ for year in years:
         #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
         
         #bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 1.])
-        bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
+        #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         #bin_bdtsm_dev = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])
+        bin_bdtsm_dev = array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
 
         #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         #nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        '''
+        
         variables.append(variabile('DNN_SM_final_1', 'SM DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_1', 'dim6 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim8_final_1', 'dim8 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_pol_final_1', 'pol DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        '''
-        variables.append(variabile('BDT_SM_final_1', 'SM BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('BDT_dim6_final_1', 'dim6 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('BDT_dim8_final_1', 'dim8 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('BDT_pol_final_1', 'pol BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        '''
+        
+        #variables.append(variabile('BDT_SM_final_1', 'SM BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        #variables.append(variabile('BDT_dim6_final_1', 'dim6 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        #variables.append(variabile('BDT_dim8_final_1', 'dim8 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        #variables.append(variabile('BDT_pol_final_1', 'pol BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        
         variables.append(variabile('DNN_SM_50I_TV', 'SM DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        '''
         variables.append(variabile('DNN_SM_50I_TV1', 'SM DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_ACAT', 'SM DNN output (ACAT)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
 

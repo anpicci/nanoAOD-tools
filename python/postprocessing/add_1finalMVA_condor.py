@@ -498,7 +498,7 @@ def OpenAndRun(st, file_path):
                         else:
                             checkbu.Close()
                             isOk = True
-                            os.system("rm " + file_path_bu)
+                            #os.system("rm " + file_path_bu)
                             pass
 
                 if isDamaged0:
@@ -528,7 +528,7 @@ def OpenAndRun(st, file_path):
                             continue
                         else:
                             isOk = True
-                            os.system("rm " + file_path_bu)
+                            #os.system("rm " + file_path_bu)
                             pass
                     isDamaged1 = True
                 else:
@@ -550,7 +550,7 @@ def OpenAndRun(st, file_path):
                                 continue
                             else:
                                 isOk = True
-                                os.system("rm " + file_path_bu)
+                                #os.system("rm " + file_path_bu)
                                 pass                        
                             
                         isDamaged2 = True
@@ -586,7 +586,7 @@ def OpenAndRun(st, file_path):
                                             continue
                                         else:
                                             isOk = True
-                                            os.system("rm " + file_path_bu)
+                                            #os.system("rm " + file_path_bu)
                                             pass                        
                                     isDamaged3 = True
                                     break
@@ -595,9 +595,9 @@ def OpenAndRun(st, file_path):
                         pass
                     pass
                 
-                print("isDamaged?", (isDamaged1 or isDamaged2 or isDamaged3))
+                print("isDamaged?", (isDamaged0 or isDamaged1 or isDamaged2 or isDamaged3))
 
-                if isDamaged1 or isDamaged2 or isDamaged3:
+                if isDamaged0 or isDamaged1 or isDamaged2 or isDamaged3:
                     print("Branching damaged file! Avoid to save and relaunching "  + branch + "...")
                     if isDamaged2 or isDamaged3:
                         checkfile.Close()

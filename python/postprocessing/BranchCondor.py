@@ -189,6 +189,10 @@ for idb, branch in enumerate(branches):
         if not os.path.exists(scalers[idb]):
             MissAny = True
             print("Missing " + scalers[idb] + " for " + branches[idb])
+    pathfeat = "ML/" + branch + "_features.txt"
+    if not os.path.exists(pathfeat):
+        MissAny = True
+        print("Missing " + pathfeat + " for " + branches[idb])
 
     branchstr += branches[idb]
     pathstr += paths[idb]
