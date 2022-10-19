@@ -5,14 +5,16 @@ from ML.MLmodels import *
 
 os.system("reset")
 
-folder = "vUL040"
+folder = "vUL045"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/ltau/"
 
 years = [
-    "UL2016APV",
-    "UL2016",
-    "UL2017",
-    "UL2018"
+    #"UL2016APV",
+    #"UL2016",
+    #"UL2017",
+    #"UL2018"
+    "UL201&M",
+    "ULRunII"
 ]
 
 branches = [
@@ -53,7 +55,7 @@ for year in years:
         if samp.year != year:
             continue
  
-        if samp.label.startswith("TT_") or samp.label.startswith("WJets"):
+        if samp.label.startswith("TT_") or samp.label.startswith("WJets") or samp.label.startswith("DYJetsToLL_Jbin_FxFx"):
             continue
 
         rfile = path + samp.label + "/" + samp.label + ".root"

@@ -4754,6 +4754,7 @@ merge_dict = {
     "TVX_UL2016":TVX_UL2016,
     "VG_UL2016":VG_UL2016,
     "WrongSign_UL2016":WrongSign_UL2016,
+    #"VBFHToWWTo2L2Nu_UL2016":VBFHToWWTo2L2Nu_UL2016,
     "Triboson_UL2016":Triboson_UL2016,
     "WJets_UL2016":WJets_UL2016,
     "WJets_Jbin_UL2016":WJets_Jbin_UL2016,

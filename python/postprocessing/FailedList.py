@@ -2,9 +2,10 @@ import os
 os.system("reset")
 folder = "vUL040"
 errpaths = [
-    "condorplot_" + folder + "_tdmcut/error/",
-    "condorbranch_" + folder + "/error/",
-    "condormerge_" + folder + "/error/"
+    #("condorplot_" + folder + "_test/error/", "PlotCondor.py --test"),
+    ("condorplot_" + folder + "/error/", "PlotCondor.py"),
+    ("condorbranch_" + folder + "/error/", "BranchCondor.py"),
+    ("condormerge_" + folder + "/error/", "MergeCondor.py"),
 ]
 
 years = [
@@ -16,7 +17,8 @@ years = [
     "ULRunII",
 ]
 
-for errpath in errpaths:
+for errpair in errpaths:
+    errpath = errpair[0]
     try:
         errfiles = os.listdir(errpath)
     except:
@@ -34,8 +36,9 @@ for errpath in errpaths:
 
     for dimzero in dimzeros:
         errfiles.remove(dimzero)
-
-
+        
+    pycomm = "python3 " + errpair[1] + " -f " + folder
+    tosys = ""
     for year in years:
         toremove = []
         idy = 0
@@ -51,7 +54,11 @@ for errpath in errpaths:
             idy += 1
         
             toremove.append(errfile)
-    
+        if not strerr.endswith(" -d "):
+            tosys += pycomm + " " + strerr + " ; \ \n"
         print(strerr)
         for tor in toremove:
             errfiles.remove(tor)
+
+    print("\n\nto launch:")
+    print(tosys)

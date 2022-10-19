@@ -19,7 +19,7 @@ set year = 'UL2018'
 #######    2016   #######
 set year = 'UL2016'
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year -c
+#python3 PrepareToPlot.py -f $folder -y $year -d WrongSign_UL2016 --or
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d WJets_Jbin -c #--rw
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
@@ -31,5 +31,6 @@ set year = 'UL2016APV'
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #set year = 'UL2016M'
+#python3 PrepareToPlot.py -f $folder -y $year --rw
 set year = 'ULRunII'
-python3 PrepareToPlot.py -f $folder -y $year --rw
+python3 PrepareToPlot.py -f $folder -y $year --rw -d TTTo2L2Nu_$year
