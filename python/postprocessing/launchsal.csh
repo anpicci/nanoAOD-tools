@@ -12,7 +12,7 @@ set year = 'UL2017'
 #######    2018   #######
 set year = 'UL2018'
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year --rw --or -d  ZZtoLep_
+python3 PrepareToPlot.py -f $folder -y $year --rw --or -d TTTo2L2Nu_$year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d WJets_Jbin -c #--rw
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
