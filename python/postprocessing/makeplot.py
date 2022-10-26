@@ -1250,10 +1250,10 @@ for year in years:
 
         #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         #nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
-        variables.append(variabile('DNN_dim6_final_2', 'dim6 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
-        variables.append(variabile('DNN_dim8_final_2', 'dim8 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
-        variables.append(variabile('DNN_dim8_final_3', 'dim8 DNN output (final 3)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
+        variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_dim6_final_2', 'dim6 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
+        variables.append(variabile('DNN_dim8_final_2', 'dim8 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
+        variables.append(variabile('DNN_dim8_final_3', 'dim8 DNN output (final 3)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
 
         '''
         variables.append(variabile('DNN_SM_final_1', 'SM DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
