@@ -4,7 +4,7 @@ import optparse
 from samples.samplesUL import *
 import copy
 
-os.system("reset")
+#os.system("reset")
 
 usage = 'python3 CombineCondor.py -d dataset_name -f destination_folder -y year'
 parser = optparse.OptionParser(usage)
@@ -19,11 +19,14 @@ parser.add_option('--sm', dest='sm', default = False, action='store_true', help 
 parser.add_option('--noFit', dest='dofit', default = True, action='store_false', help = 'Default does not run SM significance')
 parser.add_option('--doPost', dest='postfit', default = False, action='store_true', help = 'Default does not run postfit plots')
 parser.add_option('-m', '--models', dest='models', type=str, default = 'vbs', help='Please enter a dataset name')
+parser.add_option('--Lambda8', dest='Lambda8', default = False, action='store_true', help='add dim8 quad in 2D fits')
 parser.add_option('--srvar', dest='srvar', type=str, default = 'm_o1', help='var in sr')
 parser.add_option('--crvar', dest='crvar', type=str, default = 'same', help='var in cr')
 parser.add_option('--notCI', dest='doCI', default = True, action='store_false', help = 'Default does not run postfit plots')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test')
+parser.add_option('--WithFakeCR', dest='wfc', default = False, action='store_true', help = 'include Fakes CR')
+parser.add_option('--PDFWithTTDY', dest='pdfttdy', default = False, action='store_true', help = 'apply pdf to ttbar and dy')
 
 (opt, args) = parser.parse_args()
 
@@ -47,14 +50,31 @@ elif username == 'ttedesch':
     uid = 103343
 
 subfold = "combinecondor"
+condorsub = "condorcombine"
+exe = "branchcombine"
+
+if opt.wfc:
+    condorsub += "_WithFakeCR"
+    subfold += "_WithFakeCR"
+    exe += "_WithFakeCR"
+if opt.pdfttdy:
+    condorsub += "_PDFwithTTDY"
+    subfold += "_PDFwithTTDY"    
+    exe += "_PDFwithTTDY"    
+if opt.Lambda8:
+    condorsub += "_Lambda8"
+    subfold += "_Lambda8"
+    exe += "_Lambda8"
+
+condorsub += "_"
+subfold += "_" + opt.folder
+    
 if not os.path.exists(subfold):
     os.system("mkdir " + subfold)
 
-condorsub = "condorcombine"
-
-outcore = "condorcombine_" + opt.folder + "/output/"
-errcore = "condorcombine_" + opt.folder + "/error/"
-logcore = "condorcombine_" + opt.folder + "/log/"
+outcore = condorsub + opt.folder + "/output/"
+errcore = condorsub + opt.folder + "/error/"
+logcore = condorsub + opt.folder + "/log/"
 
 if not os.path.exists(outcore):
     os.system("mkdir -p " + outcore)
@@ -67,14 +87,14 @@ def submitter(model, srvar, crvar, argsins, folder):
     exesh = subfold + "/" + exe + "_" + folder + "_" + model + "_" + srvar + "_" + crvar + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
-    fsh.write("cd /afs/cern.ch/user/" + inituser + "/" + username + "\n")
+    fsh.write("cd /afs/cern.ch/user/a/apiccine\n")
     fsh.write("source setenv_combine.sh\n")
     fsh.write("cd Stat/Limits/test\n")
     for argsin in argsins:
         fsh.write("python " + pymacro + " " + argsin + "\n")
     fsh.close()
     
-    condorsubb = condorsub + "_" + folder + "_" + model + "_" + srvar + "_" + crvar + ".sub"
+    condorsubb = condorsub + folder + "_" + model + "_" + srvar + "_" + crvar + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
@@ -103,14 +123,12 @@ def submitter(model, srvar, crvar, argsins, folder):
         os.system("rm " + log)
     if os.path.exists(error):
         os.system("rm " + error)
-
+        
     os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 folder = opt.folder
 pymacro = "FitAndPlot.py"
-#pymacro = "FitAndPlot_dev.py"
-exe = "branchcombine"
 
 arg0 = " --folder " + folder 
 if not opt.impacts:
@@ -141,6 +159,8 @@ for model in models:
         arg1 += " --eft " + model
         if not opt.doCI:
             arg1 += " --notCI"
+        if opt.Lambda8:
+            arg1 += " --Lambda8"
 
     for idsr, srvar in enumerate(srvars):
         arg2 = ""
@@ -158,6 +178,12 @@ for model in models:
         elif opt.test:
             arg2 += " --test"
 
+        if opt.wfc:
+            arg2 += " --WithFakeCR"
+        if opt.pdfttdy:
+            arg2 += " --PDFWithTTDY"
+
+        arg2 += " > /dev/null "
         argss.append(arg2)
         submitter(model, srvar, crvar, argss, folder)
         

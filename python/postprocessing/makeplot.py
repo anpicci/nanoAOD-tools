@@ -1244,13 +1244,18 @@ for year in years:
         
         #bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 1.])
         #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
-        bin_bdtsm_dev = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])
-        #bin_bdtsm_dev = array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo
+        #bin_bdtsm_dev = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])
+        bin_bdtsm_dev = array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
 
         #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         #nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        
+        variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
+        variables.append(variabile('DNN_dim6_final_2', 'dim6 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
+        variables.append(variabile('DNN_dim8_final_2', 'dim8 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
+        variables.append(variabile('DNN_dim8_final_3', 'dim8 DNN output (final 3)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
+
+        '''
         variables.append(variabile('DNN_SM_final_1', 'SM DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_1', 'dim6 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim8_final_1', 'dim8 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1263,8 +1268,10 @@ for year in years:
         
         variables.append(variabile('DNN_SM_50I_TV', 'SM DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         '''
+        '''
         variables.append(variabile('DNN_SM_50I_TV1', 'SM DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_ACAT', 'SM DNN output (ACAT)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        '''
         '''
         variables.append(variabile('DNN_cHW_50I_TV2', 'c_{HW} DNN output (50I TV2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_cW_50I_TV0', 'c_{W} DNN output (50I TV0)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1274,7 +1281,7 @@ for year in years:
         variables.append(variabile('DNN_fM_50I_TV1', 'f_{M} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
 
         variables.append(variabile('DNN_POL_50I_TV', 'Pol. DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        
+        '''
         '''
         variables.append(variabile('BDT_SM_UL035_novar_sr_allbkg', 'SM BDT output (novar SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('BDT_SM_UL035_novar_truesr_allbkg', 'SM BDT output (novar true SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
@@ -1327,9 +1334,9 @@ for year in years:
             #bin_mo1 = array("d", [0., 100., 150., 200., 300.])
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
-        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
+        #variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
-        
+        '''
         if opt.sr:
             bin_mjj = array("d", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600., 2800.])
         else:
@@ -1595,7 +1602,7 @@ for year in years:
         
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
-        
+        '''
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:

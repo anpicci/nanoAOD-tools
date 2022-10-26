@@ -250,7 +250,7 @@ def MLRun(st, stpath):
     filelist = [f for f in CondoredList(st)[0] if "part" in f]
     finalpath = stpath + st + ".root"
     
-    if os.path.exists(finalpath):
+    if os.path.exists(finalpath) and not opt.rw:
         IsThere = []
         finalfile = ROOT.TFile.Open(finalpath, "READ")
         print("hello")
@@ -344,7 +344,7 @@ def OpenAndRun(st, file_path):
                 tmpentr = tmptree.GetEntries()
             except:
                 idw += 1
-                print("Problems with opening " + file_path + ", retrying... " + idw)
+                print("Problems with opening " + file_path + ", retrying... " + str(idw))
                 continue
             else:
                 toexit = True
@@ -375,7 +375,7 @@ def OpenAndRun(st, file_path):
                         os.system("cp " + file_path + " " + file_path_cp)
                     except:
                         idtc += 1
-                        print("#" + idtc + "copy not fine, retrying... " + idtc)
+                        print("#" + str(idtc) + "copy not fine, retrying... " + str(idtc))
                         continue
                     else:
                         idtc = 0
@@ -386,7 +386,7 @@ def OpenAndRun(st, file_path):
                         myfile = ROOT.TFile(file_path_cp, 'update')
                     except:
                         idtc += 1
-                        print("Problems with copying " + file_path + ", retrying... " + idtc)
+                        print("Problems with copying " + file_path + ", retrying... " + str(idtc))
                         #myfile.Close()
                         os.system("rm " + file_path_cp)
                         continue
@@ -396,7 +396,7 @@ def OpenAndRun(st, file_path):
                         myfile.Get("events_"+scenario).GetListOfBranches()
                     except:
                         idtc += 1
-                        print("Problems with copying " + file_path + ", retrying... " + idtc)
+                        print("Problems with copying " + file_path + ", retrying... " + str(idtc))
                         #myfile.Close()
                         os.system("rm " + file_path_cp)
                         continue
@@ -493,7 +493,7 @@ def OpenAndRun(st, file_path):
                             checkbu = ROOT.TFile(file_path_bu, "read")
                         except:
                             idcb += 1
-                            print("backup copy failed, retrying... " + idcb)
+                            print("backup copy failed, retrying... " + str(idcb))
                             continue
                         else:
                             checkbu.Close()

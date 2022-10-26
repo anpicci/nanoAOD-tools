@@ -1,3 +1,21 @@
+dnn_cHW_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_cHW_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3__1.h5"
+dnn_cHW_branch_final_1 = "DNN_cHW_final_1"
+dnn_cHW_scaler_final_1 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_cHW_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3__1.p"
+
+dnn_dim6_path_final_2   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim6_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_bal.h5"
+dnn_dim6_branch_final_2 = "DNN_dim6_final_2"
+dnn_dim6_scaler_final_2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim6_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_bal.p"
+
+
+dnn_dim8_path_final_2   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim8_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_fix_k8s_1.h5"
+dnn_dim8_branch_final_2 = "DNN_dim8_final_2"
+dnn_dim8_scaler_final_2 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim8_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_fix_k8s_1.p"
+
+
+dnn_dim8_path_final_3   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim8_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_fix_bal.h5"
+dnn_dim8_branch_final_3 = "DNN_dim8_final_3"
+dnn_dim8_scaler_final_3 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim8_vUL040_v3_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_moreDY_mindelta1e-3_fix_bal.p"
+
 ############### vUL045 ###############
 dnn_sm_path_final_1   = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_v3_sigQCD_noVar_trueSR_allbkg_auc_auc_cv_256bs_pat10_noiso_1to5layer_cvfixed_standard_50iter_trainval_nomjjtau_noangles_602020_moreDY_mindelta1e-3.h5"
 dnn_sm_branch_final_1 = "DNN_SM_final_1"

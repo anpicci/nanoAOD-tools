@@ -2,7 +2,7 @@ import os
 os.system("reset")
 folder = "vUL040"
 errpaths = [
-    #("condorplot_" + folder + "_test/error/", "PlotCondor.py --test"),
+    ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test"),
     ("condorplot_" + folder + "/error/", "PlotCondor.py"),
     ("condorbranch_" + folder + "/error/", "BranchCondor.py"),
     ("condormerge_" + folder + "/error/", "MergeCondor.py"),

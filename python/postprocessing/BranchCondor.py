@@ -113,6 +113,10 @@ branches = [
     dnn_sm_branch_5fold,
     dnn_dim6_branch_5fold,
     dnn_dim8_branch_5fold,
+    dnn_cHW_branch_final_1,
+    dnn_dim6_branch_final_2,
+    dnn_dim8_branch_final_2,
+    dnn_dim8_branch_final_3,
 ]
 
 paths = [
@@ -138,6 +142,10 @@ paths = [
     dnn_sm_path_5fold,
     dnn_dim6_path_5fold,
     dnn_dim8_path_5fold,
+    dnn_cHW_path_final_1,
+    dnn_dim6_path_final_2,
+    dnn_dim8_path_final_2,
+    dnn_dim8_path_final_3,
 ]
 
 scalers = [
@@ -163,6 +171,10 @@ scalers = [
     dnn_sm_scaler_5fold,
     dnn_dim6_scaler_5fold,
     dnn_dim8_scaler_5fold,
+    dnn_cHW_scaler_final_1,
+    dnn_dim6_scaler_final_2,
+    dnn_dim8_scaler_final_2,
+    dnn_dim8_scaler_final_3,
 ]
 
 folder = opt.folder
