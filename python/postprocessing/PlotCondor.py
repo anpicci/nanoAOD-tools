@@ -16,7 +16,7 @@ parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016M,UL2
 parser.add_option('--var', dest='vars', type=str, default = 'all', help='Please enter variable(s)')
 parser.add_option('--nosyst', dest='nosyst', default = False, action='store_true', help='no syst applied')
 parser.add_option('--systs', dest='systs', type=str, default = 'all', help='Systs to plot')
-parser.add_option('--count', dest='count', default = False, action='store_true', help='no syst applied')
+parser.add_option('--count', dest='count', default = False, action='store_true', help='enable writing countings')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
 (opt, args) = parser.parse_args()

@@ -1240,12 +1240,17 @@ for year in years:
 
         ######### with systematics ###########
         
-        #variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
+        variables.append(variabile('countings', 'countings', wzero+'*('+cutbase+')', True, 1, -0.5, 0.5))
         
         #bin_bdtsm = array("d", [0., 0.1, 0.2, 0.4, 0.6, 1.])
         #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
-        #bin_bdtsm_dev = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])
-        bin_bdtsm_dev = array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo
+
+        if opt.tDMcut:
+            bin_bdtsm_dev = array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo
+        elif opt.test:
+            bin_bdtsm_dev = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])
+        else:
+            bin_bdtsm_dev = array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
 
         #bin_bdtsm_dev = array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
@@ -1254,14 +1259,14 @@ for year in years:
         variables.append(variabile('DNN_dim6_final_2', 'dim6 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
         variables.append(variabile('DNN_dim8_final_2', 'dim8 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
         variables.append(variabile('DNN_dim8_final_3', 'dim8 DNN output (final 3)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
-
-        '''
         variables.append(variabile('DNN_SM_final_1', 'SM DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        '''
         variables.append(variabile('DNN_dim6_final_1', 'dim6 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim8_final_1', 'dim8 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_pol_final_1', 'pol DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         
-        variables.append(variabile('BDT_SM_final_1', 'SM BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        #variables.append(variabile('BDT_SM_final_1', 'SM BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        
         variables.append(variabile('BDT_dim6_final_1', 'dim6 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('BDT_dim8_final_1', 'dim8 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('BDT_pol_final_1', 'pol BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1603,6 +1608,7 @@ for year in years:
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
         '''
+
         for sample in dataset_new:
             print(sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
@@ -1655,6 +1661,7 @@ for year in years:
                     dimcuts.append("")
                     dimsamplenames.append("")
                     samplelabs.append(sample.label)
+
                 for idsl, samplelab in enumerate(samplelabs):
                     dimcut = dimcuts[idsl]
                     dimsamplename = dimsamplenames[idsl]
@@ -1702,13 +1709,15 @@ for year in years:
                     else:
                         raise ValueError(samplelab + " not ready to be plotted, skipping")
                         continue
-                    
+
                     for ids, syst in enumerate(systematics):
                         if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
                             continue
+
                         for var in variables:
                             if syst[0] != "" and not var.IsSystApplied():
                                 continue
+                            
                             if not "all" in vartoplot:
                                 if not var._name in vartoplot:
                                     continue
@@ -1725,6 +1734,7 @@ for year in years:
                                     tmp_f.close()
                             if (("GenPart" in var._name) or ("MC_" in var._name)) and "Data" in sample.label:
                                 continue
+
                             plot(f1, fout, samplelab, lep, opt.channel, var, sample, cut_tag, syst, dimsamplename, dimcut)
                     
                     fout.Close()
@@ -1746,3 +1756,4 @@ for year in years:
             dataset_new.append(sample_dict['DataEle_'+str(year)])
         elif lep == 'electron':
             dataset_new.append(sample_dict['DataMu_'+str(year)])
+

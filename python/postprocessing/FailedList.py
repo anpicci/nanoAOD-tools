@@ -2,6 +2,7 @@ import os
 os.system("reset")
 folder = "vUL040"
 errpaths = [
+    ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut"),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test"),
     ("condorplot_" + folder + "/error/", "PlotCondor.py"),
     ("condorbranch_" + folder + "/error/", "BranchCondor.py"),
@@ -55,7 +56,7 @@ for errpair in errpaths:
         
             toremove.append(errfile)
         if not strerr.endswith(" -d "):
-            tosys += pycomm + " " + strerr + " ; \ \n"
+            tosys += pycomm + " " + strerr + " ;\n"
         print(strerr)
         for tor in toremove:
             errfiles.remove(tor)
