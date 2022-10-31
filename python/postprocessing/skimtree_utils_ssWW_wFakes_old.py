@@ -1574,12 +1574,18 @@ class systWeights(object):
             self.weightedNames[self.maxSysts] = "pdf_totalUp"
             self.weightedNames[self.maxSysts+1] = "pdf_totalDown"
             self.weightedNames[self.maxSysts+2] = "pdf_totalSF"
+            self.weightedNames[self.maxSysts+3] = "pdf_TotUp"
+            self.weightedNames[self.maxSysts+4] = "pdf_TotDown"
+            self.weightedNames[self.maxSysts+5] = "pdf_TotSF"
+            self.weightedNames[self.maxSysts+6] = "pdf_TOTUp"
+            self.weightedNames[self.maxSysts+7] = "pdf_TOTDown"
+            self.weightedNames[self.maxSysts+8] = "pdf_TOTSF"
             #self.weightedNames[self.maxSysts+3] = "pdf_asUp"
             #self.weightedNames[self.maxSysts+4] = "pdf_asDown"
             #self.weightedNames[self.maxSysts+5] = "pdf_zmUp"
             #self.weightedNames[self.maxSysts+6] = "pdf_zmDown"
-            self.setMax(self.maxSysts+3)
-            self.setMaxNonPDF(self.maxSystsNonPDF+3)
+            self.setMax(self.maxSysts+9)
+            self.setMaxNonPDF(self.maxSystsNonPDF+9)
             if addAllPDFs:
                 nPDF = self.nPDF
                 for i in range(nPDF):
@@ -2242,3 +2248,20 @@ def IsPdfHessian(firstpdf, lastpdf):
     else:
         return False
     
+def FindPdf(samplelab):
+    filefolder = "/afs/cern.ch/work/a/apiccine/CMSSW_11_3_0_pre5/src/PhysicsTools/NanoAODTools/crab/macros/files/"
+    txtpath = filefolder + samplelab + ".txt"
+    if not path.exists(txtpath):
+        raise ValueError(samples + " does not exist in " + filefolder)
+        
+    rfiles = open(txtpath, "r").read().splitlines()
+    nfile0 = rfiles[0]
+    file0 = ROOT.TFile.Open(nfile0, "READ")
+    tree = file0.Get("Events")
+    pdfbranch = tree.GetBranch("LHEPdfWeight").GetTitle()
+    firstpdf = pdfbranch.split(" ")[-3]
+    lastpdf = pdfbranch.split(" ")[-1]
+    if IsPdfHessian(firstpdf, lastpdf):
+        return "Hessian"
+    else:
+        return "MCReplica"

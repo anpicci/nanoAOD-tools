@@ -1,6 +1,6 @@
 import os
 os.system("reset")
-folder = "vUL040"
+folder = "vUL050"
 errpaths = [
     ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut"),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test"),

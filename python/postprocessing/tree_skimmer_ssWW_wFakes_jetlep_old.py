@@ -278,6 +278,12 @@ systTree.setWeightName("mistagDown",1.)
 systTree.setWeightName("pdf_totalSF", 1.)
 systTree.setWeightName("pdf_totalUp", 1.)
 systTree.setWeightName("pdf_totalDown", 1.)
+systTree.setWeightName("pdf_TotSF", 1.)
+systTree.setWeightName("pdf_TotUp", 1.)
+systTree.setWeightName("pdf_TotDown", 1.)
+systTree.setWeightName("pdf_TOTSF", 1.)
+systTree.setWeightName("pdf_TOTUp", 1.)
+systTree.setWeightName("pdf_TOTDown", 1.)
 systTree.setWeightName("QCDScaleSF", 1.)
 systTree.setWeightName("QCDScaleUp", 1.)
 systTree.setWeightName("QCDScaleDown", 1.)
@@ -296,34 +302,44 @@ systTree.setWeightName("VBSDown", 1.)
 #++++++++++++++++++++++++++++++++++
 print("isMC: ", isMC)
 if(isMC):
+    h_PDFweight = ROOT.TH1F()
+    h_PDFweight.SetNameTitle("h_PDFweight","h_PDFweight")
+    h_PDFsys = ROOT.TH1F("h_PDFsys","h_PDFsys", 2, 0, 2)
+    h_genweight = ROOT.TH1F()
+    h_genweight.SetNameTitle('h_genweight', 'h_genweight')
+
     for filee in file_list:
         newfile = ROOT.TFile.Open(filee)
         dirc = ROOT.TDirectory()
         dirc = newfile.Get("plots")
         isthere_gen = bool(dirc.GetListOfKeys().Contains("h_genweight"))
         isthere_pdf = bool(dirc.GetListOfKeys().Contains("h_PDFweight"))
+        #isthere_q2 = bool(dirc.GetListOfKeys().Contains("h_q2weight"))
+
         print("gen?: ", isthere_gen, " pdf?: ", isthere_pdf)
 
         if isthere_gen or isthere_pdf:
             if isthere_gen:
-                h_genweight = ROOT.TH1F()
-                h_genweight.SetNameTitle('h_genweight', 'h_genweight')
                 h_genw_tmp = ROOT.TH1F(dirc.Get("h_genweight"))
                 if(ROOT.TH1F(h_genweight).Integral() < 1.):
                     h_genweight.SetBins(h_genw_tmp.GetXaxis().GetNbins(), h_genw_tmp.GetXaxis().GetXmin(), h_genw_tmp.GetXaxis().GetXmax())
                 h_genweight.Add(h_genw_tmp)
     
-            #if isthere_pdf:
-                #h_PDFweight = ROOT.TH1F()
-                #h_PDFweight.SetNameTitle("h_PDFweight","h_PDFweight")
-                #h_pdfw_tmp = ROOT.TH1F(dirc.Get("h_PDFweight"))
-                #if(ROOT.TH1F(h_PDFweight).Integral() < 1.):
-                    #h_PDFweight.SetBins(h_pdfw_tmp.GetXaxis().GetNbins(), h_pdfw_tmp.GetXaxis().GetXmin(), h_pdfw_tmp.GetXaxis().GetXmax())
-                #h_PDFweight.Add(h_pdfw_tmp)
+            if isthere_pdf:
+                h_pdfw_tmp = ROOT.TH1F(dirc.Get("h_PDFweight"))
+                if(h_PDFweight.Integral() < 1.):
+                    h_PDFweight.SetBins(h_pdfw_tmp.GetXaxis().GetNbins(), h_pdfw_tmp.GetXaxis().GetXmin(), h_pdfw_tmp.GetXaxis().GetXmax())
+                h_PDFweight.Add(h_pdfw_tmp)
             #else:
+                #pass
                 #addPDF = False
         newfile.Close()
 
+    #if isthere_pdf: ###PER MAKEPLOT
+        #nominal = h_PDFweight.GetBinContent(1)
+        #for ih in range(1, h_PDFweight.GetXaxis().GetNbins()+1):
+            #rms = h_PDFweight.GetBinContent(ih) - nominal
+            #h_PDFweight.SetBinContent(ih, rms)
 
 def reco(idxs, scenario, isMC, addPDF, MCReco):
     #++++++++++++++++++++++++++++++++++
@@ -838,10 +854,12 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     for i in range(tree.GetEntries()):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
-            #if i > 10:#00:
-            #if i != 8631:
-                #continue
-                #break
+            if isMC:
+                if i > 100:#00:
+                    #if i != 8631:
+                    #continue
+                    break
+            
             print("\nevento n. " + str(i))
         else:
             if (i+1)%1000 == 0 and i!=0:
@@ -947,26 +965,52 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 w_PDF_all[ipdf] = LHEitem(pdfw)
 
             mean_pdf = 0.
+            orsomean = 0.
             rms = 0.
+            orsorms = 0
+        
             pdf_totalSF = LHEitem(PdfWeight[0])
-
+        
             if isPDFHessian:
                 mean_pdf = LHEitem(PdfWeight[0])
+                orsomean = LHEitem(PdfWeight[0])
             else:
                 for pdfw, i in zip(PdfWeight, range(1, len(PdfWeight)+1)):
-                    mean_pdf += LHEitem(pdfw)#.__getattr__("")
+                    mean_pdf += LHEitem(pdfw)
+                    orsomean += LHEitem(pdfw)
                 mean_pdf /= len(PdfWeight)
+                orsomean /= len(PdfWeight)
 
             for pdfw, i in zip(PdfWeight, range(1, len(PdfWeight)+1)):
                 rms += (LHEitem(pdfw)-mean_pdf)**2
+                orsorms += (LHEitem(pdfw)-orsomean)
             if not isPDFHessian:
                 rms /= (len(PdfWeight) - 1.)
+                orsorms /= (len(PdfWeight) - 1.)
 
             devst = math.sqrt(rms)
+            h_PDFsys.AddBinContent(1, orsorms**2)
+            h_PDFsys.AddBinContent(2, 1)
             
-            pdf_totalUp = mean_pdf + rms
-            pdf_totalDown = mean_pdf - rms
+            #print(h_PDFsys.GetBinContent(1))
+            #print(mean_pdf, rms, devst)
+            #print(mean_pdf + devst, mean_pdf - devst)
+            #print(mean_pdf + rms, mean_pdf - rms)
+
+            pdf_totalUp = mean_pdf + devst
+            pdf_totalDown = mean_pdf - devst
             
+            if not h_PDFweight.Integral() < 1.:
+                totrms = 0
+                totmean = h_PDFweight.GetBinContent(1)
+                for ipdf, pdfw in enumerate(PdfWeight):
+                    totrms += (h_PDFweight.GetBinContent(ipdf+1) - totmean)**2
+                    #print(ipdf, totmean - h_PDFweight.GetBinContent(ipdf+1), totrms)
+                if not isPDFHessian:
+                    totrms /= (len(PdfWeight) - 1.)
+                totdevst = sqrt(totrms)#/h_genweight.GetBinContent(1)
+                #print(totdevst)
+         
             if gen.weight < 0.:
                 pdf_totalSF *= -1.
         #print("pdf_totalSF", pdf_totalSF, "pdf_totalDown", pdf_totalDown, "pdf_totalUp", pdf_totalUp)
@@ -974,7 +1018,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         systTree.setWeightName("pdf_totalSF", copy.deepcopy(pdf_totalSF))
         systTree.setWeightName("pdf_totalUp", copy.deepcopy(pdf_totalUp))
         systTree.setWeightName("pdf_totalDown", copy.deepcopy(pdf_totalDown))
-
+        
         lheSF = 1.
         lheUp = 1.
         lheDown = 1.
@@ -1811,8 +1855,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if(isMC):
             #print("h_genweight first bin content is %f and h_PDFweight has %f bins" %(h_genweight.GetBinContent(1), h_PDFweight.GetNbinsX()))
             h_genweight.Write()
-            #if isthere_pdf:
-               # h_PDFweight.Write()
+            h_PDFsys.Write()
+            if isthere_pdf:
+                h_PDFweight.Write()
             #h_eff_mu.Write()
             #h_eff_ele.Write()
     #trees[idxs].Write()
