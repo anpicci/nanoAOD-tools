@@ -5,8 +5,8 @@ errpaths = [
     ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut"),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test"),
     ("condorplot_" + folder + "/error/", "PlotCondor.py"),
-    ("condorbranch_" + folder + "/error/", "BranchCondor.py"),
-    ("condormerge_" + folder + "/error/", "MergeCondor.py"),
+    ("condorbranch_" + folder + "/error/", "BranchCondor.py --or --rw"),
+    ("condormerge_" + folder + "/error/", "MergeCondor.py --or --rw"),
 ]
 
 years = [

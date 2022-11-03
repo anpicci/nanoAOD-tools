@@ -1524,7 +1524,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             GoodLep_SFUp = abs(GoodLep.effSF_errUp)
             GoodLep_SFDown = abs(GoodLep.effSF_errDown)
             if GoodLep.pdgId == 11:
-                print("before:", GoodLep_SF, GoodLep_SFUp, GoodLep_SFDown)
+                #print("before:", GoodLep_SF, GoodLep_SFUp, GoodLep_SFDown)
                 addSF, addSF_Up, addSF_Down = EGM_SFs(GoodLep, year)
                 GoodLep_SF *= addSF
                 GoodLep_SFUp = (GoodLep_SFUp*addSF_Up)

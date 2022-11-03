@@ -91,89 +91,20 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    dnn_sm_50I_TV_branch,
-    dnn_sm_50I_TV1_branch,
-    dnn_sm_ACAT_branch,
-    dnn_cW_50I_TV0_branch,
-    dnn_cHW_50I_TV2_branch,
-    dnn_fS_50I_TV1_branch,
-    dnn_fT_50I_TV1_branch,
-    dnn_fM_50I_TV1_branch,
-    dnn_POL_50I_TV_branch,
     dnn_sm_branch_final_1,
-    bdt_sm_branch_final_1,
-    dnn_sm_branch_final_2,
-    dnn_sm_branch_final_3,
-    dnn_dim6_branch_final_1,
-    bdt_dim6_branch_final_1,
-    dnn_dim8_branch_final_1,
-    bdt_dim8_branch_final_1,
-    dnn_pol_branch_final_1,
-    bdt_pol_branch_final_1,
-    dnn_sm_branch_5fold,
-    dnn_dim6_branch_5fold,
-    dnn_dim8_branch_5fold,
-    dnn_cHW_branch_final_1,
     dnn_dim6_branch_final_2,
-    dnn_dim8_branch_final_2,
     dnn_dim8_branch_final_3,
 ]
 
 paths = [
-    dnn_sm_50I_TV_path,
-    dnn_sm_50I_TV1_path,
-    dnn_sm_ACAT_path,
-    dnn_cW_50I_TV0_path,
-    dnn_cHW_50I_TV2_path,
-    dnn_fS_50I_TV1_path,
-    dnn_fT_50I_TV1_path,
-    dnn_fM_50I_TV1_path,
-    dnn_POL_50I_TV_path,
     dnn_sm_path_final_1,
-    bdt_sm_path_final_1,
-    dnn_sm_path_final_2,
-    dnn_sm_path_final_3,
-    dnn_dim6_path_final_1,
-    bdt_dim6_path_final_1,
-    dnn_dim8_path_final_1,
-    bdt_dim8_path_final_1,
-    dnn_pol_path_final_1,
-    bdt_pol_path_final_1,
-    dnn_sm_path_5fold,
-    dnn_dim6_path_5fold,
-    dnn_dim8_path_5fold,
-    dnn_cHW_path_final_1,
     dnn_dim6_path_final_2,
-    dnn_dim8_path_final_2,
     dnn_dim8_path_final_3,
 ]
 
 scalers = [
-    dnn_sm_50I_TV_scaler,
-    dnn_sm_50I_TV1_scaler,
-    dnn_sm_ACAT_scaler,
-    dnn_cW_50I_TV0_scaler,
-    dnn_cHW_50I_TV2_scaler,
-    dnn_fS_50I_TV1_scaler,
-    dnn_fT_50I_TV1_scaler,
-    dnn_fM_50I_TV1_scaler,
-    dnn_POL_50I_TV_scaler,
     dnn_sm_scaler_final_1,
-    bdt_sm_scaler_final_1,
-    dnn_sm_scaler_final_2,
-    dnn_sm_scaler_final_3,
-    dnn_dim6_scaler_final_1,
-    bdt_dim6_scaler_final_1,
-    dnn_dim8_scaler_final_1,
-    bdt_dim8_scaler_final_1,
-    dnn_pol_scaler_final_1,
-    bdt_pol_scaler_final_1,
-    dnn_sm_scaler_5fold,
-    dnn_dim6_scaler_5fold,
-    dnn_dim8_scaler_5fold,
-    dnn_cHW_scaler_final_1,
     dnn_dim6_scaler_final_2,
-    dnn_dim8_scaler_final_2,
     dnn_dim8_scaler_final_3,
 ]
 
@@ -244,7 +175,7 @@ for year in years:
 
         if opt.dataset != "all":
             for dtp in toplot:
-                if dat.label.startswith(dtp):
+                if dat.label.startswith(dtp):# or (hasattr(dat, "components") and True in [c.label.startswith(dtp) for c in dat.components]):
                     toPlot = True
                     break
             

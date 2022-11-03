@@ -5,16 +5,16 @@ from ML.MLmodels import *
 
 os.system("reset")
 
-folder = "vUL045"
+folder = "vUL050"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/ltau/"
 
 years = [
-    #"UL2016APV",
-    #"UL2016",
+    "UL2016APV",
+    "UL2016",
     "UL2017",
     "UL2018"
-    "UL2016M",
-    "ULRunII"
+    #"UL2016M",
+    #"ULRunII"
 ]
 
 branches = [
@@ -36,7 +36,7 @@ branches = [
     #dnn_fT_50I_TV1_branch,
     #dnn_fM_50I_TV1_branch,
     #dnn_POL_50I_TV_branch,
-    #dnn_sm_branch_final_1,
+    dnn_sm_branch_final_1,
     #bdt_sm_branch_final_1,
     #dnn_sm_branch_final_2,
     #dnn_sm_branch_final_3,
@@ -46,9 +46,9 @@ branches = [
     #bdt_dim8_branch_final_1,
     #dnn_pol_branch_final_1,
     #bdt_pol_branch_final_1,
-    dnn_cHW_branch_final_1,
+    #dnn_cHW_branch_final_1,
     dnn_dim6_branch_final_2,
-    dnn_dim8_branch_final_2,
+    #dnn_dim8_branch_final_2,
     dnn_dim8_branch_final_3,
 ]
 

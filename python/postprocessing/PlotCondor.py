@@ -88,7 +88,7 @@ def submitter(sample, argsins, folder, cut):
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
     tagyear = str(sample.year)
-    inputfiles = "transfer_input_files    = $(Proxy_path), ./rwgcards, ./samples, CMS_lumi.py, variabile.py, " + pymacro+ "\n"
+    inputfiles = "transfer_input_files    = $(Proxy_path), ./rwgcards, ./samples, CMS_lumi.py, variabile.py, skimtree_utils_ssWW_wFakes_old.py, " + pymacro+ "\n"
     f.write(inputfiles)
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
