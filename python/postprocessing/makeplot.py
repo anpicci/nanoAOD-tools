@@ -1338,8 +1338,9 @@ for year in years:
             bin_bdtsm_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])
         #bin_bdtsm_dev = array.array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        '''
+        
         ############ Tommaso checks #########
+        '''
         variables.append(variabile('BDT_SM_final_1_bis', 'BDT_SM_final_1', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_bis', 'DNN_SM_final_1_bis', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_bis_5050_1of2', 'DNN_SM_final_1_bis_5050_1of2', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1350,8 +1351,17 @@ for year in years:
         variables.append(variabile('DNN_dim8_final_3_noQUAD', 'DNN_dim8_final_3_noQUAD', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_2_noQUAD', 'DNN_dim6_final_2_noQUAD', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_1_noQUAD', 'DNN_dim6_final_1_noQUAD', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        ########### end #############
         '''
+        variables.append(variabile('DNN_SM_final_1_bis_iter5', 'DNN_SM_final_1_bis_iter5', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_bis_iter6', 'DNN_SM_final_1_bis_iter6', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_bis_iter7', 'DNN_SM_final_1_bis_iter7', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_bis_iter8', 'DNN_SM_final_1_bis_iter8', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_iter5', 'DNN_SM_final_1_iter5', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_iter6', 'DNN_SM_final_1_iter6', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_iter7', 'DNN_SM_final_1_iter7', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_iter8', 'DNN_SM_final_1_iter8', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        ########### end #############
+        
         #variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_2', 'dim6 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
         #variables.append(variabile('DNN_dim8_final_2', 'dim8 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
