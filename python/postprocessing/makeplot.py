@@ -14,6 +14,7 @@ import array
 #import sklearn
 #import xgboost
 from rwgcards.FromCardToDict import *
+from collections import OrderedDict
 
 rwgdict_dim8 = CardToDict("dim8", "FT1_2p0")
 rwgdict_dim6 = CardToDict("dim6")
@@ -100,6 +101,7 @@ parser.add_option('--user', dest='user', type='string', default=str(os.environ.g
 parser.add_option('--ttbar', dest='ttbar', default = False, action='store_true', help='Enable ttbar CR, default disabled')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
+parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable flattening-signal binning')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='Enable countings')
 parser.add_option('--HT', dest='HT', default = False, action='store_true', help='Enable CTHT')
 parser.add_option('--wfake', dest='wfake', type='string', default = 'fake', help='Enable stackplots with data-driven fake leptons, default disabled')
@@ -118,6 +120,7 @@ parser.add_option('--ch', dest='channel', type=str, default = 'ltau', help='Sele
 parser.add_option('-v', dest='varss', type=str, default = 'all', help='Select variables to plot')
 parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='Tag to distinguish between different makeplot runs')
 parser.add_option('--bvetoL', dest='bvetoL', default = False, action='store_true', help='apply bveto loose in ws and dy CRs')
+parser.add_option('--noweight', dest='toweight', default = True, action='store_false', help='not apply any weight, default yes')
 
 (opt, args) = parser.parse_args()
 
@@ -125,6 +128,7 @@ parser.add_option('--bvetoL', dest='bvetoL', default = False, action='store_true
     #from PhysicsTools.NanoAODTools.postprocessing.samples.samplesUL import *
 #else:
     #from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
+ToWeight = opt.toweight
 
 if "UL" in opt.year:
     from samples.samplesUL import *
@@ -149,9 +153,11 @@ if not "btag" in opt.folder and not(opt.folder.startswith('FR_')) and (("mcreco"
     folder += "/" + opt.channel
 plot_tag = opt.plot_tag
 if opt.tDMcut:
-    plot_tag = "_tDM"
+    plot_tag += "_tDM"
 elif opt.test:
-    plot_tag = "_test"
+    plot_tag += "_test"
+if opt.flat:
+    plot_tag += "_flat"
 pfolder = opt.folder #+ opt.plot_tag
 
 filerepo = '/eos/home-a/apiccine/VBS/nosynch/' + folder + '/'
@@ -169,10 +175,10 @@ else:
         lepstr = 'plot/' + opt.channel
     else:
         lepstr = 'plot/' + opt.lep
-if opt.tDMcut:
-    lepstr = lepstr.replace("plot", "plot_tDM")
-elif opt.test:
-    lepstr = lepstr.replace("plot", "plot_test")
+#if opt.tDMcut:
+lepstr = lepstr.replace("plot", "plot" + plot_tag)
+#elif opt.test:
+#lepstr = lepstr.replace("plot", "plot_test")
 
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
@@ -205,8 +211,8 @@ if opt.bveto:
 
 elif opt.ws:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
-                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
-                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt>50.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
     }
     cut_tag = 'wrongsing_CR'
     if opt.bvetoL:
@@ -216,8 +222,8 @@ elif opt.ws:
 
 elif opt.wsdy:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
-                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
-                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_b_veto==1&&pass_jet_selection==1&&pass_tau_veto==1)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_jet_selection==1)*(" + cut + ")", 
     }
     cut_tag = 'OS_CR'
     if opt.bvetoL:
@@ -228,7 +234,7 @@ elif opt.wsdy:
 elif opt.sr:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(" + cut + ")", 
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(" + cut + ")", 
             }
     cut_tag = 'SR'
     if opt.cut != "1.":
@@ -237,7 +243,7 @@ elif opt.sr:
 elif opt.presel:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1)*(" + cut + ")", 
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1)*(" + cut + ")", 
             }
     cut_tag = 'presel'
     if opt.cut != "1.":
@@ -246,7 +252,7 @@ elif opt.presel:
 elif opt.ttbar:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==0&&pass_charge_selection==0&&pass_jet_selection==1&&pass_b_veto==0&&pass_tau_veto==1&&MET_pt>50.)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
             }
     cut_tag = 'ttbar_CR'
     if opt.cut != "1.":
@@ -255,7 +261,7 @@ elif opt.ttbar:
 elif opt.fakes:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&pass_tau_veto==1&&MET_pt<=50.)*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.)*(" + cut + ")",
             }
     cut_tag = 'fakes_CR'
     if opt.cut != "1.":
@@ -263,7 +269,7 @@ elif opt.fakes:
 elif opt.wjets:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&pass_tau_veto==1&&MET_pt<=50.&&(mT_electron_MET>50.||mT_muon_MET>50.))*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.&&mT_lep_MET>50.)*(" + cut + ")",
             }
     cut_tag = 'wjets_CR'
     if opt.cut != "1.":
@@ -271,7 +277,7 @@ elif opt.wjets:
 elif opt.qcd:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_charge_selection==1&&MET_pt<=50.&&mT_lep_MET<50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET<50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_charge_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.&&(mT_electron_MET<50.&&mT_muon_MET<50.))*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&MET_pt<=50.&&mT_lep_MET<50.)*(" + cut + ")",
             }
     cut_tag = 'QCD_CR'
     if opt.cut != "1.":
@@ -279,7 +285,7 @@ elif opt.qcd:
 elif opt.dy:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&" + bvetostring + "&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&" + bvetostring + "&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")",
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_charge_selection==0&&" + bvetostring + "&&pass_lepton_veto==1&&pass_jet_selection==1&&pass_tau_veto==1&&MET_pt<=50.)*(" + cut + ")",
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_jet_selection==1&&" + bvetostring + "&&pass_charge_selection==0&&MET_pt<=50.)*(" + cut + ")",
             }
     cut_tag = 'DY_CR'
     if opt.bvetoL:
@@ -289,7 +295,7 @@ elif opt.dy:
 elif opt.sel:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13)*(" + cut + ")*(pass_lepton_selection==1&&pass_lepton_veto==1&&pass_tau_selection==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_mjj_cut==1&&pass_MET_cut==1)", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11)*(" + cut + ")*(pass_lepton_selection==1&&pass_lepton_veto==1&&pass_tau_selection==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_mjj_cut==1&&pass_MET_cut==1)", 
-                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11))*(" + cut + ")*(pass_lepton_selection==1&&pass_lepton_veto==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_tau_veto==1)", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11)*(" + cut + ")*(pass_lepton_selection==1&&pass_lepton_veto==1&&pass_tau_selection==1&&pass_charge_selection==1&&pass_jet_selection==1&&pass_b_veto==1&&pass_mjj_cut==1&&pass_MET_cut==1)", 
             }
     cut_tag = "selection"
     if opt.cut != "1.":
@@ -336,9 +342,9 @@ if opt.bdt or opt.ebdt or opt.mubdt:
     elif opt.ebdt or opt.mubdt:
         cut_tag = cut_tag + "_lepBDTcut"        
 
-if opt.tDMcut:
-    for k, v in cut_dict.items():
-        cut_dict[k] = v + "*(tau_DecayMode<5||tau_DecayMode>6)"
+#if opt.tDMcut:
+for k, v in cut_dict.items():
+    cut_dict[k] = v + "*(tau_DecayMode<5||tau_DecayMode>6)"
 
 lumi = {'2016': 35.9, 'UL2016M': 35.9, 'UL2016APV': 19.5, 'UL2016': 16.8, "2017": 41.53, 'UL2017': 41.5, "2018": 59.7, 'UL2018':59.8, "ULRunII":138}
 
@@ -463,6 +469,51 @@ if opt.stack:
     if not os.path.exists(pathstack) and cut_tag != "1p":
         os.system("mkdir -p " + pathstack)
 
+
+def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
+    #print("Desired bins:", wnbins)
+    oldnbins = 5000
+    rfilename = filerepo + "/" + signal + "/" + signal + ".root"
+    signalcut = "((abs(lepton_pdgid)==13||abs(lepton_pdgid)==11)&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(lepton_TightRegion==1&&tau_TightRegion==1)"
+    rfile = ROOT.TFile().Open(rfilename, "READ")
+    rtree = rfile.Get("events_nominal")
+    sbins_histo = ROOT.TH1F("h_sbins", "h_sbins", oldnbins, 0., 1.)
+    rtree.Project("h_sbins", variable, signalcut)
+    
+    flatinterval = []
+    for idnb in range(1, wnbins+1):
+        flatinterval.append(idnb/wnbins)
+    #flatinterval[-1] = 1.001
+    #print("flatinterval:", flatinterval, len(flatinterval))
+    sumoverbins = 0
+    toKeep = []
+    theCall = []
+    for idnb in range(0, wnbins+1):
+        toKeep.append(0.0)
+        theCall.append(False)
+    
+    totweights = sbins_histo.GetSumOfWeights()
+    #print("totweights:", totweights)
+    for nb in range(1, oldnbins + 1):
+        #print("bincontent:", sbins_histo.GetBinContent(nb))
+        sumoverbins += sbins_histo.GetBinContent(nb)/totweights
+        #print("sum at step", nb, "\t", sumoverbins)
+        for idnb in range(0, wnbins):
+            binHighEdge = 0.
+            if theCall[idnb] == False and sumoverbins > flatinterval[idnb]:
+                binHighEdge = round(sbins_histo.GetBinLowEdge(nb) + 2*(sbins_histo.GetBinCenter(nb) - sbins_histo.GetBinLowEdge(nb)), 3)
+                #print("binHighEdge", binHighEdge, "found for new bin", idnb + 1)
+                theCall[idnb] = True
+                toKeep[idnb+1] = copy.deepcopy(binHighEdge)
+            else:
+                pass
+    if theCall[-1] == False:
+        toKeep[-1] = 1.0
+    print("flattening binning found:")
+    print(toKeep)
+    binedges = array.array("d", toKeep) 
+    return binedges
+
 def mergepart(dataset):
     print("\nhello babe\n")
     samples = []
@@ -515,10 +566,8 @@ def lumi_writer(dataset, lumi):
             ik = 0
             outfile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE")
             for key in scenarios:
-                branches = {
-                    "w_nominal": array.array('f', [0.])
-                }
-                
+                branches = OrderedDict()
+                branches["w_nominal"] = array.array('f', [0.])
                 evtree = "events_" + key
                 try:
                     tree = infile.Get(evtree)
@@ -552,8 +601,10 @@ def lumi_writer(dataset, lumi):
                 pdforsorms = 0.
 
                 if toPDF:
+                    branches['pdf_TotSF'] = array.array('f', [1.])
                     branches['pdf_TotUp'] = array.array('f', [1.])
                     branches['pdf_TotDown'] = array.array('f', [1.])
+                    branches['pdf_TOTSF'] = array.array('f', [1.])
                     branches['pdf_TOTUp'] = array.array('f', [1.])
                     branches['pdf_TOTDown'] = array.array('f', [1.])
                     typePDF = FindPdf(sample.label)
@@ -613,10 +664,12 @@ def lumi_writer(dataset, lumi):
                             #print(tree.pdf_TotSF - pdfdevst)
                             #print(tree.pdf_TOTSF + pdforsorms)
                             #print(tree.pdf_TOTSF - pdforsorms)
+                        branches['pdf_TotSF'][0] = tree.pdf_totalSF
                         branches['pdf_TotUp'][0] = tree.pdf_totalSF + pdfdevst
                         branches['pdf_TotDown'][0] = tree.pdf_totalSF - pdfdevst
+                        branches['pdf_TOTSF'][0] = tree.pdf_totalSF
                         branches['pdf_TOTUp'][0] = tree.pdf_totalSF + pdforsorms
-                        branches['pdf_TOTDown'][0] = tree.pdf_totalSF + pdforsorms
+                        branches['pdf_TOTDown'][0] = tree.pdf_totalSF - pdforsorms
                         
                     tree_new.Fill()
                 outfile.cd()
@@ -663,19 +716,19 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
         cutbase += '*(1./abs(' + nominal + '))'
     if systtype != "en" and syst != "":
-        if not syst.startswith("pdf_"):
-            cutbase += '*(' + syst + ')'
-        else:
-            rms = "abs(abs(" + nominal + ") - " + syst + ")"
-            devst = "sqrt(" + rms + ")"
-            sign = ""
-            if syst.endswith("Up"):
-                sign = "+"
-            if syst.endswith("Down"):
-                sign = "-"
-            new_syst = "abs(" + nominal + ")" + sign + devst
-            print("new_syst:", new_syst)
-            cutbase += '*(' + new_syst + ')'
+        #if not syst.startswith("pdf_"):
+        cutbase += '*(abs(' + syst + '))'
+        #else:
+            #rms = "abs(abs(" + nominal + ") - " + syst + ")"
+            #devst = "sqrt(" + rms + ")"
+            #sign = ""
+            #if syst.endswith("Up"):
+                #sign = "+"
+            #if syst.endswith("Down"):
+                #sign = "-"
+            #new_syst = "abs(" + nominal + ")" + sign + devst
+            #print("new_syst:", new_syst)
+            #cutbase += '*(' + new_syst + ')'
     print("cutbase:", cutbase)
     
     if syst != "":
@@ -692,9 +745,14 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         else:
             samcountlab = sampletagg.replace("VBS_SSWW_", "EFT ").replace("_", "=").replace("p", ".")
         countf = open(pathplot + 'countings/' + cut_tag + "/" + variable._name + "_" + str(opt.year) + syst.replace("_Up", "Up").replace("_Down", "Down") + ".csv", "a")
+        namecountbin = pathplot + 'countings/' + cut_tag + "/" + sample.label + "_" + variable._name + syst.replace("_Up", "Up").replace("_Down", "Down")
+        if not ToWeight:
+            namecountbin += "_noweight"
+        namecountbin += ".csv"
+        countbin = open(namecountbin, "w")
         countf.write(samcountlab)
         countf.write(';')
-        #countf.write("\nBin\tContent\tError")
+        countbin.write("Bin;" + sample.leglabel + "\n")
     
     if opt.channel=="ltau":
         l1fstr = "lepton"
@@ -812,20 +870,24 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             minedge = str(round(h1.GetBinLowEdge(bidx_l), 3))
             maxedge = str(round(h1.GetBinLowEdge(bidx_l) + h1.GetBinWidth(bidx_l), 3))
             bincont = round(h1.GetBinContent(bidx_l), 6)
+            strbin = "[" + minedge + ", " + maxedge + "]" + ";"
             tot += bincont
-            bincont = str(bincont)
+            strbin += str(bincont) + "\pm"
             binerrcont = round(h1.GetBinError(bidx_l), 6)
             terr += binerrcont**2.
-            binerrcont = str(binerrcont)
+            strbin += str(binerrcont) + "\n"
+            countbin.write(strbin)
 
     if opt.count and syst == "":# and variable._name == "countings":
         terr = terr**0.5
-        countf.write(str(bincont).replace(".",",") + ";" + str(binerrcont).replace(".",","))
+        countf.write(str(tot).replace(".",",") + ";" + str(terr).replace(".",","))
         countf.write("\n")
         countf.close()
+        countbin.close()
     print(fout)
-    fout.cd()
-    h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
+    if ToWeight:
+        fout.cd()
+        h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     os.system('set LD_PRELOAD=libtcmalloc.so')
@@ -1298,7 +1360,7 @@ for year in years:
             dataset_new.remove(sample_dict['FakeMu_'+str(year)])
 
         variables = []
-        
+
         lep1 = ["", ""]
         lep2 = ["", ""]
         lep12 = ["", ""]
@@ -1314,10 +1376,13 @@ for year in years:
             lep12 = ["electronmuon", "e #mu"]
               
         wzero = ""
-        if opt.channel == 'ltau':
-            wzero = 'w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF'
-        elif opt.channel == 'emu':
-            wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF*puIDSF*QCDScaleSF'
+        if ToWeight:
+            if opt.channel == 'ltau':
+                wzero = 'w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF'
+            elif opt.channel == 'emu':
+                wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF*puIDSF*QCDScaleSF'
+        else:
+            wzero = "(1.)"
         #print("wzero", wzero)
 
         cutbase = cut_dict[lep]
@@ -1331,13 +1396,21 @@ for year in years:
         #bin_bdtsm_dev = array.array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
 
         if opt.tDMcut:
-            bin_bdtsm_dev = array.array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo
+            bin_bdtsm_dev = array.array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo 21
+            if opt.flat:
+                bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm_dev), "WpWpJJ_EWK_ULRunII")
         elif opt.test:
-            bin_bdtsm_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])
+            bin_bdtsm_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
+            if opt.flat:
+                bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm_dev), "WpWpJJ_EWK_ULRunII")
         else:
-            bin_bdtsm_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])
+            bin_bdtsm_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
+            if opt.flat:
+                bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm_dev), "WpWpJJ_EWK_ULRunII")
         #bin_bdtsm_dev = array.array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
+        
+        #print(bin_bdtsm_dev)
         
         ############ Tommaso checks #########
         '''
@@ -1351,7 +1424,6 @@ for year in years:
         variables.append(variabile('DNN_dim8_final_3_noQUAD', 'DNN_dim8_final_3_noQUAD', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_2_noQUAD', 'DNN_dim6_final_2_noQUAD', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim6_final_1_noQUAD', 'DNN_dim6_final_1_noQUAD', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        '''
         variables.append(variabile('DNN_SM_final_1_bis_iter5', 'DNN_SM_final_1_bis_iter5', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_bis_iter6', 'DNN_SM_final_1_bis_iter6', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_bis_iter7', 'DNN_SM_final_1_bis_iter7', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1360,6 +1432,7 @@ for year in years:
         variables.append(variabile('DNN_SM_final_1_iter6', 'DNN_SM_final_1_iter6', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_iter7', 'DNN_SM_final_1_iter7', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_iter8', 'DNN_SM_final_1_iter8', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        '''
         ########### end #############
         
         #variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))

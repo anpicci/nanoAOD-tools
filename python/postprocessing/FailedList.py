@@ -1,10 +1,17 @@
 import os
+def cutToTag(cut):
+    newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
+    return newstring
+
+add = ""
+
 os.system("reset")
 folder = "vUL050"
 errpaths = [
-    ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut"),
-    ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test"),
-    ("condorplot_" + folder + "/error/", "PlotCondor.py"),
+    ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut " + add, ""),
+    ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test " + add, ""),
+    ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test --cuts \"DNN_SM_final_1>=0.90\" " + add, "DNN_SM_final_1>=0.90"),
+    ("condorplot_" + folder + "/error/", "PlotCondor.py " + add, ""),
     ("condorbranch_" + folder + "/error/", "BranchCondor.py --or --rw"),
     ("condormerge_" + folder + "/error/", "MergeCondor.py --or --rw"),
 ]
@@ -46,12 +53,22 @@ for errpair in errpaths:
         strerr = ""
         strerr += "-y " + year + " -d "
         for iderr, errfile in enumerate(errfiles):
-            if not errfile.replace(".err", "").endswith(year):
+            check = errfile.replace(".err", "")
+            if errpath.startswith("condorplot_"):
+                cuttag = "_" + cutToTag(errpair[2])
+                if errpair[2] != "":
+                    check += cuttag
+            if not check.endswith(year):
                 continue
             
             if idy > 0:
                 strerr += ","
             strerr += errfile.replace(".err", "")
+            if errpath.startswith("condorplot_"):
+                cuttag = "_" + cutToTag(errpair[2])
+                if errpair[2] != "":
+                    strerr = strerr.replace(cuttag, "")
+
             idy += 1
         
             toremove.append(errfile)

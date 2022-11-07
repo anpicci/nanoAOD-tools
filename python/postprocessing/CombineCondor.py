@@ -27,6 +27,8 @@ parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test')
 parser.add_option('--WithFakeCR', dest='wfc', default = False, action='store_true', help = 'include Fakes CR')
 parser.add_option('--PDFWithTTDY', dest='pdfttdy', default = False, action='store_true', help = 'apply pdf to ttbar and dy')
+parser.add_option('--DYrp', dest='DYrp', default = False, action='store_true', help = 'apply rateParam to dy')
+parser.add_option('--pdf', dest='pdf', type='string', default = 'total', help = 'Specify type of pdf')
 
 (opt, args) = parser.parse_args()
 
@@ -49,10 +51,14 @@ elif username == 'apiccine':
 elif username == 'ttedesch':
     uid = 103343
 
-subfold = "combinecondor"
-condorsub = "condorcombine"
-exe = "branchcombine"
+subfold = "combinecondor_" + opt.pdf
+condorsub = "condorcombine_" + opt.pdf
+exe = "branchcombine_" + opt.pdf
 
+if not opt.DYrp:
+    condorsub += "_nodyrp"
+    subfold += "_nodyrp"
+    exe += "_nodyrp"
 if opt.wfc:
     condorsub += "_WithFakeCR"
     subfold += "_WithFakeCR"
@@ -65,6 +71,14 @@ if opt.Lambda8:
     condorsub += "_Lambda8"
     subfold += "_Lambda8"
     exe += "_Lambda8"
+if opt.tDMcut:
+    condorsub += "_tDM"
+    subfold += "_tDM"
+    exe += "_tDM"
+if opt.test:
+    condorsub += "_test"
+    subfold += "_test"
+    exe += "_test"
 
 condorsub += "_"
 subfold += "_" + opt.folder
@@ -128,7 +142,8 @@ def submitter(model, srvar, crvar, argsins, folder):
     os.system("mv " + condorsubb + " " + subfold)
 
 folder = opt.folder
-pymacro = "FitAndPlot.py"
+pymacro = "FitAndPlot"
+pymacro += ".py"
 
 arg0 = " --folder " + folder 
 if not opt.impacts:
@@ -182,7 +197,9 @@ for model in models:
             arg2 += " --WithFakeCR"
         if opt.pdfttdy:
             arg2 += " --PDFWithTTDY"
-
+        if opt.DYrp:
+            arg2 += " --DYrp"
+        arg2 += " --pdf " + opt.pdf
         arg2 += " > /dev/null "
         argss.append(arg2)
         submitter(model, srvar, crvar, argss, folder)
