@@ -474,7 +474,7 @@ def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
     #print("Desired bins:", wnbins)
     oldnbins = 5000
     rfilename = filerepo + "/" + signal + "/" + signal + ".root"
-    signalcut = "((abs(lepton_pdgid)==13||abs(lepton_pdgid)==11)&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(lepton_TightRegion==1&&tau_TightRegion==1)"
+    signalcut = "w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF*((abs(lepton_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(1.)*(abs(deltaEta_jj)>2.5)*(tau_DecayMode<5||tau_DecayMode>6))*(lepton_TightRegion==1&&tau_TightRegion==1)"
     rfile = ROOT.TFile().Open(rfilename, "READ")
     rtree = rfile.Get("events_nominal")
     sbins_histo = ROOT.TH1F("h_sbins", "h_sbins", oldnbins, 0., 1.)
@@ -711,7 +711,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     histoname = "h_" + histag + "_" + cut_tag
     treename += systtree
 
-    print("\n" + samplelab)
+    #print("\n" + samplelab)
     if systtype == "exp":
         nominal = syst.replace("Up", "SF").replace("Down", "SF")
         cutbase += '*(1./abs(' + nominal + '))'
@@ -884,10 +884,11 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         countf.write("\n")
         countf.close()
         countbin.close()
-    print(fout)
+    #print(fout)
     if ToWeight:
         fout.cd()
         h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
+    print("plotted!")
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     os.system('set LD_PRELOAD=libtcmalloc.so')
@@ -1346,9 +1347,9 @@ print("\nStarting")
 for year in years:
     if not os.path.exists(pathstack + str(year) + "/") and cut_tag != "1p":
         os.system("mkdir -p " + pathstack + str(year) + "/")
-    print(year)
+        
     for lep in leptons:
-        print(lep)
+        print("\n\nYear and channel:", year, lep)
         dataset_new = dataset_dict[year]
 
         #dataset_new.remove(sample_dict['DataMET_'+str(year)])
@@ -1519,7 +1520,7 @@ for year in years:
             #bin_mo1 = array.array("d", [0., 100., 150., 200., 300.])
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
-        #variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
+        variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
         
         if opt.sr:
@@ -1528,7 +1529,7 @@ for year in years:
             bin_mjj = array.array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600., 2800.])
         nbin_mjj = len(bin_mjj) - 1 
         variables.append(variabile('m_jj', 'invariant mass j_{1} j_{2} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mjj, bin_mjj))
-        '''
+        
         ######### without systematics ###########
         
         #try:
@@ -1730,8 +1731,8 @@ for year in years:
         variables.append(variabile('deltaPhi_METj2', '#Delta #phi (p_{T}^{miss} j_{2})',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METlep', '#Delta #phi (p_{T}^{miss} lep)',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METtau', '#Delta #phi (p_{T}^{miss} #tau)',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
-        variables.append(variabile('min(min(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),min(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'minimum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 12, 0., 3))
-        variables.append(variabile('max(max(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),max(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'maximum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 12, 0., 3))
+        #variables.append(variabile('min(min(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),min(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'minimum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 12, 0., 3))
+       # variables.append(variabile('max(max(abs(deltaPhi_METj1),abs(deltaPhi_METj2)),max(abs(deltaPhi_METtau),abs(deltaPhi_METlep)))', 'maximum #Delta #phi (p_{T}^{miss}, vis. object)',  wzero+'*('+cutbase+')', False, 12, 0., 3))
         
         bin_deltaeta_ll = array.array("d", [-5., -3., -2., -1.5, -1., -0.5, 0., 0.5, 1., 1.5, 2., 3., 5.])
         nbin_deltaeta_ll = len(bin_deltaeta_ll) - 1
@@ -1740,16 +1741,16 @@ for year in years:
 
         bin_deltaeta_lj = array.array("d", [-6., -4., -3., -2., -1., 0., 1., 2., 3., 4., 6.])
         nbin_deltaeta_lj = len(bin_deltaeta_lj) - 1
-        #variables.append(variabile('deltaEta_' + lep2[0] + 'j1', '#Delta #eta_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False,  nbin_deltaeta_lj, bin_deltaeta_lj))
-        #variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_lj, bin_deltaeta_lj))
-        #variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_lj, bin_deltaeta_lj))
-        #variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_lj, bin_deltaeta_lj))
+        variables.append(variabile('deltaEta_' + lep2[0] + 'j1', '#Delta #eta_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False,  nbin_deltaeta_lj, bin_deltaeta_lj))
+        variables.append(variabile('deltaEta_' + lep2[0] + 'j2', '#Delta #eta_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_lj, bin_deltaeta_lj))
+        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j1', '#Delta #eta_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_lj, bin_deltaeta_lj))
+        variables.append(variabile('deltaEta_' + lep1[0].split("to")[0] + 'j2', '#Delta #eta_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_lj, bin_deltaeta_lj))
 
 
-        bin_deltatheta_jj = array.array("d", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
-        nbin_deltatheta_jj = len(bin_deltatheta_jj) - 1
+        #bin_deltatheta_jj = array.array("d", [-1., -0.8, -0.4, 0.4, 0.8, 1.])
+        #nbin_deltatheta_jj = len(bin_deltatheta_jj) - 1
         #variables.append(variabile('deltaTheta_jj', 'cos(#Delta#theta_{jj})',  wzero+'*('+cutbase+')', False, nbin_deltatheta_jj, bin_deltatheta_jj))
-        variables.append(variabile('deltaTheta_' + lep12[0], 'cos(#Delta#theta_{' + lep12[1] + '})',  wzero+'*('+cutbase+')', False,  nbin_deltatheta_jj, bin_deltatheta_jj))
+        ##variables.append(variabile('deltaTheta_' + lep12[0], 'cos(#Delta#theta_{' + lep12[1] + '})',  wzero+'*('+cutbase+')', False,  nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep2[0] + 'j1', 'cos(#Delta#theta_{' + lep2[1] + ' j_{1}})',  wzero+'*('+cutbase+')', False,  nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep2[0] + 'j2', 'cos(#Delta#theta_{' + lep2[1] + ' j_{2}})',  wzero+'*('+cutbase+')', False,  nbin_deltatheta_jj, bin_deltatheta_jj))
         #variables.append(variabile('deltaTheta_' + lep1[0].split("to")[0] + 'j1', 'cos(#Delta#theta_{' + lep1[1] + ' j_{1}})',  wzero+'*('+cutbase+')', False, nbin_deltatheta_jj, bin_deltatheta_jj))
@@ -1787,10 +1788,9 @@ for year in years:
         
         variables.append(variabile('leadjet_DeepFlv_b', 'leading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
-        '''
 
         for sample in dataset_new:
-            print(sample.label, sample.name)
+            print("\nSample:", sample.label, sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
                 continue
             elif ('DataMu' in sample.label or 'DataEle' in sample.label or 'DataMET' in sample.label or 'QCD' in sample.label) and opt.folder.startswith("CTHT"):
@@ -1846,18 +1846,18 @@ for year in years:
                     dimcut = dimcuts[idsl]
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
-                    print(foutput, "exists?", os.path.exists(foutput))
+                    #print(foutput, "exists?", os.path.exists(foutput))
                     try:
                         fout = ROOT.TFile.Open(foutput, "UPDATE")
                     except:
-                        #fout.Close()
+                        fout.Close()
                         os.system("rm " + foutput)
                         fout = ROOT.TFile.Open(foutput, "RECREATE")
                     else:
                         pass
                     #else:
                         #fout = ROOT.TFile.Open(foutput, "RECREATE")
-                    print(samplelab)
+                    #print(samplelab)
                     f1name = ""
                     if 'Fake' in str(samplelab):
                         if sample.year == "UL2016M" or sample.year == "ULRunII":
@@ -1884,7 +1884,7 @@ for year in years:
                         f1name = filerepo + sample.label + "/"  + sample.label + ".root"
                     
                     if os.path.exists(f1name):
-                        print(f1name)
+                        print("Taking trees from", f1name)
                         f1 = ROOT.TFile.Open(f1name)
                     else:
                         raise ValueError(samplelab + " not ready to be plotted, skipping")
@@ -1895,9 +1895,11 @@ for year in years:
                             continue
 
                         for var in variables:
-                            if syst[0] != "" and not var.IsSystApplied():
+                            #print(var._name, syst[0], not var.IsSystApplied(), (year != "ULRunII" or opt.flat))
+                            if not var.IsSystApplied() and (year != "ULRunII" or opt.flat):
                                 continue
-                            
+                            if syst[0] != "" and (not var.IsSystApplied() or year == "ULRunII"):
+                                continue
                             if not "all" in vartoplot:
                                 if not var._name in vartoplot:
                                     continue

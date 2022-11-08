@@ -332,7 +332,12 @@ VHToNonbb_UL2016APV.year = "UL2016APV"
 VHToNonbb_UL2016APV.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM"
 VHToNonbb_UL2016APV.sigma = 0.952 # check nowe
 
-WrongSign_UL2016APV = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2016APV")
+DYJetsToLL_M50_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
+DYJetsToLL_M50_FxFx_UL2016APV.year = "UL2016APV"
+DYJetsToLL_M50_FxFx_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
+DYJetsToLL_M50_FxFx_UL2016APV.sigma = 7181.0 #6077.22 #6529.0
+
+WrongSign_UL2016APV = sample(WScolor, 1, 1001, "Opposite Sign + (Z/#gamma + jets)", "WrongSign_UL2016APV")
 WrongSign_UL2016APV.year = "UL2016APV"
 WrongSign_UL2016APV.components = [
     WWto2L2Nu_UL2016APV,
@@ -354,6 +359,7 @@ WrongSign_UL2016APV.components = [
     VBFHToTauTau_UL2016APV,
     ttHToNonbb_UL2016APV,
     VHToNonbb_UL2016APV,
+    DYJetsToLL_M50_FxFx_UL2016APV,
 ]
 
 ### Triboson ###
@@ -511,11 +517,6 @@ DYJetsToLL_UL2016APV.components = [
     DYJetsToLL_M50_UL2016APV,
     #DYJetsToLL_M50_UL2016APV_ext,
 ]
-
-DYJetsToLL_M50_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016APV")
-DYJetsToLL_M50_FxFx_UL2016APV.year = "UL2016APV"
-DYJetsToLL_M50_FxFx_UL2016APV.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016APV.sigma = 7181.0 #6077.22 #6529.0
 
 DYJetsToLL_FxFx_UL2016APV = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016APV")
 DYJetsToLL_FxFx_UL2016APV.year = "UL2016APV"
@@ -1248,7 +1249,13 @@ VHToNonbb_UL2016.year = "UL2016"
 VHToNonbb_UL2016.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM"
 VHToNonbb_UL2016.sigma = 0.952 # check nowe
 
-WrongSign_UL2016 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2016")
+DYJetsToLL_M50_FxFx_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016")
+DYJetsToLL_M50_FxFx_UL2016.year = "UL2016"
+DYJetsToLL_M50_FxFx_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
+DYJetsToLL_M50_FxFx_UL2016.sigma = 7181.0 #6077.22 #6529.0
+
+
+WrongSign_UL2016 = sample(WScolor, 1, 1001, "Opposite Sign + (Z/#gamma + jets)", "WrongSign_UL2016")
 WrongSign_UL2016.year = "UL2016"
 WrongSign_UL2016.components = [
     WWto2L2Nu_UL2016,
@@ -1270,9 +1277,10 @@ WrongSign_UL2016.components = [
     VBFHToTauTau_UL2016,
     ttHToNonbb_UL2016,
     VHToNonbb_UL2016,
+    DYJetsToLL_M50_FxFx_UL2016,
 ]
 
-WrongSign_UL2016M = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2016M")
+WrongSign_UL2016M = sample(WScolor, 1, 1001, "Opposite Sign + (Z/#gamma + jets)", "WrongSign_UL2016M")
 WrongSign_UL2016M.year = "UL2016M"
 WrongSign_UL2016M.components = [
     WrongSign_UL2016APV,
@@ -1467,11 +1475,6 @@ DYJetsToLL_UL2016M.components = [
     DYJetsToLL_UL2016APV,
     DYJetsToLL_UL2016,
 ]
-
-DYJetsToLL_M50_FxFx_UL2016 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2016")
-DYJetsToLL_M50_FxFx_UL2016.year = "UL2016"
-DYJetsToLL_M50_FxFx_UL2016.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2016.sigma = 7181.0 #6077.22 #6529.0
 
 DYJetsToLL_FxFx_UL2016 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2016")
 DYJetsToLL_FxFx_UL2016.year = "UL2016"
@@ -2318,7 +2321,12 @@ VHToNonbb_UL2017.year = "UL2017"
 VHToNonbb_UL2017.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
 VHToNonbb_UL2017.sigma = 0.952 # check nowe
 
-WrongSign_UL2017 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2017")
+DYJetsToLL_M50_FxFx_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2017")
+DYJetsToLL_M50_FxFx_UL2017.year = "UL2017"
+DYJetsToLL_M50_FxFx_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
+DYJetsToLL_M50_FxFx_UL2017.sigma = 7181.0 #6529.0 # #6077.22 #
+
+WrongSign_UL2017 = sample(WScolor, 1, 1001, "Opposite Sign + (Z/#gamma + jets)", "WrongSign_UL2017")
 WrongSign_UL2017.year = "UL2017"
 WrongSign_UL2017.components = [
     WWto2L2Nu_UL2017,
@@ -2340,6 +2348,7 @@ WrongSign_UL2017.components = [
     VBFHToTauTau_UL2017,
     ttHToNonbb_UL2017,
     VHToNonbb_UL2017,
+    DYJetsToLL_M50_FxFx_UL2017,
 ]
 
 ### Triboson ###
@@ -2496,11 +2505,6 @@ DYJetsToLL_UL2017.components = [
     DYJetsToLL_M50_UL2017,
     #DYJetsToLL_M50_UL2017_ext,
 ]
-
-DYJetsToLL_M50_FxFx_UL2017 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2017")
-DYJetsToLL_M50_FxFx_UL2017.year = "UL2017"
-DYJetsToLL_M50_FxFx_UL2017.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2017.sigma = 7181.0 #6529.0 # #6077.22 #
 
 DYJetsToLL_FxFx_UL2017 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2017")
 DYJetsToLL_FxFx_UL2017.year = "UL2017"
@@ -3240,7 +3244,12 @@ VHToNonbb_UL2018.year = "UL2018"
 VHToNonbb_UL2018.dataset = "/VHToNonbb_M125_TuneCP5_13TeV-amcatnloFXFX_madspin_pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
 VHToNonbb_UL2018.sigma = 0.952 # check nowe
 
-WrongSign_UL2018 = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_UL2018")
+DYJetsToLL_M50_FxFx_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2018")
+DYJetsToLL_M50_FxFx_UL2018.year = "UL2018"
+DYJetsToLL_M50_FxFx_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
+DYJetsToLL_M50_FxFx_UL2018.sigma = 7181.0 #6077.22 #6529.0
+
+WrongSign_UL2018 = sample(WScolor, 1, 1001, "Opposite Sign + (Z/#gamma + jets)", "WrongSign_UL2018")
 WrongSign_UL2018.year = "UL2018"
 WrongSign_UL2018.components = [
     WWto2L2Nu_UL2018,
@@ -3262,9 +3271,10 @@ WrongSign_UL2018.components = [
     VBFHToTauTau_UL2018,
     ttHToNonbb_UL2018,
     VHToNonbb_UL2018,
+    DYJetsToLL_M50_FxFx_UL2018,
 ]
 
-WrongSign_ULRunII = sample(WScolor, 1, 1001, "Opposite Sign", "WrongSign_ULRunII")
+WrongSign_ULRunII = sample(WScolor, 1, 1001, "Opposite Sign + (Z/#gamma + jets)", "WrongSign_ULRunII")
 WrongSign_ULRunII.year = "ULRunII"
 WrongSign_ULRunII.components = [
     WrongSign_UL2016APV,
@@ -3471,11 +3481,6 @@ DYJetsToLL_ULRunII.components = [
     DYJetsToLL_UL2017,
     DYJetsToLL_UL2018,
 ]
-
-DYJetsToLL_M50_FxFx_UL2018 = sample(WZcolor, 1, 1001, "DYJetsToLL_M50", "DYJetsToLL_M50_FxFx_UL2018")
-DYJetsToLL_M50_FxFx_UL2018.year = "UL2018"
-DYJetsToLL_M50_FxFx_UL2018.dataset = "/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
-DYJetsToLL_M50_FxFx_UL2018.sigma = 7181.0 #6077.22 #6529.0
 
 DYJetsToLL_FxFx_UL2018 = sample(DYcolor, 1, 1001, "Z/#gamma + Jets", "DYJetsToLL_FxFx_UL2018")
 DYJetsToLL_FxFx_UL2018.year = "UL2018"
@@ -4621,7 +4626,7 @@ condor_dict = {
     "WZ_UL2016APV":WZ_UL2016APV,
     #"DYJetsToLL_UL2016APV":DYJetsToLL_UL2016APV,
     #"DYJetsToLL_M10to50_UL2016APV":DYJetsToLL_M10to50_UL2016APV,
-    "DYJetsToLL_FxFx_UL2016APV":DYJetsToLL_FxFx_UL2016APV,
+    #"DYJetsToLL_FxFx_UL2016APV":DYJetsToLL_FxFx_UL2016APV,
     "DYJetsToLL_Jbin_FxFx_UL2016APV":DYJetsToLL_Jbin_FxFx_UL2016APV,
     #"WpWpJJ_EWK_UL2016APV":WpWpJJ_EWK_UL2016APV,
     #"WpWpJJ_QCD_UL2016APV":WpWpJJ_QCD_UL2016APV,
@@ -4647,7 +4652,7 @@ condor_dict = {
     "WZ_UL2016":WZ_UL2016,
     #"DYJetsToLL_UL2016":DYJetsToLL_UL2016,
     #"DYJetsToLL_M10to50_UL2016":DYJetsToLL_M10to50_UL2016,
-    "DYJetsToLL_FxFx_UL2016":DYJetsToLL_FxFx_UL2016,
+    #"DYJetsToLL_FxFx_UL2016":DYJetsToLL_FxFx_UL2016,
     "DYJetsToLL_Jbin_FxFx_UL2016":DYJetsToLL_Jbin_FxFx_UL2016,
     #"WpWpJJ_EWK_UL2016":WpWpJJ_EWK_UL2016,
     #"WpWpJJ_QCD_UL2016":WpWpJJ_QCD_UL2016,
@@ -4673,7 +4678,7 @@ condor_dict = {
     "WZ_UL2017":WZ_UL2017,
     #"DYJetsToLL_UL2017":DYJetsToLL_UL2017,
     #"DYJetsToLL_M10to50_UL2017":DYJetsToLL_M10to50_UL2017,
-    "DYJetsToLL_FxFx_UL2017":DYJetsToLL_FxFx_UL2017,
+    #"DYJetsToLL_FxFx_UL2017":DYJetsToLL_FxFx_UL2017,
     "DYJetsToLL_Jbin_FxFx_UL2017":DYJetsToLL_Jbin_FxFx_UL2017,
     #"WpWpJJ_EWK_UL2017":WpWpJJ_EWK_UL2017,
     #"WpWpJJ_QCD_UL2017":WpWpJJ_QCD_UL2017,
@@ -4699,7 +4704,7 @@ condor_dict = {
     "WZ_UL2018":WZ_UL2018,
     #"DYJetsToLL_UL2018":DYJetsToLL_UL2018,
     #"DYJetsToLL_M10to50_UL2018":DYJetsToLL_M10to50_UL2018,
-    "DYJetsToLL_FxFx_UL2018":DYJetsToLL_FxFx_UL2018,
+    #"DYJetsToLL_FxFx_UL2018":DYJetsToLL_FxFx_UL2018,
     "DYJetsToLL_Jbin_FxFx_UL2018":DYJetsToLL_Jbin_FxFx_UL2018,
     #"WpWpJJ_EWK_UL2018":WpWpJJ_EWK_UL2018,
     #"WpWpJJ_QCD_UL2018":WpWpJJ_QCD_UL2018,
@@ -4727,7 +4732,7 @@ merge_dict = {
     "WZ_UL2016APV":WZ_UL2016APV,
     #"DYJetsToLL_UL2016APV":DYJetsToLL_UL2016APV,
     #"DYJetsToLL_M10to50_UL2016APV":DYJetsToLL_M10to50_UL2016APV,
-    "DYJetsToLL_FxFx_UL2016APV":DYJetsToLL_FxFx_UL2016APV,
+    #"DYJetsToLL_FxFx_UL2016APV":DYJetsToLL_FxFx_UL2016APV,
     "DYJetsToLL_Jbin_FxFx_UL2016APV":DYJetsToLL_Jbin_FxFx_UL2016APV,
     #"WpWpJJ_EWK_UL2016APV":WpWpJJ_EWK_UL2016APV,
     #"WpWpJJ_QCD_UL2016APV":WpWpJJ_QCD_UL2016APV,
@@ -4761,7 +4766,7 @@ merge_dict = {
     "WZ_UL2016":WZ_UL2016,
     #"DYJetsToLL_UL2016":DYJetsToLL_UL2016,
     #"DYJetsToLL_M10to50_UL2016":DYJetsToLL_M10to50_UL2016,
-    "DYJetsToLL_FxFx_UL2016":DYJetsToLL_FxFx_UL2016,
+    #"DYJetsToLL_FxFx_UL2016":DYJetsToLL_FxFx_UL2016,
     "DYJetsToLL_Jbin_FxFx_UL2016":DYJetsToLL_Jbin_FxFx_UL2016,
     #"WpWpJJ_EWK_UL2016":WpWpJJ_EWK_UL2016,
     #"WpWpJJ_QCD_UL2016":WpWpJJ_QCD_UL2016,
@@ -4803,7 +4808,7 @@ merge_dict = {
     "VG_UL2016M":VG_UL2016M,
     "WZ_UL2016M":WZ_UL2016M,
     "WrongSign_UL2016M":WrongSign_UL2016M,
-    "DYJetsToLL_FxFx_UL2016M":DYJetsToLL_FxFx_UL2016M,
+    #"DYJetsToLL_FxFx_UL2016M":DYJetsToLL_FxFx_UL2016M,
     #"DYJetsToLL_Jbin_FxFx_UL2016M":DYJetsToLL_Jbin_FxFx_UL2016M,
     "TTTo2L2Nu_UL2016M":TTTo2L2Nu_UL2016M,
     #TT_UL2016M,
@@ -4826,7 +4831,7 @@ merge_dict = {
     "WZ_UL2017":WZ_UL2017,
     #"DYJetsToLL_UL2017":DYJetsToLL_UL2017,
     #"DYJetsToLL_M10to50_UL2017":DYJetsToLL_M10to50_UL2017,
-    "DYJetsToLL_FxFx_UL2017":DYJetsToLL_FxFx_UL2017,
+    #"DYJetsToLL_FxFx_UL2017":DYJetsToLL_FxFx_UL2017,
     "DYJetsToLL_Jbin_FxFx_UL2017":DYJetsToLL_Jbin_FxFx_UL2017,
     #"WpWpJJ_EWK_UL2017":WpWpJJ_EWK_UL2017,
     #"WpWpJJ_QCD_UL2017":WpWpJJ_QCD_UL2017,
@@ -4860,7 +4865,7 @@ merge_dict = {
     "WZ_UL2018":WZ_UL2018,
     #"DYJetsToLL_UL2018":DYJetsToLL_UL2018,
     #"DYJetsToLL_M10to50_UL2018":DYJetsToLL_M10to50_UL2018,
-    "DYJetsToLL_FxFx_UL2018":DYJetsToLL_FxFx_UL2018,
+    #"DYJetsToLL_FxFx_UL2018":DYJetsToLL_FxFx_UL2018,
     "DYJetsToLL_Jbin_FxFx_UL2018":DYJetsToLL_Jbin_FxFx_UL2018,
     #"WpWpJJ_EWK_UL2018":WpWpJJ_EWK_UL2018,
     #"WpWpJJ_QCD_UL2018":WpWpJJ_QCD_UL2018,
@@ -4902,7 +4907,7 @@ merge_dict = {
     "VG_ULRunII":VG_ULRunII,
     "WZ_ULRunII":WZ_ULRunII,
     "WrongSign_ULRunII":WrongSign_ULRunII,
-    "DYJetsToLL_FxFx_ULRunII":DYJetsToLL_FxFx_ULRunII,
+    #"DYJetsToLL_FxFx_ULRunII":DYJetsToLL_FxFx_ULRunII,
     #"DYJetsToLL_Jbin_FxFx_ULRunII":DYJetsToLL_Jbin_FxFx_ULRunII,
     "TTTo2L2Nu_ULRunII":TTTo2L2Nu_ULRunII,
     #TT_ULRunII,
@@ -5201,7 +5206,7 @@ stack_list = [
     WZ_UL2016APV,
     WrongSign_UL2016APV,
     #DYJetsToLL_UL2016APV,
-    DYJetsToLL_FxFx_UL2016APV,
+    #DYJetsToLL_FxFx_UL2016APV,
     #DYJetsToLL_Jbin_FxFx_UL2016APV,
     TTTo2L2Nu_UL2016APV,
     #TT_UL2016APV,
@@ -5238,7 +5243,7 @@ stack_list = [
     VG_UL2016,
     WZ_UL2016,
     WrongSign_UL2016,
-    DYJetsToLL_FxFx_UL2016,
+    #DYJetsToLL_FxFx_UL2016,
     #DYJetsToLL_Jbin_FxFx_UL2016,
     #DYJetsToLL_UL2016,
     TTTo2L2Nu_UL2016,
@@ -5276,7 +5281,7 @@ stack_list = [
     VG_UL2016M,
     WZ_UL2016M,
     WrongSign_UL2016M,
-    DYJetsToLL_FxFx_UL2016M,
+    #DYJetsToLL_FxFx_UL2016M,
     #DYJetsToLL_Jbin_FxFx_UL2016M,
     #DYJetsToLL_UL2016M,
     TTTo2L2Nu_UL2016M,
@@ -5314,7 +5319,7 @@ stack_list = [
     VG_UL2017,
     WZ_UL2017,
     WrongSign_UL2017,
-    DYJetsToLL_FxFx_UL2017,
+    #DYJetsToLL_FxFx_UL2017,
     #DYJetsToLL_Jbin_FxFx_UL2017,
     #DYJetsToLL_UL2017,
     TTTo2L2Nu_UL2017,
@@ -5352,7 +5357,7 @@ stack_list = [
     VG_UL2018,
     WZ_UL2018,
     WrongSign_UL2018,
-    DYJetsToLL_FxFx_UL2018,
+    #DYJetsToLL_FxFx_UL2018,
     #DYJetsToLL_Jbin_FxFx_UL2018,
     #DYJetsToLL_UL2018,
     TTTo2L2Nu_UL2018,
@@ -5409,7 +5414,7 @@ stack_list = [
     VG_ULRunII,
     WZ_ULRunII,
     WrongSign_ULRunII,
-    DYJetsToLL_FxFx_ULRunII,
+    #DYJetsToLL_FxFx_ULRunII,
     #DYJetsToLL_Jbin_FxFx_ULRunII,
     #DYJetsToLL_ULRunII,
     TTTo2L2Nu_ULRunII,

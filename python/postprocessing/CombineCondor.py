@@ -25,6 +25,7 @@ parser.add_option('--crvar', dest='crvar', type=str, default = 'same', help='var
 parser.add_option('--notCI', dest='doCI', default = True, action='store_false', help = 'Default does not run postfit plots')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test')
+parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable flattening bin')
 parser.add_option('--WithFakeCR', dest='wfc', default = False, action='store_true', help = 'include Fakes CR')
 parser.add_option('--PDFWithTTDY', dest='pdfttdy', default = False, action='store_true', help = 'apply pdf to ttbar and dy')
 parser.add_option('--DYrp', dest='DYrp', default = False, action='store_true', help = 'apply rateParam to dy')
@@ -75,10 +76,15 @@ if opt.tDMcut:
     condorsub += "_tDM"
     subfold += "_tDM"
     exe += "_tDM"
-if opt.test:
+elif opt.test:
     condorsub += "_test"
     subfold += "_test"
     exe += "_test"
+if opt.flat:
+    condorsub += "_flat"
+    subfold += "_flat"
+    exe += "_flat"
+
 
 condorsub += "_"
 subfold += "_" + opt.folder
@@ -192,6 +198,8 @@ for model in models:
             arg2 += " --tDMcut"
         elif opt.test:
             arg2 += " --test"
+        if opt.flat:
+            arg2 += " --flat"
 
         if opt.wfc:
             arg2 += " --WithFakeCR"

@@ -19,6 +19,7 @@ parser.add_option('--systs', dest='systs', type=str, default = 'all', help='Syst
 parser.add_option('--count', dest='count', default = False, action='store_true', help='enable writing countings')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
+parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable signal-flattening binning')
 (opt, args) = parser.parse_args()
 
 def cutToTag(cut):
@@ -53,6 +54,8 @@ if opt.tDMcut:
     tagf += "_tdmcut"
 elif opt.test:
     tagf += "_test"
+if opt.flat:
+    tagf += "_flat"
 
 outcore = "condorplot_" + opt.folder + tagf + "/output/"
 errcore = "condorplot_" + opt.folder + tagf + "/error/"
@@ -193,7 +196,8 @@ for year in years:
                 arg3 += " --tDMcut"
             elif opt.test:
                 arg3 += " --test"
-
+            if opt.flat:
+                arg3 += " --flat"
             for lepn in lepss:
                 arg4 = arg3 + " --lep " + lepn
                 if opt.nosyst:

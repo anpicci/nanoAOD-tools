@@ -10,6 +10,9 @@ folder = "vUL050"
 errpaths = [
     ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut " + add, ""),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test " + add, ""),
+    ("condorplot_" + folder + "_tdmcut_flat/error/", "PlotCondor.py --tDMcut --flat" + add, ""),
+    ("condorplot_" + folder + "_test_flat/error/", "PlotCondor.py --test --flat " + add, ""),
+    ("condorplot_" + folder + "_flat/error/", "PlotCondor.py --flat " + add, ""),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test --cuts \"DNN_SM_final_1>=0.90\" " + add, "DNN_SM_final_1>=0.90"),
     ("condorplot_" + folder + "/error/", "PlotCondor.py " + add, ""),
     ("condorbranch_" + folder + "/error/", "BranchCondor.py --or --rw"),
