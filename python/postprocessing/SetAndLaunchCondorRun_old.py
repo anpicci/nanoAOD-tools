@@ -202,7 +202,7 @@ vetosamp = []
 if opt.veto != "none":
     vetosamp = opt.veto.split(",")
     
-
+'''
 condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
@@ -215,7 +215,7 @@ for line in condorstatus:
     if sample != "" and sample.endswith(opt.year):
         if not sample in vetosamp:
             vetosamp.append(sample)
-
+'''
 
 if len(vetosamp) > 0:
     toVeto = True
@@ -338,8 +338,9 @@ for prname, proc in condor_dict.items():
 
             if os.path.exists(path+sample.label):
                 if opt.rw:
-                    print('Relaunching all the jobs for', sample.label)
-                    os.system("rm -r "+ path + sample.label + "/*")
+                    print('Relaunching all the jobs for', sample.label, "removing following files:")
+                    os.system("ls "+ path + sample.label + "/*part*")
+                    os.system("rm -r "+ path + sample.label + "/*part*")
             
             #AreCondored, toRel = AreAllCondored(sample.name, sample.label)
             AreCondored = AreAllCondored(sample.name, sample.label)
@@ -384,8 +385,10 @@ for prname, proc in condor_dict.items():
     
         if os.path.exists(path+proc.label):
             if opt.rw:
-                print('Relaunching all the jobs for', proc.label)
-                os.system("rm -f "+ path + proc.label + "/*")
+                print('Relaunching all the jobs for', proc.label, "removing following files:")
+                os.system("ls "+ path + proc.label + "/*part*")
+                os.system("rm -f "+ path + proc.label + "/*part*")
+                #os.system("rm -f "+ path + proc.label + "/*part*")
         #AreCondored, toRel = AreAllCondored(proc.name, sample.label)
         AreCondored = AreAllCondored(proc.name, proc.label)
         if not AreCondored:# and toRel:

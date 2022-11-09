@@ -450,12 +450,13 @@ if opt.plot or opt.stack:
 print("\ncut_tag:\t", cut_tag)
 
 pathplot = plotrepo + lepstr  + "/"
+pathstack = pathplot.replace("plot", "stack")
 
-pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
-if opt.tDMcut:
-    pathstack = pathstack.replace("stack", "stack_tDM")
-elif opt.test:
-    pathstack = pathstack.replace("stack", "stack_test")
+#pathstack = plotrepo + "stack" + "/" + cut_tag + "/"
+#if opt.tDMcut:
+    #pathstack = pathstack.replace("stack", "stack_tDM")
+#elif opt.test:
+    #pathstack = pathstack.replace("stack", "stack_test")
 
 print(lepstr, pathplot, pathstack) 
 

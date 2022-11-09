@@ -1024,8 +1024,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         lheDown = 1.
         if isMC and addQCD:
             if ScaleWeight is not None and len(ScaleWeight) > 1:
-                lhemin = min([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
-                lhemax = max([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
+                #lhemin = min([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
+                #lhemax = max([LHEitem(ScaleWeight[g]) for g in range(len(ScaleWeight))])
+                lhemin = LHEitem(ScaleWeight[0])
+                lhemax = LHEitem(ScaleWeight[len(ScaleWeight)-1])
                 if len(ScaleWeight) < 9:#"UL" in sample.year and "_aQGC-" in sample.dataset:
                     lheSF = 1.
                 else:
@@ -1043,10 +1045,14 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         fsrmax = 1.
         if isMC and addPS:
             if len(PSWeight) > 1:
-                isrmin = min([LHEitem(PSWeight[0]), LHEitem(PSWeight[3])])
-                isrmax = max([LHEitem(PSWeight[0]), LHEitem(PSWeight[3])])
-                fsrmin = min([LHEitem(PSWeight[1]), LHEitem(PSWeight[3])])
-                fsrmax = max([LHEitem(PSWeight[1]), LHEitem(PSWeight[3])])
+                #isrmin = min([LHEitem(PSWeight[0]), LHEitem(PSWeight[2])])
+                isrmin = LHEitem(PSWeight[2])
+                #isrmax = max([LHEitem(PSWeight[0]), LHEitem(PSWeight[2])])
+                isrmax = LHEitem(PSWeight[0])
+                #fsrmin = min([LHEitem(PSWeight[1]), LHEitem(PSWeight[3])])
+                fsrmin = LHEitem(PSWeight[3])
+                #fsrmax = max([LHEitem(PSWeight[1]), LHEitem(PSWeight[3])])
+                fsrmax = LHEitem(PSWeight[1])
             else:
                 isrmin = LHEitem(PSWeight[0])
                 isrmax = LHEitem(PSWeight[0])

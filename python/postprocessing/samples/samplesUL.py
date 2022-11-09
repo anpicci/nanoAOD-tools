@@ -5146,7 +5146,7 @@ plot_list = [
     #VBS_SSWW_LL_SM_ULRunII,
     #VBS_SSWW_TL_SM_ULRunII,
     #VBS_SSWW_TT_SM_ULRunII,
-    #VBS_SSWW_cW_ULRunII,
+    VBS_SSWW_cW_ULRunII,
     #VBS_SSWW_cHW_ULRunII,
     #VBS_SSWW_cW_SM_ULRunII,
     #VBS_SSWW_cHW_SM_ULRunII,
