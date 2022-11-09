@@ -920,9 +920,9 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     tmp = ROOT.TH1F()
     h = ROOT.TH1F()
     if not variabile_._iscustom:
-        hdata = ROOT.TH1F('h','h')#, variabile_._nbins, variabile_._xmin, variabile_._xmax)
+        hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin, variabile_._xmax)
     else:
-        hdata = ROOT.TH1F('h','h')#, variabile_._nbins, variabile_._xmin)
+        hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin)
     h_sig = []
     h_err = ROOT.TH1F()
     h_bkg_err = ROOT.TH1F()
