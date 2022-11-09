@@ -16,6 +16,7 @@ import array
 from rwgcards.FromCardToDict import *
 from collections import OrderedDict
 
+
 rwgdict_dim8 = CardToDict("dim8", "FT1_2p0")
 rwgdict_dim6 = CardToDict("dim6")
 
