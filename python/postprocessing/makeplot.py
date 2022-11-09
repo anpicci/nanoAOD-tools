@@ -920,9 +920,9 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     tmp = ROOT.TH1F()
     h = ROOT.TH1F()
     if not variabile_._iscustom:
-        hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin, variabile_._xmax)
+        hdata = ROOT.TH1F('h','h')#, variabile_._nbins, variabile_._xmin, variabile_._xmax)
     else:
-        hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin)
+        hdata = ROOT.TH1F('h','h')#, variabile_._nbins, variabile_._xmin)
     h_sig = []
     h_err = ROOT.TH1F()
     h_bkg_err = ROOT.TH1F()
@@ -1011,7 +1011,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         if('Data' in s.label):
             if ("GenPart" in variabile_._name) or ("MC_" in variabile_._name):
                 continue
-            hdata.Add(ROOT.TH1F(tmp.Clone("")))
+            hdata = copy.deepcopy(tmp)#.Add(ROOT.TH1F(tmp.Clone("")))
             hdata.SetMarkerStyle(20)
             hdata.SetMarkerSize(0.9)
             if(i == 0 and not blind): # trick to add Data flag to legend only once
