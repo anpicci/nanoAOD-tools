@@ -202,20 +202,20 @@ vetosamp = []
 if opt.veto != "none":
     vetosamp = opt.veto.split(",")
     
-'''
 condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
     sample = ""
+    print(idjob)
     try:
         sample = os.popen("condor_ssh_to_job " + idjob + " \"head snfile.txt\" ").readlines()[0]
+        print("sampole:", sample)
     except:
         continue
     
     if sample != "" and sample.endswith(opt.year):
         if not sample in vetosamp:
             vetosamp.append(sample)
-'''
 
 if len(vetosamp) > 0:
     toVeto = True

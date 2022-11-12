@@ -855,7 +855,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
             if isMC:
-                if i > 100:#00:
+                if i > 8:#00:
                     #if i != 8631:
                     #continue
                     break
@@ -1804,6 +1804,10 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if IsDim8 or IsDim6:
             #pass
             for opname, opdict in rwgdict.items():
+                if opname != "FT1":
+                    continue
+                print("\n")
+                print(opname)
                 for val in opdict.keys():
                     if val == '0':
                         continue
@@ -1814,37 +1818,37 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     idxneg = opdict[val][0]#int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
                     idxzero = opdict["0"][0]#int((EFT_operator[opn]["idx"] - 1)*11 + 5)
 
-                    try:
-                        wpos = LHEitem(LHEDim8[idxpos]) if idxpos >= 0 else 1.
-                        wneg = LHEitem(LHEDim8[idxneg]) if idxneg >= 0 else 1.
-                        wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
-                    except:
-                        continue
-                    #print('idxneg:', idxneg, 'wneg:', wneg)
-                    #print('idxpos:', idxpos, 'wpos:', wpos)
-                    #print('idxzero:', idxzero, 'wzero:', wzero)
+                    #try:
+                    wpos = LHEitem(LHEDim8[idxpos]) if idxpos >= 0 else 1.
+                    wneg = LHEitem(LHEDim8[idxneg]) if idxneg >= 0 else 1.
+                    wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
+                    #except:
+                       #continue
+                    print("\n")
+                    print('idxneg:', idxneg, 'wneg:', wneg)
+                    print('idxpos:', idxpos, 'wpos:', wpos)
+                    print('idxzero:', idxzero, 'wzero:', wzero)
 
                     wcoeff[coeffstr][0] = wzero
                     wcoeff[coeffstr][1] = wneg
                     wcoeff[coeffstr][2] = wpos
+                    wcoeff[coeffstr][3] = wzero
 
                     wsign = 0
                     kpow = 0
 
-                    for idwc in range(3, 6):
-                        if idwc == 3: ###only-SM
-                            wpos = 1.*wzero
-                            wsign = 0.
-                            kpow = 1.
-                        elif idwc == 4:#### lin term
-                            wsign = -1.
-                            kpow = 2.*epoint
+                    for idwc in range(4, 6):
+                        if idwc == 4:#### lin term
+                            #wsign = -1.
+                            #kpow = 2.*epoint
+                            w_coeff = (wpos - wneg) / (2.*epoint)
                         elif idwc == 5: #### quad term
-                            wsign = +1.
-                            wpos += -2.*wzero
-                            kpow = 2.*(epoint**2.)
-
-                        w_coeff = (wpos + wsign * wneg) / kpow
+                            #wsign = +1.
+                            #wpos += -2.*wzero
+                            #kpow = 2.*(epoint**2.)
+                            w_coeff = (wpos + wneg -2.*wzero) / (2.*epoint**2.)
+                        print("before calculating w_coeff:", wpos, wsign,wneg, kpow)
+                        
                         wcoeff[coeffstr][idwc] = w_coeff
                     if Debug:
                         print("wcoeff[", coeffstr, "]:", wcoeff[coeffstr])

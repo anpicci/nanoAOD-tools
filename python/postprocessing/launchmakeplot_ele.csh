@@ -14,7 +14,7 @@ reset
 ###python3 makeplot.py -y $year --lep electron --presel -f $folder0 -p --ch $channel --syst noSyst 
 
 #################### year1bis #################
-set year = UL2016
+#set year = UL2016
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year\_*
 #python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --syst noSyst 
 #python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --syst noSyst 
@@ -42,17 +42,17 @@ set year = UL2017
 #################### year3 #################
 set year = UL2018
 #rm -rf /eos/home-a/apiccine/VBS/nosynch/$folder0/plot/electron/countings/*/*$year*
-#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --syst noSyst --test -d WrongSign_$year,DYJetsToLL_FxFx_$year,TTTo2L2Nu_$year,FakeMu_$year,DataMu_$year 
-#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --syst noSyst --test -d WrongSign_$year,DYJetsToLL_FxFx_$year,TTTo2L2Nu_$year,FakeMu_$year,DataMu_$year 
+#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --tDMcut -v m_o1 -d WpWpJJ_EWK_$year,FakeMu_$year --flat --syst noSyst
+#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel
 #python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --syst noSyst --test -d WrongSign_$year,DYJetsToLL_FxFx_$year,TTTo2L2Nu_$year,FakeMu_$year,DataMu_$year 
 #python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --syst noSyst --test -d WrongSign_$year,DYJetsToLL_FxFx_$year,TTTo2L2Nu_$year,FakeMu_$year,DataMu_$year 
 #python3 makeplot.py -y $year --lep electron --presel -f $folder0 -p --ch $channel  -v leadjet_eta,subleadjet_eta --syst noSyst --test
 
 set year = ULRunII
-python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --syst noSyst --count -v DNN_SM_final_1 --noweight
-python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --syst noSyst --count -v DNN_SM_final_1 --noweight
-python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --syst noSyst --count -v DNN_SM_final_1 --noweight
-python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --syst noSyst --count -v DNN_SM_final_1 --noweight
+python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --syst noSyst --tDMcut --flat --count -v DNN_SM_final_1 #--noweight
+python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --syst noSyst --tDMcut --flat --count -v DNN_SM_final_1 #--noweight
+python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --syst noSyst --tDMcut --flat --count -v DNN_SM_final_1 #--noweight
+python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --syst noSyst --tDMcut --flat --count -v DNN_SM_final_1 #--noweight
 #python3 makeplot.py -y $year --lep electron --presel -f $folder0 -p --ch $channel  -v leadjet_eta,subleadjet_eta --syst noSyst
 
 

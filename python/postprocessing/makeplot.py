@@ -476,7 +476,7 @@ if opt.stack:
 
 
 def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
-    #print("Desired bins:", wnbins)
+    print("Variable:", variable)
     oldnbins = 5000
     rfilename = filerepo + "/" + signal + "/" + signal + ".root"
     signalcut = "w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF*((abs(lepton_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(1.)*(abs(deltaEta_jj)>2.5)*(tau_DecayMode<5||tau_DecayMode>6))*(lepton_TightRegion==1&&tau_TightRegion==1)"
@@ -1403,18 +1403,25 @@ for year in years:
 
         if opt.tDMcut:
             bin_bdtsm_dev = array.array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo 21
-            if opt.flat:
-                bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm_dev), "WpWpJJ_EWK_ULRunII")
+            bin_bdtdim6_dev = array.array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo 21
+            bin_bdtdim8_dev = array.array("d", [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.82, 0.84, 0.86, 0.88, 0.90, 0.92, 0.94, 0.96, 0.98, 1.])#matteo 21
         elif opt.test:
             bin_bdtsm_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
-            if opt.flat:
-                bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm_dev), "WpWpJJ_EWK_ULRunII")
+            bin_bdtdim6_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
+            bin_bdtdim8_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
         else:
             bin_bdtsm_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
-            if opt.flat:
-                bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm_dev), "WpWpJJ_EWK_ULRunII")
-        #bin_bdtsm_dev = array.array("d", [0., 0.5, 0.6, 0.7, 0.8, 0.9, 1.])
+            bin_bdtdim6_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
+            bin_bdtdim8_dev = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
+        
+        if opt.flat:
+            bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm_dev), "WpWpJJ_EWK_ULRunII")
+            bin_bdtdim6_dev = FlatSigBinning("DNN_dim6_final_2", len(bin_bdtdim6_dev), "WpWpJJ_EWK_ULRunII")
+            bin_bdtdim8_dev = FlatSigBinning("DNN_dim8_final_3", len(bin_bdtdim8_dev), "WpWpJJ_EWK_ULRunII")
+            
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
+        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         
         #print(bin_bdtsm_dev)
         
@@ -1441,11 +1448,18 @@ for year in years:
         '''
         ########### end #############
         
-        #variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_dim6_final_2', 'dim6 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
-        #variables.append(variabile('DNN_dim8_final_2', 'dim8 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
-        variables.append(variabile('DNN_dim8_final_3', 'dim8 DNN output (final 3)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev)) 
+        #variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim6_final_2', 'dim6 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev)) 
+        variables.append(variabile('DNN_dim6_final_2_noQUAD', 'dim6 DNN output (final 2 noQUAD)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev)) 
+
+        #variables.append(variabile('DNN_dim8_final_2', 'dim8 DNN output (final 2)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+        variables.append(variabile('DNN_dim8_final_3', 'dim8 DNN output (final 3)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+        variables.append(variabile('DNN_dim8_final_3_noQUAD', 'dim8 DNN output (final 3 noQUAD)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+
         variables.append(variabile('DNN_SM_final_1', 'SM DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_iter5', 'SM DNN output (final 1 I5)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_rec', 'SM DNN output (reco)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_rec_iter3', 'SM DNN output (reco I3)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         
         #variables.append(variabile('DNN_dim6_final_1', 'dim6 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         #variables.append(variabile('DNN_dim8_final_1', 'dim8 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))

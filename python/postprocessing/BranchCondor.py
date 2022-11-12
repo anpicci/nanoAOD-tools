@@ -66,7 +66,7 @@ def submitter(sample, argsin, folder):
     f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 8\n")
+    f.write("request_cpus            = 4\n")
     output = outcore + sample.label + ".out"
     log = logcore + sample.label + ".log"
     error = errcore + sample.label + ".err"
@@ -92,20 +92,38 @@ toveto = opt.veto.split(",")
 
 branches = [
     dnn_sm_branch_final_1,
+    dnn_sm_branch_rec,
+    dnn_sm_branch_rec_iter1,
+    dnn_sm_branch_rec_iter3,
+    dnn_sm_branch_final_1_iter5,
     dnn_dim6_branch_final_2,
+    dnn_dim6_branch_final_2_noQUAD,
     dnn_dim8_branch_final_3,
+    dnn_dim8_branch_final_3_noQUAD,
 ]
 
 paths = [
     dnn_sm_path_final_1,
+    dnn_sm_path_rec,
+    dnn_sm_path_rec_iter1,
+    dnn_sm_path_rec_iter3,
+    dnn_sm_path_final_1_iter5,
     dnn_dim6_path_final_2,
+    dnn_dim6_path_final_2_noQUAD,
     dnn_dim8_path_final_3,
+    dnn_dim8_path_final_3_noQUAD,
 ]
 
 scalers = [
     dnn_sm_scaler_final_1,
+    dnn_sm_scaler_rec,    
+    dnn_sm_scaler_rec_iter1,
+    dnn_sm_scaler_rec_iter3,
+    dnn_sm_scaler_final_1_iter5,
     dnn_dim6_scaler_final_2,
+    dnn_dim6_scaler_final_2_noQUAD,
     dnn_dim8_scaler_final_3,
+    dnn_dim8_scaler_final_3_noQUAD,
 ]
 
 folder = opt.folder
