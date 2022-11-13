@@ -74,10 +74,10 @@ def submitter(sample, argsins, folder):
     tagyear = str(sample.year)
     inputfiles = "transfer_input_files    = $(Proxy_path),\n" # ./rwgcards, ./samples, CMS_lumi.py, variabile.py, makeplot.py, " + pymacro+ "\n"
     f.write(inputfiles)
-    f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
+    f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 8\n")
+    f.write("request_cpus            = 4\n")
     
     output = outcore + sample.label + ".out"
     log = logcore + sample.label + ".log"
@@ -100,7 +100,7 @@ def submitter(sample, argsins, folder):
 years = opt.years.split(",")
 tomerge = opt.dataset.split(",")
 toveto = opt.veto.split(",")
-'''
+
 condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
 for line in condorstatus:
     idjob = line.split(" 1 ")[-1]
@@ -113,7 +113,7 @@ for line in condorstatus:
     if sample != "" and (True in [sample.endswith(year) for year in years]):
         if not sample in toveto:
             toveto.append(sample)
-'''
+
 folder = opt.folder
 pymacro = "PrepareToPlot.py"
 exe = "branchmerge"

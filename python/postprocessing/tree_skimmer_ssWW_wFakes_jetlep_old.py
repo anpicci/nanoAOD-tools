@@ -1804,10 +1804,6 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if IsDim8 or IsDim6:
             #pass
             for opname, opdict in rwgdict.items():
-                if opname != "FT1":
-                    continue
-                print("\n")
-                print(opname)
                 for val in opdict.keys():
                     if val == '0':
                         continue
@@ -1818,16 +1814,18 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                     idxneg = opdict[val][0]#int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
                     idxzero = opdict["0"][0]#int((EFT_operator[opn]["idx"] - 1)*11 + 5)
 
+                    if not (idxpos < len(LHEDim8) and idxneg < len(LHEDim8) and idxzero < len(LHEDim8)):
+                        continue
                     #try:
                     wpos = LHEitem(LHEDim8[idxpos]) if idxpos >= 0 else 1.
                     wneg = LHEitem(LHEDim8[idxneg]) if idxneg >= 0 else 1.
                     wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
                     #except:
                        #continue
-                    print("\n")
-                    print('idxneg:', idxneg, 'wneg:', wneg)
-                    print('idxpos:', idxpos, 'wpos:', wpos)
-                    print('idxzero:', idxzero, 'wzero:', wzero)
+                    #print("\n")
+                    #print('idxneg:', idxneg, 'wneg:', wneg)
+                    #print('idxpos:', idxpos, 'wpos:', wpos)
+                    #print('idxzero:', idxzero, 'wzero:', wzero)
 
                     wcoeff[coeffstr][0] = wzero
                     wcoeff[coeffstr][1] = wneg
@@ -1846,7 +1844,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                             #wsign = +1.
                             #wpos += -2.*wzero
                             #kpow = 2.*(epoint**2.)
-                            w_coeff = (wpos + wneg -2.*wzero) / (2.*epoint**2.)
+                            w_coeff = (wpos + wneg - 2.*wzero) / (2.*epoint**2.)
                         print("before calculating w_coeff:", wpos, wsign,wneg, kpow)
                         
                         wcoeff[coeffstr][idwc] = w_coeff

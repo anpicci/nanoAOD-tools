@@ -458,7 +458,7 @@ def OpenAndRun(st, file_path):
                         mytree.GetEntry(n)
 
                         try:
-                            remainder = (n+1)%int(numOfEvents/20)
+                            remainder = (n+1)%int(numOfEvents/5)
                         except ZeroDivisionError:
                             remainder = 0
 

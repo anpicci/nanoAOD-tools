@@ -548,9 +548,26 @@ def mergetree(sample):
         hascomp = sample.components is not None
     if hascomp:#hasattr(sample, 'components'): # How to check whether this exists or not
         add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + ".root" 
+        compfiles = []
         for comp in sample.components:
             add+= " " + filerepo + comp.label + "/"  + comp.label + ".root" 
+            compfiles.append(filerepo + comp.label + "/"  + comp.label + ".root")
+        print(add)
+
         os.system(str(add))
+        if sample.year == "ULRunII":
+            newfile = filerepo + sample.label + "/"  + sample.label + "_cp.root"
+            oldfile = filerepo + sample.label + "/"  + sample.label + ".root" 
+            oldrfile = ROOT.TFile.Open(oldfile, "READ")
+            newrfile = ROOT.TFile.Open(newfile, "RECREATE")
+            newrfile.cd()
+            nomtree = oldrfile.Get("events_nominal").CloneTree()
+            nomtree.Write()
+            newrfile.Close()
+            oldrfile.cd()
+            oldrfile.Close()
+            os.system("rm " + oldfile)
+            os.system("mv " + newfile + " " + oldfile)
 
 def lumi_writer(dataset, lumi):
     samples = []

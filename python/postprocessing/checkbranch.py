@@ -18,38 +18,15 @@ years = [
 ]
 
 branches = [
-    #dnn_sm_50I_TV_branch,
-    #dnn_sm_50I_TV1_branch,
-    #dnn_sm_ACAT_branch,
-    #dnn_cW_50I_TV0_branch,
-    #dnn_cHW_50I_TV2_branch,
-    #dnn_fS_50I_TV1_branch,
-    #dnn_fT_50I_TV1_branch,
-    #dnn_fM_50I_TV1_branch,
-    #dnn_POL_50I_TV_branch,
-    #dnn_sm_50I_TV_branch,
-    #dnn_sm_50I_TV1_branch,
-    #dnn_sm_ACAT_branch,
-    #dnn_cW_50I_TV0_branch,
-    #dnn_cHW_50I_TV2_branch,
-    #dnn_fS_50I_TV1_branch,
-    #dnn_fT_50I_TV1_branch,
-    #dnn_fM_50I_TV1_branch,
-    #dnn_POL_50I_TV_branch,
     dnn_sm_branch_final_1,
-    #bdt_sm_branch_final_1,
-    #dnn_sm_branch_final_2,
-    #dnn_sm_branch_final_3,
-    #dnn_dim6_branch_final_1,
-    #bdt_dim6_branch_final_1,
-    #dnn_dim8_branch_final_1,
-    #bdt_dim8_branch_final_1,
-    #dnn_pol_branch_final_1,
-    #bdt_pol_branch_final_1,
-    #dnn_cHW_branch_final_1,
+    dnn_sm_branch_rec,
+    dnn_sm_branch_rec_iter1,
+    dnn_sm_branch_rec_iter3,
+    dnn_sm_branch_final_1_iter5,
     dnn_dim6_branch_final_2,
-    #dnn_dim8_branch_final_2,
+    dnn_dim6_branch_final_2_noQUAD,
     dnn_dim8_branch_final_3,
+    dnn_dim8_branch_final_3_noQUAD,
 ]
 
 scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
@@ -59,7 +36,7 @@ for year in years:
         if samp.year != year:
             continue
  
-        if samp.label.startswith("TT_") or samp.label.startswith("WJets") or samp.label.startswith("DYJetsToLL_Jbin_FxFx"):
+        if samp.label.startswith("TT_") or samp.label.startswith("WJets") or samp.label.startswith("DYJetsToLL_Jbin_FxFx") or samp.label.startswith("VBS_SSWW_a"):
             continue
 
         rfile = path + samp.label + "/" + samp.label + ".root"
