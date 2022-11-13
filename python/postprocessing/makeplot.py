@@ -1932,7 +1932,7 @@ for year in years:
 
                         for var in variables:
                             #print(var._name, syst[0], not var.IsSystApplied(), (year != "ULRunII" or opt.flat))
-                            if not var.IsSystApplied() and (year != "ULRunII" or opt.flat):
+                            if not var.IsSystApplied() and (year != "ULRunII"):# or opt.flat):
                                 continue
                             if syst[0] != "" and (not var.IsSystApplied() or year == "ULRunII"):
                                 continue
