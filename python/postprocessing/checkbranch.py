@@ -9,11 +9,11 @@ folder = "vUL050"
 path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/ltau/"
 
 years = [
-    "UL2016APV",
-    "UL2016",
+    #"UL2016APV",
+    #"UL2016",
     "UL2017",
     "UL2018"
-    #"UL2016M",
+    "UL2016M",
     #"ULRunII"
 ]
 

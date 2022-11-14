@@ -1478,75 +1478,7 @@ for year in years:
         variables.append(variabile('DNN_SM_rec', 'SM DNN output (reco)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_rec_iter3', 'SM DNN output (reco I3)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         
-        #variables.append(variabile('DNN_dim6_final_1', 'dim6 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        #variables.append(variabile('DNN_dim8_final_1', 'dim8 DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         #variables.append(variabile('DNN_pol_final_1', 'pol DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        
-        #variables.append(variabile('BDT_SM_final_1', 'SM BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        
-        #variables.append(variabile('BDT_dim6_final_1', 'dim6 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        #variables.append(variabile('BDT_dim8_final_1', 'dim8 BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        #variables.append(variabile('BDT_pol_final_1', 'pol BDT output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        
-        #variables.append(variabile('DNN_SM_50I_TV', 'SM DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        
-        '''
-        variables.append(variabile('DNN_SM_50I_TV1', 'SM DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_ACAT', 'SM DNN output (ACAT)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        '''
-        '''
-        variables.append(variabile('DNN_cHW_50I_TV2', 'c_{HW} DNN output (50I TV2)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_cW_50I_TV0', 'c_{W} DNN output (50I TV0)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-
-        variables.append(variabile('DNN_fS_50I_TV1', 'f_{S} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_fT_50I_TV1', 'f_{T} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_fM_50I_TV1', 'f_{M} DNN output (50I TV1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-
-        variables.append(variabile('DNN_POL_50I_TV', 'Pol. DNN output (50I TV)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        '''
-        '''
-        variables.append(variabile('BDT_SM_UL035_novar_sr_allbkg', 'SM BDT output (novar SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('BDT_SM_UL035_novar_truesr_allbkg', 'SM BDT output (novar true SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
-        variables.append(variabile('DNN_SM_UL035_novar_sr_allbkg', 'SM DNN output (novar SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg', 'SM DNN output (novar true SR allbkg)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))        
-        
-        variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_nomet_256bs', 'SM DNN output (novar SR allbkg nomet 256bs)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_nomet', 'SM DNN output (novar SR allbkg nomet)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_UL035_novar_truesr_allbkg_moresteps_1', 'SM DNN output (novar trueSR allbkg moresteps)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-
-        #variables.append(variabile('DNN_SM_UL035_v2', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_UL035_novar', 'SM DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_UL035_novar_sr', 'SM DNN output (novar SR)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        #variables.append(variabile('DNN_SM_UL035_T_DYL', 'SM DNN output (T DY_L)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_cW_UL035_v2', 'c_{W} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('DNN_cW_UL035_novar', 'c_{W} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        #variables.append(variabile('DNN_cHW_UL035_v2', 'c_{HW} DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('DNN_cHW_UL035_novar', 'c_{HW} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-
-        #variables.append(variabile('DNN_aQGC_UL035_v2', 'aQGC DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('DNN_aQGC_UL035_novar', 'aQGC DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_FS_UL035_novar', 'f_{S} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_FM_UL035_novar', 'f_{M} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_FT_UL035_novar', 'f_{T} DNN output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_FS_UL035_novar_fix', 'f_{S} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_FM_UL035_novar_fix', 'f_{M} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_FT_UL035_novar_fix', 'f_{T} DNN output (novar fix)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        '''
-        #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        '''
-        variables.append(variabile('BDT_SM_UL035_v2', 'SM BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_SM_UL035_novar', 'SM BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_SM_UL035_novar_SR', 'SM BDT output (novar SR)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_SM_UL035_T_DYL', 'SM BDT output (T DY_L)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_cW_UL035_v2', 'c_{W} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_cW_UL035_novar', 'c_{W} BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_cHW_UL035_v2', 'c_{HW} BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_cHW_UL035_novar', 'c_{HW} BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_aQGC_UL035_v2', 'aQGC BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        variables.append(variabile('BDT_aQGC_UL035_novar', 'aQGC BDT output (novar)', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        '''
-        #variables.append(variabile('BDT_pol_UL030', 'LL vs TX VBS BDT output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
-        #variables.append(variabile('DNN_pol_UL030', 'LL vs TX VBS DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm, bin_bdtsm))
         
         bin_m1T = array.array("d", [0., 100., 150., 200., 300., 400., 500.])#, 1000.])
         #if not opt.sr:
