@@ -22,15 +22,15 @@ rwgdict_dim6 = CardToDict("dim6")
 
 desiredop_dim8 = [
     "FS0_1p0",
-    "FS1_1p0",
-    "FS2_1p0",
-    "FM0_1p0",
-    "FM1_0p9",
-    #"FM6_1p0",
-    "FM7_1p0",
-    "FT0_1p0",
-    "FT1_1p0",
-    "FT2_0p9",
+    #"FS1_1p0",
+    #"FS2_1p0",
+    #"FM0_1p0",
+    #"FM1_0p9",
+    ##"FM6_1p0",
+    #"FM7_1p0",
+    #"FT0_1p0",
+    #"FT1_1p0",
+    #"FT2_0p9",
 ]
 
 desiredop_dim6 = [
@@ -710,7 +710,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     syst = systlist[0]
     isSystCorr = systlist[1]
     systtype = systlist[2]
-    print("begin:", fout)
+    #print("begin:", fout)
     if systtype == "en":
         systtree = syst
     else:
@@ -751,7 +751,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             #new_syst = "abs(" + nominal + ")" + sign + devst
             #print("new_syst:", new_syst)
             #cutbase += '*(' + new_syst + ')'
-    print("cutbase:", cutbase)
+    print("\tcutbase", cutbase)
     
     if syst != "":
         #print("hello", syst)
@@ -828,7 +828,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         samplelab = sample.label
     
     #print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
-    print("plotting ", variable._name, "\nsample:", samplelab, "\ncut:", cut_tag, "\nsyst applied:", syst)
+    print("\tplotting ", variable._name, "\tsample:", samplelab, "\tcut:", cut_tag, "\tsyst applied:", syst)
     
     nbins = variable._nbins
 
@@ -910,7 +910,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     if ToWeight:
         fout.cd()
         h1.Write(h1.GetName(), ROOT.TObject.kWriteDelete)
-    print("plotted!")
+    print("\t\tplotted!")
 
 def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     os.system('set LD_PRELOAD=libtcmalloc.so')
@@ -1855,7 +1855,7 @@ for year in years:
                         f1name = filerepo + sample.label + "/"  + sample.label + ".root"
                     
                     if os.path.exists(f1name):
-                        print("Taking trees from", f1name)
+                        print("\nTaking trees from", f1name)
                         f1 = ROOT.TFile.Open(f1name)
                     else:
                         raise ValueError(samplelab + " not ready to be plotted, skipping")
@@ -1867,6 +1867,8 @@ for year in years:
 
                         for var in variables:
                             #print(var._name, syst[0], not var.IsSystApplied(), (year != "ULRunII" or opt.flat))
+                            if (IsDim8 or IsDim6) and var._name.startswith("DNN_SM"):
+                                continue
                             if not var.IsSystApplied() and (year != "ULRunII"):# or opt.flat):
                                 continue
                             if syst[0] != "" and (not var.IsSystApplied() or year == "ULRunII"):

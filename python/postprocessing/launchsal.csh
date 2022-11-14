@@ -30,9 +30,9 @@ set year = 'UL2016APV'
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d VBS_SSWW_aQGC_,VBS_SSWW_aTGC #-c
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
-#set year = 'UL2016M'
-#python3 PrepareToPlot.py -f $folder -y $year --rw --or --veto VBS_SSWW_aQGC_,VBS_SSWW_aTG
-set year = 'ULRunII'
-python3 PrepareToPlot.py -f $folder -y $year --rw --or -d VG_ULRunII
+set year = 'UL2016M'
+python3 PrepareToPlot.py -f $folder -y $year --rw --or -d VBS_SSWW_aQGC_
+#set year = 'ULRunII'
+#python3 PrepareToPlot.py -f $folder -y $year --rw --or -d VG_ULRunII
 
 
