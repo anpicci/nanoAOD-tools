@@ -93,7 +93,7 @@ def submitter(sample, argsins, folder, cut):
     tagyear = str(sample.year)
     inputfiles = "transfer_input_files    = $(Proxy_path), ./rwgcards, ./samples, CMS_lumi.py, variabile.py, skimtree_utils_ssWW_wFakes_old.py, " + pymacro+ "\n"
     f.write(inputfiles)
-    f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
+    f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
     f.write("request_cpus            = 3\n")
