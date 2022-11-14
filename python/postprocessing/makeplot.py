@@ -1022,7 +1022,10 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             if 'DataMET' in s.label:# or 'DataHT' in s.label:
                 continue
 
-        tmp = copy.deepcopy(infile[s.label].Get(histoname))
+        try:
+            tmp = copy.deepcopy(infile[s.label].Get(histoname))
+        except:
+            print(histoname, "not present in", infile[s.label])
         tmp.Scale(1, "width")
         tmp.SetLineColor(ROOT.kBlack)
         tmp.SetName(s.leglabel)
