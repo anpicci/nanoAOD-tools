@@ -36,7 +36,7 @@ for year in years:
         if samp.year != year:
             continue
  
-        if samp.label.startswith("TT_") or samp.label.startswith("WJets") or samp.label.startswith("DYJetsToLL_Jbin_FxFx") or samp.label.startswith("VBS_SSWW_a"):
+        if samp.label.startswith("TT_") or samp.label.startswith("WJets") or samp.label.startswith("DYJetsToLL_Jbin_FxFx"):# or samp.label.startswith("VBS_SSWW_a"):
             continue
 
         rfile = path + samp.label + "/" + samp.label + ".root"

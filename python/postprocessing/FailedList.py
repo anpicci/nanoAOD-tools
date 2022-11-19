@@ -3,14 +3,14 @@ def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
 
-add = ""
+add = "--var DNN_dim6_final_2,DNN_dim8_final_3"
 
 os.system("reset")
 folder = "vUL050"
 errpaths = [
     ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut " + add, ""),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test " + add, ""),
-    ("condorplot_" + folder + "_tdmcut_flat/error/", "PlotCondor.py --tDMcut --flat" + add, ""),
+    ("condorplot_" + folder + "_tdmcut_flat/error/", "PlotCondor.py --tDMcut --flat " + add, ""),
     ("condorplot_" + folder + "_test_flat/error/", "PlotCondor.py --test --flat " + add, ""),
     ("condorplot_" + folder + "_flat/error/", "PlotCondor.py --flat " + add, ""),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test --cuts \"DNN_SM_final_1>=0.90\" " + add, "DNN_SM_final_1>=0.90"),

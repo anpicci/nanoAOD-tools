@@ -60,6 +60,7 @@ if opt.flat:
 outcore = "condorplot_" + opt.folder + tagf + "/output/"
 errcore = "condorplot_" + opt.folder + tagf + "/error/"
 logcore = "condorplot_" + opt.folder + tagf + "/log/"
+condorsub += tagf
 
 if not os.path.exists(outcore):
     os.system("mkdir -p " + outcore)

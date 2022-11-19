@@ -13,6 +13,7 @@ parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help=
 parser.add_option('-y', '--year', dest='years', type=str, default = 'UL2016APV,UL2016,UL2017,UL2018', help='Please enter year(s)')
 parser.add_option('--rw', dest='rw', default = False, action = 'store_true', help='Default does not rewrite')
 parser.add_option('--or', dest='override', default = False, action = 'store_true', help='Default does not override AreAllCondored')
+parser.add_option('--cs', dest='checksubmitted', default = False, action = 'store_true', help='Checks the running condor jobs')
 
 (opt, args) = parser.parse_args()
 
@@ -101,18 +102,19 @@ years = opt.years.split(",")
 tomerge = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
-condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
-for line in condorstatus:
-    idjob = line.split(" 1 ")[-1]
-    sample = ""
-    try:
-        sample = os.popen("condor_ssh_to_job " + idjob + " \"head snfile.txt\" ").readlines()[0]
-    except:
-        continue
+if opt.checksubmitted:
+    condorstatus = [l.replace("\n", "") for l in os.popen("condor_q").readlines() if "apiccine" in l and not "Total" in l]
+    for line in condorstatus:
+        idjob = line.split(" 1 ")[-1]
+        sample = ""
+        try:
+            sample = os.popen("condor_ssh_to_job " + idjob + " \"head snfile.txt\" ").readlines()[0]
+        except:
+            continue
 
-    if sample != "" and (True in [sample.endswith(year) for year in years]):
-        if not sample in toveto:
-            toveto.append(sample)
+        if sample != "" and (True in [sample.endswith(year) for year in years]):
+            if not sample in toveto:
+                toveto.append(sample)
 
 folder = opt.folder
 pymacro = "PrepareToPlot.py"

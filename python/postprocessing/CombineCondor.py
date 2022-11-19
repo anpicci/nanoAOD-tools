@@ -131,10 +131,12 @@ def submitter(model, srvar, crvar, argsins, folder):
         f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    if not (model.startswith("c") and ":" in model):
-        f.write("request_cpus            = 4\n")
-    else:
+    if (model.startswith("c") and ":" in model) or model == "EWvsQCD":
         f.write("request_cpus            = 10\n")
+    elif model.startswith("c") or model.startswith("F"):
+        f.write("request_cpus            = 6\n")
+    else:
+        f.write("request_cpus            = 4\n")
     output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".out"
     log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".log"
     error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".err"
