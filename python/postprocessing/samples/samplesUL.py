@@ -700,7 +700,7 @@ VBS_SSWW_aTGC_UL2016APV.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_Tun
 VBS_SSWW_aTGC_mixed_UL2016APV = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2016APV")
 VBS_SSWW_aTGC_mixed_UL2016APV.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2016APV.year = "UL2016APV"
-VBS_SSWW_aTGC_mixed_UL2016APV.dataset = ""
+VBS_SSWW_aTGC_mixed_UL2016APV.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2016APV_Legnaro-00000000000000000000000000000000/USER"
 
 DataMuB1_UL2016APV = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuB1_UL2016APV")
 DataMuB1_UL2016APV.runP = 'B-ver1'
@@ -1783,7 +1783,7 @@ VBS_SSWW_aTGC_UL2016.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_TuneCP
 VBS_SSWW_aTGC_mixed_UL2016 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2016")
 VBS_SSWW_aTGC_mixed_UL2016.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2016.year = "UL2016"
-VBS_SSWW_aTGC_mixed_UL2016.dataset = ""
+VBS_SSWW_aTGC_mixed_UL2016.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2016_Legnaro-00000000000000000000000000000000/USER"
 
 VBS_SSWW_aQGC_UL2016M = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aQGC_UL2016M")
 VBS_SSWW_aQGC_UL2016M.year = "UL2016M"
@@ -2700,7 +2700,7 @@ VBS_SSWW_aTGC_UL2017.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_TuneCP
 VBS_SSWW_aTGC_mixed_UL2017 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2017")
 VBS_SSWW_aTGC_mixed_UL2017.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2017.year = "UL2017"
-VBS_SSWW_aTGC_mixed_UL2017.dataset = ""
+VBS_SSWW_aTGC_mixed_UL2017.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2017_Legnaro-00000000000000000000000000000000/USER"
 
 DataMuB_UL2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuB_UL2017")
 DataMuB_UL2017.runP = 'B'
@@ -3842,7 +3842,7 @@ VBS_SSWW_aTGC_UL2018.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_TuneCP
 VBS_SSWW_aTGC_mixed_UL2018 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2018")
 VBS_SSWW_aTGC_mixed_UL2018.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2018.year = "UL2018"
-VBS_SSWW_aTGC_mixed_UL2018.dataset = ""
+VBS_SSWW_aTGC_mixed_UL2018.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2018_Legnaro-00000000000000000000000000000000/USER"
 
 VBS_SSWW_aQGC_ULRunII = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_ULRunII")
 VBS_SSWW_aQGC_ULRunII.year = "ULRunII"
