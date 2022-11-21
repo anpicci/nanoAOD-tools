@@ -1451,9 +1451,9 @@ for year in years:
         ############ Tommaso checks #########
         variables.append(variabile('DNN_SM_final_1_NOMOREDY_test', 'SM DNN output (f1 NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2000', 'SM DNN output (f1 NMR test 2000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2000', 'SM DNN output (f1 NMR test 2001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2000', 'SM DNN output (f1 NMR test 2002)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2000', 'SM DNN output (f1 NMR test 2003)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2001', 'SM DNN output (f1 NMR test 2001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2002', 'SM DNN output (f1 NMR test 2002)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2003', 'SM DNN output (f1 NMR test 2003)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim8_final_3_NOMOREDY_test', 'dim8 DNN output (f3 NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_test', 'dim6 DNN output (f2 NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev)) 
         '''

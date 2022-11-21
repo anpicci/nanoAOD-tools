@@ -1,3 +1,40 @@
+dnn_dim6_path_2_NOMOREDY_test_nodivide = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_test_nodivide.h5"
+dnn_dim6_branch_2_NOMOREDY_test_nodivide = "DNN_dim6_final_2_NOMOREDY_test_nodivide"
+dnn_dim6_scaler_2_NOMOREDY_test_nodivide = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_test_nodivide.p"
+
+dnn_dim6_path_2_NOMOREDY_lower_halfway = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_lower_halfway.h5"
+dnn_dim6_branch_2_NOMOREDY_lower_halfway = "DNN_dim6_final_2_NOMOREDY_lower_halfway"
+dnn_dim6_scaler_2_NOMOREDY_lower_halfway = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_lower_halfway.p"
+
+dnn_dim8_path_3_NOMOREDY_lower = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim8_vUL040_DNN_dim8_final_3_NOMOREDY_lower.h5"
+dnn_dim8_branch_3_NOMOREDY_lower = "DNN_dim8_final_3_NOMOREDY_lower"
+dnn_dim8_scaler_3_NOMOREDY_lower = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim8_vUL040_DNN_dim8_final_3_NOMOREDY_lower.p"
+
+dnn_sm_path_1_NOMOREDY_lower = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower.h5"
+dnn_sm_branch_1_NOMOREDY_lower = "DNN_SM_final_1_NOMOREDY_lower"
+dnn_sm_scaler_1_NOMOREDY_lower = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower.p"
+
+dnn_sm_path_1_NOMOREDY_lower_4000 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_4000.h5"
+dnn_sm_branch_1_NOMOREDY_lower_4000 = "DNN_SM_final_1_NOMOREDY_lower_4000"
+dnn_sm_scaler_1_NOMOREDY_lower_4000 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower.p"
+
+dnn_sm_path_1_NOMOREDY_lower_4001 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_4001.h5"
+dnn_sm_branch_1_NOMOREDY_lower_4001 = "DNN_SM_final_1_NOMOREDY_lower_4001"
+dnn_sm_scaler_1_NOMOREDY_lower_4001 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower.p"
+
+dnn_sm_path_1_NOMOREDY_lower_bisnotopt = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_bisnotopt.h5"
+dnn_sm_branch_1_NOMOREDY_lower_bisnotopt = "DNN_SM_final_1_NOMOREDY_lower_bisnotopt"
+dnn_sm_scaler_1_NOMOREDY_lower_bisnotopt = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_bisnotopt.p"
+
+dnn_sm_path_1_NOMOREDY_lower_bisnotopt_4000 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4000.h5"
+dnn_sm_branch_1_NOMOREDY_lower_bisnotopt_4000 = "DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4000"
+dnn_sm_scaler_1_NOMOREDY_lower_bisnotopt_4000 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_bisnotopt.p"
+
+dnn_sm_path_1_NOMOREDY_lower_bisnotopt_4001 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4001.h5"
+dnn_sm_branch_1_NOMOREDY_lower_bisnotopt_4001 = "DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4001"
+dnn_sm_scaler_1_NOMOREDY_lower_bisnotopt_4001 = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_DNN_SM_final_1_NOMOREDY_lower_bisnotopt.p"
+
+#######
 dnn_sm_path_1_NOMOREDY_test = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_SM_vUL040_DNN_SM_final_1_NOMOREDY_test.h5"
 dnn_sm_branch_1_NOMOREDY_test = "DNN_SM_final_1_NOMOREDY_test"
 dnn_sm_scaler_1_NOMOREDY_test = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_SM_vUL040_DNN_SM_final_1_NOMOREDY_test.p"

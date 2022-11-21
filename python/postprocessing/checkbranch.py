@@ -14,19 +14,24 @@ years = [
     "UL2017",
     "UL2018"
     "UL2016M",
-    #"ULRunII"
+    "ULRunII"
 ]
 
 branches = [
-    dnn_sm_branch_final_1,
-    dnn_sm_branch_rec,
-    dnn_sm_branch_rec_iter1,
-    dnn_sm_branch_rec_iter3,
-    dnn_sm_branch_final_1_iter5,
-    dnn_dim6_branch_final_2,
-    dnn_dim6_branch_final_2_noQUAD,
-    dnn_dim8_branch_final_3,
-    dnn_dim8_branch_final_3_noQUAD,
+    dnn_sm_branch_1_lower_iter1,
+    dnn_sm_branch_1_lower_iter4,
+    dnn_sm_branch_bis_lower_iter2,
+    dnn_sm_branch_bis_lower_iter4,
+    dnn_dim8_branch_final_3_noQUAD_fix,
+    dnn_dim8_branch_final_3_1to2,
+    dnn_dim8_branch_final_3_again,
+    dnn_sm_branch_1_NOMOREDY_test,
+    dnn_sm_branch_1_NOMOREDY_test_2000,
+    dnn_sm_branch_1_NOMOREDY_test_2001,
+    dnn_sm_branch_1_NOMOREDY_test_2002,
+    dnn_sm_branch_1_NOMOREDY_test_2003,
+    dnn_dim8_branch_3_NOMOREDY_test,
+    dnn_dim6_branch_2_NOMOREDY_test,
 ]
 
 scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
@@ -36,7 +41,7 @@ for year in years:
         if samp.year != year:
             continue
  
-        if samp.label.startswith("TT_") or samp.label.startswith("WJets") or samp.label.startswith("DYJetsToLL_Jbin_FxFx"):# or samp.label.startswith("VBS_SSWW_a"):
+        if samp.label.startswith("TT_") or samp.label.startswith("WJets") or samp.label.startswith("DYJetsToLL_Jbin_FxFx"):# or samp.label.startswith("VBS_SSWW_SM") or samp.label.startswith("VBS_SSWW_c"):
             continue
 
         rfile = path + samp.label + "/" + samp.label + ".root"
