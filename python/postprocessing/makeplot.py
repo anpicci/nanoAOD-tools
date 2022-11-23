@@ -1457,6 +1457,19 @@ for year in years:
         variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2003', 'SM DNN output (f1 NMR test 2003)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_dim8_final_3_NOMOREDY_test', 'dim8 DNN output (f3 NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_test', 'dim6 DNN output (f2 NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev)) 
+       
+
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower', 'SM DNN output (lower LR)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_4000', 'SM DNN output (lower LR 4000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_4001', 'SM DNN output (lower LR 4001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt', 'SM DNN output (lower LR bis)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4000', 'SM DNN output (lower LR bis 4000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4001', 'SM DNN output (lower LR bis 4001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_test_nodivide', 'dim6 DNN output (f2 NMR test nodivide)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_halfway', 'dim6 DNN output (f2 NMR lower halfway)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower', 'dim8 DNN output (f3 NMR lower)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+
+
         '''
         variables.append(variabile('BDT_SM_final_1_bis', 'BDT_SM_final_1', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_bis', 'DNN_SM_final_1_bis', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
@@ -1893,7 +1906,14 @@ for year in years:
                             if syst[0] != "" and (not var.IsSystApplied() or year == "ULRunII"):
                                 continue
                             if not "all" in vartoplot:
-                                if not var._name in vartoplot:
+                                IsToPlot = False
+                                for singvar in vartoplot:
+                                #if not var._name in vartoplot:
+                                    print("checking", var._name, singvar, var._name.startswith(singvar))
+                                    if var._name.startswith(singvar):
+                                        IsToPlot = True
+                                        break
+                                if not IsToPlot:
                                     continue
                             if opt.count:
                                 if os.path.exists(pathplot + 'countings/'):

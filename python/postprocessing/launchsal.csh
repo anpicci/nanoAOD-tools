@@ -12,14 +12,14 @@ set year = 'UL2017'
 #######    2018   #######
 set year = 'UL2018'
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year --rw --or -d TTTo2L2Nu_$year #VBS_SSWW_SM_,VBS_SSWW_c
+#python3 PrepareToPlot.py -f $folder -y $year -d VBS_SSWW_cW_SM_$year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d VBS_SSWW_aQGC_,VBS_SSWW_aTGC #-c 
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 #######    2016   #######
 set year = 'UL2016'
 #reset
-#python3 PrepareToPlot.py -f $folder -y $year --or --rw -d VBS_SSWW_cW_SM_UL2016
+#python3 PrepareToPlot.py -f $folder -y $year --or --rw -d VBS_SSWW_cW_cHW_$year
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco jl --masscrit --deltaeta -y $year -d VBS_SSWW_aQGC_,VBS_SSWW_aTGC #-c
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
@@ -31,8 +31,8 @@ set year = 'UL2016APV'
 #python3 SetAndLaunchCondorRun_old.py -f $folder --reco lj --masscrit --deltaeta -y $year
 
 set year = 'UL2016M'
-python3 PrepareToPlot.py -f $folder -y $year --rw --or -d VBS_SSWW_TL_
+#python3 PrepareToPlot.py -f $folder -y $year --rw --or -d VBS_SSWW_SM_,VBS_SSWW_c
 set year = 'ULRunII'
-#python3 PrepareToPlot.py -f $folder -y $year --rw --or -d VBS_SSWW_cW_SM
+python3 PrepareToPlot.py -f $folder -y $year --rw --or -d VBS_SSWW_cW_SM_$year
 
 
