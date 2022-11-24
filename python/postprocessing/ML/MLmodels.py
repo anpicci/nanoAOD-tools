@@ -1,3 +1,8 @@
+dnn_dim6_path_2_NOMOREDY_lower = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_lower.h5"
+dnn_dim6_branch_2_NOMOREDY_lower = "DNN_dim6_final_2_NOMOREDY_lower"
+dnn_dim6_scaler_2_NOMOREDY_lower = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_lower.p"
+
+####
 dnn_dim6_path_2_NOMOREDY_test_nodivide = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/es_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_test_nodivide.h5"
 dnn_dim6_branch_2_NOMOREDY_test_nodivide = "DNN_dim6_final_2_NOMOREDY_test_nodivide"
 dnn_dim6_scaler_2_NOMOREDY_test_nodivide = "/eos/user/t/ttedesch/SWAN_projects/VBS_ML_UL/models/scaler_dim6_vUL040_DNN_dim6_final_2_NOMOREDY_test_nodivide.p"

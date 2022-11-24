@@ -18,15 +18,7 @@ years = [
 ]
 
 branches = [
-    dnn_dim6_branch_2_NOMOREDY_test_nodivide,
-    dnn_dim6_branch_2_NOMOREDY_lower_halfway,
-    dnn_dim8_branch_3_NOMOREDY_lower,
-    dnn_sm_branch_1_NOMOREDY_lower,
-    dnn_sm_branch_1_NOMOREDY_lower_4000,
-    dnn_sm_branch_1_NOMOREDY_lower_4001,
-    dnn_sm_branch_1_NOMOREDY_lower_bisnotopt,
-    dnn_sm_branch_1_NOMOREDY_lower_bisnotopt_4000,
-    dnn_sm_branch_1_NOMOREDY_lower_bisnotopt_4001,
+    dnn_dim6_branch_2_NOMOREDY_lower,
 ]
 
 scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
