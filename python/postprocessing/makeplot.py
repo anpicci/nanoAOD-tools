@@ -1138,7 +1138,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         if "GeV" in variabile_._title:
             ytitle = "Events / GeV"
         else:
-            ytitle = "Events / a.u"
+            ytitle = "Events / bin width"
      
     print(stack)
     stack.GetYaxis().SetTitle(ytitle)
@@ -1262,6 +1262,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     #c1.Print("stack/"+canvasname+".pdf")
     pathstack_tmp = pathstack + str(year) + "/"
     c1.Print(pathstack_tmp + canvasname + ".png")
+    c1.Print(pathstack_tmp + canvasname + ".pdf")
     del histo
     tmp.Delete()
     h.Delete()

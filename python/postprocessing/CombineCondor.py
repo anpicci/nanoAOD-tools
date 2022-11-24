@@ -12,7 +12,7 @@ parser.add_option('--folder', dest='folder', type='string', default = 'vUL025', 
 parser.add_option('--user', dest='user', type='string', default = 'apiccine', help = 'Username')
 parser.add_option('--notImpacts', dest='impacts', default = True, action='store_false', help = 'Default does impacts')
 parser.add_option('--notUncBreak', dest='uncbreak', default = True, action='store_false', help = 'Default does unc. breaking')
-parser.add_option('--plot', dest='plotvar', type='string', default = 'all', help = 'Specify variables to plot in postfit')
+parser.add_option('--plot', dest='plotvar', type='string', default = 'fitvar', help = 'Specify variables to plot in postfit')
 parser.add_option('--year', dest='year', type='string', default = 'RunII', help = 'Specify year, default is RunII')
 parser.add_option('--cut', dest='cut', type='string', default = 'not', help = 'Specify cut, if needed')
 parser.add_option('--sm', dest='sm', default = False, action='store_true', help = 'Default does not run SM significance')
@@ -39,6 +39,15 @@ if opt.crvar == "same":
     crvars = copy.deepcopy(srvars)
 else:
     crvars = opt.crvar.split(":")
+
+plotvars = []
+if opt.postfit:
+    if opt.plotvar == "fitvar":
+        plotvars = copy.deepcopy(srvars)
+    else:
+        plotvars = opt.plotvar.split(":")
+        if len(plotvars) != len(srvars):
+            raise ValueError("number of plotvars has to be equal to number of srvars")
 
 if len(srvars) != len(crvars):
     raise ValueError("number of srvars has to be equal to number of crvars")
@@ -160,19 +169,13 @@ pymacro = "FitAndPlot"
 pymacro += ".py"
 
 arg0 = " --folder " + folder 
+arg0 += " --year " + opt.year
 if not opt.impacts:
     arg0 += " --notImpacts"
 if not opt.uncbreak:
     arg0 += " --notUncBreak"
 if not opt.dofit:
     arg0 += " --noFit"
-
-
-if opt.postfit:
-    arg0 += " --doPost"
-if opt.plotvar != "all":
-    arg0 += " --plot " + opt.plotvar
-arg0 += " --year " + opt.year
 
 for model in models:
     arg1 = ""
@@ -201,6 +204,9 @@ for model in models:
             crvar = crvars[idsr]
         else:
             crvar = srvar
+
+        if opt.postfit:
+            arg2 += " --doPost --plot " + plotvars[idsr]
 
         if opt.tDMcut:
             arg2 += " --tDMcut"

@@ -3,7 +3,7 @@ def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
 
-add = ""#--var DNN_dim6_final_2,DNN_dim8_final_3"
+add = "--var DNN_ --lastbins"
 
 os.system("reset")
 folder = "vUL050"
