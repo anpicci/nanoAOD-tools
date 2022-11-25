@@ -1940,7 +1940,7 @@ for year in years:
                                 IsToPlot = False
                                 for singvar in vartoplot:
                                 #if not var._name in vartoplot:
-                                    print("checking", var._name, singvar, var._name.startswith(singvar))
+                                    #print("checking", var._name, singvar, var._name.startswith(singvar))
                                     if var._name.startswith(singvar):
                                         IsToPlot = True
                                         break
@@ -1971,17 +1971,13 @@ for year in years:
                     IsToPlot = False
                     for singvar in vartoplot:
                         #if not var._name in vartoplot:
-                        print("checking", var._name, singvar, var._name.startswith(singvar))
+                        #print("checking", var._name, singvar, var._name.startswith(singvar))
                         if var._name.startswith(singvar):
                             IsToPlot = True
                             break
                     if not IsToPlot:
                         continue
-          
-                if not "all" in vartoplot:
-                    if not var._name in vartoplot:
-                        continue
-                            
+                                      
                 print("var to stack", var._name)
                 os.system('set LD_PRELOAD=libtcmalloc.so')
                 print("channel", opt.channel)
