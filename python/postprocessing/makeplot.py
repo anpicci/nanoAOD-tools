@@ -932,7 +932,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         histag = "min_deltaPhi_MET"
     if variabile_._name.startswith("max"):
         histag = "max_deltaPhi_MET"
-    '''
+    
     if reg_ == 'ltau':
         if str(lep_).strip('[]') == "muon":
             lep_tag = "#mu+"
@@ -954,6 +954,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin, variabile_._xmax)
     else:
         hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin)
+    '''
     h_sig = []
     h_err = ROOT.TH1F()
     h_bkg_err = ROOT.TH1F()
@@ -1829,7 +1830,6 @@ for year in years:
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
 
         for sample in dataset_new:
-            Print("\nSample: " + sample.label + " " + sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
                 continue
             elif ('DataMu' in sample.label or 'DataEle' in sample.label or 'DataMET' in sample.label or 'QCD' in sample.label) and opt.folder.startswith("CTHT"):
@@ -1843,6 +1843,7 @@ for year in years:
                 IsDim6 = True
             
             if(opt.plot):
+                Print("\nSample: " + sample.label + " " + sample.name)
                 dimsamplenames = []
                 samplelabs = []
                 dimcuts = []
