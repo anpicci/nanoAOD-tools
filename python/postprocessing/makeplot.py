@@ -950,11 +950,11 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     histo = []
     tmp = ROOT.TH1F()
     h = ROOT.TH1F()
-    if not variabile_._iscustom:
-        hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin, variabile_._xmax)
-    else:
-        hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin)
-    '''
+    #if not variabile_._iscustom:
+        #hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin, variabile_._xmax)
+    #else:
+        #hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin)
+    
     h_sig = []
     h_err = ROOT.TH1F()
     h_bkg_err = ROOT.TH1F()
@@ -1295,7 +1295,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         #infile[s.label].Delete()
         infile[kf].Delete()
     #os.system('set LD_PRELOAD=libtcmalloc.so')
-    '''
+    
 leptons = opt.lep.split(',')
 
 #dataset_dict = {'2016':[],'2017':[],'2018':[]}
