@@ -172,8 +172,8 @@ pfolder = opt.folder #+ opt.plot_tag
 
 filerepo = '/eos/home-a/apiccine/VBS/nosynch/' + folder + '/'
 plotrepo = '/eos/home-a/apiccine/VBS/nosynch/' + pfolder + '/'
-Print("pfolder", pfolder, opt.test)
-Print(filerepo, plotrepo)
+Print("pfolder " + pfolder + str(opt.test))
+Print(filerepo + " " + plotrepo)
 
 FRtag = opt.wfake.split("_")[-1]
 
@@ -192,7 +192,7 @@ lepstr = lepstr.replace("plot", "plot" + plot_tag)
 
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
-Print("To plot:", vartoplot)
+Print("To plot: " + vartoplot)
 
 epdgstr = ""
 mpdgstr = ""
@@ -443,7 +443,7 @@ if opt.syst!="all" and opt.syst!="noSyst":
 elif opt.syst!="all" and opt.syst=="noSyst":
     for syst in systematicslist:
         if syst[0] == "":
-            #Print("hello", syst)
+            #Print("hello " + syst)
             systematics.append(syst)
         else:
             continue
@@ -457,7 +457,7 @@ if opt.plot or opt.stack:
     for syst in systematics:
         Print(syst[0])
 
-Print("\ncut_tag:\t", cut_tag)
+Print("\ncut_tag:\t" + cut_tag)
 
 pathplot = plotrepo + lepstr  + "/"
 #pathstack = pathplot.replace("plot", "stack")
@@ -473,7 +473,7 @@ if opt.lastbins:
     pathstack += "_lastbins"
 pathstack += "/" + cut_tag + "/"
 
-Print(lepstr, pathplot, pathstack) 
+Print(lepstr + " " + pathplot + " " + pathstack) 
 
 if opt.plot:
     if not os.path.exists(pathplot) and cut_tag != "1p":
@@ -487,8 +487,8 @@ if opt.stack:
 
 
 def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
-    Print("Variable:", variable)
-    Print("nbins:", wnbins)
+    Print("Variable: " + variable)
+    Print("nbins: " + wnbins)
     oldnbins = 5000
     rfilename = filerepo + "/" + signal + "/" + signal + ".root"
     signalcut = "w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF*((abs(lepton_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(1.)*(abs(deltaEta_jj)>2.5)*(tau_DecayMode<5||tau_DecayMode>6))*(lepton_TightRegion==1&&tau_TightRegion==1)"
@@ -501,7 +501,7 @@ def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
     for idnb in range(1, wnbins+1):
         flatinterval.append(idnb/wnbins)
     #flatinterval[-1] = 1.001
-    #Print("flatinterval:", flatinterval, len(flatinterval))
+    #Print("flatinterval: " + flatinterval + " " + str(len(flatinterval)))
     sumoverbins = 0
     toKeep = []
     theCall = []
@@ -510,16 +510,16 @@ def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
         theCall.append(False)
     
     totweights = sbins_histo.GetSumOfWeights()
-    #Print("totweights:", totweights)
+    #Print("totweights: " + totweights)
     for nb in range(1, oldnbins + 1):
-        #Print("bincontent:", sbins_histo.GetBinContent(nb))
+        #Print("bincontent: " + str(sbins_histo.GetBinContent(nb)))
         sumoverbins += sbins_histo.GetBinContent(nb)/totweights
-        #Print("sum at step", nb, "\t", sumoverbins)
+        #Print("sum at step " + nb + "\t" + str(sumoverbins))
         for idnb in range(0, wnbins):
             binHighEdge = 0.
             if theCall[idnb] == False and sumoverbins > flatinterval[idnb]:
                 binHighEdge = round(sbins_histo.GetBinLowEdge(nb) + 2*(sbins_histo.GetBinCenter(nb) - sbins_histo.GetBinLowEdge(nb)), 3)
-                #Print("binHighEdge", binHighEdge, "found for new bin", idnb + 1)
+                #Print("binHighEdge " + binHighEdge + " found for new bin " + str(idnb + 1))
                 theCall[idnb] = True
                 toKeep[idnb+1] = copy.deepcopy(binHighEdge)
             else:
@@ -527,7 +527,7 @@ def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
     if theCall[-1] == False:
         toKeep[-1] = 1.0
     Print("flattening binning found:")
-    Print(toKeep, len(toKeep))
+    Print(toKeep + " " + str(len(toKeep)))
     binedges = array.array("d", toKeep) 
     return binedges
 
@@ -620,7 +620,7 @@ def lumi_writer(dataset, lumi):
                     h_pdfsys = ROOT.TH1F(infile.Get("h_PDFsys"))
                 except:
                     toPDF = False
-                Print("evtree:", evtree, tree)
+                Print("evtree: " + " " + evtree + " " + tree)
                 
                 #tree.SetBranchStatus('w_nominal', 0)
                 #if toPDF:
@@ -666,7 +666,7 @@ def lumi_writer(dataset, lumi):
                     tree_new.Branch(kb, branches[kb], kb + '[1]/F')
                     tree.SetBranchStatus(kb, 1)
                 
-                Print("Calculating renormalization weights for scenario", key)
+                Print("Calculating renormalization weights for scenario " + key)
                 for event in range(0, tree.GetEntries()):
                     tree.GetEntry(event)
                     perc = (event+1)/(tree.GetEntries())*100
@@ -676,7 +676,7 @@ def lumi_writer(dataset, lumi):
                     if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
                         sys.stdout.write("\nProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
                         #Print("\nw_nom before:", w_nom[0])
-                        Print("\nw_nom before:", branches['w_nominal'][0])
+                        Print("\nw_nom before: " + str(branches['w_nominal'][0]))
                     if sample.year == "UL2016APV":
                         #w_nom[0] *= 0.5373
                         branches['w_nominal'][0] *= 0.5373
@@ -690,7 +690,7 @@ def lumi_writer(dataset, lumi):
 
                     if event==(tree.GetEntries()-1):
                         #Print("w_nom after:", w_nom[0])
-                        Print("w_nom after:", branches['w_nominal'][0])
+                        Print("w_nom after: " + str(branches['w_nominal'][0]))
                     
                     if toPDF:
                         #if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
@@ -722,7 +722,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     syst = systlist[0]
     isSystCorr = systlist[1]
     systtype = systlist[2]
-    #Print("begin:", fout)
+    #Print("begin: "+ fout)
     if systtype == "en":
         systtree = syst
     else:
@@ -761,12 +761,12 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             #if syst.endswith("Down"):
                 #sign = "-"
             #new_syst = "abs(" + nominal + ")" + sign + devst
-            #Print("new_syst:", new_syst)
+            #Print("new_syst: " + new_syst)
             #cutbase += '*(' + new_syst + ')'
-    Print("\tcutbase", cutbase)
+    Print("\tcutbase " + cutbase)
     
     if syst != "":
-        #Print("hello", syst)
+        #Print("hello" + syst)
         histoname += "_" + syst.replace("_Up", "Up").replace("_Down", "Down")
         if not isSystCorr:
             histoname += "_" + str(opt.year).replace("UL", "")
@@ -839,8 +839,8 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     else:
         samplelab = sample.label
     
-    #Print("after syst applied\tcut", cut, "\nhistoname:", histoname, "\ttreename:", treename)
-    Print("\tplotting ", variable._name, "\tsample:", samplelab, "\tcut:", cut_tag, "\tsyst applied:", syst)
+    #Print("after syst applied\tcut " + cut + "\nhistoname: " + histoname + "\ttreename: " + treename)
+    Print("\tplotting " + variable._name + "\tsample: " + samplelab + "\tcut: " + cut_tag + "\tsyst applied: " + syst)
     
     nbins = variable._nbins
 
@@ -877,7 +877,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
 
     foutput = pathplot + sample.label + "_" + lep + ".root"
-    #Print("at project", histoname,vartoproject,cut)
+    #Print("at project " + histoname + " " + vartoproject + " " +cut)
     f1.Get(treename).Project(histoname,vartoproject,cut)
     if not opt.lastbins:
         h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
@@ -957,7 +957,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     h_sig = []
     h_err = ROOT.TH1F()
     h_bkg_err = ROOT.TH1F()
-    Print("Variabile:", variabile_._name)
+    Print("Variabile: " + variabile_._name)
     ROOT.gROOT.SetStyle('Plain')
     ROOT.gStyle.SetPalette(1)
     ROOT.gStyle.SetOptStat(0)
@@ -1007,7 +1007,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 
     i = 0
 
-    #Print("infile:", infile)
+    #Print("infile: " + infile)
 
     for s in samples_:
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
@@ -1027,7 +1027,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
                 continue
           
         infile[s.label].cd()
-        Print("opening file: ", infile[s.label].GetName())
+        Print("opening file: " + infile[s.label].GetName())
         #Print("isthere?", histoname, infile[s.label].Get(histoname))
         if('Data' in s.label):
             if ("GenPart" in variabile_._name) or ("MC_" in variabile_._name):
@@ -1038,7 +1038,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         try:
             tmp = copy.deepcopy(infile[s.label].Get(histoname))
         except:
-            Print(histoname, "not present in", infile[s.label])
+            Print(histoname + " not present in " + infile[s.label])
         tmp.Scale(1, "width")
         tmp.SetLineColor(ROOT.kBlack)
         tmp.SetName(s.leglabel)
@@ -1177,7 +1177,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     CMS_lumi.writeExtraText = 1
     CMS_lumi.extraText = ""
          
-    Print("lep_tag: ", lep_tag)
+    Print("lep_tag: " + lep_tag)
     lumi_sqrtS = "%s fb^{-1}  (13 TeV)"%(lumi)
     
     iPeriod = 0
@@ -1314,14 +1314,14 @@ else:# opt.plot:
 #Print(class_list)
 
 if(opt.dat != 'all'):
-     #Print("opt.dat", opt.dat)
+     #Print("opt.dat " + opt.dat)
      #Print(opt.dat)
      if 'DataMET' in str(opt.dat):
           raise Exception("Not interesting dataset")
      elif not opt.folder.startswith('CTHT') and 'DataHT' in str(opt.dat) and (opt.plot or opt.stack):
           raise Exception("Not interesting dataset")
      dataset_names = opt.dat.strip('[]').split(',')
-     #Print("dataset_names", dataset_names)
+     #Print("dataset_names " + dataset_names)
      for dat in dataset_names:
           if not(dat in sample_dict.keys()):
               raise Exception("dataset not found!")
@@ -1362,7 +1362,7 @@ else:
 
           dataset_dict[str(v.year)].append(v)
 
-#Print("dataset_dict", dataset_dict)
+#Print("dataset_dict " + dataset_dict)
 
 years = []
 if(opt.year!='all'):
@@ -1388,7 +1388,7 @@ for year in years:
         os.system("mkdir -p " + pathstack + str(year) + "/")
         
     for lep in leptons:
-        Print("\n\nYear and channel:", year, lep)
+        Print("\n\nYear and channel: " + year + " " + lep)
         dataset_new = dataset_dict[year]
 
         #dataset_new.remove(sample_dict['DataMET_'+str(year)])
@@ -1423,7 +1423,7 @@ for year in years:
                 wzero = 'w_nominal*PFSF*puSF*lepSF*btagSF*puIDSF*QCDScaleSF'
         else:
             wzero = "(1.)"
-        #Print("wzero", wzero)
+        #Print("wzero " + wzero)
 
         cutbase = cut_dict[lep]
 
@@ -1829,7 +1829,7 @@ for year in years:
         variables.append(variabile('subleadjet_DeepFlv_b', 'subleading jet DeepFlavour b raw',  wzero+'*('+cutbase+')', False, nbin_df, bin_df))
 
         for sample in dataset_new:
-            Print("\nSample:", sample.label, sample.name)
+            Print("\nSample: " + sample.label + " " + sample.name)
             if ('DataHT' in sample.label or 'DataMET' in sample.label) and not opt.folder.startswith("CTHT"):# or "WJets" in sample.label:
                 continue
             elif ('DataMu' in sample.label or 'DataEle' in sample.label or 'DataMET' in sample.label or 'QCD' in sample.label) and opt.folder.startswith("CTHT"):
@@ -1885,7 +1885,7 @@ for year in years:
                     dimcut = dimcuts[idsl]
                     dimsamplename = dimsamplenames[idsl]
                     foutput = pathplot + samplelab + "_" + lep + ".root"
-                    #Print(foutput, "exists?", os.path.exists(foutput))
+                    #Print(foutput + " exists? " + os.path.exists(foutput))
                     try:
                         fout = ROOT.TFile.Open(foutput, "UPDATE")
                     except:
@@ -1923,7 +1923,7 @@ for year in years:
                         f1name = filerepo + sample.label + "/"  + sample.label + ".root"
                     
                     if os.path.exists(f1name):
-                        Print("\nTaking trees from", f1name)
+                        Print("\nTaking trees from " + f1name)
                         f1 = ROOT.TFile.Open(f1name)
                     else:
                         raise ValueError(samplelab + " not ready to be plotted, skipping")
@@ -1934,7 +1934,7 @@ for year in years:
                             continue
 
                         for var in variables:
-                            #Print(var._name, syst[0], not var.IsSystApplied(), (year != "ULRunII" or opt.flat))
+                            #Print(var._name + " " + syst[0] + " " + str(not var.IsSystApplied()) + " " + str(year != "ULRunII" or opt.flat))
                             if (IsDim8 or IsDim6) and var._name.startswith("DNN_SM"):
                                 continue
                             if not var.IsSystApplied() and (year != "ULRunII"):# or opt.flat):
@@ -1945,7 +1945,7 @@ for year in years:
                                 IsToPlot = False
                                 for singvar in vartoplot:
                                 #if not var._name in vartoplot:
-                                    #Print("checking", var._name, singvar, var._name.startswith(singvar))
+                                    #Print("checking " + var._name + " " + singvar + " " + str(var._name.startswith(singvar)))
                                     if var._name.startswith(singvar):
                                         IsToPlot = True
                                         break
@@ -1976,16 +1976,16 @@ for year in years:
                     IsToPlot = False
                     for singvar in vartoplot:
                         #if not var._name in vartoplot:
-                        #Print("checking", var._name, singvar, var._name.startswith(singvar))
+                        #Print("checking " + var._name + " " + singvar + " " + str(var._name.startswith(singvar)))
                         if var._name.startswith(singvar):
                             IsToPlot = True
                             break
                     if not IsToPlot:
                         continue
                                       
-                Print("var to stack", var._name)
+                Print("var to stack " + var._name)
                 os.system('set LD_PRELOAD=libtcmalloc.so')
-                Print("channel", opt.channel)
+                Print("channel " + opt.channel)
                 makestack(lep, opt.channel, var, dataset_new, cut_tag, "", lumi[str(year)], year)
                 os.system('set LD_PRELOAD=libtcmalloc.so')
 
