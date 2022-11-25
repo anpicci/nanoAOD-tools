@@ -1968,6 +1968,17 @@ for year in years:
         if opt.stack:
             for var in variables:
                 if not "all" in vartoplot:
+                    IsToPlot = False
+                    for singvar in vartoplot:
+                        #if not var._name in vartoplot:
+                        print("checking", var._name, singvar, var._name.startswith(singvar))
+                        if var._name.startswith(singvar):
+                            IsToPlot = True
+                            break
+                    if not IsToPlot:
+                        continue
+          
+                if not "all" in vartoplot:
                     if not var._name in vartoplot:
                         continue
                             

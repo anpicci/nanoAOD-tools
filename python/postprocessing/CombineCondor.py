@@ -30,6 +30,8 @@ parser.add_option('--WithFakeCR', dest='wfc', default = False, action='store_tru
 parser.add_option('--PDFWithTTDY', dest='pdfttdy', default = False, action='store_true', help = 'apply pdf to ttbar and dy')
 parser.add_option('--DYrp', dest='DYrp', default = False, action='store_true', help = 'apply rateParam to dy')
 parser.add_option('--pdf', dest='pdf', type='string', default = 'total', help = 'Specify type of pdf')
+parser.add_option('--frp', dest='frp', default = False, action='store_true', help = 'apply rateParam to fake')
+parser.add_option('--frsys', dest='frsys', default = False, action='store_true', help = 'apply lnN to fake')
 
 (opt, args) = parser.parse_args()
 
@@ -69,6 +71,14 @@ if not opt.DYrp:
     condorsub += "_nodyrp"
     subfold += "_nodyrp"
     exe += "_nodyrp"
+if opt.frsys:
+    condorsub += "_frsys"
+    subfold += "_frsys"
+    exe += "_frsys"
+if opt.frp:
+    condorsub += "_frp"
+    subfold += "_frp"
+    exe += "_frp"
 if opt.wfc:
     condorsub += "_WithFakeCR"
     subfold += "_WithFakeCR"
@@ -166,6 +176,10 @@ def submitter(model, srvar, crvar, argsins, folder):
 
 folder = opt.folder
 pymacro = "FitAndPlot"
+if opt.frsys:
+    pymacro += "_frsys"
+if opt.frp:
+    pymacro += "_frp"
 pymacro += ".py"
 
 arg0 = " --folder " + folder 

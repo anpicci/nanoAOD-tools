@@ -91,16 +91,33 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    dnn_dim6_branch_2_NOMOREDY_lower,
+    dnn_dim6_branch_2_NOMOREDY_lower_tobesure,
+    dnn_dim6_branch_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_branch_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB,
+    dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB_10000,
+    dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB_10001,
+    dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB_bisnotopt,
 ]
 
 paths = [    
-    dnn_dim6_path_2_NOMOREDY_lower,
-
+    dnn_dim6_path_2_NOMOREDY_lower_tobesure,
+    dnn_dim6_path_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_path_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB,
+    dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB_10000,
+    dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB_10001,
+    dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB_bisnotopt,
 ]
 
 scalers = [
-    dnn_dim6_scaler_2_NOMOREDY_lower,
+    dnn_dim6_scaler_2_NOMOREDY_lower_tobesure,
+    dnn_dim6_scaler_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_scaler_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB,
+    dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB_10000,
+    dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB_10001,
+    dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB_bisnotopt,
 ]
 
 folder = opt.folder

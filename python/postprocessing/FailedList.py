@@ -3,7 +3,7 @@ def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
 
-add = "--var DNN_ --lastbins"
+add = "--var DNN_ "
 
 os.system("reset")
 folder = "vUL050"
@@ -13,6 +13,11 @@ errpaths = [
     ("condorplot_" + folder + "_tdmcut_flat/error/", "PlotCondor.py --tDMcut --flat " + add, ""),
     ("condorplot_" + folder + "_test_flat/error/", "PlotCondor.py --test --flat " + add, ""),
     ("condorplot_" + folder + "_flat/error/", "PlotCondor.py --flat " + add, ""),
+
+    ("condorplot_" + folder + "_tdmcut_flat_lastbins/error/", "PlotCondor.py --tDMcut --flat --lastbins " + add, ""),
+    ("condorplot_" + folder + "_test_flat_lastbins/error/", "PlotCondor.py --test --flat --lastbins " + add, ""),
+    ("condorplot_" + folder + "_flat_lastbins/error/", "PlotCondor.py --flat --lastbins " + add, ""),
+
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test --cuts \"DNN_SM_final_1>=0.90\" " + add, "DNN_SM_final_1>=0.90"),
     ("condorplot_" + folder + "/error/", "PlotCondor.py " + add, ""),
     ("condorbranch_" + folder + "/error/", "BranchCondor.py --or --rw"),
