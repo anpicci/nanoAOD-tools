@@ -527,7 +527,7 @@ def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
     if theCall[-1] == False:
         toKeep[-1] = 1.0
     Print("flattening binning found:")
-    Print(toKeep + " " + str(len(toKeep)))
+    Print(str(toKeep) + " " + str(len(toKeep)))
     binedges = array.array("d", toKeep) 
     return binedges
 
