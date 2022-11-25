@@ -488,7 +488,7 @@ if opt.stack:
 
 def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
     Print("Variable: " + variable)
-    Print("nbins: " + wnbins)
+    Print("nbins: " + str(wnbins))
     oldnbins = 5000
     rfilename = filerepo + "/" + signal + "/" + signal + ".root"
     signalcut = "w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF*((abs(lepton_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(1.)*(abs(deltaEta_jj)>2.5)*(tau_DecayMode<5||tau_DecayMode>6))*(lepton_TightRegion==1&&tau_TightRegion==1)"
