@@ -192,7 +192,7 @@ lepstr = lepstr.replace("plot", "plot" + plot_tag)
 
 cut = opt.cut #default cut must be obvious, for example 1.
 vartoplot = opt.varss.split(",")
-Print("To plot: " + vartoplot)
+Print("To plot: " + str(vartoplot))
 
 epdgstr = ""
 mpdgstr = ""
