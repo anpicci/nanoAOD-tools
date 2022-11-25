@@ -932,7 +932,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         histag = "min_deltaPhi_MET"
     if variabile_._name.startswith("max"):
         histag = "max_deltaPhi_MET"
-
+    '''
     if reg_ == 'ltau':
         if str(lep_).strip('[]') == "muon":
             lep_tag = "#mu+"
@@ -1294,7 +1294,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         #infile[s.label].Delete()
         infile[kf].Delete()
     #os.system('set LD_PRELOAD=libtcmalloc.so')
-
+    '''
 leptons = opt.lep.split(',')
 
 #dataset_dict = {'2016':[],'2017':[],'2018':[]}
