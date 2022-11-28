@@ -97,10 +97,16 @@ def submitter(sample, argsins, folder, cut):
     tagyear = str(sample.year)
     inputfiles = "transfer_input_files    = $(Proxy_path), ./rwgcards, ./samples, CMS_lumi.py, variabile.py, skimtree_utils_ssWW_wFakes_old.py, " + pymacro+ "\n"
     f.write(inputfiles)
-    f.write("+JobFlavour             = \"workday\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
+    if not ("aQGC" in sample.label or "aTGC" in sample.label):
+        f.write("+JobFlavour             = \"workday\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
+    else:
+        f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 2\n")
+    if not ("aQGC" in sample.label or "aTGC" in sample.label):
+        f.write("request_cpus            = 2\n")
+    else:
+        f.write("request_cpus            = 4\n")
     #f.write("+AccountingGroup        = \"group_u_BE.ABP.SLAP\"\n")
     output = outcore + sample.label + cuttag + ".out"
     log = logcore + sample.label + cuttag + ".log"

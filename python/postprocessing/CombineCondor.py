@@ -145,9 +145,9 @@ def submitter(model, srvar, crvar, argsins, folder):
     inputfiles = "transfer_input_files    = $(Proxy_path)\n"
     f.write(inputfiles)
     if (model.startswith("c") and ":" in model):
-        f.write("+JobFlavour             = \"testmatch\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
+        f.write("+JobFlavour             = \"nextweek\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     else:    
-        f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
+        f.write("+JobFlavour             = \"testmatch\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
     if (model.startswith("c") and ":" in model) or model == "EWvsQCD":
@@ -155,7 +155,7 @@ def submitter(model, srvar, crvar, argsins, folder):
     elif model.startswith("c") or model.startswith("F"):
         f.write("request_cpus            = 6\n")
     else:
-        f.write("request_cpus            = 4\n")
+        f.write("request_cpus            = 6\n")
     output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".out"
     log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".log"
     error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".err"

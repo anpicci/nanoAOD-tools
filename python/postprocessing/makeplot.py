@@ -18,10 +18,10 @@ from collections import OrderedDict
 from platform import python_version
 
 def Print(string):
-    if python_version().startswith("3"):
-        print(string)
-    elif python_version().startswith("2"):
-        print string
+    #if python_version().startswith("3"):
+    print(string)
+    #elif python_version().startswith("2"):
+    #print string
 rwgdict_dim8 = CardToDict("dim8", "FT1_2p0")
 rwgdict_dim6 = CardToDict("dim6")
 
@@ -31,11 +31,11 @@ desiredop_dim8 = [
     "FS2_1p0",
     "FM0_1p0",
     "FM1_0p9",
-    ##"FM6_1p0",
+    ###"FM6_1p0",
     "FM7_1p0",
-    "FT0_1p0",
-    "FT1_1p0",
-    "FT2_0p9",
+    #"FT0_1p0",
+    #"FT1_1p0",
+    #"FT2_0p9",
 ]
 
 desiredop_dim6 = [
@@ -620,7 +620,7 @@ def lumi_writer(dataset, lumi):
                     h_pdfsys = ROOT.TH1F(infile.Get("h_PDFsys"))
                 except:
                     toPDF = False
-                Print("evtree: " + " " + evtree + " " + tree)
+                Print("evtree: " + " " + str(evtree) + " " + str(tree))
                 
                 #tree.SetBranchStatus('w_nominal', 0)
                 #if toPDF:
@@ -1487,24 +1487,24 @@ for year in years:
         
         ############ Tommaso checks #########
         ### no DY bug
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2000', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2001', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2002', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2003', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_test', 'dim8 DNN output', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
-        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_test', 'dim6 DNN output', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev)) 
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test', 'SM DNN output (NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2000', 'SM DNN output (NMR test 2000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2001', 'SM DNN output (NMR test 2001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2002', 'SM DNN output (NMR test 2002)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_test_2003', 'SM DNN output (NMR test 2003)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_test', 'dim8 DNN output (NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_test', 'dim6 DNN output (NMR test)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev)) 
        
 
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_4000', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_4001', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4000', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4001', 'SM DNN output', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
-        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_test_nodivide', 'dim6 DNN output', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
-        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_halfway', 'dim6 DNN output', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
-        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower', 'dim8 DNN output', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower', 'SM DNN output (NMR lower)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_4000', 'SM DNN output (NMR lower 4000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_4001', 'SM DNN output (NMR lower 4001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt', 'SM DNN output (NMR bis)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4000', 'SM DNN output (NMR bis 4000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_bisnotopt_4001', 'SM DNN output (NMR bis 4001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_test_nodivide', 'dim6 DNN output (NMR test nodivide)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_halfway', 'dim6 DNN output (NMR lower halfway)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower', 'dim8 DNN output (NMR lower)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
 
 
         '''
@@ -1527,6 +1527,16 @@ for year in years:
         variables.append(variabile('DNN_SM_final_1_iter7', 'DNN_SM_final_1_iter7', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         variables.append(variabile('DNN_SM_final_1_iter8', 'DNN_SM_final_1_iter8', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         '''
+
+        #####
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB', 'SM DNN output (f1 NMR lower NN LCB)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_10000', 'SM DNN output (f1 NMR lower NN LCB 10000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_10001', 'SM DNN output (f1 NMR lower NN LCB 10001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_bisnotopt', 'SM DNN output (f1 NMR lower NN LCB bis)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_tobesure', 'dim6 DNN output (f2 NMR lower tbs)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_NONOISE_LCB', 'dim6 DNN output (f2 NMR lower NN LCB)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_NONOISE_LCB_again_2', 'dim8 DNN output (f3 NMR lower NN LCB ag2)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+
         ########### end #############
         ###with DY bug
         #variables.append(variabile('DNN_cHW_final_1', 'c_{HW} DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
@@ -1890,7 +1900,7 @@ for year in years:
                     try:
                         fout = ROOT.TFile.Open(foutput, "UPDATE")
                     except:
-                        fout.Close()
+                        #fout.Close()
                         os.system("rm " + foutput)
                         fout = ROOT.TFile.Open(foutput, "RECREATE")
                     else:
