@@ -2,6 +2,7 @@ import os
 from ML.MLmodels import *
 import optparse
 from samples.samplesUL import *
+import copy
 
 #os.system("reset")
 
@@ -53,7 +54,11 @@ if not os.path.exists(logcore):
 os.popen("cp /tmp/x509up_u" + str(uid) + " /afs/cern.ch/user/" + inituser + "/" + username + "/private/x509up")
 
 def submitter(sample, argsins, folder):
-    exesh = subfold + "/" + exe + "_" + sample.label + "_" + folder + ".sh"
+    IsString = bool(isinstance(sample, str))
+    if not IsString:
+        exesh = subfold + "/" + exe + "_" + sample.label + "_" + folder + ".sh"
+    else:
+        exesh = subfold + "/" + exe + "_" + sample + "_" + folder + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
     fsh.write("cd /afs/cern.ch/user/" + inituser + "/" + username + "\n")
@@ -63,7 +68,10 @@ def submitter(sample, argsins, folder):
         fsh.write("python3 " + pymacro + " " + argsin + "\n")
     fsh.close()
     
-    condorsubb = condorsub + "_" + str(sample.year) + "_" + folder + ".sub"
+    if not IsString:
+        condorsubb = condorsub + "_" + str(sample.year) + "_" + folder + ".sub"
+    else:
+        condorsubb = condorsub + "_" + sample + "_" + folder + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
@@ -72,17 +80,23 @@ def submitter(sample, argsins, folder):
     f.write("use_x509userproxy       = true\n")
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
-    tagyear = str(sample.year)
+    #tagyear = str(sample.year)
     inputfiles = "transfer_input_files    = $(Proxy_path),\n" # ./rwgcards, ./samples, CMS_lumi.py, variabile.py, makeplot.py, " + pymacro+ "\n"
     f.write(inputfiles)
     f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
-    f.write("request_cpus            = 4\n")
+    f.write("request_cpus            = 2\n")
     
-    output = outcore + sample.label + ".out"
-    log = logcore + sample.label + ".log"
-    error = errcore + sample.label + ".err"
+    if not IsString:
+        output = outcore + sample.label + ".out"
+        log = logcore + sample.label + ".log"
+        error = errcore + sample.label + ".err"
+    else:
+        output = outcore + sample + ".out"
+        log = logcore + sample + ".log"
+        error = errcore + sample + ".err"
+
     f.write("output                  = " + output + "\n")
     f.write("error                   = " + error + "\n")
     f.write("log                     = " + log + "\n")
@@ -96,10 +110,11 @@ def submitter(sample, argsins, folder):
         os.system("rm " + error)
 
     os.system("condor_submit " + condorsubb)
+    #print("mv " + condorsubb + " " + subfold)
     os.system("mv " + condorsubb + " " + subfold)
 
 years = opt.years.split(",")
-tomerge = opt.dataset.split(",")
+tomerge = opt.dataset.split(":")
 toveto = opt.veto.split(",")
 
 if opt.checksubmitted:
@@ -132,7 +147,29 @@ for dat in merge_list:
 '''
 
 for year in years:
-    arg1 = " -y " + year 
+    arg1 = " -y " + year
+
+    datstring = ""
+    
+    toContinue = False
+    for tomergeobj in tomerge:
+        if "," in tomergeobj:
+            argss = []
+            datstring = copy.deepcopy(tomergeobj)
+            arg2 = arg0 + arg1 + " -d " + datstring
+
+            if opt.rw:
+                arg2 += " --rw"
+            if opt.override:
+                arg2 += " --or"
+
+            argss.append(arg2)
+            submitter(datstring + "_" + year, argss, folder)
+            toContinue = True
+
+    if toContinue:
+        continue
+ 
     for dat in merge_list:
         argss = []
         #if dat.label.startswith("TT_") or dat.label.startswith("WJets_") or 
@@ -144,6 +181,8 @@ for year in years:
 
         toMerge = False
         toVeto = False
+
+        datstring = ""
         
         if opt.dataset != "all":
             for dtp in tomerge:
@@ -162,7 +201,9 @@ for year in years:
             if toVeto:
                 continue
 
-        arg2 = arg0 + arg1 + " -d " + dat.label
+        datstring = dat.label
+
+        arg2 = arg0 + arg1 + " -d " + datstring
 
         if opt.rw:
             arg2 += " --rw"

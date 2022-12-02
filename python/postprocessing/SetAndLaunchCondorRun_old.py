@@ -429,7 +429,7 @@ if not opt.check:
         t.write("PT_CUT_ELE=  35\n")
     else:
         t.write("PT_CUT_ELE=  35\n")
-    t.write("ETA_CUT_ELE= 2.4\n")
+    t.write("ETA_CUT_ELE= 2.5\n")
     t.write("ISO_CUT_ELE= 0.08\n\n")
     
     t.write("REL_ISO_CUT_LEP_VETO_ELE=   0.2\n")

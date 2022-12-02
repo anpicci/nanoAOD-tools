@@ -155,7 +155,7 @@ def submitter(model, srvar, crvar, argsins, folder):
     elif model.startswith("c") or model.startswith("F"):
         f.write("request_cpus            = 6\n")
     else:
-        f.write("request_cpus            = 6\n")
+        f.write("request_cpus            = 4\n")
     output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".out"
     log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".log"
     error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".err"

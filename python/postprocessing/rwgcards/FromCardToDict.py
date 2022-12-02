@@ -12,6 +12,7 @@ def CardToDict(dim, op = ""):
     if op != "":
         cardpath += "_" + op
     cardpath += ".txt"
+    print("Opening card", cardpath)
     rwgcard = open(cardpath, "r")
     
     if dim == "dim8":
@@ -96,7 +97,10 @@ def CardToDict(dim, op = ""):
                     coeffdict[coeff] is None
                 except KeyError:
                     coeffdict[coeff] = OrderedDict()
-                    coeffdict[coeff]['0'] = [0, 0]
+                    if "_" in coeff:
+                        coeffdict[coeff]['0_0'] = [0, 0]
+                    else:
+                        coeffdict[coeff]['0'] = [0, 0]
                     if idc == 0:
                         idc += 1
                 else:
@@ -117,8 +121,9 @@ def CardToDict(dim, op = ""):
 #for k, v in CardToDict("dim6").items():
     #print("\ncoeff\t", k)
     #print(k)
-    #for kv in v.keys():
-        #print(kv)
+    #for kv, vv in v.items():
+        #print("\n", kv)
+        #print(vv)
     #print(k, v)
 #CardToDict("dim8", "FT1_2p0")
 #CardToDict("dim6")

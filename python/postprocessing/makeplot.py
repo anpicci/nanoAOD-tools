@@ -33,9 +33,9 @@ desiredop_dim8 = [
     "FM1_0p9",
     ###"FM6_1p0",
     "FM7_1p0",
-    #"FT0_1p0",
-    #"FT1_1p0",
-    #"FT2_0p9",
+    "FT0_1p0",
+    "FT1_1p0",
+    "FT2_0p9",
 ]
 
 desiredop_dim6 = [
@@ -1536,6 +1536,20 @@ for year in years:
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_tobesure', 'dim6 DNN output (f2 NMR lower tbs)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_NONOISE_LCB', 'dim6 DNN output (f2 NMR lower NN LCB)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
         variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_NONOISE_LCB_again_2', 'dim8 DNN output (f3 NMR lower NN LCB ag2)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
+
+
+        #######
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed', 'SM DNN output (f1 NMR lower FS)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100000', 'SM DNN output (f1 NMR lower FS 100000)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100001', 'SM DNN output (f1 NMR lower FS 100001)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100002', 'SM DNN output (f1 NMR lower FS 100002)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100003', 'SM DNN output (f1 NMR lower FS 100003)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100006', 'SM DNN output (f1 NMR lower FS 100006)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100007', 'SM DNN output (f1 NMR lower FS 100007)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100011', 'SM DNN output (f1 NMR lower FS 100011)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_SM_final_1_NOMOREDY_lower_fixedseed_100012', 'SM DNN output (f1 NMR lower FS 100012)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_halfway_fixedseed_100001', 'dim6 DNN output (f2 NMR lower hw fs 100001)', wzero+'*('+cutbase+')', True, nbin_bdtdim6_dev, bin_bdtdim6_dev))
+        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_fixedseed_100000', 'dim8 DNN output (f3 NMR lower FS 100000)', wzero+'*('+cutbase+')', True, nbin_bdtdim8_dev, bin_bdtdim8_dev)) 
 
         ########### end #############
         ###with DY bug

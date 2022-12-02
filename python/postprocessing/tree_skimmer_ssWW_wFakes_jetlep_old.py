@@ -357,11 +357,17 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         for opname, opdict in rwgdict.items():
             #print(opname, opdict)
             for val in opdict.keys():
-                coeffstr = opname
-                #if not "_" in opname:
-                coeffstr += "_" + val
+                coeffstrs = opname.split("_")
+                vals = val.split("_")
+                coeffstr = ""
+                for cstr, vall in zip(coeffstrs, vals):
+                    if coeffstr != "":
+                        coeffstr += "_"
+                    coeffstr += cstr + "_" + vall
                 wcoeff[coeffstr] = array.array('f', [-999.]*6)
                 var_list.append(wcoeff[coeffstr])
+    
+    #print("wcoeff:", wcoeff)
     
     #++++++++++++++++++++++++++++++++++
     #++         All category         ++
@@ -687,6 +693,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     #w_dim8
     if IsDim8 or IsDim6:
         for coeffname, coeffarray in wcoeff.items():
+            #print(coeffname, coeffarray)
             systTree.branchTreesSysts(trees, scenario, coeffname, outTreeFile, coeffarray)
             
     #branches added for ssWW analysis
@@ -858,7 +865,8 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
                 if i > 8:#00:
                     #if i != 8631:
                     #continue
-                    break
+                    #break
+                    pass
             
             print("\nevento n. " + str(i))
         else:
@@ -1804,57 +1812,116 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if IsDim8 or IsDim6:
             #pass
             for opname, opdict in rwgdict.items():
+                #print("\n", opname, opdict)
                 for val in opdict.keys():
-                    if val == '0':
+                    if val == '0' or val == "0_0":
                         continue
 
                     epoint = float(val.replace("p", "."))
-                    coeffstr = opname + "_" + val
-                    idxpos = opdict[val][1]#int((EFT_operator[opn]["idx"])*11 - (eidx + 1))
-                    idxneg = opdict[val][0]#int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
-                    idxzero = opdict["0"][0]#int((EFT_operator[opn]["idx"] - 1)*11 + 5)
 
-                    if not (idxpos < len(LHEDim8) and idxneg < len(LHEDim8) and idxzero < len(LHEDim8)):
-                        continue
-                    #try:
-                    wpos = LHEitem(LHEDim8[idxpos]) if idxpos >= 0 else 1.
-                    wneg = LHEitem(LHEDim8[idxneg]) if idxneg >= 0 else 1.
-                    wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
-                    #except:
-                       #continue
-                    #print("\n")
-                    #print('idxneg:', idxneg, 'wneg:', wneg)
-                    #print('idxpos:', idxpos, 'wpos:', wpos)
-                    #print('idxzero:', idxzero, 'wzero:', wzero)
+                    coeffnames = opname.split("_")
+                    vals = val.split("_")
+                    coeffstr = ""
+                    coeffstrs = []
+                    for cstr, vall in zip(coeffnames, vals):
+                        if coeffstr != "":
+                            coeffstr += "_"
+                        coeffstr += cstr + "_" + vall
+                        coeffstrs.append(cstr + "_" + vall)
 
-                    wcoeff[coeffstr][0] = wzero
-                    wcoeff[coeffstr][1] = wneg
-                    wcoeff[coeffstr][2] = wpos
-                    wcoeff[coeffstr][3] = wzero
+                    #coeffstr = opname + "_" + val
+                    #print(opdict[val])
+                    if len(coeffstrs) == 1:
+                        idxpos = opdict[val][1]#int((EFT_operator[opn]["idx"])*11 - (eidx + 1))
+                        idxneg = opdict[val][0]#int((EFT_operator[opn]["idx"] - 1)*11 + eidx)
+                        idxzero = opdict["0"][0]#int((EFT_operator[opn]["idx"] - 1)*11 + 5)
+                    
+                        if not (idxpos < len(LHEDim8) and idxneg < len(LHEDim8) and idxzero < len(LHEDim8)):
+                            #print(idxpos, idxneg, idxzero, len(LHEDim8))
+                            continue
+                        #try:
+                        wpos = round(LHEitem(LHEDim8[idxpos]), 10) if idxpos >= 0 else 1.
+                        wneg = round(LHEitem(LHEDim8[idxneg]), 10) if idxneg >= 0 else 1.
+                        wzero = round(LHEitem(LHEDim8[idxzero]), 10) if idxzero >= 0 else 1.
+                        #except:
+                            #continue
+                        #print("\n")
+                        #print('idxneg:', idxneg, 'wneg:', wneg)
+                        #print('idxpos:', idxpos, 'wpos:', wpos)
+                        #print('idxzero:', idxzero, 'wzero:', wzero)
+                    
+                        wcoeff[coeffstr][0] = wzero
+                        wcoeff[coeffstr][1] = wneg
+                        wcoeff[coeffstr][2] = wpos
+                        wcoeff[coeffstr][3] = wzero
 
-                    wsign = 0
-                    kpow = 0
-
-                    for idwc in range(4, 6):
-                        if idwc == 4:#### lin term
-                            #wsign = -1.
-                            #kpow = 2.*epoint
-                            w_coeff = (wpos - wneg) / (2.*epoint)
-                        elif idwc == 5: #### quad term
-                            #wsign = +1.
-                            #wpos += -2.*wzero
-                            #kpow = 2.*(epoint**2.)
-                            w_coeff = (wpos + wneg - 2.*wzero) / (2.*epoint**2.)
-                        print("before calculating w_coeff:", wpos, wsign,wneg, kpow)
+                        for idwc in range(4, 6):
+                            if idwc == 4:#### lin term
+                                w_coeff = (wpos - wneg) / (2.*epoint)
+                            elif idwc == 5: #### quad term
+                                w_coeff = (wpos + wneg - 2.*wzero) / (2.*epoint**2.)
+                            #print("before calculating w_coeff:", wpos, wsign,wneg, kpow)
                         
-                        wcoeff[coeffstr][idwc] = w_coeff
-                    if Debug:
-                        print("wcoeff[", coeffstr, "]:", wcoeff[coeffstr])
+                            wcoeff[coeffstr][idwc] = w_coeff
+
+                    else:
+                        idxzero = opdict["0_0"][0]##sm 
+                        c1 = coeffstrs[0].split("_")[0]
+                        c2 = coeffstrs[1].split("_")[0]
+                        val1 = coeffstrs[0].split("_")[1]
+                        val2 = coeffstrs[1].split("_")[1]
+                        epoint1 = round(float(val1.replace("p", ".")), 2)
+                        epoint2 = round(float(val2.replace("p", ".")), 2)
+                        idxpos1 = rwgdict[c1][val1][1] ## rescaling to c1
+                        idxneg1 = rwgdict[c1][val1][0] ## rescaling to c1
+                        idxpos2 = rwgdict[c2][val2][1] ## rescaling to c2  
+                        idxneg2 = rwgdict[c2][val2][0] ## rescaling to c2  
+                        idxcomb = opdict[val][1] ## rescaling to c1 + c2
+                        #print(c1, val1, epoint1, idxpos1, idxneg1)
+                        #print(c2, val2, epoint2, idxpos2, idxneg2)
+
+                        wpos1 = LHEitem(LHEDim8[idxpos1]) if idxpos >= 0 else 1.
+                        wneg1 = LHEitem(LHEDim8[idxneg1]) if idxneg >= 0 else 1.
+                        wpos2 = LHEitem(LHEDim8[idxpos2]) if idxpos >= 0 else 1.
+                        wneg2 = LHEitem(LHEDim8[idxneg2]) if idxneg >= 0 else 1.
+                        wzero = LHEitem(LHEDim8[idxzero]) if idxzero >= 0 else 1.
+                        wcomb = LHEitem(LHEDim8[idxcomb]) if idxcomb >= 0 else 1.
+
+                        wcoeff[coeffstr][0] = wcomb
+                        wcoeff[coeffstr][1] = wpos1
+                        wcoeff[coeffstr][2] = wpos2
+                        
+                        clin1 = (wpos1 - wneg1) / 2.
+                        lin1 = clin1 / epoint1
+                        clin2 = (wpos2 - wneg2) / 2.
+                        lin2 = clin2 / epoint2
+                        cquad1 = (wpos1 + wneg1 - 2.*wzero) / 2. 
+                        quad1 =  cquad1 / (epoint1**2.)
+                        cquad2 = (wpos2 + wneg2 - 2.*wzero) / 2. 
+                        quad2 = cquad2 / (epoint2**2.)
+
+                        #print("wpos1:", wpos1, "wpos2:", wpos2)#, "lin1:", lin1, "lin2:", lin2, "quad1:", quad1, "quad2:", quad2)
+                        mixed12 = (wcomb - wzero - clin1 - clin2 - cquad1 - cquad2) / (epoint1 * epoint2)
+                        #print("wzero:", wzero, "wcomb:", wcomb, "lin1:", lin1, "lin2:", lin2, "quad1:", quad1, "quad2:", quad2, "mixed12", mixed12)
+                        wcoeff[coeffstr][3] = lin1 + lin2
+                        wcoeff[coeffstr][4] = quad1 + quad2
+                        wcoeff[coeffstr][5] = mixed12
+
+                    #if Debug:
+                        #print("wcoeff[", coeffstr, "]:", wcoeff[coeffstr])
+            
+            print("\n")
+            #for kkk, vvv in wcoeff.items():
+                #print(kkk, vvv)
+
 
         w_nominal_all[0] *= pdf_totalSF*toprwg
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         systTree.fillTreesSysts(trees, scenario)
-        #if Debug:
+        break
+    
+  
+       #if Debug:
             #print("exiting at the end of the event (saving)")
 
     #trees[0].Print()
@@ -1874,6 +1941,9 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     if idxs == 0 or (isMC and idxs>0):
         #for scen in scenarios:
         print("Number of events in output tree " + str(scenario) + ": " + str(trees[idxs].GetEntries()))
+    
+
+
 
 for ids, scenario in enumerate(scenarios):
     if Debug and not (scenario == "nominal"):# or scenario.startswith("met")):
