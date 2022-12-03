@@ -1918,9 +1918,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         w_nominal_all[0] *= pdf_totalSF*toprwg
         systTree.setWeightName("w_nominal",copy.deepcopy(w_nominal_all[0]))
         systTree.fillTreesSysts(trees, scenario)
-        break
     
-  
        #if Debug:
             #print("exiting at the end of the event (saving)")
 
