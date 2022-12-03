@@ -1245,7 +1245,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     h_bkg_err.SetMarkerSize(0)
     h_bkg_err.SetFillColor(ROOT.kGray+1)
     #if not opt.tostack:
-    if opt.las tbins:
+    if opt.lastbins:
         h_bkg_err.GetXaxis().SetRangeUser(firstbin, lastbin)
     h_bkg_err.Draw("e20same")
      
