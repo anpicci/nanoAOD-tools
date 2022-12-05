@@ -1031,7 +1031,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     firstbin = 0
     lastbin = 0
     for ids, s in enumerate(samples_):
-        tofindlastbins = True
+        tofindlastbins = True and variabile_._name.startswith("DNN_")
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
             Print("not passed")
             continue
