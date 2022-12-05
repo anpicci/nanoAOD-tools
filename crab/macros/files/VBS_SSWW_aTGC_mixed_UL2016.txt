@@ -137,7 +137,6 @@ root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusmin
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/VBS_SSWW_aTGC_mixed_UL2016/221121_181813/0000/tree_hadd_137.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/VBS_SSWW_aTGC_mixed_UL2016/221121_181813/0000/tree_hadd_138.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/VBS_SSWW_aTGC_mixed_UL2016/221121_181813/0000/tree_hadd_139.root
-root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/VBS_SSWW_aTGC_mixed_UL2016/221121_181813/0000/tree_hadd_140.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/VBS_SSWW_aTGC_mixed_UL2016/221121_181813/0000/tree_hadd_141.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/VBS_SSWW_aTGC_mixed_UL2016/221121_181813/0000/tree_hadd_142.root
 root://cms-xrd-global.cern.ch//store/user/apiccine/VBSLegnaro/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/VBS_SSWW_aTGC_mixed_UL2016/221121_181813/0000/tree_hadd_143.root

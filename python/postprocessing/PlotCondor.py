@@ -19,7 +19,7 @@ parser.add_option('--systs', dest='systs', type=str, default = 'all', help='Syst
 parser.add_option('--count', dest='count', default = False, action='store_true', help='enable writing countings')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
-parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable signal-flattening binning')
+parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable signal-flattening binning')
 parser.add_option('--lastbins', dest='lastbins', default = False, action='store_true', help='Last bins')
 (opt, args) = parser.parse_args()
 
@@ -55,8 +55,8 @@ if opt.tDMcut:
     tagf += "_tdmcut"
 elif opt.test:
     tagf += "_test"
-if opt.flat:
-    tagf += "_flat"
+if not opt.flat:
+    tagf += "_noflat"
 if opt.lastbins:
     tagf += "_lastbins"
 
@@ -206,8 +206,8 @@ for year in years:
                 arg3 += " --tDMcut"
             elif opt.test:
                 arg3 += " --test"
-            if opt.flat:
-                arg3 += " --flat"
+            if not opt.flat:
+                arg3 += " --noflat"
             if opt.lastbins:
                 arg3 += " --lastbins"
             for lepn in lepss:

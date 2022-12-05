@@ -91,45 +91,21 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    dnn_dim6_branch_2_NOMOREDY_lower_halfway_fixedseed_100001,
-    dnn_dim8_branch_3_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100001,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100002,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100003,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100006,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100007,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100011,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100012,
+    dnn_dim6_branch_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_branch_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB,    
 ]
 
 paths = [    
-    dnn_dim6_path_2_NOMOREDY_lower_halfway_fixedseed_100001,
-    dnn_dim8_path_3_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100001,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100002,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100003,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100006,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100007,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100011,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100012,
+    dnn_dim6_path_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_path_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB,
 ]
 
 scalers = [
-    dnn_dim6_scaler_2_NOMOREDY_lower_halfway_fixedseed_100001,
-    dnn_dim8_scaler_3_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100001,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100002,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100003,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100006,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100007,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100011,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100012,
+    dnn_dim6_scaler_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_scaler_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB,
 ]
 
 folder = opt.folder

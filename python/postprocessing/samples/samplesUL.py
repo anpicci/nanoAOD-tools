@@ -22,11 +22,11 @@ TTcolor = ROOT.kRed+2
 TTdilepcolor = ROOT.kAzure-9
 TVXcolor = ROOT.kCyan-7
 VGcolor = ROOT.kSpring+7
-WScolor = ROOT.kGreen-10
+DYcolor = ROOT.kGreen-10
 TBcolor = ROOT.kOrange-4
 WJcolor = ROOT.kGreen+2
 WZcolor = ROOT.kYellow-4
-DYcolor = ROOT.kRed-9
+WScolor = ROOT.kRed-9
 VBScolor = ROOT.kRed
 VBSLLcolor = ROOT.kGreen+3
 VBSTLcolor = ROOT.kBlue+3
@@ -38,6 +38,7 @@ QCDVBScolor = ROOT.kViolet+2
 WWJJcolor = ROOT.kMagenta-4
 aQGCcolor = ROOT.kGreen
 aTGCcolor = ROOT.kViolet
+othcolor = ROOT.kGreen+2
 ######### UL2016APV ##########
 
 ### ZZtoLep ###
@@ -4274,6 +4275,16 @@ SampleHTFake_UL2018.components = [
     GluGluToContinToZZTo4tau_UL2018,
 ]
 
+Others_ULRunII = sample(othcolor, 1, 1001, "Other bkgs.", "Others_ULRunII")
+Others_ULRunII.year = "ULRunII"
+Others_ULRunII.components = [
+    ZZtoLep_ULRunII,
+    Triboson_ULRunII,
+    TVX_ULRunII,
+    VG_ULRunII,
+    WZ_ULRunII,
+]
+    
 ########################################################
 
 sample_dict={
@@ -4606,6 +4617,7 @@ sample_dict={
     "VBS_SSWW_aTGC_ULRunII":VBS_SSWW_aTGC_ULRunII,
     "VBS_SSWW_aTGC_mixed_ULRunII":VBS_SSWW_aTGC_mixed_ULRunII,
 
+    "Others_ULRunII":Others_ULRunII,
 }
 
 crab_dict = {
@@ -4895,7 +4907,7 @@ merge_dict = {
     "TVX_UL2016APV":TVX_UL2016APV,
     "VG_UL2016APV":VG_UL2016APV,
     "WrongSign_UL2016APV":WrongSign_UL2016APV,
-    "WrongSign_ML_UL2016APV":WrongSign_ML_UL2016APV,
+    #"WrongSign_ML_UL2016APV":WrongSign_ML_UL2016APV,
     "Triboson_UL2016APV":Triboson_UL2016APV,
     "WJets_UL2016APV":WJets_UL2016APV,
     "WJets_Jbin_UL2016APV":WJets_Jbin_UL2016APV,
@@ -4915,8 +4927,8 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2016APV":VBS_SSWW_cW_cHW_UL2016APV,
     #"VBS_SSWW_DIM6_SM_UL2016APV":VBS_SSWW_DIM6_SM_UL2016APV,
     "VBS_SSWW_aQGC_UL2016APV":VBS_SSWW_aQGC_UL2016APV,
-    "VBS_SSWW_aTGC_UL2016APV":VBS_SSWW_aTGC_UL2016APV,
-    #"VBS_SSWW_aTGC_mixed_UL2016APV":VBS_SSWW_aTGC_mixed_UL2016APV,
+    #"VBS_SSWW_aTGC_UL2016APV":VBS_SSWW_aTGC_UL2016APV,
+    "VBS_SSWW_aTGC_mixed_UL2016APV":VBS_SSWW_aTGC_mixed_UL2016APV,
     "DataMu_UL2016APV":DataMu_UL2016APV,
     "FakeMu_UL2016APV":FakeMu_UL2016APV,
     "DataEle_UL2016APV":DataEle_UL2016APV,
@@ -4930,7 +4942,7 @@ merge_dict = {
     "TVX_UL2016":TVX_UL2016,
     "VG_UL2016":VG_UL2016,
     "WrongSign_UL2016":WrongSign_UL2016,
-    "WrongSign_ML_UL2016":WrongSign_ML_UL2016,
+    #"WrongSign_ML_UL2016":WrongSign_ML_UL2016,
     #"VBFHToWWTo2L2Nu_UL2016":VBFHToWWTo2L2Nu_UL2016,
     "Triboson_UL2016":Triboson_UL2016,
     "WJets_UL2016":WJets_UL2016,
@@ -4951,8 +4963,8 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2016":VBS_SSWW_cW_cHW_UL2016,
     #"VBS_SSWW_DIM6_SM_UL2016":VBS_SSWW_DIM6_SM_UL2016,
     "VBS_SSWW_aQGC_UL2016":VBS_SSWW_aQGC_UL2016,
-    "VBS_SSWW_aTGC_UL2016":VBS_SSWW_aTGC_UL2016,
-    #"VBS_SSWW_aTGC_mixed_UL2016":VBS_SSWW_aTGC_mixed_UL2016,
+    #"VBS_SSWW_aTGC_UL2016":VBS_SSWW_aTGC_UL2016,
+    "VBS_SSWW_aTGC_mixed_UL2016":VBS_SSWW_aTGC_mixed_UL2016,
     "DataMu_UL2016":DataMu_UL2016,
     "FakeMu_UL2016":FakeMu_UL2016,
     "DataEle_UL2016":DataEle_UL2016,
@@ -4972,8 +4984,8 @@ merge_dict = {
     "VBS_SSWW_cHW_BSM_UL2016M":VBS_SSWW_cHW_BSM_UL2016M,
     "VBS_SSWW_cW_cHW_UL2016M":VBS_SSWW_cW_cHW_UL2016M,
     "VBS_SSWW_aQGC_UL2016M":VBS_SSWW_aQGC_UL2016M,
-    "VBS_SSWW_aTGC_UL2016M":VBS_SSWW_aTGC_UL2016M,
-    #"VBS_SSWW_aTGC_mixed_UL2016M":VBS_SSWW_aTGC_mixed_UL2016M,
+    #"VBS_SSWW_aTGC_UL2016M":VBS_SSWW_aTGC_UL2016M,
+    "VBS_SSWW_aTGC_mixed_UL2016M":VBS_SSWW_aTGC_mixed_UL2016M,
     "WpWpJJ_QCD_UL2016M":WpWpJJ_QCD_UL2016M,
     "WpWpJJ_UL2016M":WpWpJJ_UL2016M,
     "ZZtoLep_UL2016M":ZZtoLep_UL2016M,
@@ -4982,7 +4994,7 @@ merge_dict = {
     "VG_UL2016M":VG_UL2016M,
     "WZ_UL2016M":WZ_UL2016M,
     "WrongSign_UL2016M":WrongSign_UL2016M,
-    "WrongSign_ML_UL2016M":WrongSign_ML_UL2016M,
+    #"WrongSign_ML_UL2016M":WrongSign_ML_UL2016M,
     #"DYJetsToLL_FxFx_UL2016M":DYJetsToLL_FxFx_UL2016M,
     #"DYJetsToLL_Jbin_FxFx_UL2016M":DYJetsToLL_Jbin_FxFx_UL2016M,
     "TTTo2L2Nu_UL2016M":TTTo2L2Nu_UL2016M,
@@ -5000,7 +5012,7 @@ merge_dict = {
     "TVX_UL2017":TVX_UL2017,
     "VG_UL2017":VG_UL2017,
     "WrongSign_UL2017":WrongSign_UL2017,
-    "WrongSign_ML_UL2017":WrongSign_ML_UL2017,
+    #"WrongSign_ML_UL2017":WrongSign_ML_UL2017,
     "Triboson_UL2017":Triboson_UL2017,
     "WJets_UL2017":WJets_UL2017,
     "WJets_Jbin_UL2017":WJets_Jbin_UL2017,
@@ -5021,8 +5033,8 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2017":VBS_SSWW_cW_cHW_UL2017,
     #"VBS_SSWW_DIM6_SM_UL2017":VBS_SSWW_DIM6_SM_UL2017,
     "VBS_SSWW_aQGC_UL2017":VBS_SSWW_aQGC_UL2017,
-    "VBS_SSWW_aTGC_UL2017":VBS_SSWW_aTGC_UL2017,
-    #"VBS_SSWW_aTGC_mixed_UL2017":VBS_SSWW_aTGC_mixed_UL2017,
+    #"VBS_SSWW_aTGC_UL2017":VBS_SSWW_aTGC_UL2017,
+    "VBS_SSWW_aTGC_mixed_UL2017":VBS_SSWW_aTGC_mixed_UL2017,
     "DataMu_UL2017":DataMu_UL2017,
     "FakeMu_UL2017":FakeMu_UL2017,
     "DataEle_UL2017":DataEle_UL2017,
@@ -5036,7 +5048,7 @@ merge_dict = {
     "TVX_UL2018":TVX_UL2018,
     "VG_UL2018":VG_UL2018,
     "WrongSign_UL2018":WrongSign_UL2018,
-    "WrongSign_ML_UL2018":WrongSign_ML_UL2018,
+    #"WrongSign_ML_UL2018":WrongSign_ML_UL2018,
     "Triboson_UL2018":Triboson_UL2018,
     "WJets_UL2018":WJets_UL2018,
     "WJets_Jbin_UL2018":WJets_Jbin_UL2018,
@@ -5056,8 +5068,8 @@ merge_dict = {
     "VBS_SSWW_cW_cHW_UL2018":VBS_SSWW_cW_cHW_UL2018,
     #"VBS_SSWW_DIM6_SM_UL2018":VBS_SSWW_DIM6_SM_UL2018,
     "VBS_SSWW_aQGC_UL2018":VBS_SSWW_aQGC_UL2018,
-    "VBS_SSWW_aTGC_UL2018":VBS_SSWW_aTGC_UL2018,
-    #"VBS_SSWW_aTGC_mixed_UL2018":VBS_SSWW_aTGC_mixed_UL2018,
+    #"VBS_SSWW_aTGC_UL2018":VBS_SSWW_aTGC_UL2018,
+    "VBS_SSWW_aTGC_mixed_UL2018":VBS_SSWW_aTGC_mixed_UL2018,
     "DataMu_UL2018":DataMu_UL2018,
     "FakeMu_UL2018":FakeMu_UL2018,
     "DataEle_UL2018":DataEle_UL2018,
@@ -5076,8 +5088,8 @@ merge_dict = {
     "VBS_SSWW_cHW_BSM_ULRunII":VBS_SSWW_cHW_BSM_ULRunII,
     "VBS_SSWW_cW_cHW_ULRunII":VBS_SSWW_cW_cHW_ULRunII,
     "VBS_SSWW_aQGC_ULRunII":VBS_SSWW_aQGC_ULRunII,
-    "VBS_SSWW_aTGC_ULRunII":VBS_SSWW_aTGC_ULRunII,
-    #"VBS_SSWW_aTGC_mixed_ULRunII":VBS_SSWW_aTGC_mixed_ULRunII,
+    #"VBS_SSWW_aTGC_ULRunII":VBS_SSWW_aTGC_ULRunII,
+    "VBS_SSWW_aTGC_mixed_ULRunII":VBS_SSWW_aTGC_mixed_ULRunII,
     "WpWpJJ_EWK_ULRunII":WpWpJJ_EWK_ULRunII,
     "WpWpJJ_QCD_ULRunII":WpWpJJ_QCD_ULRunII,
     "WpWpJJ_ULRunII":WpWpJJ_ULRunII,
@@ -5097,6 +5109,7 @@ merge_dict = {
     "DataMu_ULRunII":DataMu_ULRunII,
     "FakeEle_ULRunII":FakeEle_ULRunII,
     "DataEle_ULRunII":DataEle_ULRunII,
+    "Others_ULRunII":Others_ULRunII,
 }
 
 merge_list = merge_dict.values()
@@ -5367,6 +5380,7 @@ plot_list = [
     #PromptEleFakeTau_ULRunII,
     #FakeEleFakeTau_ULRunII,
     DataEle_ULRunII,
+    Others_ULRunII,
 
 ]
 
@@ -5617,6 +5631,6 @@ stack_list = [
     #PromptEleFakeTau_ULRunII,
     #FakeEleFakeTau_ULRunII,
     DataEle_ULRunII,
-
+    Others_ULRunII,
 ]
 
