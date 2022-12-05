@@ -165,6 +165,7 @@ if opt.tDMcut:
     plot_tag += "_tDM"
 elif opt.test:
     plot_tag += "_test"
+plot_tag += "_flat"
 if not opt.flat:
     plot_tag += "_noflat"
 #if opt.lastbins:
@@ -471,6 +472,7 @@ elif opt.test:
     pathstack += "_test"
 if not opt.flat:
     pathstack += "_noflat"
+pathstack += "_flat"
 if opt.lastbins:
     pathstack += "_lastbins"
 pathstack += "/" + cut_tag + "/"
@@ -1059,7 +1061,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             tmp = copy.deepcopy(infile[s.label].Get(histoname))
         except:
             Print(histoname + " not present in " + infile[s.label])
-                if tofindlastbins:
+        
+        if tofindlastbins:
             binning = tmp.GetNbinsX()
             if opt.lastbins:
                 binLowE = []
@@ -1174,6 +1177,9 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         stack.Draw("HIST NOSTACK")
     if opt.lastbins:
         stack.GetHistogram().GetXaxis().SetRangeUser(firstbin, lastbin)
+    if not opt.toscale:
+        ytitle = "Events"
+
 
     if not variabile_._iscustom and opt.toscale:
         step = float(variabile_._xmax - variabile_._xmin)/float(variabile_._nbins)
@@ -1193,7 +1199,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             ytitle = "Events / GeV"
         else:
             ytitle = "Events / bin width"
-     
+
     Print(stack)
     stack.GetYaxis().SetTitle(ytitle)
     stack.GetYaxis().SetTitleFont(42)
