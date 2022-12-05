@@ -165,7 +165,7 @@ if opt.tDMcut:
     plot_tag += "_tDM"
 elif opt.test:
     plot_tag += "_test"
-plot_tag += "_flat"
+#plot_tag += "_flat"
 if not opt.flat:
     plot_tag += "_noflat"
 #if opt.lastbins:
@@ -472,7 +472,7 @@ elif opt.test:
     pathstack += "_test"
 if not opt.flat:
     pathstack += "_noflat"
-pathstack += "_flat"
+#pathstack += "_flat"
 if opt.lastbins:
     pathstack += "_lastbins"
 pathstack += "/" + cut_tag + "/"
