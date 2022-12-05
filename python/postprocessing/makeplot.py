@@ -128,6 +128,8 @@ parser.add_option('--plot_tag', dest='plot_tag', type=str, default = '', help='T
 parser.add_option('--bvetoL', dest='bvetoL', default = False, action='store_true', help='apply bveto loose in ws and dy CRs')
 parser.add_option('--noweight', dest='toweight', default = True, action='store_false', help='not apply any weight, default yes')
 parser.add_option('--lastbins', dest='lastbins', default = False, action='store_true', help='only last bins for DNNs')
+parser.add_option('--linscale', dest='linscale', default = False, action='store_true', help='linscale')
+parser.add_option('--scale', dest='toscale', default = False, action='store_true', help='scale to bin width')
 
 (opt, args) = parser.parse_args()
 
@@ -987,7 +989,12 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         histoname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
         stackname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
         canvasname += "_" + syst_.replace("_Up", "Up").replace("_Down", "Down")
-
+    if opt.linscale:
+        canvasname += "_linscale"
+    else:
+        canvasname += "_logscale"
+    if opt.toscale:
+        canvasname += "_binscaled"
     if opt.sr:
         blind = True
     stack = ROOT.THStack(stackname, histag)
@@ -1019,7 +1026,10 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 
     #Print("infile: " + infile)
 
-    for s in samples_:
+    firstbin = 0
+    lastbin = 0
+    for ids, s in enumerate(samples_):
+        tofindlastbins = True
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
             Print("not passed")
             continue
@@ -1049,7 +1059,24 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             tmp = copy.deepcopy(infile[s.label].Get(histoname))
         except:
             Print(histoname + " not present in " + infile[s.label])
-        tmp.Scale(1, "width")
+                if tofindlastbins:
+            binning = tmp.GetNbinsX()
+            if opt.lastbins:
+                binLowE = []
+                for i in range(1,binning+2):
+                    binLowE.append(tmp.GetBinLowEdge(i))
+                lastbin = binLowE[-1]
+                for edge in binLowE:
+                    if 0.9 - edge > 0.01:
+                        continue
+                    else:
+                        firstbin = copy.deepcopy(edge)
+                        break
+            tofindlastbins = False
+        
+        if opt.toscale:
+            tmp.Scale(1, "width")
+
         tmp.SetLineColor(ROOT.kBlack)
         tmp.SetName(s.leglabel)
         if('Data' in s.label):
@@ -1124,13 +1151,22 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         maximum = max(stack.GetMaximum(),hdata.GetMaximum())
     else:
         maximum = stack.GetMaximum()
-    logscale = True # False #
+
+    if not opt.lastbins:
+        if not blind:
+            maximum = max(stack.GetMaximum(),hdata.GetMaximum())
+        else:
+            maximum = stack.GetMaximum()
+    else:
+        maximum = max([stack.GetStack().Last().GetBinContent(idxb) for idxb in range(binLowE.index(firstbin)+1, binLowE.index(lastbin)+2)])
+    logscale = not opt.linscale
+    
     if(logscale) and stack.GetStack().Last().Integral()>0.:
         stack.SetMinimum(0.01)
         pad1.SetLogy()
         stack.SetMaximum(maximum*10000)
     else:
-        stack.SetMaximum(maximum*1.6)
+        stack.SetMaximum(maximum*1.8)
 
     if opt.tostack:
         stack.Draw("HIST")
@@ -1138,7 +1174,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         stack.Draw("HIST NOSTACK")
     if opt.lastbins:
         stack.GetHistogram().GetXaxis().SetRangeUser(firstbin, lastbin)
-    if not variabile_._iscustom:
+
+    if not variabile_._iscustom and opt.toscale:
         step = float(variabile_._xmax - variabile_._xmin)/float(variabile_._nbins)
         #Print(str(step))
         if "GeV" in variabile_._title:
@@ -1151,7 +1188,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
                 ytitle = "Events / %.0f units" %step
             else:
                 ytitle = "Events / %.2f units" %step
-    else:
+    elif opt.toscale:
         if "GeV" in variabile_._title:
             ytitle = "Events / GeV"
         else:
@@ -1163,8 +1200,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     stack.GetXaxis().SetLabelOffset(1.8)
     stack.GetYaxis().SetTitleOffset(0.85)
     stack.GetXaxis().SetLabelSize(0.15)
-    stack.GetYaxis().SetLabelSize(0.07)
-    stack.GetYaxis().SetTitleSize(0.07)
+    stack.GetYaxis().SetLabelSize(0.05)
+    stack.GetYaxis().SetTitleSize(0.06)
     stack.SetTitle("")
     if(signal):
         for hsig in h_sig:
