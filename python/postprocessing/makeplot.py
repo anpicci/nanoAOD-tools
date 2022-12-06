@@ -1036,7 +1036,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 
     i = 0
 
-    print "infile:"
+    #print "infile:"
     for k, v in infile.items():
         print k, v
 
