@@ -5,7 +5,7 @@ def cutToTag(cut):
 
 add = ""#--var DNN_ "
 
-os.system("reset")
+#os.system("reset")
 folder = "vUL055"
 errpaths = [
     ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut " + add, ""),
