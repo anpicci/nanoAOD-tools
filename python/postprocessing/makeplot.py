@@ -130,6 +130,7 @@ parser.add_option('--noweight', dest='toweight', default = True, action='store_f
 parser.add_option('--lastbins', dest='lastbins', default = False, action='store_true', help='only last bins for DNNs')
 parser.add_option('--linscale', dest='linscale', default = False, action='store_true', help='linscale')
 parser.add_option('--scale', dest='toscale', default = False, action='store_true', help='scale to bin width')
+parser.add_option('--unify', dest='unistack', default = False, action='store_true', help='reduce stacked processes')
 
 (opt, args) = parser.parse_args()
 
@@ -475,6 +476,8 @@ if not opt.flat:
 #pathstack += "_flat"
 if opt.lastbins:
     pathstack += "_lastbins"
+if opt.unistack:
+    pathstack += "_merged"
 pathstack += "/" + cut_tag + "/"
 
 Print(lepstr + " " + pathplot + " " + pathstack) 
@@ -1018,6 +1021,13 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         else:
             if s.label.startswith('Fake'):
                 continue
+        if opt.unistack:
+            if not (s.label.startswith("WpWpJJ_") or s.label.startswith("Others_") or s.label.startswith("Fake") or s.label.startswith("Data") or s.label.startswith("TTTo2L2Nu_") or s.label.startswith("WrongSign_")):
+                continue
+        else:
+            if s.label.startswith("Others_"):
+                continue
+
         if('WpWpJJ_EWK' in s.label or 'VBS_SSWW' in s.label) and not opt.signal:
             signal = True
             #Print(s.label)
@@ -1026,12 +1036,16 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
 
     i = 0
 
-    #Print("infile: " + infile)
+    print "infile:"
+    for k, v in infile.items():
+        print k, v
+
 
     firstbin = 0
     lastbin = 0
     for ids, s in enumerate(samples_):
         tofindlastbins = True and variabile_._name.startswith("DNN_")
+        '''
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
             Print("not passed")
             continue
@@ -1047,8 +1061,14 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         else:
             if s.label.startswith('Fake'):# or s.label.startswith('QCD'):
                 continue
-          
-        infile[s.label].cd()
+        '''
+        try:  
+            infile[s.label].cd()
+        except:
+            continue
+        else:
+            pass
+
         Print("opening file: " + infile[s.label].GetName())
         #Print("isthere?", histoname, infile[s.label].Get(histoname))
         if('Data' in s.label):
