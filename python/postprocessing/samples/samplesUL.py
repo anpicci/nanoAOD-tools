@@ -19,14 +19,14 @@ class sample:
 ### color labels ###
 ZZcolor = ROOT.kViolet-9
 TTcolor = ROOT.kRed+2
-TTdilepcolor = ROOT.kAzure+7
-TVXcolor = ROOT.kCyan-9
-VGcolor = ROOT.kSpring+7
-DYcolor = ROOT.kGreen-10
-TBcolor = ROOT.kOrange-4
+TTdilepcolor = ROOT.kAzure+6#-9
+TVXcolor = ROOT.kMagenta-9#kSpring-4
+VGcolor = ROOT.kOrange-4
+DYcolor = ROOT.kGreen-5
+TBcolor = ROOT.kYellow-7
 WJcolor = ROOT.kGreen+2
-WZcolor = ROOT.kYellow-4
-WScolor = ROOT.kOrange+7
+WZcolor = ROOT.kCyan-9#kPink+1#kYellow-7
+WScolor = ROOT.kGreen-9#kPink+1
 VBScolor = ROOT.kRed
 VBSLLcolor = ROOT.kGreen+3
 VBSTLcolor = ROOT.kBlue+3
@@ -34,11 +34,11 @@ VBSTTcolor = ROOT.kMagenta+3
 CWcolor = ROOT.kGray+3
 CHWcolor = ROOT.kAzure+10
 EWVBScolor = ROOT.kRed
-QCDVBScolor = ROOT.kViolet+2
+QCDVBScolor = ROOT.kViolet-8
 WWJJcolor = ROOT.kMagenta-4
 aQGCcolor = ROOT.kGreen
 aTGCcolor = ROOT.kViolet
-othcolor = ROOT.kGreen+2
+othcolor = ROOT.kMagenta-10
 ######### UL2016APV ##########
 
 ### ZZtoLep ###
@@ -851,7 +851,7 @@ DataHT_UL2016APV.components =  [
     DataHTF_UL2016APV,
 ] 
 
-FakeElePromptTau_UL2016APV = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2016APV")
+FakeElePromptTau_UL2016APV = sample(ROOT.kGray, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2016APV")
 FakeElePromptTau_UL2016APV.year = "UL2016APV"
 FakeElePromptTau_UL2016APV.components = [
     DataEle_UL2016APV,
@@ -888,7 +888,7 @@ FakeEle_UL2016APV.components = [
     TT_UL2016APV,
 ]
 
-FakeMuPromptTau_UL2016APV = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016APV")
+FakeMuPromptTau_UL2016APV = sample(ROOT.kGray, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016APV")
 FakeMuPromptTau_UL2016APV.year = "UL2016APV"
 FakeMuPromptTau_UL2016APV.components = [
     DataMu_UL2016APV,
@@ -1946,7 +1946,7 @@ DataHT_UL2016.components =  [
     DataHTH_UL2016,
 ]
 
-FakeElePromptTau_UL2016 = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2016")
+FakeElePromptTau_UL2016 = sample(ROOT.kGray, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2016")
 FakeElePromptTau_UL2016.year = "UL2016"
 FakeElePromptTau_UL2016.components = [
     DataEle_UL2016,
@@ -1983,7 +1983,7 @@ FakeEle_UL2016.components = [
     TT_UL2016,
 ]
 
-FakeElePromptTau_UL2016M = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2016M")
+FakeElePromptTau_UL2016M = sample(ROOT.kGray, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2016M")
 FakeElePromptTau_UL2016M.year = "UL2016M"
 FakeElePromptTau_UL2016M.components = [
     FakeElePromptTau_UL2016APV,
@@ -2011,7 +2011,7 @@ FakeEle_UL2016M.components = [
     FakeEle_UL2016,
 ]
 
-FakeMuPromptTau_UL2016 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016")
+FakeMuPromptTau_UL2016 = sample(ROOT.kGray, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016")
 FakeMuPromptTau_UL2016.year = "UL2016"
 FakeMuPromptTau_UL2016.components = [
     DataMu_UL2016,
@@ -2055,7 +2055,7 @@ FakeMu_UL2016M.components = [
     FakeMu_UL2016,
 ]
 
-FakeMuPromptTau_UL2016M = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016M")
+FakeMuPromptTau_UL2016M = sample(ROOT.kGray, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2016M")
 FakeMuPromptTau_UL2016M.year = "UL2016M"
 FakeMuPromptTau_UL2016M.components = [
     FakeMuPromptTau_UL2016APV,
@@ -2888,7 +2888,7 @@ DataHT_UL2017.components =  [
     DataHTF_UL2017,
 ]
 
-FakeElePromptTau_UL2017 = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2017")
+FakeElePromptTau_UL2017 = sample(ROOT.kGray, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2017")
 FakeElePromptTau_UL2017.year = "UL2017"
 FakeElePromptTau_UL2017.components = [
     DataEle_UL2017,
@@ -2926,7 +2926,7 @@ FakeEle_UL2017.components = [
     TT_UL2017,
 ]
 
-FakeMuPromptTau_UL2017 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2017")
+FakeMuPromptTau_UL2017 = sample(ROOT.kGray, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2017")
 FakeMuPromptTau_UL2017.year = "UL2017"
 FakeMuPromptTau_UL2017.components = [
     DataMu_UL2017,
@@ -4095,7 +4095,7 @@ DataHT_UL2018.components =  [
     DataHTD_UL2018,
 ]
 
-FakeElePromptTau_UL2018 = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2018")
+FakeElePromptTau_UL2018 = sample(ROOT.kGray, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_UL2018")
 FakeElePromptTau_UL2018.year = "UL2018"
 FakeElePromptTau_UL2018.components = [
     DataEle_UL2018,
@@ -4141,7 +4141,7 @@ FakeEle_ULRunII.components = [
     FakeEle_UL2018,
 ]
 
-FakeElePromptTau_ULRunII = sample(ROOT.kGray+1, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_ULRunII")
+FakeElePromptTau_ULRunII = sample(ROOT.kGray, 1, 1001, "Fake e Prompt #tau", "FakeElePromptTau_ULRunII")
 FakeElePromptTau_ULRunII.year = "ULRunII"
 FakeElePromptTau_ULRunII.components = [
     FakeElePromptTau_UL2016APV,
@@ -4169,7 +4169,7 @@ FakeEleFakeTau_ULRunII.components = [
 ]
 
 
-FakeMuPromptTau_UL2018 = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2018")
+FakeMuPromptTau_UL2018 = sample(ROOT.kGray, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_UL2018")
 FakeMuPromptTau_UL2018.year = "UL2018"
 FakeMuPromptTau_UL2018.components = [
     DataMu_UL2018,
@@ -4215,7 +4215,7 @@ FakeMu_ULRunII.components = [
     FakeMu_UL2018,
 ]
 
-FakeMuPromptTau_ULRunII = sample(ROOT.kGray+1, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_ULRunII")
+FakeMuPromptTau_ULRunII = sample(ROOT.kGray, 1, 1001, "Fake #mu Prompt #tau", "FakeMuPromptTau_ULRunII")
 FakeMuPromptTau_ULRunII.year = "ULRunII"
 FakeMuPromptTau_ULRunII.components = [
     FakeMuPromptTau_UL2016APV,
