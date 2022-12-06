@@ -961,9 +961,9 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         #hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin, variabile_._xmax)
     #else:
         #hdata = ROOT.TH1F('h','h', variabile_._nbins, variabile_._xmin)
-    
+    lastbins = opt.lastbins and variabile_._name.startswith("DNN_")
     binning = variabile_._xmin
-    if opt.lastbins:
+    if lastbins:
         lastbin = binning[-1]
         for edge in binning:
             if 0.9 - edge > 0.01:
@@ -1084,7 +1084,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         
         if tofindlastbins:
             binning = tmp.GetNbinsX()
-            if opt.lastbins:
+            if lastbins:
                 binLowE = []
                 for i in range(1,binning+2):
                     binLowE.append(tmp.GetBinLowEdge(i))
@@ -1175,7 +1175,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     else:
         maximum = stack.GetMaximum()
 
-    if not opt.lastbins:
+    if not lastbins:
         if not blind:
             maximum = max(stack.GetMaximum(),hdata.GetMaximum())
         else:
@@ -1195,7 +1195,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         stack.Draw("HIST")
     else:
         stack.Draw("HIST NOSTACK")
-    if opt.lastbins:
+    if lastbins:
         stack.GetHistogram().GetXaxis().SetRangeUser(firstbin, lastbin)
     if not opt.toscale:
         ytitle = "Events"
@@ -1232,7 +1232,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     if(signal):
         for hsig in h_sig:
             #hsig.Scale(1000)
-            if opt.lastbins:
+            if lastbins:
                 hsig.GetXaxis().SetRangeUser(firstbin, lastbin)
             hsig.Draw("hist same")
             leg_stack.AddEntry(hsig, hsig.GetName(), "l")
@@ -1241,19 +1241,19 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     h_err.SetFillStyle(3154)
     h_err.SetMarkerSize(0)
     h_err.SetFillColor(ROOT.kGray+2)
-    if opt.lastbins:
+    if lastbins:
         h_err.GetXaxis().SetRangeUser(firstbin, lastbin)
     h_err.Draw("e2same0")
     leg_stack.AddEntry(h_err, "Stat. Unc.", "f")
 
     if not blind: 
         Print(hdata.Integral())
-        if opt.lastbins:
+        if lastbins:
             hdata.GetXaxis().SetRangeUser(firstbin, lastbin)
         hdata.Draw("eSAMEpx0")
     else:
         hdata = stack.GetStack().Last().Clone("h_data")
-        if opt.lastbins:
+        if lastbins:
             hdata.GetXaxis().SetRangeUser(firstbin, lastbin)
     leg_stack.Draw("same")
 
@@ -1289,7 +1289,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     ratio.Divide(hratio)
     ratio.SetMarkerStyle(20)
     ratio.SetMarkerSize(0.9)
-    if opt.lastbins:
+    if lastbins:
         ratio.GetXaxis().SetRangeUser(firstbin, lastbin)
     ratio.Draw("epx0e0")
     ratio.SetTitle("")
@@ -1308,7 +1308,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     h_bkg_err.SetMarkerSize(0)
     h_bkg_err.SetFillColor(ROOT.kGray+1)
     #if not opt.tostack:
-    if opt.lastbins:
+    if lastbins:
         h_bkg_err.GetXaxis().SetRangeUser(firstbin, lastbin)
     h_bkg_err.Draw("e20same")
      
@@ -1316,7 +1316,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         xmin = variabile_._xmin
     else:
         xmin = variabile_._xmin[0]
-    if opt.lastbins:
+    if lastbins:
         xmin = firstbin
 
     f1 = ROOT.TLine(xmin, 1., variabile_._xmax,1.)
@@ -1347,7 +1347,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     ratio.GetXaxis().SetTitle(variabile_._title)
     ratio.GetXaxis().SetLabelOffset(0.04)
     ratio.GetYaxis().SetLabelOffset(0.02)
-    if opt.lastbins:
+    if lastbins:
         ratio.GetXaxis().SetRangeUser(firstbin, lastbin)
     ratio.Draw("epx0e0same")
 
