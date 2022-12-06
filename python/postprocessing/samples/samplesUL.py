@@ -19,21 +19,21 @@ class sample:
 ### color labels ###
 ZZcolor = ROOT.kViolet-9
 TTcolor = ROOT.kRed+2
-TTdilepcolor = ROOT.kAzure-9
-TVXcolor = ROOT.kCyan-7
+TTdilepcolor = ROOT.kAzure+7
+TVXcolor = ROOT.kCyan-9
 VGcolor = ROOT.kSpring+7
 DYcolor = ROOT.kGreen-10
 TBcolor = ROOT.kOrange-4
 WJcolor = ROOT.kGreen+2
 WZcolor = ROOT.kYellow-4
-WScolor = ROOT.kRed-9
+WScolor = ROOT.kOrange+7
 VBScolor = ROOT.kRed
 VBSLLcolor = ROOT.kGreen+3
 VBSTLcolor = ROOT.kBlue+3
 VBSTTcolor = ROOT.kMagenta+3
 CWcolor = ROOT.kGray+3
 CHWcolor = ROOT.kAzure+10
-EWVBScolor = ROOT.kOrange+10
+EWVBScolor = ROOT.kRed
 QCDVBScolor = ROOT.kViolet+2
 WWJJcolor = ROOT.kMagenta-4
 aQGCcolor = ROOT.kGreen
@@ -5614,6 +5614,7 @@ stack_list = [
     TVX_ULRunII,
     VG_ULRunII,
     WZ_ULRunII,
+    Others_ULRunII,
     WrongSign_ULRunII,
     #DYJetsToLL_FxFx_ULRunII,
     #DYJetsToLL_Jbin_FxFx_ULRunII,
@@ -5631,6 +5632,5 @@ stack_list = [
     #PromptEleFakeTau_ULRunII,
     #FakeEleFakeTau_ULRunII,
     DataEle_ULRunII,
-    Others_ULRunII,
 ]
 
