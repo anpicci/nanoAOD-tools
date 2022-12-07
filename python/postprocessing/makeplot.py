@@ -1617,7 +1617,7 @@ for year in years:
 
         #####
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB"
-        DNN_tag = 'SM DNN output (f1 NMR lower NN LCB)'
+        DNN_tag = 'SM DNN output' # (f1 NMR lower NN LCB)'
         if opt.flat and opt.plot:
             bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
@@ -1631,8 +1631,8 @@ for year in years:
         nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
         #variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_tobesure', 'dim6 DNN output (f2 NMR lower tbs)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
-        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_NONOISE_LCB', 'dim6 DNN output (f2 NMR lower NN LCB)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
-        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_NONOISE_LCB_again_2', 'dim8 DNN output (f3 NMR lower NN LCB ag2)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim8_dev), copy.deepcopy(bin_bdtdim8_dev)))
+        variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_NONOISE_LCB', 'dim6 DNN output', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
+        variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_NONOISE_LCB_again_2', 'dim8 DNN output', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim8_dev), copy.deepcopy(bin_bdtdim8_dev)))
         '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_10000"
         DNN_tag = 'SM DNN output (f1 NMR lower NN LCB 10000)'
