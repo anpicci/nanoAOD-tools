@@ -10,15 +10,12 @@ folder = "vUL055"
 errpaths = [
     ("condorplot_" + folder + "_tdmcut/error/", "PlotCondor.py --tDMcut " + add, ""),
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test " + add, ""),
+    ("condorplot_" + folder + "/error/", "PlotCondor.py " + add, ""),
+    ("condorplot_" + folder + "_vbroad/error/", "PlotCondor.py --vbroad " + add, ""),
     ("condorplot_" + folder + "_tdmcut_noflat/error/", "PlotCondor.py --tDMcut --noflat " + add, ""),
     ("condorplot_" + folder + "_test_noflat/error/", "PlotCondor.py --test --noflat " + add, ""),
     ("condorplot_" + folder + "_noflat/error/", "PlotCondor.py --noflat " + add, ""),
 
-    ("condorplot_" + folder + "_tdmcut_noflat_lastbins/error/", "PlotCondor.py --tDMcut --noflat --lastbins " + add, ""),
-    ("condorplot_" + folder + "_test_noflat_lastbins/error/", "PlotCondor.py --test --noflat --lastbins " + add, ""),
-    ("condorplot_" + folder + "_noflat_lastbins/error/", "PlotCondor.py --noflat --lastbins " + add, ""),
-
-    ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test --cuts \"DNN_SM_final_1>=0.90\" " + add, "DNN_SM_final_1>=0.90"),
     ("condorplot_" + folder + "/error/", "PlotCondor.py " + add, ""),
     ("condorbranch_" + folder + "/error/", "BranchCondor.py --or --rw"),
     ("condormerge_" + folder + "/error/", "MergeCondor.py --or --rw"),

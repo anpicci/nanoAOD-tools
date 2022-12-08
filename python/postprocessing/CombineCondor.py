@@ -25,8 +25,8 @@ parser.add_option('--crvar', dest='crvar', type=str, default = 'same', help='var
 parser.add_option('--notCI', dest='doCI', default = True, action='store_false', help = 'Default does not run postfit plots')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test')
-#parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable flattening bin')
-parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable flattening bin')
+parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable flattening bin')
+#parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable flattening bin')
 parser.add_option('--WithFakeCR', dest='wfc', default = False, action='store_true', help = 'include Fakes CR')
 parser.add_option('--PDFWithTTDY', dest='pdfttdy', default = False, action='store_true', help = 'apply pdf to ttbar and dy')
 parser.add_option('--DYrp', dest='DYrp', default = False, action='store_true', help = 'apply rateParam to dy')
@@ -101,14 +101,14 @@ elif opt.test:
     condorsub += "_test"
     subfold += "_test"
     exe += "_test"
-#if not opt.flat:
-    #condorsub += "_noflat"
-    #subfold += "_noflat"
-    #exe += "_noflat"
-if opt.flat:
-    condorsub += "_flat"
-    subfold += "_flat"
-    exe += "_flat"
+if not opt.flat:
+    condorsub += "_noflat"
+    subfold += "_noflat"
+    exe += "_noflat"
+#if opt.flat:
+    #condorsub += "_flat"
+    #subfold += "_flat"
+    #exe += "_flat"
 if opt.profile:
     condorsub += "_profile"
     subfold += "_profile"
@@ -237,10 +237,10 @@ for model in models:
             arg2 += " --tDMcut"
         elif opt.test:
             arg2 += " --test"
-        #if not opt.flat:
-            #arg2 += " --noflat"
-        if opt.flat:
-            arg2 += " --flat"
+        if not opt.flat:
+            arg2 += " --noflat"
+        #if opt.flat:
+            #arg2 += " --flat"
 
         if opt.wfc:
             arg2 += " --WithFakeCR"

@@ -107,6 +107,7 @@ parser.add_option('--user', dest='user', type='string', default=str(os.environ.g
 parser.add_option('--ttbar', dest='ttbar', default = False, action='store_true', help='Enable ttbar CR, default disabled')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
+parser.add_option('--vbroad', dest='vbroad', default = False, action='store_true', help='vbroad test saving')
 parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable flattening-signal binning')
 parser.add_option('--count', dest='count', default = False, action='store_true', help='Enable countings')
 parser.add_option('--HT', dest='HT', default = False, action='store_true', help='Enable CTHT')
@@ -166,6 +167,8 @@ if opt.tDMcut:
     plot_tag += "_tDM"
 elif opt.test:
     plot_tag += "_test"
+elif opt.vbroad:
+    plot_tag += "_vbroad"
 #plot_tag += "_flat"
 if not opt.flat:
     plot_tag += "_noflat"
@@ -176,7 +179,7 @@ pfolder = opt.folder #+ opt.plot_tag
 
 filerepo = '/eos/home-a/apiccine/VBS/nosynch/' + folder + '/'
 plotrepo = '/eos/home-a/apiccine/VBS/nosynch/' + pfolder + '/'
-Print("pfolder " + pfolder + str(opt.test))
+Print("pfolder " + pfolder)
 Print(filerepo + " " + plotrepo)
 
 FRtag = opt.wfake.split("_")[-1]
@@ -471,6 +474,8 @@ if opt.tDMcut:
     pathstack += "_tDM"
 elif opt.test:
     pathstack += "_test"
+elif opt.vbroad:
+    pathstack += "_vbroad"
 if not opt.flat:
     pathstack += "_noflat"
 #pathstack += "_flat"
@@ -1535,6 +1540,10 @@ for year in years:
             bin_bdtsm = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
             bin_bdtdim6 = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
             bin_bdtdim8 = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
+        if opt.vbroad:
+            bin_bdtsm = array.array("d", [0, 0.2, 0.4, 0.55, 0.65, 0.75, 0.82, 0.86, 0.90, 0.94, 0.98, 1.])#matteo 11
+            bin_bdtdim6 = array.array("d", [0, 0.2, 0.4, 0.55, 0.65, 0.75, 0.82, 0.86, 0.90, 0.94, 0.98, 1.])#matteo 11
+            bin_bdtdim8 = array.array("d", [0, 0.2, 0.4, 0.55, 0.65, 0.75, 0.82, 0.86, 0.90, 0.94, 0.98, 1.])#matteo 11
         else:
             bin_bdtsm = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
             bin_bdtdim6 = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
