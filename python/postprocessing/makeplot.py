@@ -1540,7 +1540,7 @@ for year in years:
             bin_bdtsm = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
             bin_bdtdim6 = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
             bin_bdtdim8 = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.833, 0.867, 0.9, 0.933, 0.967, 1.])# 17
-        if opt.vbroad:
+        elif opt.vbroad:
             bin_bdtsm = array.array("d", [0, 0.2, 0.4, 0.55, 0.65, 0.75, 0.82, 0.86, 0.90, 0.94, 0.98, 1.])#matteo 11
             bin_bdtdim6 = array.array("d", [0, 0.2, 0.4, 0.55, 0.65, 0.75, 0.82, 0.86, 0.90, 0.94, 0.98, 1.])#matteo 11
             bin_bdtdim8 = array.array("d", [0, 0.2, 0.4, 0.55, 0.65, 0.75, 0.82, 0.86, 0.90, 0.94, 0.98, 1.])#matteo 11
@@ -2239,7 +2239,7 @@ for year in years:
                                 continue
                             if not var.IsSystApplied() and (year != "ULRunII"):# or opt.flat):
                                 continue
-                            if syst[0] != "" and (not var.IsSystApplied() or year == "ULRunII"):
+                            if not (syst[0] == "" or syst[0].startswith("QCD")) and (not var.IsSystApplied() or year == "ULRunII"):
                                 continue
                             if not "all" in vartoplot:
                                 IsToPlot = False

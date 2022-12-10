@@ -1,5 +1,5 @@
 set LD_PRELOAD=libtcmalloc.so
-set folder0 = vUL050
+set folder0 = vUL055
 #set folder0 = vUL045
 set channel = "ltau" 
 reset
@@ -49,11 +49,11 @@ set year = UL2018
 #python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel  -v leadjet_eta,subleadjet_eta --syst noSyst --test
 
 set year = ULRunII
-python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel --syst noSyst -d VG_$year -v DNN_ --tDMcut --noflat #--noweight
-#python3 makeplot.py -y $year --lep muon --ttbar -f $folder0 -p --ch $channel --syst noSyst --tDMcut --flat --count -v DNN_SM_final_1 #--noweight
-#python3 makeplot.py -y $year --lep muon --fakes -f $folder0 -p --ch $channel --syst noSyst --tDMcut --flat --count -v DNN_SM_final_1 #--noweight
-#python3 makeplot.py -y $year --lep muon --wsdy --bvetoL -f $folder0 -p --ch $channel --syst noSyst --tDMcut --flat --count -v DNN_SM_final_1 #--noweight
-#python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel  -v leadjet_eta,subleadjet_eta --syst noSyst
+#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
+#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
+#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
+#python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
+python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel --syst noSyst -v DNN_ --tDMcut
 
 
 #set year = UL2016M
