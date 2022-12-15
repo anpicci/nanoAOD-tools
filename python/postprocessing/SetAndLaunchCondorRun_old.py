@@ -29,12 +29,12 @@ parser.add_option('--reco', dest='reco', type=str, default = "not", help='Launch
 
 (opt, args) = parser.parse_args()
 
-isWithSysts = False
-if "UL" in opt.fold and int(opt.fold.split("UL")[-1]) > 9:
-    isWithSysts = True
-    scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
-else:
-    scenarios = ["all"]
+#isWithSysts = False
+#if "UL" in opt.fold and int(opt.fold.split("UL")[-1]) > 9:
+isWithSysts = True
+scenarios = ["nominal", "lepenUp", "lepenDown", "jesUp", "jesDown", "jerUp", "jerDown", "TESUp", "TESDown", "FESUp", "FESDown"]
+#else:
+#scenarios = ["all"]
 
 def CondoredList(samplename):
     try:
@@ -118,6 +118,7 @@ def AreAllCondored(crabname, condorname):
     #toRel = False
     #condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
     condoredlist = CondoredList(condorname)
+    
     #print(torel, wrongex, StillCondoring)
     #print(condoredlist)
     #if not StillCondoring and (torel or wrongex):
@@ -234,7 +235,8 @@ else:
 
 print(opt.fold, opt.channel, folder)
 #path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/"
-path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/"
+#path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/"
+path = "/eos/user/s/sajmal/VBSAnalysis/" + folder + "/"
 print("output path:", path, "\n")
 
 subpy = ""

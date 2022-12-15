@@ -57,9 +57,12 @@ elif opt.reco == "lj":
 elif opt.reco == "jl":
     executpy += "_jetlep_old.py"
 
+eosfolder= "/eos/user/s/sajmal/VBSAnalysis/"
+#eosfolder = "/eos/home-a/apiccine/VBS/nosynch/"
+
 def sub_writer(sample, n, files, folder):
     condorsubb = condorsub + "_" + str(sample.year) + ".sub"
-    outputpath = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/" + sample.label +"/"
+    outputpath = eosfolder + folder + "/" + sample.label +"/"
     #print(condorsub, condorsubb)
     runtype = ""
     if fsplitted[0] == "vUL001":
@@ -146,7 +149,8 @@ split = 50
 for sample in samples:
     condorsubb = condorsub + "_" + str(sample.year) + ".sub"
     isMC = True
-    opath = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label + "/"
+    #opath = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label + "/"
+    opath = eosfolder + folder + "/" + sample.label + "/"
     if('Data' in sample.label):
         isMC = False
     if not os.path.exists(opath):#"/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/" + sample.label):

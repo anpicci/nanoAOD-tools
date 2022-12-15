@@ -20,6 +20,8 @@ parser.add_option('--count', dest='count', default = False, action='store_true',
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
 parser.add_option('--vbroad', dest='vbroad', default = False, action='store_true', help='Enable vbroad saving')
+parser.add_option('--vvbroad', dest='vvbroad', default = False, action='store_true', help='Enable vvbroad saving')
+parser.add_option('--vvvbroad', dest='vvvbroad', default = False, action='store_true', help='Enable vvvbroad saving')
 parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable signal-flattening binning')
 #parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable signal-flattening binning')
 parser.add_option('--lastbins', dest='lastbins', default = False, action='store_true', help='Last bins')
@@ -59,6 +61,10 @@ elif opt.test:
     tagf += "_test"
 elif opt.vbroad:
     tagf += "_vbroad"
+elif opt.vvbroad:
+    tagf += "_vvbroad"
+elif opt.vvvbroad:
+    tagf += "_vvvbroad"
 if not opt.flat:
     tagf += "_noflat"
 #if opt.flat:
@@ -214,6 +220,10 @@ for year in years:
                 arg3 += " --test"
             elif opt.vbroad:
                 arg3 += " --vbroad"
+            elif opt.vvbroad:
+                arg3 += " --vvbroad"
+            elif opt.vvvbroad:
+                arg3 += " --vvvbroad"
             if not opt.flat:
                 arg3 += " --noflat"
             #if opt.flat:

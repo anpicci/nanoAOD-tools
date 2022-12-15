@@ -3,6 +3,7 @@ from ML.MLmodels import *
 import optparse
 from samples.samplesUL import *
 import copy
+from datetime import datetime
 
 #os.system("reset")
 
@@ -25,6 +26,7 @@ parser.add_option('--crvar', dest='crvar', type=str, default = 'same', help='var
 parser.add_option('--notCI', dest='doCI', default = True, action='store_false', help = 'Default does not run postfit plots')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test')
+parser.add_option('--vbroad', dest='vbroad', default = False, action='store_true', help='Enable vbroad')
 parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable flattening bin')
 #parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable flattening bin')
 parser.add_option('--WithFakeCR', dest='wfc', default = False, action='store_true', help = 'include Fakes CR')
@@ -65,9 +67,11 @@ elif username == 'apiccine':
 elif username == 'ttedesch':
     uid = 103343
 
-subfold = "combinecondor_" + opt.pdf
-condorsub = "condorcombine_" + opt.pdf
-exe = "branchcombine_" + opt.pdf
+now = datetime.now().time().strftime("%H%M%S%f")
+
+subfold = "combinecondor_" + opt.pdf + "_" + now
+condorsub = "condorcombine_" + opt.pdf + "_" + now
+exe = "branchcombine_" + opt.pdf + "_" + now
 
 if not opt.DYrp:
     condorsub += "_nodyrp"
@@ -101,6 +105,10 @@ elif opt.test:
     condorsub += "_test"
     subfold += "_test"
     exe += "_test"
+elif opt.vbroad:
+    condorsub += "_vbroad"
+    subfold += "_vbroad"
+    exe += "_vbroad"
 if not opt.flat:
     condorsub += "_noflat"
     subfold += "_noflat"
@@ -165,10 +173,10 @@ def submitter(model, srvar, crvar, argsins, folder):
     elif model.startswith("c") or model.startswith("F"):
         f.write("request_cpus            = 6\n")
     else:
-        f.write("request_cpus            = 4\n")
-    output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".out"
-    log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".log"
-    error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + ".err"
+        f.write("request_cpus            = 8\n")
+    output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + now + ".out"
+    log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + now + ".log"
+    error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + now + ".err"
     f.write("output                  = " + output + "\n")
     f.write("error                   = " + error + "\n")
     f.write("log                     = " + log + "\n")
@@ -237,6 +245,8 @@ for model in models:
             arg2 += " --tDMcut"
         elif opt.test:
             arg2 += " --test"
+        elif opt.vbroad:
+            arg2 += " --vbroad"
         if not opt.flat:
             arg2 += " --noflat"
         #if opt.flat:

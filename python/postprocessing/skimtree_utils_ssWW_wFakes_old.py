@@ -764,7 +764,7 @@ def SelectAndVetoTaus(year, taus, sellep, jet1 = None, jet2 = None):
             #cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU
             cutloose_vsjet = ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU
 
-        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU and (tau.decayMode < 5 or tau.decayMode > 6):
+        if (tau.idDeepTau2017v2p1VSjet>=cutloose_vsjet and tau.idDeepTau2017v2p1VSe>=ID_TAU_RECO_DEEPTAU_VSELE and tau.idDeepTau2017v2p1VSmu>=ID_TAU_RECO_DEEPTAU_VSMU) and deltaR(tau.eta, tau.phi, sellep.eta, sellep.phi)>DR_OVERLAP_CONE_TAU and deltaR(tau.eta, tau.phi, jet1eta, jet1phi)>isocone and deltaR(tau.eta, tau.phi, jet2eta, jet2phi)>isocone and tau.pt>=PT_CUT_TAU and abs(tau.eta)<=ETA_CUT_TAU: # and (tau.decayMode < 5 or tau.decayMode > 6):
             nTau+=1
 
             isAtLeastLoose = False
