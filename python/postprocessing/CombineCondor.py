@@ -27,20 +27,27 @@ parser.add_option('--notCI', dest='doCI', default = True, action='store_false', 
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test')
 parser.add_option('--vbroad', dest='vbroad', default = False, action='store_true', help='Enable vbroad')
+parser.add_option('--vvbroad', dest='vvbroad', default = False, action='store_true', help='Enable vvery broad')
+parser.add_option('--vvvbroad', dest='vvvbroad', default = False, action='store_true', help='Enable vvvery broad')
 parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable flattening bin')
-#parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable flattening bin')
-parser.add_option('--WithFakeCR', dest='wfc', default = False, action='store_true', help = 'include Fakes CR')
+parser.add_option('-u', '--unblind', dest = 'unblind', default = False, action = 'store_true', help = 'unblinding SR, default not')
 parser.add_option('--PDFWithTTDY', dest='pdfttdy', default = False, action='store_true', help = 'apply pdf to ttbar and dy')
 parser.add_option('--DYrp', dest='DYrp', default = False, action='store_true', help = 'apply rateParam to dy')
 parser.add_option('--pdf', dest='pdf', type='string', default = 'total', help = 'Specify type of pdf')
-parser.add_option('--frp', dest='frp', default = False, action='store_true', help = 'apply rateParam to fake')
-parser.add_option('--frsys', dest='frsys', default = False, action='store_true', help = 'apply lnN to fake')
+parser.add_option('--flnN', dest='flnN', default = False, action='store_true', help = 'apply lognormal to fakes')
+parser.add_option('--frp', dest='frp', default = False, action='store_true', help = 'apply rateParam to fakes')
 parser.add_option('--profile', dest='profile', default = False, action='store_true', help = 'apply profiling to 2D fits eft')
+parser.add_option('--regions', dest='regions', type='string', default = 'SR,CRTT,CROS,CRF', help = 'Regions to fit')
+parser.add_option('--leptons', dest='leptons', type='string', default = 'muon,electron', help = 'Channels to include')
+parser.add_option('--HN', dest='HN', default = False, action='store_true', help = 'fit with HybridNew instead of AsymptoticLimits')
 
 (opt, args) = parser.parse_args()
 
 models = opt.models.split(",")
 srvars = opt.srvar.split(":")
+regions = opt.regions.split(":")
+leptons = opt.leptons.split(":")
+
 if opt.crvar == "same":
     crvars = copy.deepcopy(srvars)
 else:
@@ -69,26 +76,35 @@ elif username == 'ttedesch':
 
 now = datetime.now().time().strftime("%H%M%S%f")
 
-subfold = "combinecondor_" + opt.pdf + "_" + now
-condorsub = "condorcombine_" + opt.pdf + "_" + now
-exe = "branchcombine_" + opt.pdf + "_" + now
+subfold = "combinecondor_" + opt.pdf
+condorsub = "condorcombine_" + opt.pdf
+exe = "branchcombine_" + opt.pdf
 
-if not opt.DYrp:
-    condorsub += "_nodyrp"
-    subfold += "_nodyrp"
-    exe += "_nodyrp"
-if opt.frsys:
-    condorsub += "_frsys"
-    subfold += "_frsys"
-    exe += "_frsys"
+if opt.unblind:
+    condorsub += "_DF"
+    subfold += "_DF"
+    exe += "_DF"
+else:
+    condorsub += "_TF"
+    subfold += "_TF"
+    exe += "_TF"
+
+#condorsub += opt.regions.replace(",", "-") + "_" + opt.leptons.replace(",", "-")
+#subfold += opt.regions.replace(",", "-") + "_" + opt.leptons.replace(",", "-")
+#exe += opt.regions.replace(",", "-") + "_" + opt.leptons.replace(",", "-")
+
+if opt.DYrp:
+    condorsub += "_OSrp"
+    subfold += "_OSrp"
+    exe += "_OSyrp"
+if opt.flnN:
+    condorsub += "_flnN"
+    subfold += "_flnN"
+    exe += "_flnN"
 if opt.frp:
     condorsub += "_frp"
     subfold += "_frp"
     exe += "_frp"
-if opt.wfc:
-    condorsub += "_WithFakeCR"
-    subfold += "_WithFakeCR"
-    exe += "_WithFakeCR"
 if opt.pdfttdy:
     condorsub += "_PDFwithTTDY"
     subfold += "_PDFwithTTDY"    
@@ -109,6 +125,14 @@ elif opt.vbroad:
     condorsub += "_vbroad"
     subfold += "_vbroad"
     exe += "_vbroad"
+elif opt.vvbroad:
+    condorsub += "_vvbroad"
+    subfold += "_vvbroad"
+    exe += "_vvbroad"
+elif opt.vvvbroad:
+    condorsub += "_vvvbroad"
+    subfold += "_vvvbroad"
+    exe += "_vvvbroad"
 if not opt.flat:
     condorsub += "_noflat"
     subfold += "_noflat"
@@ -121,7 +145,10 @@ if opt.profile:
     condorsub += "_profile"
     subfold += "_profile"
     exe += "_profile"
-
+if opt.HN:
+    condorsub += "_HN"
+    subfold += "_HN"
+    exe += "_HN"
 
 condorsub += "_"
 subfold += "_" + opt.folder
@@ -140,8 +167,8 @@ if not os.path.exists(errcore):
 if not os.path.exists(logcore):
     os.system("mkdir -p " + logcore)
 
-def submitter(model, srvar, crvar, argsins, folder):
-    exesh = subfold + "/" + exe + "_" + folder + "_" + model + "_" + srvar + "_" + crvar + ".sh"
+def submitter(model, srvar, crvar, argsins, folder, lepton, region):
+    exesh = subfold + "/" + exe + "_" + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
     fsh.write("cd /afs/cern.ch/user/a/apiccine\n")
@@ -151,7 +178,7 @@ def submitter(model, srvar, crvar, argsins, folder):
         fsh.write("python " + pymacro + " " + argsin + "\n")
     fsh.close()
     
-    condorsubb = condorsub + folder + "_" + model + "_" + srvar + "_" + crvar + ".sub"
+    condorsubb = condorsub + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
@@ -173,10 +200,10 @@ def submitter(model, srvar, crvar, argsins, folder):
     elif model.startswith("c") or model.startswith("F"):
         f.write("request_cpus            = 6\n")
     else:
-        f.write("request_cpus            = 8\n")
-    output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + now + ".out"
-    log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + now + ".log"
-    error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + now + ".err"
+        f.write("request_cpus            = 4\n")
+    output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".out"
+    log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".log"
+    error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".err"
     f.write("output                  = " + output + "\n")
     f.write("error                   = " + error + "\n")
     f.write("log                     = " + log + "\n")
@@ -194,14 +221,13 @@ def submitter(model, srvar, crvar, argsins, folder):
 
 folder = opt.folder
 pymacro = "FitAndPlot"
-if opt.frsys:
-    pymacro += "_frsys"
-if opt.frp:
-    pymacro += "_frp"
 pymacro += ".py"
 
 arg0 = " --folder " + folder 
 arg0 += " --year " + opt.year
+
+if opt.unblind:
+    arg0 += " -u"
 if not opt.impacts:
     arg0 += " --notImpacts"
 if not opt.uncbreak:
@@ -227,9 +253,10 @@ for model in models:
             arg1 += " --Lambda8"
         if opt.profile:
             arg1 += " --profile"
+    if opt.HN:
+        arg1 += " --HN"    
     for idsr, srvar in enumerate(srvars):
         arg2 = ""
-        argss = []
         arg2 = arg0 + arg1 + " --fit " + srvar
 
         if not opt.crvar == "same":
@@ -247,19 +274,33 @@ for model in models:
             arg2 += " --test"
         elif opt.vbroad:
             arg2 += " --vbroad"
+        elif opt.vvbroad:
+            arg2 += " --vvbroad"
+        elif opt.vvvbroad:
+            arg2 += " --vvvbroad"
         if not opt.flat:
             arg2 += " --noflat"
         #if opt.flat:
             #arg2 += " --flat"
 
-        if opt.wfc:
-            arg2 += " --WithFakeCR"
         if opt.pdfttdy:
             arg2 += " --PDFWithTTDY"
         if opt.DYrp:
             arg2 += " --DYrp"
+        if opt.flnN:
+            arg2 += " --flnN"
+        if opt.frp:
+            arg2 += " --frp"
+
         arg2 += " --pdf " + opt.pdf
-        arg2 += " > /dev/null "
-        argss.append(arg2)
-        submitter(model, srvar, crvar, argss, folder)
+        
+        for lepton in leptons:
+            for region in regions:
+                argss = []
+                arg3 = arg2 + " --regions " + region + " --leptons " + lepton
+                arg3 += " > /dev/null "
+
+                argss.append(arg3)
+                submitter(model, srvar, crvar, argss, folder, lepton, region)
+        
         

@@ -3,7 +3,7 @@ def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
 
-add = ""#--var DNN_ "
+add = " --var DNN_,m_o1,m_1T,m_jj,countings "
 
 #os.system("reset")
 folder = "vUL055"
@@ -12,6 +12,8 @@ errpaths = [
     ("condorplot_" + folder + "_test/error/", "PlotCondor.py --test " + add, ""),
     ("condorplot_" + folder + "/error/", "PlotCondor.py " + add, ""),
     ("condorplot_" + folder + "_vbroad/error/", "PlotCondor.py --vbroad " + add, ""),
+    ("condorplot_" + folder + "_vvbroad/error/", "PlotCondor.py --vvbroad " + add, ""),
+    ("condorplot_" + folder + "_vvvbroad/error/", "PlotCondor.py --vvvbroad " + add, ""),
     ("condorplot_" + folder + "_tdmcut_noflat/error/", "PlotCondor.py --tDMcut --noflat " + add, ""),
     ("condorplot_" + folder + "_test_noflat/error/", "PlotCondor.py --test --noflat " + add, ""),
     ("condorplot_" + folder + "_noflat/error/", "PlotCondor.py --noflat " + add, ""),
