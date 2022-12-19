@@ -981,7 +981,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     if lastbins:
         lastbin = binning[-1]
         for edge in binning:
-            if 0.9 - edge > 0.01:
+            if 0.8 - edge > 0.01:
                 continue
             else:
                 firstbin = copy.deepcopy(edge)
