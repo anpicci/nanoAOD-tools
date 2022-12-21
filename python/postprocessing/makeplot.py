@@ -1105,7 +1105,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
                     binLowE.append(tmp.GetBinLowEdge(i))
                 lastbin = binLowE[-1]
                 for edge in binLowE:
-                    if 0.9 - edge > 0.01:
+                    if 0.8 - edge > 0.01:
                         continue
                     else:
                         firstbin = copy.deepcopy(edge)
