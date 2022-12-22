@@ -916,10 +916,16 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         if content < 0. and not (isdim8 or "SSWW_c" in sample.label or sample.label.startswith("Fake")):
             h1.SetBinContent(i, 0.)
 
+    if not sample.year == "ULRunII":
+        fakefactor = 0.3
+    else:
+        fakefactor = (3*0.3**2)**0.5
+
     for bidx in range(nbins):          
         bidx_l = bidx + 1
         if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
-            h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
+            #h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
+            h1.SetBinError(bidx_l, fakefactor*h1.GetBinContent(bidx_l))
 
         if not (opt.count):# and variable._name == "countings"):
             continue
