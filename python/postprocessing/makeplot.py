@@ -54,23 +54,141 @@ desiredop_dim6 = [
     "cqq11_1",
     "cqq3_1",
     "cqq31_1",
+    "cW_1_cHW_1",
+    "cW_1_cHWB_1",
+    "cW_1_cHbox_1",
+    "cW_1_cHDD_1",
+    "cW_1_cHl1_1",
+    "cW_1_cHl3_1",
+    "cW_1_cHq1_1",
+    "cW_1_cHq3_1",
+    "cW_1_cll_1",
+    "cW_1_cll1_1",
+    "cW_1_cqq1_1",
+    "cW_1_cqq31_1",
+    "cW_1_cqq11_1",
+    "cW_1_cqq3_1",
+    "cHW_1_cHWB_1",
+    "cHW_1_cHbox_1",
+    "cHW_1_cHDD_1",
+    "cHW_1_cHl1_1",
+    "cHW_1_cHl3_1",
+    "cHW_1_cHq1_1",
+    "cHW_1_cHq3_1",
+    "cHW_1_cll_1",
+    "cHW_1_cll1_1",
+    "cHW_1_cqq1_1",
+    "cHW_1_cqq31_1",
+    "cHW_1_cqq11_1",
+    "cHW_1_cqq3_1",
+    "cHWB_1_cHbox_1",
+    "cHWB_1_cHDD_1",
+    "cHWB_1_cHl1_1",
+    "cHWB_1_cHl3_1",
+    "cHWB_1_cHq1_1",
+    "cHWB_1_cHq3_1",
+    "cHWB_1_cll_1",
+    "cHWB_1_cll1_1",
+    "cHWB_1_cqq1_1",
+    "cHWB_1_cqq31_1",
+    "cHWB_1_cqq11_1",
+    "cHWB_1_cqq3_1",
+    "cHbox_1_cHDD_1",
+    "cHbox_1_cHl1_1",
+    "cHbox_1_cHl3_1",
+    "cHbox_1_cHq1_1",
+    "cHbox_1_cHq3_1",
+    "cHbox_1_cll_1",
+    "cHbox_1_cll1_1",
+    "cHbox_1_cqq1_1",
+    "cHbox_1_cqq31_1",
+    "cHbox_1_cqq11_1",
+    "cHbox_1_cqq3_1",
+    "cHDD_1_cHl1_1",
+    "cHDD_1_cHl3_1",
+    "cHDD_1_cHq1_1",
+    "cHDD_1_cHq3_1",
+    "cHDD_1_cll_1",
+    "cHDD_1_cll1_1",
+    "cHDD_1_cqq1_1",
+    "cHDD_1_cqq31_1",
+    "cHDD_1_cqq11_1",
+    "cHDD_1_cqq3_1",
+    "cHl1_1_cHl3_1",
+    "cHl1_1_cHq1_1",
+    "cHl1_1_cHq3_1",
+    "cHl1_1_cll_1",
+    "cHl1_1_cll1_1",
+    "cHl1_1_cqq1_1",
+    "cHl1_1_cqq31_1",
+    "cHl1_1_cqq11_1",
+    "cHl1_1_cqq3_1",
+    "cHl3_1_cHq1_1",
+    "cHl3_1_cHq3_1",
+    "cHl3_1_cll_1",
+    "cHl3_1_cll1_1",
+    "cHl3_1_cqq1_1",
+    "cHl3_1_cqq31_1",
+    "cHl3_1_cqq11_1",
+    "cHl3_1_cqq3_1",
+    "cHq1_1_cHq3_1",
+    "cHq1_1_cll_1",
+    "cHq1_1_cll1_1",
+    "cHq1_1_cqq1_1",
+    "cHq1_1_cqq31_1",
+    "cHq1_1_cqq11_1",
+    "cHq1_1_cqq3_1",
+    "cHq3_1_cll_1",
+    "cHq3_1_cll1_1",
+    "cHq3_1_cqq1_1",
+    "cHq3_1_cqq31_1",
+    "cHq3_1_cqq11_1",
+    "cHq3_1_cqq3_1",
+    "cll_1_cll1_1",
+    "cll_1_cqq1_1",
+    "cll_1_cqq31_1",
+    "cll_1_cqq11_1",
+    "cll_1_cqq3_1",
+    "cll1_1_cqq1_1",
+    "cll1_1_cqq31_1",
+    "cll1_1_cqq11_1",
+    "cll1_1_cqq3_1",
+    "cqq1_1_cqq31_1",
+    "cqq1_1_cqq11_1",
+    "cqq1_1_cqq3_1",
+    "cqq31_1_cqq11_1",
+    "cqq31_1_cqq3_1",
+    "cqq11_1_cqq3_1",
 ]
 
+
 wcoeff_dim8 = []
+wcoeff_dim8 = desiredop_dim8
+
+'''
 for opname, opdict in rwgdict_dim8.items():
     coeffstr = ""
     for val in opdict.keys():
         coeffstr = opname + "_" + val
         if coeffstr in desiredop_dim8:
             wcoeff_dim8.append(coeffstr)
-
+'''
+#print(rwgdict_dim6)
 wcoeff_dim6 = []
+wcoeff_dim6 = desiredop_dim6
+
+'''
 for opname, opdict in rwgdict_dim6.items():
     coeffstr = ""
     for val in opdict.keys():
         coeffstr = opname + "_" + val
         if coeffstr in desiredop_dim6:
             wcoeff_dim6.append(coeffstr)
+
+lendim6 = len(wcoeff_dim6)
+
+#print(wcoeff_dim6)
+'''
 
 typcontr = [
     "0",
@@ -741,6 +859,7 @@ def lumi_writer(dataset, lumi):
 
 
 def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)], sampletagg = "", dim8cut = ""):
+    print(samplelab, dim8cut)
     syst = systlist[0]
     isSystCorr = systlist[1]
     systtype = systlist[2]
@@ -785,7 +904,6 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             #new_syst = "abs(" + nominal + ")" + sign + devst
             #Print("new_syst: " + new_syst)
             #cutbase += '*(' + new_syst + ')'
-    Print("\tcutbase " + cutbase)
     
     if syst != "":
         #Print("hello" + syst)
@@ -861,6 +979,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     else:
         samplelab = sample.label
     
+    Print("\tcut " + cut)
     #Print("after syst applied\tcut " + cut + "\nhistoname: " + histoname + "\ttreename: " + treename)
     Print("\tplotting " + variable._name + "\tsample: " + samplelab + "\tcut: " + cut_tag + "\tsyst applied: " + syst)
     
@@ -1666,22 +1785,23 @@ for year in years:
         #variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_tobesure', 'dim6 DNN output (f2 NMR lower tbs)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_NONOISE_LCB', 'dim6 DNN output', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
         variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_NONOISE_LCB_again_2', 'dim8 DNN output', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim8_dev), copy.deepcopy(bin_bdtdim8_dev)))
-        '''
+        
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_10000"
         DNN_tag = 'SM DNN output (f1 NMR lower NN LCB 10000)'
         if opt.flat and opt.plot:
             bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
-            bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
-            bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
+            #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
+            #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
             bin_bdtsm_dev = copy.deepcopy(bin_bdtsm)
-            bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
-            bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
+            #bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
+            #bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
 
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_10001"
         DNN_tag = 'SM DNN output (f1 NMR lower NN LCB 10001)'
         if opt.flat and opt.plot:
@@ -1696,6 +1816,7 @@ for year in years:
         nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
         nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
+        
 
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_bisnotopt"
         DNN_tag = 'SM DNN output (f1 NMR lower NN LCB bis)'
@@ -1708,8 +1829,8 @@ for year in years:
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
             bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
 
         #####
@@ -1724,27 +1845,28 @@ for year in years:
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
             bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_halfway_fixedseed_100001', 'dim6 DNN output (f2 NMR lower hw fs 100001)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
         variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_fixedseed_100000', 'dim8 DNN output (f3 NMR lower FS 100000)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim8_dev), copy.deepcopy(bin_bdtdim8_dev)))
-
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100000"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100000)'
         if opt.flat and opt.plot:
             bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
-            bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
-            bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
+            #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
+            #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
             bin_bdtsm_dev = copy.deepcopy(bin_bdtsm)
-            bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
-            bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
+            #bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
+            #bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
 
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100001"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100001)'
         if opt.flat and opt.plot:
@@ -1756,8 +1878,8 @@ for year in years:
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
             bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
 
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100002"
@@ -1771,25 +1893,27 @@ for year in years:
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
             bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
+        '''
 
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100003"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100003)'
         if opt.flat and opt.plot:
             bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
-            bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
-            bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
+            #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
+            #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
             bin_bdtsm_dev = copy.deepcopy(bin_bdtsm)
-            bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
-            bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
+            #bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
+            #bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
 
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100006"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100006)'
         if opt.flat and opt.plot:
@@ -1801,26 +1925,27 @@ for year in years:
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
             bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
+        '''
 
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100007"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100007)'
         if opt.flat and opt.plot:
             bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
-            bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
-            bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
+            #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
+            #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
             bin_bdtsm_dev = copy.deepcopy(bin_bdtsm)
-            bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
-            bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
+            #bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
+            #bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
         print("\nDNN flattened:", DNN_name)
-
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100011"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100011)'
         if opt.flat and opt.plot:
@@ -1832,8 +1957,8 @@ for year in years:
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
             bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         nbin_bdtsm_dev = len(bin_bdtsm_dev) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
 
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100012"
@@ -2187,6 +2312,15 @@ for year in years:
                 elif IsDim6:
                     for cstr in wcoeff_dim6:
                         dimtag = cstr
+                        IsCombined = bool(len(cstr.split("_"))==4)
+                        if IsCombined:
+                            dimcut = dimtag + "[5]"
+                            dimcuts.append(dimcut)
+                            dimsamplenames.append(sample.label.replace("aTGC_mixed", dimtag))
+                            samplelabs.append(sample.label.replace("aTGC_mixed", dimtag))
+                            continue
+                        else:
+                            pass
                         for idt, typ in enumerate(typcontr):
                             if idt == 0:
                                 #idarray = str(idt + 3)
@@ -2196,8 +2330,8 @@ for year in years:
                             elif idt == 2:
                                 dimcut = dimtag + "[5]"
                             dimcuts.append(dimcut)
-                            dimsamplenames.append(sample.label.replace("aTGC", dimtag + "_" + typ))
-                            samplelabs.append(sample.label.replace("aTGC", dimtag + "_" + typ))
+                            dimsamplenames.append(sample.label.replace("aTGC_mixed", dimtag + "_" + typ))
+                            samplelabs.append(sample.label.replace("aTGC_mixed", dimtag + "_" + typ))
 
 
                 else:

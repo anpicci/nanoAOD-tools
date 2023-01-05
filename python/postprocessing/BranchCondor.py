@@ -91,24 +91,36 @@ toplot = opt.dataset.split(",")
 toveto = opt.veto.split(",")
 
 branches = [
-    #dnn_dim6_branch_2_NOMOREDY_lower_NONOISE_LCB,
-    #dnn_dim8_branch_3_NOMOREDY_lower_NONOISE_LCB_again_2,
-    #dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB,    
-    dnn_sm_branch_final_1,
+    dnn_dim6_branch_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_branch_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB,    
+    #dnn_sm_branch_final_1,
+    dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB_10000,
+    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100000,
+    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100003,
+    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100007,
 ]
 
 paths = [    
-    #dnn_dim6_path_2_NOMOREDY_lower_NONOISE_LCB,
-    #dnn_dim8_path_3_NOMOREDY_lower_NONOISE_LCB_again_2,
-    #dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB,
-    dnn_sm_path_final_1,
+    dnn_dim6_path_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_path_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB,
+    #dnn_sm_path_final_1,
+    dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB_10000,
+    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100000,
+    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100003,
+    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100007,
 ]
 
 scalers = [
-    #dnn_dim6_scaler_2_NOMOREDY_lower_NONOISE_LCB,
-    #dnn_dim8_scaler_3_NOMOREDY_lower_NONOISE_LCB_again_2,
-    #dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB,
-    dnn_sm_scaler_final_1,
+    dnn_dim6_scaler_2_NOMOREDY_lower_NONOISE_LCB,
+    dnn_dim8_scaler_3_NOMOREDY_lower_NONOISE_LCB_again_2,
+    dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB,
+    #dnn_sm_scaler_final_1,
+    dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB_10000,
+    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100000,
+    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100003,
+    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100007,
 ]
 
 folder = opt.folder

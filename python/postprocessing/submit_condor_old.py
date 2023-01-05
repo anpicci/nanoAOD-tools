@@ -57,8 +57,8 @@ elif opt.reco == "lj":
 elif opt.reco == "jl":
     executpy += "_jetlep_old.py"
 
-eosfolder= "/eos/user/s/sajmal/VBSAnalysis/"
-#eosfolder = "/eos/home-a/apiccine/VBS/nosynch/"
+#eosfolder= "/eos/user/s/sajmal/VBSAnalysis/"
+eosfolder = "/eos/home-a/apiccine/VBS/nosynch/"
 
 def sub_writer(sample, n, files, folder):
     condorsubb = condorsub + "_" + str(sample.year) + ".sub"

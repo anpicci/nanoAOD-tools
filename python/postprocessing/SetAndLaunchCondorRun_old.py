@@ -235,8 +235,8 @@ else:
 
 print(opt.fold, opt.channel, folder)
 #path = "/eos/home-" + inituser + "/" + username + "/VBS/nosynch/" + folder + "/"
-#path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/"
-path = "/eos/user/s/sajmal/VBSAnalysis/" + folder + "/"
+path = "/eos/home-a/apiccine/VBS/nosynch/" + folder + "/"
+#path = "/eos/user/s/sajmal/VBSAnalysis/" + folder + "/"
 print("output path:", path, "\n")
 
 subpy = ""

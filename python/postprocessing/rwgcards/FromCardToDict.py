@@ -118,13 +118,30 @@ def CardToDict(dim, op = ""):
     
 
 #for k, v in CardToDict("dim8", "FT1_2p0").items():
+#top = ""
 #for k, v in CardToDict("dim6").items():
     #print("\ncoeff\t", k)
     #print(k)
     #for kv, vv in v.items():
         #print("\n", kv)
         #print(vv)
-    #print(k, v)
+    #print(v)
+    #cfs = k.split("_")
+    #vs = list(v.keys())[1].split("_")
+    
+    #top = ""
+    #if top != "":
+        #top += ","
+    #for idc, cf in enumerate(cfs):
+        #if top != "":
+            #top += "_"
+        #else:
+            #top += '\"'
+        #if not top.endswith(",") and top != "":
+            #top += ":"
+        #top += cf + "_" + str(vs[idc])
+    #top += '\",'
+#print(top)
 #CardToDict("dim8", "FT1_2p0")
 #CardToDict("dim6")
 

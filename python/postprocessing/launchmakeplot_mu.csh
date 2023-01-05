@@ -53,7 +53,7 @@ set year = ULRunII
 #python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
 #python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
 #python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
-python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel --syst noSyst -v DNN_ --tDMcut
+python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel --syst noSyst -v DNN_ -d VBS_SSWW_aTGC_mixed_$year
 
 
 #set year = UL2016M

@@ -3,7 +3,7 @@ def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
 
-add = " --var DNN_,m_o1,m_1T,m_jj,countings "
+add = "--var countings,m_o1,m_1T,m_jj,DNN_"
 
 #os.system("reset")
 folder = "vUL055"
@@ -69,7 +69,10 @@ for errpair in errpaths:
                 continue
             
             if idy > 0:
-                strerr += ","
+                if not errpath.startswith("condormerge_"):
+                    strerr += ","
+                else:
+                    strerr += ":"
             strerr += errfile.replace(".err", "")
             if errpath.startswith("condorplot_"):
                 cuttag = "_" + cutToTag(errpair[2])
