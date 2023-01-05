@@ -49,11 +49,11 @@ set year = UL2018
 #python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel  -v leadjet_eta,subleadjet_eta --syst noSyst --test
 
 set year = ULRunII
-#python3 makeplot.py -y $year --lep electron --sr -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
-#python3 makeplot.py -y $year --lep electron --ttbar -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
-#python3 makeplot.py -y $year --lep electron --fakes -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
-#python3 makeplot.py -y $year --lep electron --wsdy --bvetoL -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
-python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel --syst noSyst -v DNN_ -d VBS_SSWW_aTGC_mixed_$year
+#python3 makeplot.py -y $year --lep muon --sr -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
+#python3 makeplot.py -y $year --lep muon --ttbar -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
+python3 makeplot.py -y $year --lep muon --fakes -f $folder0 -p --ch $channel --syst noSyst -v DNN_ --tDMcut -d VG_$year #--noweight
+#python3 makeplot.py -y $year --lep muon --wsdy --bvetoL -f $folder0 -p --ch $channel --syst QCDScaleUp,QCDScaleDown -v DNN_ --tDMcut #--noweight
+#python3 makeplot.py -y $year --lep muon --presel -f $folder0 -p --ch $channel --syst noSyst -v DNN_ -d VBS_SSWW_aTGC_mixed_$year
 
 
 #set year = UL2016M

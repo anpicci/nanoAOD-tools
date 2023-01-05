@@ -1038,7 +1038,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     if not sample.year == "ULRunII":
         fakefactor = 0.3
     else:
-        fakefactor = (3*0.3**2)**0.5
+        fakefactor = 0.3/lumi["ULRunII"]*((lumi["UL2016M"]**2.+lumi["UL2017"]**2.+lumi["UL2018"]**2.)**0.5)#(3*0.3**2)**0.5
 
     for bidx in range(nbins):          
         bidx_l = bidx + 1
