@@ -36,8 +36,8 @@ CHWcolor = ROOT.kAzure+10
 EWVBScolor = ROOT.kRed
 QCDVBScolor = ROOT.kViolet-8
 WWJJcolor = ROOT.kMagenta-4
-aQGCcolor = ROOT.kGreen
-aTGCcolor = ROOT.kViolet
+aQGCcolor = ROOT.kGreen+3
+aTGCcolor = ROOT.kBlue+2
 othcolor = ROOT.kMagenta-10
 ######### UL2016APV ##########
 
