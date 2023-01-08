@@ -1147,8 +1147,6 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     signal = False
 
     for s in samples_:
-        print s.label
-
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
             Print("not passed")
             continue
@@ -1213,7 +1211,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             pass
 
         Print("opening file: " + infile[s.label].GetName())
-        print "isthere?", histoname, infile[s.label].Get(histoname)
+        #print "isthere?", histoname, infile[s.label].Get(histoname)
         if('Data' in s.label):
             if ("GenPart" in variabile_._name) or ("MC_" in variabile_._name):
                 continue
