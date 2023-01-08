@@ -1147,6 +1147,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
     signal = False
 
     for s in samples_:
+        print s.label
+
         if s.label.startswith('VBS') and not ('SSWW_SM_' in s.label or 'SSWW_cHW_' in s.label or 'SSWW_cW_' in s.label or '_aQGC_' in s.label or '_aTGC_' in s.label) and not str(s.year) in s.label:
             Print("not passed")
             continue
@@ -1162,7 +1164,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             if s.label.startswith('Fake'):
                 continue
         if opt.unistack:
-            if not (s.label.startswith("WpWpJJ_") or s.label.startswith("Others_") or s.label.startswith("Fake") or s.label.startswith("Data") or s.label.startswith("TTTo2L2Nu_") or s.label.startswith("WrongSign_")):
+            if not (s.label.startswith("WpWpJJ_") or s.label.startswith("VBS_SSWW_") or s.label.startswith("Others_") or s.label.startswith("Fake") or s.label.startswith("Data") or s.label.startswith("TTTo2L2Nu_") or s.label.startswith("WrongSign_")):
                 continue
         else:
             if s.label.startswith("Others_"):
@@ -1172,14 +1174,15 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             signal = True
             #Print(s.label)
         
-        infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + ".root")
+        stacklab = s.label.replace("_aQGC_", "_FT1_1p0_SM_").replace("_aTGC_mixed_", "_cW_1_SM_")
+        #infile[s.label] = ROOT.TFile.Open(pathplot + s.label + "_" + lep + ".root")
+        infile[s.label] = ROOT.TFile.Open(pathplot + stacklab + "_" + lep + ".root")
 
     i = 0
 
-    #print "infile:"
+    #print "infile:", infile
     #for k, v in infile.items():
         #print k, v
-
 
     firstbin = 0
     lastbin = 0
@@ -1210,7 +1213,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
             pass
 
         Print("opening file: " + infile[s.label].GetName())
-        #Print("isthere?", histoname, infile[s.label].Get(histoname))
+        print "isthere?", histoname, infile[s.label].Get(histoname)
         if('Data' in s.label):
             if ("GenPart" in variabile_._name) or ("MC_" in variabile_._name):
                 continue

@@ -713,7 +713,7 @@ VBS_SSWW_DIM6_SM_UL2016APV.components = [
     VBS_SSWW_cW_cHW_UL2016APV,
 ]
 
-VBS_SSWW_aQGC_UL2016APV = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2016APV")
+VBS_SSWW_aQGC_UL2016APV = sample(aQGCcolor, 1, 1001, "f_{T1} = 1.0 TeV^{-4}", "VBS_SSWW_aQGC_UL2016APV")
 VBS_SSWW_aQGC_UL2016APV.sigma = 0.1077
 VBS_SSWW_aQGC_UL2016APV.year = "UL2016APV"
 VBS_SSWW_aQGC_UL2016APV.dataset = "/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/apiccine-NanoAODv9_UL2016APV_Legnaro-00000000000000000000000000000000/USER"
@@ -723,7 +723,7 @@ VBS_SSWW_aTGC_UL2016APV.sigma = 1.083
 VBS_SSWW_aTGC_UL2016APV.year = "UL2016APV"
 VBS_SSWW_aTGC_UL2016APV.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2016APV_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aTGC_mixed_UL2016APV = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2016APV")
+VBS_SSWW_aTGC_mixed_UL2016APV = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_mixed_UL2016APV")
 VBS_SSWW_aTGC_mixed_UL2016APV.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2016APV.year = "UL2016APV"
 VBS_SSWW_aTGC_mixed_UL2016APV.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2016APV_Legnaro-00000000000000000000000000000000/USER"
@@ -1790,7 +1790,7 @@ VBS_SSWW_cW_cHW_UL2016M.components = [
     VBS_SSWW_cW_cHW_UL2016APV,
 ]
 
-VBS_SSWW_DIM6_UL2016 = sample(ROOT.kGreen+3, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_DIM6_UL2016")
+VBS_SSWW_DIM6_UL2016 = sample(ROOT.kGreen+3, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_DIM6_UL2016")
 VBS_SSWW_DIM6_UL2016.year = "UL2016"
 VBS_SSWW_DIM6_UL2016.components = [
     VBS_SSWW_cHW_BSM_UL2016,
@@ -1800,7 +1800,7 @@ VBS_SSWW_DIM6_UL2016.components = [
     VBS_SSWW_cW_cHW_UL2016,
 ]
 
-VBS_SSWW_DIM6_UL2016M = sample(ROOT.kGreen+3, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_DIM6_UL2016M")
+VBS_SSWW_DIM6_UL2016M = sample(ROOT.kGreen+3, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_DIM6_UL2016M")
 VBS_SSWW_DIM6_UL2016M.year = "UL2016M"
 VBS_SSWW_DIM6_UL2016M.components = [
     VBS_SSWW_DIM6_UL2016APV,
@@ -1827,36 +1827,36 @@ VBS_SSWW_DIM6_SM_UL2016M.components = [
     VBS_SSWW_DIM6_SM_UL2016,
 ]
 
-VBS_SSWW_aQGC_UL2016 = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2016")
+VBS_SSWW_aQGC_UL2016 = sample(aQGCcolor, 1, 1001, "f_{T1} = 1.0 TeV^{-4}", "VBS_SSWW_aQGC_UL2016")
 VBS_SSWW_aQGC_UL2016.sigma = 0.1077
 VBS_SSWW_aQGC_UL2016.year = "UL2016"
 VBS_SSWW_aQGC_UL2016.dataset = "/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/apiccine-NanoAODv9_UL2016_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aTGC_UL2016 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_UL2016")
+VBS_SSWW_aTGC_UL2016 = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_UL2016")
 VBS_SSWW_aTGC_UL2016.sigma = 1.083
 VBS_SSWW_aTGC_UL2016.year = "UL2016"
 VBS_SSWW_aTGC_UL2016.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2016_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aTGC_mixed_UL2016 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2016")
+VBS_SSWW_aTGC_mixed_UL2016 = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_mixed_UL2016")
 VBS_SSWW_aTGC_mixed_UL2016.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2016.year = "UL2016"
 VBS_SSWW_aTGC_mixed_UL2016.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2016_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aQGC_UL2016M = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aQGC_UL2016M")
+VBS_SSWW_aQGC_UL2016M = sample(aQGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aQGC_UL2016M")
 VBS_SSWW_aQGC_UL2016M.year = "UL2016M"
 VBS_SSWW_aQGC_UL2016M.components = [
     VBS_SSWW_aQGC_UL2016APV,
     VBS_SSWW_aQGC_UL2016,
 ]
 
-VBS_SSWW_aTGC_UL2016M = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aTGC_UL2016M")
+VBS_SSWW_aTGC_UL2016M = sample(aTGCcolor, 1, 1001, "f_{T1} = 1.0 TeV^{-4}", "VBS_SSWW_aTGC_UL2016M")
 VBS_SSWW_aTGC_UL2016M.year = "UL2016M"
 VBS_SSWW_aTGC_UL2016M.components = [
     VBS_SSWW_aTGC_UL2016APV,
     VBS_SSWW_aTGC_UL2016,
 ]
 
-VBS_SSWW_aTGC_mixed_UL2016M = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aTGC_mixed_UL2016M")
+VBS_SSWW_aTGC_mixed_UL2016M = sample(aTGCcolor, 1, 1001, "f_{T1} = 1.0 TeV^{-4}", "VBS_SSWW_aTGC_mixed_UL2016M")
 VBS_SSWW_aTGC_mixed_UL2016M.year = "UL2016M"
 VBS_SSWW_aTGC_mixed_UL2016M.components = [
     VBS_SSWW_aTGC_mixed_UL2016APV,
@@ -2745,7 +2745,7 @@ VBS_SSWW_cW_cHW_UL2017.year = "UL2017"
 VBS_SSWW_cW_cHW_UL2017.dataset = "/VBS_SSWW_cW_cHW_TuneCP5_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v1/NANOAODSIM"
 VBS_SSWW_cW_cHW_UL2017.sigma = 0.002014
 
-VBS_SSWW_DIM6_UL2017 = sample(ROOT.kGreen+3, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_DIM6_UL2017")
+VBS_SSWW_DIM6_UL2017 = sample(ROOT.kGreen+3, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_DIM6_UL2017")
 VBS_SSWW_DIM6_UL2017.year = "UL2017"
 VBS_SSWW_DIM6_UL2017.components = [
     VBS_SSWW_cHW_BSM_UL2017,
@@ -2768,17 +2768,17 @@ VBS_SSWW_DIM6_SM_UL2017.components = [
     VBS_SSWW_cW_cHW_UL2017,
 ]
 
-VBS_SSWW_aQGC_UL2017 = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2017")
+VBS_SSWW_aQGC_UL2017 = sample(aQGCcolor, 1, 1001, "f_{T1} = 1.0 TeV^{-4}", "VBS_SSWW_aQGC_UL2017")
 VBS_SSWW_aQGC_UL2017.sigma = 0.1077
 VBS_SSWW_aQGC_UL2017.year = "UL2017"
 VBS_SSWW_aQGC_UL2017.dataset = "/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/apiccine-NanoAODv9_UL2017_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aTGC_UL2017 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_UL2017")
+VBS_SSWW_aTGC_UL2017 = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_UL2017")
 VBS_SSWW_aTGC_UL2017.sigma = 1.083
 VBS_SSWW_aTGC_UL2017.year = "UL2017"
 VBS_SSWW_aTGC_UL2017.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2017_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aTGC_mixed_UL2017 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2017")
+VBS_SSWW_aTGC_mixed_UL2017 = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_mixed_UL2017")
 VBS_SSWW_aTGC_mixed_UL2017.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2017.year = "UL2017"
 VBS_SSWW_aTGC_mixed_UL2017.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2017_Legnaro-00000000000000000000000000000000/USER"
@@ -3902,7 +3902,7 @@ VBS_SSWW_cW_cHW_ULRunII.components= [
     VBS_SSWW_cW_cHW_UL2018,
 ]
 
-VBS_SSWW_DIM6_UL2018 = sample(ROOT.kGreen+3, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_DIM6_UL2018")
+VBS_SSWW_DIM6_UL2018 = sample(ROOT.kGreen+3, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_DIM6_UL2018")
 VBS_SSWW_DIM6_UL2018.year = "UL2018"
 VBS_SSWW_DIM6_UL2018.components = [
     VBS_SSWW_cHW_BSM_UL2018,
@@ -3912,7 +3912,7 @@ VBS_SSWW_DIM6_UL2018.components = [
     VBS_SSWW_cW_cHW_UL2018,
 ]
 
-VBS_SSWW_DIM6_ULRunII = sample(ROOT.kGreen+3, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_DIM6_ULRunII")
+VBS_SSWW_DIM6_ULRunII = sample(ROOT.kGreen+3, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_DIM6_ULRunII")
 VBS_SSWW_DIM6_ULRunII.year = "ULRunII"
 VBS_SSWW_DIM6_ULRunII.components = [
     VBS_SSWW_DIM6_UL2016APV,
@@ -3943,22 +3943,22 @@ VBS_SSWW_DIM6_SM_ULRunII.components = [
     VBS_SSWW_DIM6_SM_UL2018,
 ]
 
-VBS_SSWW_aQGC_UL2018 = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_UL2018")
+VBS_SSWW_aQGC_UL2018 = sample(aQGCcolor, 1, 1001, "f_{T1} = 1.0 TeV^{-4}", "VBS_SSWW_aQGC_UL2018")
 VBS_SSWW_aQGC_UL2018.sigma = 0.1077
 VBS_SSWW_aQGC_UL2018.year = "UL2018"
 VBS_SSWW_aQGC_UL2018.dataset = "/WWJJ_SS_WToLNu_EWK_aQGC-FT-FS-FM_TuneCP5_13TeV_madgraph-pythia8/apiccine-NanoAODv9_UL2018_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aTGC_UL2018 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_UL2018")
+VBS_SSWW_aTGC_UL2018 = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_UL2018")
 VBS_SSWW_aTGC_UL2018.sigma = 1.083
 VBS_SSWW_aTGC_UL2018.year = "UL2018"
 VBS_SSWW_aTGC_UL2018.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2018_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aTGC_mixed_UL2018 = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_UL2018")
+VBS_SSWW_aTGC_mixed_UL2018 = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_mixed_UL2018")
 VBS_SSWW_aTGC_mixed_UL2018.sigma = 1.083
 VBS_SSWW_aTGC_mixed_UL2018.year = "UL2018"
 VBS_SSWW_aTGC_mixed_UL2018.dataset = "/WplusminusWplusminus2JTo2L2Nu2J_EWK_dim6_mixed_TuneCP5_13TeV-madgraph-pythia8/apiccine-NanoAODv9_UL2018_Legnaro-00000000000000000000000000000000/USER"
 
-VBS_SSWW_aQGC_ULRunII = sample(aQGCcolor, 1, 1001, "VBS ssWW dim-8 EFT", "VBS_SSWW_aQGC_ULRunII")
+VBS_SSWW_aQGC_ULRunII = sample(aQGCcolor, 1, 1001, "f_{T1} = 1.0 TeV^{-4}", "VBS_SSWW_aQGC_ULRunII")
 VBS_SSWW_aQGC_ULRunII.year = "ULRunII"
 VBS_SSWW_aQGC_ULRunII.components = [
     VBS_SSWW_aQGC_UL2016APV,
@@ -3967,7 +3967,7 @@ VBS_SSWW_aQGC_ULRunII.components = [
     VBS_SSWW_aQGC_UL2018,
 ]
 
-VBS_SSWW_aTGC_ULRunII = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_ULRunII")
+VBS_SSWW_aTGC_ULRunII = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_ULRunII")
 VBS_SSWW_aTGC_ULRunII.year = "ULRunII"
 VBS_SSWW_aTGC_ULRunII.components = [
     VBS_SSWW_aTGC_UL2016APV,
@@ -3976,7 +3976,7 @@ VBS_SSWW_aTGC_ULRunII.components = [
     VBS_SSWW_aTGC_UL2018,
 ]
 
-VBS_SSWW_aTGC_mixed_ULRunII = sample(aTGCcolor, 1, 1001, "VBS ssWW dim-6 EFT", "VBS_SSWW_aTGC_mixed_ULRunII")
+VBS_SSWW_aTGC_mixed_ULRunII = sample(aTGCcolor, 1, 1001, "c_{W} = 1.0 TeV^{-2}", "VBS_SSWW_aTGC_mixed_ULRunII")
 VBS_SSWW_aTGC_mixed_ULRunII.year = "ULRunII"
 VBS_SSWW_aTGC_mixed_ULRunII.components = [
     VBS_SSWW_aTGC_mixed_UL2016APV,
@@ -5599,14 +5599,15 @@ stack_list = [
     #VBS_SSWW_LL_SM_ULRunII,
     #VBS_SSWW_TL_SM_ULRunII,
     #VBS_SSWW_TT_SM_ULRunII,
-    VBS_SSWW_cW_ULRunII,
+    #VBS_SSWW_cW_ULRunII,
     ##VBS_SSWW_cHW_ULRunII,
     ##VBS_SSWW_cW_SM_ULRunII,
     ##VBS_SSWW_cHW_SM_ULRunII,
     ##VBS_SSWW_cW_BSM_ULRunII,
     ##VBS_SSWW_cHW_BSM_ULRunII,
     ##VBS_SSWW_DIM6_ULRunII,
-    ##VBS_SSWW_aQGC_ULRunII,
+    VBS_SSWW_aQGC_ULRunII,
+    VBS_SSWW_aTGC_mixed_ULRunII,
     WpWpJJ_QCD_ULRunII,
     #WpWpJJ_ULRunII,
     ZZtoLep_ULRunII,
