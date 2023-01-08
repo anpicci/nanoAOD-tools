@@ -1021,8 +1021,8 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     #Print("at project " + histoname + " " + vartoproject + " " +cut)
     f1.Get(treename).Project(histoname,vartoproject,cut)
     #if not opt.lastbins:
-        #h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
-        #h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
+    h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
+    h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
     h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
     h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
     
