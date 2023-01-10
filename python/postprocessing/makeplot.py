@@ -2398,7 +2398,7 @@ for year in years:
                                 continue
                             if not var.IsSystApplied() and (year != "ULRunII"):# or opt.flat):
                                 continue
-                            if not (syst[0] == "" or syst[0].startswith("QCD")) and (not var.IsSystApplied() or year == "ULRunII"):
+                            if not (syst[0] == "" or syst[0].startswith("QCD") or syst[0].startswith("pdf_Tot")) and (not var.IsSystApplied() or year == "ULRunII"):
                                 continue
                             if not "all" in vartoplot:
                                 IsToPlot = False
