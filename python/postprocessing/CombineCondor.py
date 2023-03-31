@@ -4,7 +4,7 @@ import optparse
 from samples.samplesUL import *
 import copy
 from datetime import datetime
-
+from ExtractCondor import FindModels
 #os.system("reset")
 
 usage = 'python3 CombineCondor.py -d dataset_name -f destination_folder -y year'
@@ -36,6 +36,7 @@ parser.add_option('--DYrp', dest='DYrp', default = False, action='store_true', h
 parser.add_option('--pdf', dest='pdf', type='string', default = 'total', help = 'Specify type of pdf')
 parser.add_option('--flnN', dest='flnN', default = False, action='store_true', help = 'apply lognormal to fakes')
 parser.add_option('--frp', dest='frp', default = False, action='store_true', help = 'apply rateParam to fakes')
+parser.add_option('--noQCDScale', dest='noQCDScale', default = False, action='store_true', help = 'QCDScale not')
 parser.add_option('--profile', dest='profile', default = False, action='store_true', help = 'apply profiling to 2D fits eft')
 parser.add_option('--regions', dest='regions', type='string', default = 'SR,CRTT,CROS,CRF', help = 'Regions to fit')
 parser.add_option('--leptons', dest='leptons', type='string', default = 'muon,electron', help = 'Channels to include')
@@ -137,6 +138,10 @@ if not opt.flat:
     condorsub += "_noflat"
     subfold += "_noflat"
     exe += "_noflat"
+if opt.noQCDScale:
+    condorsub += "_noQCDScale"
+    subfold += "_noQCDScale"
+    exe += "_noQCDScale"
 #if opt.flat:
     #condorsub += "_flat"
     #subfold += "_flat"
@@ -200,7 +205,7 @@ def submitter(model, srvar, crvar, argsins, folder, lepton, region):
     elif model.startswith("c") or model.startswith("F"):
         f.write("request_cpus            = 6\n")
     else:
-        f.write("request_cpus            = 4\n")
+        f.write("request_cpus            = 6\n")
     output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".out"
     log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".log"
     error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".err"
@@ -216,7 +221,7 @@ def submitter(model, srvar, crvar, argsins, folder, lepton, region):
     if os.path.exists(error):
         os.system("rm " + error)
         
-    #os.system("condor_submit " + condorsubb)
+    os.system("condor_submit " + condorsubb)
     os.system("mv " + condorsubb + " " + subfold)
 
 folder = opt.folder
@@ -234,9 +239,26 @@ if not opt.uncbreak:
     arg0 += " --notUncBreak"
 if not opt.dofit:
     arg0 += " --noFit"
+if opt.noQCDScale:
+    arg0 += " --noQCDScale"
+#runningmodels = FindModels()
+
+#print(runningmodels)
 
 for model in models:
     arg1 = ""
+    #if not ("cqq3_" in model or "cqq31_" in model or "cqq11_" in model):
+        #continue
+    #if "cqq1_" in model:
+        #continue
+    #if not "cW_" in model:
+        #continue
+    #if not (":FT" in model or ":FS" in model or ":FM" in model):
+        #continue
+
+    #if model in runningmodels:
+        #continue
+   
     if model.startswith("vbs"):
         arg1 += " --sm --vbs"
         if model != "vbs":
@@ -302,5 +324,5 @@ for model in models:
 
                 argss.append(arg3)
                 submitter(model, srvar, crvar, argss, folder, lepton, region)
-        
+                
         

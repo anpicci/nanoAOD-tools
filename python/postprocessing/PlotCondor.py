@@ -25,6 +25,9 @@ parser.add_option('--vvvbroad', dest='vvvbroad', default = False, action='store_
 parser.add_option('--noflat', dest='flat', default = True, action='store_false', help='Disable signal-flattening binning')
 #parser.add_option('--flat', dest='flat', default = False, action='store_true', help='Enable signal-flattening binning')
 parser.add_option('--lastbins', dest='lastbins', default = False, action='store_true', help='Last bins')
+parser.add_option('--cons', dest='cons', default = False, action='store_true', help='stat+30perc for fakes')
+parser.add_option('--only30', dest='only30', default = False, action='store_true', help='only 30perc for fakes')
+
 (opt, args) = parser.parse_args()
 
 def cutToTag(cut):
@@ -201,6 +204,13 @@ for year in years:
 
         #arg2 = arg0 + arg1 + " --ch ltau --count -d " + dat.label
         arg2 = arg0 + arg1 + " --ch ltau -d " + dat.label
+
+        if opt.cons:
+            arg2 += " --cons"
+        elif opt.only30:
+            arg2 += " --only30"
+        else:
+            pass
         
         for region in regions:
             arg3 = arg2 + " --" + region

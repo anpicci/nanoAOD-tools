@@ -31,7 +31,7 @@ desiredop_dim8 = [
     #"FS2_1p0",
     #"FM0_1p0",
     #"FM1_0p9",
-    ####"FM6_1p0",
+    ###"FM6_1p0",
     #"FM7_1p0",
     #"FT0_1p0",
     "FT1_1p0",
@@ -212,6 +212,8 @@ parser.add_option('--sr', dest='sr', default = False, action='store_true', help=
 parser.add_option('--bdt', dest='bdt', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--ebdt', dest='ebdt', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--mubdt', dest='mubdt', default = False, action='store_true', help='Default do not apply any selection')
+parser.add_option('--cons', dest='cons', default = False, action='store_true', help='stat+30perc for fakes')
+parser.add_option('--only30', dest='only30', default = False, action='store_true', help='only 30perc for fakes')
 parser.add_option('-p', '--plot', dest='plot', default = False, action='store_true', help='Default make no plots')
 parser.add_option('-s', '--stack', dest='stack', default = False, action='store_true', help='Default make no stacks')
 parser.add_option('-N', '--notstacked', dest='tostack', default = True, action='store_false', help='Default make plots stacked')
@@ -298,6 +300,11 @@ if not opt.flat:
     plot_tag += "_noflat"
 #if opt.lastbins:
     #plot_tag += "_lastbins"
+#if opt.cons:
+#plot_tag += "_cons"
+#elif opt.only30:
+#plot_tag += "_only30"
+
 
 pfolder = opt.folder #+ opt.plot_tag
 
@@ -611,6 +618,11 @@ if opt.lastbins:
     pathstack += "_lastbins"
 if opt.unistack:
     pathstack += "_merged"
+#if opt.cons:
+    #pathstack += "_cons"
+#elif opt.only30:
+    #pathstack += "_only30"
+
 pathstack += "/" + cut_tag + "/"
 
 Print(lepstr + " " + pathplot + " " + pathstack) 
@@ -672,7 +684,7 @@ def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
     return binedges
 
 def mergepart(dataset):
-    Print("\nhello babe\n")
+    #Print("\nhello babe\n")
     samples = []
     hascomp = False
     if "UL" in opt.year:
@@ -875,7 +887,7 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     if (not "_UL" in sample.label and sample.label.startswith("VBS_SSWW_F")) or ("_UL" in sample.label and (sample.label.startswith("VBS_SSWW_aQGC") or sample.label.startswith("VBS_SSWW_aTGC"))):
         isdim8 = True
   
-    ROOT.TH1.SetDefaultSumw2()
+    ROOT.TH1.SetDefaultSumw2(ROOT.kTRUE)
     cutbase = variable._taglio
     histag = variable._name
     if variable._name.startswith("min"):
@@ -952,6 +964,14 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
             if opt.channel == 'emu':
                 cut = cutbase + "*(" + "((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==0)*(" + l1fstr + "_SFFake))+((" + l1fstr + "_LnTRegion==0&&" + l2fstr + "_LnTRegion==1)*(" + l2fstr + "_SFFake_vsjet2" + "))+((" + l1fstr + "_LnTRegion==1&&" + l2fstr + "_LnTRegion==1)*(" + l1fstr + "_SFFake*" + l2fstr + "_SFFake))" + ")"
 
+        adjcut = ""
+        if opt.sr:
+            adjcut += "*(((abs(" + l1fstr + "_pdgid)==11)*((DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB<=0.25)*1.15+(DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB>0.25&&DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB<=0.4)*0.9+(DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB>0.4)*1))"
+            adjcut +="+((abs(" + l1fstr + "_pdgid)==13)*((DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB<=0.25)*1.05+(DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB>0.25)*1)))"
+        if opt.wsdy:
+            adjcut +="*(((abs(" + l1fstr + "_pdgid)==11)*((DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB<=0.25)*1.34+(DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB>0.25&&DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB<=0.4)*1.32+(DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB>0.4&&DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB<=0.52)*1.18+(DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB>0.52)*1))"
+            adjcut +="+((abs(" + l1fstr + "_pdgid)==13)*((DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB<=0.25)*1.17+(DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB>0.25)*1)))"
+        cut += adjcut
     else:
         cut = cutbase + "*(" + l1fstr + "_TightRegion==1&&" + l2fstr + "_TightRegion==1)"
     
@@ -1043,8 +1063,12 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
     for bidx in range(nbins):          
         bidx_l = bidx + 1
         if str(sample.label).startswith('Fake') or str(sample.label).startswith('Prompt'):
-            #h1.SetBinError(bidx_l, 0.3*h1.GetBinContent(bidx_l))
-            h1.SetBinError(bidx_l, fakefactor*h1.GetBinContent(bidx_l))
+            if opt.only30:
+                h1.SetBinError(bidx_l, fakefactor*h1.GetBinContent(bidx_l))
+            elif opt.cons:
+                h1.SetBinError(bidx_l, ((fakefactor*h1.GetBinContent(bidx_l))**2.+h1.GetBinError(bidx_l)**2.)**0.5)
+            else:
+                pass
 
         if not (opt.count):# and variable._name == "countings"):
             continue
@@ -1140,7 +1164,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi, year):
         canvasname += "_logscale"
     if opt.toscale:
         canvasname += "_binscaled"
-    if opt.sr:
+    if opt.sr and opt.blinded:
         blind = True
     stack = ROOT.THStack(stackname, histag)
     leg_stack = ROOT.TLegend(0.32,0.58,0.93,0.87)
@@ -2387,11 +2411,11 @@ for year in years:
                     else:
                         raise ValueError(samplelab + " not ready to be plotted, skipping")
                         continue
-
+                    print(systematics)
                     for ids, syst in enumerate(systematics):
                         if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
                             continue
-
+                        print(syst)
                         for var in variables:
                             #Print(var._name + " " + syst[0] + " " + str(not var.IsSystApplied()) + " " + str(year != "ULRunII" or opt.flat))
                             if (IsDim8 or IsDim6) and var._name.startswith("DNN_SM") and year != "ULRunII":
@@ -2400,6 +2424,9 @@ for year in years:
                                 continue
                             if not (syst[0] == "" or syst[0].startswith("QCD") or syst[0].startswith("pdf_Tot")) and (not var.IsSystApplied() or year == "ULRunII"):
                                 continue
+                            else:
+                                pass
+                                #print("hello")
                             if not "all" in vartoplot:
                                 IsToPlot = False
                                 for singvar in vartoplot:
