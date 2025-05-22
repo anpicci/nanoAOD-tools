@@ -1320,8 +1320,15 @@ class Collection:
         ret = Object(self._event,self._prefix,index=index)
         if type(index) == int: self._cache[index] = ret
         return ret
+    #def __len__(self):
+    #    return self._len
     def __len__(self):
-        return self._len
+        # force Python int
+        return int(self._len)
+
+    def size(self):
+        # same as ROOT’s .size()
+        return int(self._len)
         
 ###############################################
 ###        End of framework/datamodel       ###
