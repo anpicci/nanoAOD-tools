@@ -1327,7 +1327,7 @@ class Collection:
         return int(self._len)
 
     def size(self):
-        # same as ROOT’s .size()
+        # same as ROOTs .size()
         return int(self._len)
         
 ###############################################
