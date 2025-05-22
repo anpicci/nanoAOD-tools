@@ -297,6 +297,45 @@ systTree.setWeightName("VBSSF", 1.)
 systTree.setWeightName("VBSUp", 1.)
 systTree.setWeightName("VBSDown", 1.)
 
+from collections import defaultdict
+
+def is_WZ_1hadTau_2lep(genparts):
+    """
+    genparts: the Collection(event, "GenPart") list
+    Returns True if exactly one hadronic tau and exactly two leptons (e or mu),
+    where leptons from W/Z decays or from leptonic tau decays are counted.
+    """
+    # build mother → [daughter indices] map
+    children = defaultdict(list)
+    for idx, gp in enumerate(genparts):
+        mom = int(gp.genPartIdxMother)
+        if mom >= 0:
+            children[mom].append(idx)
+
+    had_tau_idxs = []
+    lep_idxs      = set()
+
+    # classify taus: hadronic vs. leptonic
+    for idx, gp in enumerate(genparts):
+        if abs(gp.pdgId) == 15:
+            # look for any e/μ daughters
+            lep_daughters = [ch for ch in children[idx]
+                             if abs(genparts[ch].pdgId) in (11,13)]
+            if lep_daughters:
+                lep_idxs.update(lep_daughters)
+            else:
+                had_tau_idxs.append(idx)
+
+    # now pick up any prompt e/μ from W (24) or Z (23)
+    for idx, gp in enumerate(genparts):
+        if abs(gp.pdgId) in (11,13):
+            mom = int(gp.genPartIdxMother)
+            if mom >= 0 and abs(genparts[mom].pdgId) in (23,24):
+                lep_idxs.add(idx)
+
+    return (len(had_tau_idxs) == 1) and (len(lep_idxs) == 2)
+
+
 #++++++++++++++++++++++++++++++++++
 #++      taking MC weights       ++
 #++++++++++++++++++++++++++++++++++
