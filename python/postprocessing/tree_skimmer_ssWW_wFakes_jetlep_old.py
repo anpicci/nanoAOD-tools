@@ -305,7 +305,7 @@ def is_WZ_1hadTau_2lep(genparts):
     Returns True if exactly one hadronic tau and exactly two leptons (e or mu),
     where leptons from W/Z decays or from leptonic tau decays are counted.
     """
-    # build mother → [daughter indices] map
+    # build mother --> [daughter indices] map
     children = defaultdict(list)
     for idx, gp in enumerate(genparts):
         mom = int(gp.genPartIdxMother)
@@ -318,7 +318,7 @@ def is_WZ_1hadTau_2lep(genparts):
     # classify taus: hadronic vs. leptonic
     for idx, gp in enumerate(genparts):
         if abs(gp.pdgId) == 15:
-            # look for any e/μ daughters
+            # look for any e daughters
             lep_daughters = [ch for ch in children[idx]
                              if abs(genparts[ch].pdgId) in (11,13)]
             if lep_daughters:
@@ -326,7 +326,7 @@ def is_WZ_1hadTau_2lep(genparts):
             else:
                 had_tau_idxs.append(idx)
 
-    # now pick up any prompt e/μ from W (24) or Z (23)
+    # now pick up any prompt e from W (24) or Z (23)
     for idx, gp in enumerate(genparts):
         if abs(gp.pdgId) in (11,13):
             mom = int(gp.genPartIdxMother)
