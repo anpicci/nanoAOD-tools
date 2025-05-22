@@ -709,6 +709,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     #pass_upToBVeto_ML           =   array.array('i', [0])#
     #pass_tau_selection_ML       =   array.array('i', [0])#
     pass_everyCut               =   array.array('i', [0])
+    pass_WZlep               =   array.array('i', [0])
     var_list.append(pass_lepton_selection)
     var_list.append(pass_lepton_veto)
     var_list.append(pass_lepton_iso)
@@ -724,6 +725,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     var_list.append(pass_upToBVeto)
     #var_list.append(pass_upToBVeto_ML)#
     var_list.append(pass_everyCut)
+    var_list.append(pass_WZlep)
 
     #weights#
     w_PDF_all = array.array('f', [1.]*103)#
@@ -886,6 +888,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
     systTree.branchTreesSysts(trees, scenario, "pass_upToBVeto",           outTreeFile, pass_upToBVeto)
     #systTree.branchTreesSysts(trees, scenario, "pass_upToBVeto_ML",           outTreeFile, pass_upToBVeto_ML)#
     systTree.branchTreesSysts(trees, scenario, "pass_everyCut",            outTreeFile, pass_everyCut)
+    systTree.branchTreesSysts(trees, scenario, "pass_WZlep",            outTreeFile, pass_WZlep)
 
 
     if(isMC):
@@ -953,7 +956,11 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if isMC:
             genparts = Collection(event, "GenPart")
             genjets     = Collection(event, "GenJet")
-            
+            if is_WZ_1hadTau_2lep(genparts):
+                pass_WZlep[0]=1
+            else:
+                pass_WZlep[0]=0
+                
         if isMC and ("WpWp" in sample.label or "WmWm" in sample.label or sample.label.startswith("VBS_SSWW_")):
             sgenjets = SelectVBSQGenJet(genparts, genjets)
         #met        = Object(event, "PuppiMET")
@@ -1843,6 +1850,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if (SingleEle or SingleMu) and pass_lepton_selection[0]==1 and pass_lepton_veto[0]==1 and pass_tau_selection[0]==1 and pass_charge_selection[0]==1 and pass_jet_selection[0]==1 and pass_b_veto[0]==1 and pass_mjj_cut[0]==1 and pass_MET_cut[0]==1:
             pass_everyCut[0]=1
 
+        
 
         #######################################
         ## Removing events with HEM problem  ##
