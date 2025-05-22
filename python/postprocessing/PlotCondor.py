@@ -27,6 +27,7 @@ parser.add_option('--noflat', dest='flat', default = True, action='store_false',
 parser.add_option('--lastbins', dest='lastbins', default = False, action='store_true', help='Last bins')
 parser.add_option('--cons', dest='cons', default = False, action='store_true', help='stat+30perc for fakes')
 parser.add_option('--only30', dest='only30', default = False, action='store_true', help='only 30perc for fakes')
+parser.add_option('--merge', dest='merge', type='string', default = '0', help='Default no merging bins')
 
 (opt, args) = parser.parse_args()
 
@@ -51,10 +52,12 @@ condorsub = "condorplot"
 
 regions = [
     "sr",
+    ##"srinv",
     "ttbar",
+    ##"ttbarL",
     "fakes",
     "wsdy --bvetoL",
-    #"presel",
+    ##"presel",
 ]
 
 tagf = ""
@@ -74,6 +77,8 @@ if not opt.flat:
     #tagf += "_flat"
 if opt.lastbins:
     tagf += "_lastbins"
+if not opt.merge == 0:
+    tagf += "_merge" + opt.merge
 
 outcore = "condorplot_" + opt.folder + tagf + "/output/"
 errcore = "condorplot_" + opt.folder + tagf + "/error/"
@@ -113,9 +118,9 @@ def submitter(sample, argsins, folder, cut):
     inputfiles = "transfer_input_files    = $(Proxy_path), ./rwgcards, ./samples, CMS_lumi.py, variabile.py, skimtree_utils_ssWW_wFakes_old.py, " + pymacro+ "\n"
     f.write(inputfiles)
     if not ("aQGC" in sample.label or "aTGC" in sample.label):
-        f.write("+JobFlavour             = \"workday\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
-    else:
         f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
+    else:
+        f.write("+JobFlavour             = \"testmatch\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week                                           
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
     if not ("aQGC" in sample.label or "aTGC" in sample.label):
@@ -123,12 +128,17 @@ def submitter(sample, argsins, folder, cut):
     else:
         f.write("request_cpus            = 4\n")
     #f.write("+AccountingGroup        = \"group_u_BE.ABP.SLAP\"\n")
-    output = outcore + sample.label + cuttag + ".out"
-    log = logcore + sample.label + cuttag + ".log"
-    error = errcore + sample.label + cuttag + ".err"
+    output = outcore + sample.label + cuttag
+    log = logcore + sample.label + cuttag
+    error = errcore + sample.label + cuttag
+    output += ".out"
+    log += ".log"
+    error += ".err"
+
     f.write("output                  = " + output + "\n")
     f.write("error                   = " + error + "\n")
     f.write("log                     = " + log + "\n")
+    f.write('MY.WantOS = \"el7\"' + "\n")
     f.write("queue\n")
     f.close()
     #if os.path.exists(output):     
@@ -167,6 +177,9 @@ for year in years:
         argss = []
         if dat.label.startswith("TT_") or dat.label.startswith("WJets") or dat.label.startswith("DataHT"):
             continue
+
+        #if dat.label.startswith("VBS_SSWW_aQGC_") or dat.label.startswith("VBS_SSWW_aTGC_") or dat.label.startswith("VBS_SSWW_c"):
+            #continue
 
         if dat.year != year:
             continue
@@ -238,6 +251,8 @@ for year in years:
                 arg3 += " --noflat"
             #if opt.flat:
                 #arg3 += " --flat"
+            arg3 += " --merge " + str(opt.merge) 
+
             if opt.lastbins:
                 arg3 += " --lastbins"
             for lepn in lepss:

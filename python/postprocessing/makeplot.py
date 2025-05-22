@@ -7,6 +7,7 @@ from variabile import variabile
 import copy as copy
 from CMS_lumi import CMS_lumi
 import array
+import gc
 #import pandas as pd
 #import uproot
 #import pickle
@@ -17,6 +18,8 @@ from rwgcards.FromCardToDict import *
 from collections import OrderedDict
 from platform import python_version
 
+ROOT.TTree.SetMaxTreeSize(10000000000) # 4GB
+
 def Print(string):
     #if python_version().startswith("3"):
     print(string)
@@ -26,141 +29,155 @@ rwgdict_dim8 = CardToDict("dim8", "FT1_2p0")
 rwgdict_dim6 = CardToDict("dim6")
 
 desiredop_dim8 = [
-    #"FS0_1p0",
-    #"FS1_1p0",
-    #"FS2_1p0",
-    #"FM0_1p0",
-    #"FM1_0p9",
-    ###"FM6_1p0",
-    #"FM7_1p0",
-    #"FT0_1p0",
+    "FS0_1p0",
+    "FS1_1p0",
+    "FS2_1p0",
+    "FM0_1p0",
+    "FM1_0p9",
+    #"FM6_1p0",
+    "FM7_1p0",
+    "FT0_1p0",
     "FT1_1p0",
-    #"FT2_0p9",
+    "FT2_0p9",
 ]
 
 desiredop_dim6 = [
     "cW_1",
-    #"cHW_1",
-    #"cHWB_1",
-    #"cHDD_1",
-    #"cHbox_1",
-    #"cHl1_1",
-    #"cHl3_1",
-    #"cHq1_1",
-    #"cHq3_1",
-    #"cll_1",
-    #"cll1_1",
-    #"cqq1_1",
-    #"cqq11_1",
-    #"cqq3_1",
-    #"cqq31_1",
-    #"cW_1_cHW_1",
-    #"cW_1_cHWB_1",
-    #"cW_1_cHbox_1",
-    #"cW_1_cHDD_1",
-    #"cW_1_cHl1_1",
-    #"cW_1_cHl3_1",
-    #"cW_1_cHq1_1",
-    #"cW_1_cHq3_1",
-    #"cW_1_cll_1",
-    #"cW_1_cll1_1",
-    #"cW_1_cqq1_1",
-    #"cW_1_cqq31_1",
-    #"cW_1_cqq11_1",
-    #"cW_1_cqq3_1",
-    #"cHW_1_cHWB_1",
-    #"cHW_1_cHbox_1",
-    #"cHW_1_cHDD_1",
-    #"cHW_1_cHl1_1",
-    #"cHW_1_cHl3_1",
-    #"cHW_1_cHq1_1",
-    #"cHW_1_cHq3_1",
-    #"cHW_1_cll_1",
-    #"cHW_1_cll1_1",
-    #"cHW_1_cqq1_1",
-    #"cHW_1_cqq31_1",
-    #"cHW_1_cqq11_1",
-    #"cHW_1_cqq3_1",
-    #"cHWB_1_cHbox_1",
-    #"cHWB_1_cHDD_1",
-    #"cHWB_1_cHl1_1",
-    #"cHWB_1_cHl3_1",
-    #"cHWB_1_cHq1_1",
-    #"cHWB_1_cHq3_1",
-    #"cHWB_1_cll_1",
-    #"cHWB_1_cll1_1",
-    #"cHWB_1_cqq1_1",
-    #"cHWB_1_cqq31_1",
-    #"cHWB_1_cqq11_1",
-    #"cHWB_1_cqq3_1",
-    #"cHbox_1_cHDD_1",
-    #"cHbox_1_cHl1_1",
-    #"cHbox_1_cHl3_1",
-    #"cHbox_1_cHq1_1",
-    #"cHbox_1_cHq3_1",
-    #"cHbox_1_cll_1",
-    #"cHbox_1_cll1_1",
-    #"cHbox_1_cqq1_1",
-    #"cHbox_1_cqq31_1",
-    #"cHbox_1_cqq11_1",
-    #"cHbox_1_cqq3_1",
-    #"cHDD_1_cHl1_1",
-    #"cHDD_1_cHl3_1",
-    #"cHDD_1_cHq1_1",
-    #"cHDD_1_cHq3_1",
-    #"cHDD_1_cll_1",
-    #"cHDD_1_cll1_1",
-    #"cHDD_1_cqq1_1",
-    #"cHDD_1_cqq31_1",
-    #"cHDD_1_cqq11_1",
-    #"cHDD_1_cqq3_1",
-    #"cHl1_1_cHl3_1",
-    #"cHl1_1_cHq1_1",
-    #"cHl1_1_cHq3_1",
-    #"cHl1_1_cll_1",
-    #"cHl1_1_cll1_1",
-    #"cHl1_1_cqq1_1",
-    #"cHl1_1_cqq31_1",
-    #"cHl1_1_cqq11_1",
-    #"cHl1_1_cqq3_1",
-    #"cHl3_1_cHq1_1",
-    #"cHl3_1_cHq3_1",
-    #"cHl3_1_cll_1",
-    #"cHl3_1_cll1_1",
-    #"cHl3_1_cqq1_1",
-    #"cHl3_1_cqq31_1",
-    #"cHl3_1_cqq11_1",
-    #"cHl3_1_cqq3_1",
-    #"cHq1_1_cHq3_1",
-    #"cHq1_1_cll_1",
-    #"cHq1_1_cll1_1",
-    #"cHq1_1_cqq1_1",
-    #"cHq1_1_cqq31_1",
-    #"cHq1_1_cqq11_1",
-    #"cHq1_1_cqq3_1",
-    #"cHq3_1_cll_1",
-    #"cHq3_1_cll1_1",
-    #"cHq3_1_cqq1_1",
-    #"cHq3_1_cqq31_1",
-    #"cHq3_1_cqq11_1",
-    #"cHq3_1_cqq3_1",
-    #"cll_1_cll1_1",
-    #"cll_1_cqq1_1",
-    #"cll_1_cqq31_1",
-    #"cll_1_cqq11_1",
-    #"cll_1_cqq3_1",
-    #"cll1_1_cqq1_1",
-    #"cll1_1_cqq31_1",
-    #"cll1_1_cqq11_1",
-    #"cll1_1_cqq3_1",
-    #"cqq1_1_cqq31_1",
-    #"cqq1_1_cqq11_1",
-    #"cqq1_1_cqq3_1",
-    #"cqq31_1_cqq11_1",
-    #"cqq31_1_cqq3_1",
-    #"cqq11_1_cqq3_1",
+    "cHW_1",
+    "cHWB_1",
+    "cHDD_1",
+    "cHbox_1",
+    "cHl1_1",
+    "cHl3_1",
+    "cHq1_1",
+    "cHq3_1",
+    "cll_1",
+    "cll1_1",
+    "cqq1_1",
+    "cqq11_1",
+    "cqq3_1",
+    "cqq31_1",
+    #"cW_0p5",
+    #"cHW_0p5",
+    #"cHWB_0p5",
+    #"cHDD_0p5",
+    #"cHbox_0p5",
+    #"cHl1_0p5",
+    #"cHl3_0p5",
+    #"cHq1_0p5",
+    #"cHq3_0p5",
+    #"cll_0p5",
+    #"cll1_0p5",
+    #"cqq1_0p1",
+    #"cqq11_0p1",
+    #"cqq3_0p1",
+    #"cqq31_0p1",
+    "cW_1_cHW_1",
+    "cW_1_cHWB_1",
+    "cW_1_cHbox_1",
+    "cW_1_cHDD_1",
+    "cW_1_cHl1_1",
+    "cW_1_cHl3_1",
+    "cW_1_cHq1_1",
+    "cW_1_cHq3_1",
+    "cW_1_cll_1",
+    "cW_1_cll1_1",
+    "cW_1_cqq1_1",
+    "cW_1_cqq31_1",
+    "cW_1_cqq11_1",
+    "cW_1_cqq3_1",
+    "cHW_1_cHWB_1",
+    "cHW_1_cHbox_1",
+    "cHW_1_cHDD_1",
+    "cHW_1_cHl1_1",
+    "cHW_1_cHl3_1",
+    "cHW_1_cHq1_1",
+    "cHW_1_cHq3_1",
+    "cHW_1_cll_1",
+    "cHW_1_cll1_1",
+    "cHW_1_cqq1_1",
+    "cHW_1_cqq31_1",
+    "cHW_1_cqq11_1",
+    "cHW_1_cqq3_1",
+    "cHWB_1_cHbox_1",
+    "cHWB_1_cHDD_1",
+    "cHWB_1_cHl1_1",
+    "cHWB_1_cHl3_1",
+    "cHWB_1_cHq1_1",
+    "cHWB_1_cHq3_1",
+    "cHWB_1_cll_1",
+    "cHWB_1_cll1_1",
+    "cHWB_1_cqq1_1",
+    "cHWB_1_cqq31_1",
+    "cHWB_1_cqq11_1",
+    "cHWB_1_cqq3_1",
+    "cHbox_1_cHDD_1",
+    "cHbox_1_cHl1_1",
+    "cHbox_1_cHl3_1",
+    "cHbox_1_cHq1_1",
+    "cHbox_1_cHq3_1",
+    "cHbox_1_cll_1",
+    "cHbox_1_cll1_1",
+    "cHbox_1_cqq1_1",
+    "cHbox_1_cqq31_1",
+    "cHbox_1_cqq11_1",
+    "cHbox_1_cqq3_1",
+    "cHDD_1_cHl1_1",
+    "cHDD_1_cHl3_1",
+    "cHDD_1_cHq1_1",
+    "cHDD_1_cHq3_1",
+    "cHDD_1_cll_1",
+    "cHDD_1_cll1_1",
+    "cHDD_1_cqq1_1",
+    "cHDD_1_cqq31_1",
+    "cHDD_1_cqq11_1",
+    "cHDD_1_cqq3_1",
+    "cHl1_1_cHl3_1",
+    "cHl1_1_cHq1_1",
+    "cHl1_1_cHq3_1",
+    "cHl1_1_cll_1",
+    "cHl1_1_cll1_1",
+    "cHl1_1_cqq1_1",
+    "cHl1_1_cqq31_1",
+    "cHl1_1_cqq11_1",
+    "cHl1_1_cqq3_1",
+    "cHl3_1_cHq1_1",
+    "cHl3_1_cHq3_1",
+    "cHl3_1_cll_1",
+    "cHl3_1_cll1_1",
+    "cHl3_1_cqq1_1",
+    "cHl3_1_cqq31_1",
+    "cHl3_1_cqq11_1",
+    "cHl3_1_cqq3_1",
+    "cHq1_1_cHq3_1",
+    "cHq1_1_cll_1",
+    "cHq1_1_cll1_1",
+    "cHq1_1_cqq1_1",
+    "cHq1_1_cqq31_1",
+    "cHq1_1_cqq11_1",
+    "cHq1_1_cqq3_1",
+    "cHq3_1_cll_1",
+    "cHq3_1_cll1_1",
+    "cHq3_1_cqq1_1",
+    "cHq3_1_cqq31_1",
+    "cHq3_1_cqq11_1",
+    "cHq3_1_cqq3_1",
+    "cll_1_cll1_1",
+    "cll_1_cqq1_1",
+    "cll_1_cqq31_1",
+    "cll_1_cqq11_1",
+    "cll_1_cqq3_1",
+    "cll1_1_cqq1_1",
+    "cll1_1_cqq31_1",
+    "cll1_1_cqq11_1",
+    "cll1_1_cqq3_1",
+    "cqq1_1_cqq31_1",
+    "cqq1_1_cqq11_1",
+    "cqq1_1_cqq3_1",
+    "cqq31_1_cqq11_1",
+    "cqq31_1_cqq3_1",
+    "cqq11_1_cqq3_1",
 ]
-
 
 wcoeff_dim8 = []
 wcoeff_dim8 = desiredop_dim8
@@ -194,6 +211,7 @@ typcontr = [
     "0",
     "SM",
     "BSM",
+    "LIN",
 ]
 
 ROOT.ROOT.EnableThreadSafety()
@@ -209,6 +227,7 @@ parser.add_option('--sel', dest='sel', default = False, action='store_true', hel
 parser.add_option('--bveto', dest='bveto', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--bbv', dest='bbv', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--sr', dest='sr', default = False, action='store_true', help='Default do not apply any selection')
+parser.add_option('--srinv', dest='srinv', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--bdt', dest='bdt', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--ebdt', dest='ebdt', default = False, action='store_true', help='Default do not apply any selection')
 parser.add_option('--mubdt', dest='mubdt', default = False, action='store_true', help='Default do not apply any selection')
@@ -223,8 +242,10 @@ parser.add_option('-C', '--cut', dest='cut', type='string', default = '1.', help
 parser.add_option('-y', '--year', dest='year', type='string', default = '2017', help='Default 2016, 2017 and 2018 are included')
 parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v7', help='Default folder is v0')
 parser.add_option('-d', '--dat', dest='dat', type='string', default = 'all', help="")
+parser.add_option('--merge', dest='merge', type='string', default = '0', help='Default no merging bins')
 parser.add_option('--user', dest='user', type='string', default=str(os.environ.get('USER')), help='User')
 parser.add_option('--ttbar', dest='ttbar', default = False, action='store_true', help='Enable ttbar CR, default disabled')
+parser.add_option('--ttbarL', dest='ttbarL', default = False, action='store_true', help='Enable ttbar CR looser cut, default disabled')
 parser.add_option('--tDMcut', dest='tDMcut', default = False, action='store_true', help='Enable tau DecayMode cut')
 parser.add_option('--test', dest='test', default = False, action='store_true', help='Enable test saving')
 parser.add_option('--vbroad', dest='vbroad', default = False, action='store_true', help='vbroad test saving')
@@ -300,10 +321,15 @@ if not opt.flat:
     plot_tag += "_noflat"
 #if opt.lastbins:
     #plot_tag += "_lastbins"
-#if opt.cons:
-#plot_tag += "_cons"
-#elif opt.only30:
-#plot_tag += "_only30"
+if opt.cons:
+    plot_tag += "_cons"
+elif opt.only30:
+    plot_tag += "_only30"
+if opt.merge != "0":
+    plot_tag += "_merge" + opt.merge
+
+mergeb = opt.merge
+print("\n\nmerge", mergeb) 
 
 
 pfolder = opt.folder #+ opt.plot_tag
@@ -388,6 +414,15 @@ elif opt.sr:
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
 
+elif opt.srinv:
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_upToBVeto==1&&m_jj<500.&&MET_pt>50.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_upToBVeto==1&&m_jj<500.&&MET_pt>50.)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_upToBVeto==1&&m_jj<500.&&MET_pt>50.)*(" + cut + ")", 
+            }
+    cut_tag = 'SRINV'
+    if opt.cut != "1.":
+        cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut) 
+
 elif opt.presel:
     cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1)*(" + cut + ")", 
                 'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1)*(" + cut + ")", 
@@ -403,6 +438,15 @@ elif opt.ttbar:
                 'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>50.)*(" + cut + ")", 
             }
     cut_tag = 'ttbar_CR'
+    if opt.cut != "1.":
+        cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)           
+
+elif opt.ttbarL:
+    cut_dict = {'muon':"(abs(" + mpdgstr + "_pdgid)==13&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>20.)*(" + cut + ")", 
+                'electron':"(abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>20.)*(" + cut + ")", 
+                'incl':"((abs(" + mpdgstr + "_pdgid)==13" + incl_logic + "abs(" + epdgstr + "_pdgid)==11&&pass_lepton_selection==1&&pass_tau_selection==1&&pass_lepton_veto==1&&pass_charge_selection==0&&pass_b_veto==0&&pass_jet_selection==1&&MET_pt>20.)*(" + cut + ")", 
+            }
+    cut_tag = 'ttbarL_CR'
     if opt.cut != "1.":
         cut_tag = cut_tag+ '_AND_' + cutToTag(opt.cut)           
 
@@ -638,12 +682,16 @@ if opt.stack:
         os.system("mkdir -p " + pathstack)
 
 
-def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
+def FlatSigBinning(variable, wnbins, merges="0", signal = "WpWpJJ_EWK_ULRunII"):
     Print("\nVariable: " + variable)
     Print("nbins: " + str(wnbins))
+    print("merging", merges)
+    merge = int(merges.replace("dis", ""))
     oldnbins = 5000
-    rfilename = filerepo + "/" + signal + "/" + signal + ".root"
+    #rfilename = filerepo + "/" + signal + "/" + signal + ".root"
+    rfilename = "/eos/home-a/apiccine/VBS/nosynch/vUL055/ltau/WpWpJJ_EWK_ULRunII/WpWpJJ_EWK_ULRunII.root"
     signalcut = "w_nominal*QCDScaleSF*PFSF*puSF*lepSF*tau_vsjet_SF*tau_vsele_SF*tau_vsmu_SF*btagSF*puIDSF*VBSSF*((abs(lepton_pdgid)==13&&pass_upToBVeto==1&&m_jj>500.&&MET_pt>50.)*(1.)*(abs(deltaEta_jj)>2.5)*(tau_DecayMode<5||tau_DecayMode>6))*(lepton_TightRegion==1&&tau_TightRegion==1)"
+    
     rfile = ROOT.TFile().Open(rfilename, "READ")
     rtree = rfile.Get("events_nominal")
     sbins_histo = ROOT.TH1F("h_sbins", "h_sbins", oldnbins, 0., 1.)
@@ -676,8 +724,27 @@ def FlatSigBinning(variable, wnbins, signal = "WpWpJJ_EWK_ULRunII"):
                 toKeep[idnb+1] = copy.deepcopy(binHighEdge)
             else:
                 pass
+
     if theCall[-1] == False:
         toKeep[-1] = 1.0
+
+    if not "dis" in merges:
+        torem = len(toKeep) - merge
+        stop = len(toKeep) - merge + 1
+    else:
+        torem = len(toKeep) - merge*2
+        stop = len(toKeep) - merge
+
+    Print(str(toKeep) + " " + str(len(toKeep)-1))
+    ir = 0
+
+    while len(toKeep) > stop:
+        if ("dis" in merges and (ir % 2 != 0 or ir == 0)):
+            del toKeep[torem+ir]
+        elif (not "dis" in merges):
+            del toKeep[torem]
+        ir += 1
+
     Print("flattening binning found:")
     Print(str(toKeep) + " " + str(len(toKeep)-1))
     binedges = array.array("d", toKeep) 
@@ -747,14 +814,15 @@ def lumi_writer(dataset, lumi):
     
     for sample in samples:
         if not ('Data' in sample.label):# or 'TT_dilep' in sample.label):
-            infile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root")
+            infile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root", "READ", "", 9)
             isthere_gen = bool(infile.GetListOfKeys().Contains("h_genweight"))
             ik = 0
-            outfile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE")
+            outfile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE", "", 9)
             for key in scenarios:
                 branches = OrderedDict()
                 branches["w_nominal"] = array.array('f', [0.])
                 evtree = "events_" + key
+                tree = None
                 try:
                     tree = infile.Get(evtree)
                 except:
@@ -793,7 +861,8 @@ def lumi_writer(dataset, lumi):
                     branches['pdf_TOTSF'] = array.array('f', [1.])
                     branches['pdf_TOTUp'] = array.array('f', [1.])
                     branches['pdf_TOTDown'] = array.array('f', [1.])
-                    typePDF = FindPdf(sample.label)
+                    samplelabel = sample.label.replace("WmWm", "WpWp")
+                    typePDF = FindPdf(samplelabel)
                     nreplicas = h_pdfw.GetXaxis().GetNbins()
                     if typePDF == "Hessian":
                         pdfmean = h_pdfw.GetBinContent(1)
@@ -822,13 +891,21 @@ def lumi_writer(dataset, lumi):
                 for event in range(0, tree.GetEntries()):
                     tree.GetEntry(event)
                     perc = (event+1)/(tree.GetEntries())*100
-
-                    #w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
-                    branches['w_nominal'][0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./float(h_genw_tmp.GetBinContent(1))
+                    if samplelabel.startswith("VBS_SSWW_aTGC_mixed"):
+                        if sample.year == "UL2017":
+                            ntot = 9521000.0
+                        elif sample.year == "UL2018":
+                            ntot = 9723000.0
+                    else:
+                        ntot = float(h_genw_tmp.GetBinContent(1))
+                    
+                    #w_nom[0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./ntot
+                    branches['w_nominal'][0] = tree.w_nominal * sample.sigma * tree.HLT_effLumi * 1000./ntot
                     if (int(perc)) != 0 and perc%int(perc) == 0. or event==(tree.GetEntries()-1):
                         sys.stdout.write("\nProcessing event {0}     complete {1:.0f} percent".format(event, 100*event/tree.GetEntries()))
                         #Print("\nw_nom before:", w_nom[0])
-                        Print("\nw_nom before: " + str(branches['w_nominal'][0]))
+                        Print("\nTot:" + str(ntot))
+                        Print("w_nom before: " + str(branches['w_nominal'][0]))
                     if sample.year == "UL2016APV":
                         #w_nom[0] *= 0.5373
                         branches['w_nominal'][0] *= 0.5373
@@ -861,13 +938,16 @@ def lumi_writer(dataset, lumi):
                 outfile.cd()
                 tree_new.Write()
                 Print("\n")
+                del tree, tree_new, branches, h_genw_tmp
+                tree, tree_new, branches, h_genw_tmp = (None, None, None, None)
+                gc.collect()
             infile.Close()
             outfile.Close()
-            os.system("rm " + filerepo + sample.label + "/"  + sample.label + "_merged.root")
+            os.system("rm " + filerepo + samplelabel + "/"  + samplelabel + "_merged.root")
             Print('\n')
 
         else:
-            os.popen("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
+            os.popen("mv " + filerepo + samplelabel + "/"  + samplelabel + "_merged.root " + filerepo + samplelabel + "/"  + samplelabel + ".root")
 
 
 def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["nominal", ("", False)], sampletagg = "", dim8cut = ""):
@@ -1038,7 +1118,8 @@ def plot(f1, fout, samplelab, lep, reg, variable, sample, cut_tag, systlist=["no
         cut = cut + "*(abs(leadjet_eta)>3.2||abs(leadjet_eta)<2.5)*(abs(subleadjet_eta)>3.2||abs(subleadjet_eta)<2.5)"
 
     foutput = pathplot + sample.label + "_" + lep + ".root"
-    #Print("at project " + histoname + " " + vartoproject + " " +cut)
+    Print("at project " + histoname + " " + vartoproject + " " +cut)
+    Print(treename)
     f1.Get(treename).Project(histoname,vartoproject,cut)
     #if not opt.lastbins:
     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
@@ -1717,13 +1798,13 @@ for year in years:
             bin_bdtdim6 = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
             bin_bdtdim8 = array.array("d", [0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.])# 13
         
-        if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm))
-            bin_bdtdim6_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtdim6))
-            bin_bdtdim8_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtdim8))
-        nbin_bdtsm_dev = len(bin_bdtsm) - 1
-        nbin_bdtdim6_dev = len(bin_bdtdim6) - 1
-        nbin_bdtdim8_dev = len(bin_bdtdim8) - 1
+        #if opt.flat and opt.plot:
+            #bin_bdtsm_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtsm))
+            #bin_bdtdim6_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtdim6))
+            #bin_bdtdim8_dev = FlatSigBinning("DNN_SM_final_1", len(bin_bdtdim8))
+        #nbin_bdtsm_dev = len(bin_bdtsm) - 1
+        #nbin_bdtdim6_dev = len(bin_bdtdim6) - 1
+        #nbin_bdtdim8_dev = len(bin_bdtdim8) - 1
 
             
         '''
@@ -1796,9 +1877,9 @@ for year in years:
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB"
         DNN_tag = 'SM DNN output' # (f1 NMR lower NN LCB)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
-            bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
-            bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
+            bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6), mergeb)
+            bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8), mergeb)
         else:
             bin_bdtsm_dev = copy.deepcopy(bin_bdtsm)
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
@@ -1811,10 +1892,11 @@ for year in years:
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_NONOISE_LCB', 'dim6 DNN output', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
         variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_NONOISE_LCB_again_2', 'dim8 DNN output', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim8_dev), copy.deepcopy(bin_bdtdim8_dev)))
         
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_10000"
         DNN_tag = 'SM DNN output (f1 NMR lower NN LCB 10000)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1826,11 +1908,10 @@ for year in years:
         #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
 
-        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_10001"
         DNN_tag = 'SM DNN output (f1 NMR lower NN LCB 10001)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1846,7 +1927,7 @@ for year in years:
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_NONOISE_LCB_bisnotopt"
         DNN_tag = 'SM DNN output (f1 NMR lower NN LCB bis)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1862,7 +1943,7 @@ for year in years:
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed"
         DNN_tag = 'SM DNN output (f1 NMR lower FS)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1876,10 +1957,11 @@ for year in years:
         variables.append(variabile('DNN_dim6_final_2_NOMOREDY_lower_halfway_fixedseed_100001', 'dim6 DNN output (f2 NMR lower hw fs 100001)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim6_dev), copy.deepcopy(bin_bdtdim6_dev)))
         variables.append(variabile('DNN_dim8_final_3_NOMOREDY_lower_fixedseed_100000', 'dim8 DNN output (f3 NMR lower FS 100000)', wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtdim8_dev), copy.deepcopy(bin_bdtdim8_dev)))
         '''
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100000"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100000)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1890,12 +1972,12 @@ for year in years:
         #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
         #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
-
+        '''
         '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100001"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100001)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1910,7 +1992,7 @@ for year in years:
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100002"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100002)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1922,11 +2004,11 @@ for year in years:
         #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
         '''
-
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100003"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100003)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1937,12 +2019,12 @@ for year in years:
         #nbin_bdtdim6_dev = len(bin_bdtdim6_dev) - 1
         #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
-
+        '''
         '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100006"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100006)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1954,11 +2036,11 @@ for year in years:
         #nbin_bdtdim8_dev = len(bin_bdtdim8_dev) - 1
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
         '''
-
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100007"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100007)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             #bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             #bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1971,10 +2053,11 @@ for year in years:
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
         print("\nDNN flattened:", DNN_name)
         '''
+        '''
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100011"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100011)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1989,7 +2072,7 @@ for year in years:
         DNN_name = "DNN_SM_final_1_NOMOREDY_lower_fixedseed_100012"
         DNN_tag = 'SM DNN output (f1 NMR lower FS 100012)'
         if opt.flat and opt.plot:
-            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm))
+            bin_bdtsm_dev = FlatSigBinning(DNN_name, len(bin_bdtsm), mergeb)
             bin_bdtdim6_dev = FlatSigBinning(DNN_name, len(bin_bdtdim6))
             bin_bdtdim8_dev = FlatSigBinning(DNN_name, len(bin_bdtdim8))
         else:
@@ -1997,7 +2080,7 @@ for year in years:
             bin_bdtdim6_dev = copy.deepcopy(bin_bdtdim6)
             bin_bdtdim8_dev = copy.deepcopy(bin_bdtdim8)
         variables.append(variabile(DNN_name, DNN_tag, wzero+'*('+cutbase+')', True, copy.deepcopy(nbin_bdtsm_dev), copy.deepcopy(bin_bdtsm_dev)))
-
+        
         '''
         ########### end #############
         ###with DY bug
@@ -2025,19 +2108,27 @@ for year in years:
         
         #variables.append(variabile('DNN_pol_final_1', 'pol DNN output (final 1)', wzero+'*('+cutbase+')', True, nbin_bdtsm_dev, bin_bdtsm_dev))
         '''
-        bin_m1T = array.array("d", [0., 100., 150., 200., 300., 400., 500.])#, 1000.])
-        #if not opt.sr:
         #bin_mo1 = array.array("d", [0., 50., 100., 150., 200., 300., 500.])#, 1000.])
-        bin_mo1 = array.array("d", [0., 100., 150., 200., 300., 400., 500.])#, 1000.])
-        #else:
-            #bin_mo1 = array.array("d", [0., 100., 150., 200., 300.])
+        #bin_mo1 = array.array("d", [0., 100., 150., 200., 500.])#, 1000.])
+
+        if opt.merge == '10': 
+            bin_m1T = array.array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+            bin_mo1 = array.array("d", [0., 100., 150., 200., 300., 500.])#, 1000.])
+        elif opt.merge == '11': 
+            bin_m1T = array.array("d", [0., 100., 150., 200., 500.])#, 1000.])
+            bin_mo1 = array.array("d", [0., 100., 150., 200., 500.])#, 1000.])
+        else:
+            bin_m1T = array.array("d", [0., 100., 150., 200., 300., 400., 500.])#, 1000.])
+            bin_mo1 = array.array("d", [0., 100., 150., 200., 300., 400., 500.])#, 1000.])
+
         nbin_m1T = len(bin_m1T) - 1 
         nbin_mo1 = len(bin_mo1) - 1 
+        
         variables.append(variabile('m_1T', 'M_{1T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_m1T, bin_m1T))
         variables.append(variabile('m_o1', 'M_{o1} [GeV]',  wzero+'*('+cutbase+')', True, nbin_mo1, bin_mo1))
         
         if opt.sr:
-            bin_mjj = array.array("d", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600., 2800.])
+            bin_mjj = array.array("d", [500., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2800.])
         else:
             bin_mjj = array.array("d", [0., 200., 400., 600., 800., 1000., 1200., 1400., 1600., 1800., 2000., 2200., 2400., 2600., 2800.])
         nbin_mjj = len(bin_mjj) - 1 
@@ -2056,9 +2147,14 @@ for year in years:
         variables.append(variabile(lep1[0] + '_eta', lep1[1] + ' #eta', wzero+'*('+cutbase+')', False, 10, -2.5, 2.5))
         variables.append(variabile(lep1[0] + '_phi', lep1[1] + ' #phi',  wzero+'*('+cutbase+')', False, 14, -3.50, 3.50))
 
-        bin_lepton_pt = array.array("d", [30., 40., 50., 60., 70., 80., 90., 100., 110., 120., 130., 140., 150., 160., 170., 180., 200., 220., 240., 260., 300.])
+        if opt.srinv or opt.sr:
+            bin_lepton_pt = array.array("d", [30., 40., 50., 60., 70., 80., 90., 100., 120., 150., 200.])
+        elif opt.wsdy:
+            bin_lepton_pt = array.array("d", [30., 40., 50., 60., 70., 80., 90., 100., 110., 120., 130., 140., 150., 160., 180., 200., 250.])
+        else:
+            bin_lepton_pt = array.array("d", [30., 40., 50., 60., 70., 80., 90., 100., 110., 120., 130., 140., 150., 160., 170., 180., 200., 220., 240., 260., 300.])
         nbin_lepton_pt = len(bin_lepton_pt)-1
-        variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', False, nbin_lepton_pt, bin_lepton_pt))
+        variables.append(variabile(lep1[0] + '_pt',  lep1[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_lepton_pt, bin_lepton_pt))
 
         #variables.append(variabile(lep1[0] + '_pdgid', lep1[1] + ' pdgid',  wzero+'*('+cutbase+')', False, 31, -15.5, 15.5))
         variables.append(variabile(lep1[0] + '_pfRelIso04', lep1[1] + ' pfRelIso04',  wzero+'*('+cutbase+')', False, 15, 0, 0.15))
@@ -2069,7 +2165,7 @@ for year in years:
         else:
             bin_zepp = array.array("d", [-1., -0.7, -0.4, -0.2, 0., 0.2, 0.4, 0.7, 1.])
             nbin_zepp = len(bin_zepp)-1
-        variables.append(variabile('event_Zeppenfeld_over_deltaEta_jj', 'event Zeppenfeld',  wzero+'*('+cutbase+')', False, nbin_zepp, bin_zepp))
+        variables.append(variabile('event_Zeppenfeld_over_deltaEta_jj', 'event Zeppenfeld',  wzero+'*('+cutbase+')', True, nbin_zepp, bin_zepp))
         #variables.append(variabile(lep1[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{l}',  wzero+'*('+cutbase+')', False, nbin_zepp, bin_zepp))
         
 
@@ -2078,13 +2174,13 @@ for year in years:
         else:
             bin_taupt = array.array("d", [30., 45., 60., 80., 100., 125., 150, 175., 200.])
         nbin_taupt = len(bin_taupt) - 1
-        variables.append(variabile(lep2[0] + '_pt',  lep2[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', False, nbin_taupt, bin_taupt))
+        variables.append(variabile(lep2[0] + '_pt',  lep2[1] + ' p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_taupt, bin_taupt))
         
         bin_taum = array.array("d", [0., 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0])
         nbin_taum = len(bin_taum) - 1
         variables.append(variabile(lep2[0] + '_mass',  lep2[1] + ' mass [GeV]',  wzero+'*('+cutbase+')', False, nbin_taum, bin_taum))
         
-        variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', False, 10, -2.5, 2.5))
+        variables.append(variabile(lep2[0] + '_eta', lep2[1] + ' #eta',  wzero+'*('+cutbase+')', True, 10, -2.5, 2.5))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld', lep2[1] + ' Zeppenfeld',  wzero+'*('+cutbase+')', False, 20, -5, 5))
         #variables.append(variabile(lep2[0] + '_Zeppenfeld_over_deltaEta_jj', 'z_{#tau}',  wzero+'*('+cutbase+')', False, 12, -1.5, 1.5))
         variables.append(variabile('tau_DecayMode', '#tau Decay Mode',  wzero+'*('+cutbase+')', False, 12, -0.5, 11.5))
@@ -2093,7 +2189,7 @@ for year in years:
         if opt.channel == "ltau":
             #variables.append(variabile(lep2[0] + '_DecayMode', '#tau decay mode',  wzero+'*('+cutbase+')', False, 12, -0.5, 11.5))
             
-            variables.append(variabile('tauleadTk_ptOverTau',  '#tau LeadTk relative p_{T}',  wzero+'*('+cutbase+')', False, 10, 0, 1))
+            variables.append(variabile('tauleadTk_ptOverTau',  '#tau LeadTk relative p_{T}',  wzero+'*('+cutbase+')', True, 10, 0, 1))
             #variables.append(variabile('tauleadTk_deltaPhi',  '#tau LeadTk relative #Delta#phi',  wzero+'*('+cutbase+')', False, 8, -0.1, 0.1))
             #variables.append(variabile('tauleadTk_deltaEta',  '#tau LeadTk relative #Delta#eta',  wzero+'*('+cutbase+')', False, 8, -0.1, 0.1))
             variables.append(variabile('tauleadTk_Gamma',  '#tau LeadTk #Upsilon',  wzero+'*('+cutbase+')', False, 10, -1., 1.))
@@ -2126,7 +2222,7 @@ for year in years:
 
         bin_leadjet_pt = array.array("d", [0., 50., 100., 150., 250., 400.])
         nbin_leadjet_pt = len(bin_leadjet_pt)-1
-        variables.append(variabile('leadjet_pt',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', False, nbin_leadjet_pt, bin_leadjet_pt))
+        variables.append(variabile('leadjet_pt',  'Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_leadjet_pt, bin_leadjet_pt))
         variables.append(variabile('leadjet_eta', 'Lead jet #eta',  wzero+'*('+cutbase+')', False, 16, -4., 4.))
         variables.append(variabile('leadjet_phi', 'Lead jet #Phi',  wzero+'*('+cutbase+')', False,  14, -3.50, 3.50))
 
@@ -2135,7 +2231,7 @@ for year in years:
 
         bin_leadjet_mass = array.array("d", [0., 10., 20., 30., 50.])
         nbin_leadjet_mass = len(bin_leadjet_mass)-1
-        variables.append(variabile('leadjet_mass',  'Lead jet mass [GeV]',  wzero+'*('+cutbase+')', False, nbin_leadjet_mass, bin_leadjet_mass))
+        variables.append(variabile('leadjet_mass',  'Lead jet mass [GeV]',  wzero+'*('+cutbase+')', True, nbin_leadjet_mass, bin_leadjet_mass))
         #bin_ak8leadjet_pt = array.array("d", [0., 100., 200., 300., 400., 500., 600., 800., 1200.])
         #nbin_ak8leadjet_pt = len(bin_ak8leadjet_pt)-1
         #variables.append(variabile('AK8leadjet_pt',  'AK8 Lead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', False, nbin_ak8leadjet_pt, bin_ak8leadjet_pt))#30, 1500))
@@ -2169,13 +2265,13 @@ for year in years:
         else:
             bin_subleadjet_pt = array.array("d", [0., 50., 100., 150., 250.])
         nbin_subleadjet_pt = len(bin_subleadjet_pt) - 1
-        variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', False, nbin_subleadjet_pt, bin_subleadjet_pt))
+        variables.append(variabile('subleadjet_pt', 'Sublead jet p_{T} [GeV]',  wzero+'*('+cutbase+')', True, nbin_subleadjet_pt, bin_subleadjet_pt))
         variables.append(variabile('subleadjet_eta', 'Sublead jet #eta',  wzero+'*('+cutbase+')', False, 16, -4., 4.))
         variables.append(variabile('subleadjet_phi', 'Sublead jet #Phi',  wzero+'*('+cutbase+')', False, 14, -3.50, 3.50))
         
         bin_subleadjet_mass = array.array("d", [0., 5., 10., 15., 25.])
         nbin_subleadjet_mass = len(bin_subleadjet_mass)-1
-        variables.append(variabile('subleadjet_mass',  'Sublead jet mass [GeV]',  wzero+'*('+cutbase+')', False, nbin_subleadjet_mass, bin_subleadjet_mass))
+        variables.append(variabile('subleadjet_mass',  'Sublead jet mass [GeV]',  wzero+'*('+cutbase+')', True, nbin_subleadjet_mass, bin_subleadjet_mass))
         
         variables.append(variabile('nJets', 'n jets',  wzero+'*('+cutbase+')', False,  11, -0.5, 10.5))
         variables.append(variabile('nBJets', 'n bjets (DeepJet M)',  wzero+'*('+cutbase+')', False,  6, -0.5, 5.5))
@@ -2222,10 +2318,10 @@ for year in years:
             bin_mTs = array.array("d", [0., 25., 50., 75., 100., 125., 150., 200., 250.])
             nbin_mTs = len(bin_mTs) - 1
 
-        variables.append(variabile('mT_' + lep1[0].split("to")[0] + '_MET', 'M_{T}(' + lep1[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
+        variables.append(variabile('mT_' + lep1[0].split("to")[0] + '_MET', 'M_{T}(' + lep1[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', True, nbin_mTs, bin_mTs))
         variables.append(variabile('mT_' + lep2[0] + '_MET', 'M_{T}(' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
         if opt.channel == "ltau":
-            variables.append(variabile('mT_leptau_MET', 'M_{T}(l,  ' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
+            variables.append(variabile('mT_leptau_MET', 'M_{T}(l,  ' + lep2[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', True, nbin_mTs, bin_mTs))
         #elif opt.channel == "emu":
             #variables.append(variabile('mT_' + lep12[0] + '_MET', 'M_{T}(' + lep12[1] + ', MET) [GeV]',  wzero+'*('+cutbase+')', False, nbin_mTs, bin_mTs))
 
@@ -2234,12 +2330,12 @@ for year in years:
         nbin_deltaeta_jj = len(bin_deltaeta_jj) - 1
         variables.append(variabile('deltaEta_jj', '#Delta #eta_{jj}',  wzero+'*('+cutbase+')', False, nbin_deltaeta_jj, bin_deltaeta_jj))
 
-        variables.append(variabile('deltaPhi_jj', '#Delta #phi_{jj}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_jj', '#Delta #phi_{jj}',  wzero+'*('+cutbase+')', True,  14, -3.5, 3.5))
         #variables.append(variabile('deltaPhi_' + lep12[0], '#Delta #phi_{' + lep12[1] + '}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep2[0] + 'j1', '#Delta #phi_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep2[0] + 'j2', '#Delta #phi_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j1', '#Delta #phi_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
-        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j2', '#Delta #phi_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep2[0] + 'j1', '#Delta #phi_{' + lep2[1] + ' j_{1}}',  wzero+'*('+cutbase+')', True,  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep2[0] + 'j2', '#Delta #phi_{' + lep2[1] + ' j_{2}}',  wzero+'*('+cutbase+')', True,  14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j1', '#Delta #phi_{' + lep1[1] + ' j_{1}}',  wzero+'*('+cutbase+')', True, 14, -3.5, 3.5))
+        variables.append(variabile('deltaPhi_' + lep1[0].split("to")[0] + 'j2', '#Delta #phi_{' + lep1[1] + ' j_{2}}',  wzero+'*('+cutbase+')', True, 14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METj1', '#Delta #phi (p_{T}^{miss} j_{1})',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METj2', '#Delta #phi (p_{T}^{miss} j_{2})',  wzero+'*('+cutbase+')', False,  14, -3.5, 3.5))
         variables.append(variabile('deltaPhi_METlep', '#Delta #phi (p_{T}^{miss} lep)',  wzero+'*('+cutbase+')', False, 14, -3.5, 3.5))
@@ -2273,10 +2369,10 @@ for year in years:
         nbin_ptRel_2 = len(bin_ptRel_2) - 1    
         #variables.append(variabile('ptRel_jj', 'relative p_{T} j_{1} j_{2}',  wzero+'*('+cutbase+')', False, nbin_ptRel, bin_ptRel))
         #variables.append(variabile('ptRel_' + lep12[0], 'relative p_{T} ' + lep12[1],  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
-        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', False, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep2[0] + 'j1', 'relative p_{T} ' + lep2[1] + ' j_{1}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep2[0] + 'j2', 'relative p_{T} ' + lep2[1] + ' j_{2}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j1', 'relative p_{T} ' + lep1[1] + ' j_{1}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
+        variables.append(variabile('ptRel_' + lep1[0].split("to")[0] + 'j2', 'relative p_{T} ' + lep1[1] + ' j_{2}',  wzero+'*('+cutbase+')', True, nbin_ptRel_2, bin_ptRel_2))
         
         if opt.fakes or opt.wsdy:
             bin_rt = array.array("d", [0., 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.4, 2.8, 3.2, 3.6, 4.4, 5.])
@@ -2324,13 +2420,17 @@ for year in years:
                     for cstr in wcoeff_dim8:
                         dimtag = cstr
                         for idt, typ in enumerate(typcontr):
-                            if idt == 0:
+                            if typ == "0":
                                 #idarray = str(idt + 3)
                                 dimcut = dimtag + "[0]"#" + idarray + "]"
-                            elif idt == 1:
+                            elif typ == "SM":
                                 dimcut = dimtag + "[0]+" + dimtag + "[4]+" + dimtag + "[5]"
-                            elif idt == 2:
+                            elif typ == "BSM":
                                 dimcut = dimtag + "[5]"
+                            elif typ == "LIN":
+                                dimcut = dimtag + "[4]"
+                            else:
+                                pass
                             dimcuts.append(dimcut)
                             dimsamplenames.append(sample.label.replace("aQGC", dimtag + "_" + typ))
                             samplelabs.append(sample.label.replace("aQGC", dimtag + "_" + typ))
@@ -2347,13 +2447,15 @@ for year in years:
                         else:
                             pass
                         for idt, typ in enumerate(typcontr):
-                            if idt == 0:
+                            if typ == "0":
                                 #idarray = str(idt + 3)
                                 dimcut = dimtag + "[0]"#" + idarray + "]"
-                            elif idt == 1:
+                            elif typ == "SM":
                                 dimcut = dimtag + "[0]+" + dimtag + "[4]+" + dimtag + "[5]"
-                            elif idt == 2:
+                            elif typ == "BSM":
                                 dimcut = dimtag + "[5]"
+                            elif typ == "LIN":
+                                dimcut = dimtag + "[4]"
                             dimcuts.append(dimcut)
                             dimsamplenames.append(sample.label.replace("aTGC_mixed", dimtag + "_" + typ))
                             samplelabs.append(sample.label.replace("aTGC_mixed", dimtag + "_" + typ))
@@ -2411,15 +2513,16 @@ for year in years:
                     else:
                         raise ValueError(samplelab + " not ready to be plotted, skipping")
                         continue
-                    print(systematics)
+                    #print(systematics)
                     for ids, syst in enumerate(systematics):
                         if syst[0] != "" and ("Data" in sample.label or "Fake" in sample.label):
                             continue
                         print(syst)
                         for var in variables:
                             #Print(var._name + " " + syst[0] + " " + str(not var.IsSystApplied()) + " " + str(year != "ULRunII" or opt.flat))
-                            if (IsDim8 or IsDim6) and var._name.startswith("DNN_SM") and year != "ULRunII":
-                                continue
+                            #if (IsDim8 or IsDim6) and var._name.startswith("DNN_SM") and year != "ULRunII":
+                                #continue
+                            #if syst[0] != "" and (not var.IsSystApplied() and (year != "ULRunII")):# or opt.flat):
                             if not var.IsSystApplied() and (year != "ULRunII"):# or opt.flat):
                                 continue
                             if not (syst[0] == "" or syst[0].startswith("QCD") or syst[0].startswith("pdf_Tot")) and (not var.IsSystApplied() or year == "ULRunII"):

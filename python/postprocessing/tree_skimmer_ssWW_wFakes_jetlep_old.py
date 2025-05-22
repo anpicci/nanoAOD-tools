@@ -862,7 +862,7 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         #reinizializza tutte le variabili a 0, per sicurezza
         if Debug:
             if isMC:
-                if i > 8:#00:
+                if i > 9:#00:
                     #if i != 8631:
                     #continue
                     #break
@@ -915,9 +915,15 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
             genparts = Collection(event, "GenPart")
             genjets     = Collection(event, "GenJet")
             
-        if isMC and ("WpWp" in sample.label or (sample.label.startswith("VBS_SSWW_") and not "_aQGC" in sample.label and not "SSWW_c" in sample.label)):
+        if isMC and ("WpWp" in sample.label or "WmWm" in sample.label or sample.label.startswith("VBS_SSWW_")):
             sgenjets = SelectVBSQGenJet(genparts, genjets)
         #met        = Object(event, "PuppiMET")
+        if isMC and ("WpWp" in sample.label or "WmWm" in sample.label):
+            wcharge = FindWPairCharge(genparts)
+            if wcharge == 1 and "WmWm" in sample.label:
+                continue
+            elif wcharge == -1 and "WpWp" in sample.label:
+                continue
         if isMC:
             met         = Object(event, "MET_T1Smear")
         else:

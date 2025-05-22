@@ -109,7 +109,7 @@ def CondoredList(samplename):
     return condlist #, toRel, wrongex, StillCondoring
     
 def DoesSampleExist(samplename):
-    if samplename+".txt" not in os.listdir("../../crab/macros/files/"):
+    if samplename.replace("WmWm", "WpWp")+".txt" not in os.listdir("../../crab/macros/files/"):
         return False
     else:
         return True
@@ -118,7 +118,7 @@ def AreAllCondored(crabname, condorname):
     #toRel = False
     #condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
     condoredlist = CondoredList(condorname)
-    
+    crabname = crabname.replace("WmWm", "WpWp")
     #print(torel, wrongex, StillCondoring)
     #print(condoredlist)
     #if not StillCondoring and (torel or wrongex):
@@ -457,10 +457,10 @@ if not opt.check:
     t.write("BTAG_ALGO   =   'DeepFlv'\n")
     t.write("BTAG_WP     =   'M'\n")
     t.write("BTAG_WP_LOOSE     =   'L'\n")
-    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-    t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE = 16" + " #Bydeeptau2017v2p1vsjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
-    t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU = 16" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_ELE = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+    t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_ELE = 8" + " #Bydeeptau2017v2p1vsjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+    t.write("ID_TAU_RECO_DEEPTAU_VSJET_LOOSE_MU = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
+    t.write("ID_TAU_RECO_DEEPTAU_VSJET_VETO_MU = 8" + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     
     t.write("ID_TAU_RECO_DEEPTAU_VSJET = " + vsJet_dict[opt.jetwp] + " #byDeepTau2017v2p1VSjet ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")
     t.write("ID_TAU_RECO_DEEPTAU_VSELE = " + vsEle_dict[opt.elewp] + "  #byDeepTau2017v2p1VSe ID working points (deepTau2017v2p1): bitmask 1 = VVVLoose, 2 = VVLoose, 4 = VLoose, 8 = Loose, 16 = Medium, 32 = Tight, 64 = VTight, 128 = VVTight\n")

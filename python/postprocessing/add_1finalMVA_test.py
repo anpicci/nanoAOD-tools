@@ -111,7 +111,7 @@ for idm, modelpath in enumerate(modelpaths):
 Debug = opt.check # True # False #
 split = 50
 print(opt.scenario)
-if "UL" in opt.folder and int(opt.folder.split("UL")[-1]) > 9:
+if "UL" in opt.folder and int(opt.folder.split("_")[0].split("UL")[-1]) > 9:
     isWithSysts = True
     if opt.scenario == "all":
         scenarios = [
@@ -202,6 +202,7 @@ def CondoredList(samplename):
     return condlist, toRel, wrongex, StillCondoring
 
 def DoesSampleExist(samplename):
+    samplename = samplename.replace("WmWm", "WpWp")
     if samplename+".txt" not in os.listdir(crabpath):
         return False
     else:
@@ -210,6 +211,7 @@ def DoesSampleExist(samplename):
 def AreAllCondored(crabname, condorname):
     toRel = False
     condoredlist, torel, wrongex, StillCondoring = CondoredList(condorname)
+    crabname = crabname.replace("WmWm", "WpWp")
     if not StillCondoring and (torel or wrongex):
         toRel = True
         storelist = [line for line in open("../../crab/macros/files/"+crabname+".txt")]
@@ -518,9 +520,10 @@ print("year", opt.year)
 #}
 
 for k, v in merge_dict.items():
+
     if not k.endswith(str(opt.year)):
         continue
-
+    
     if toVeto:
         toContinue = False
         for vs in vetosamp:
@@ -530,8 +533,10 @@ for k, v in merge_dict.items():
         if toContinue:
             continue
 
+    print("hello", k,v)
     if notAll:
         toPass = False
+        print(mergesamp)
         for ms in mergesamp:
             if k.startswith(ms):
                 toPass = True

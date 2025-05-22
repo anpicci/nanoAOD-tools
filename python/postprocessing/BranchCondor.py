@@ -96,9 +96,9 @@ branches = [
     dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB,    
     #dnn_sm_branch_final_1,
     dnn_sm_branch_1_NOMOREDY_lower_NONOISE_LCB_10000,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100003,
-    dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100007,
+    #dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100000,
+    #dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100003,
+    #dnn_sm_branch_1_NOMOREDY_lower_fixedseed_100007,
 ]
 
 paths = [    
@@ -107,9 +107,9 @@ paths = [
     dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB,
     #dnn_sm_path_final_1,
     dnn_sm_path_1_NOMOREDY_lower_NONOISE_LCB_10000,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100003,
-    dnn_sm_path_1_NOMOREDY_lower_fixedseed_100007,
+    #dnn_sm_path_1_NOMOREDY_lower_fixedseed_100000,
+    #dnn_sm_path_1_NOMOREDY_lower_fixedseed_100003,
+    #dnn_sm_path_1_NOMOREDY_lower_fixedseed_100007,
 ]
 
 scalers = [
@@ -118,9 +118,9 @@ scalers = [
     dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB,
     #dnn_sm_scaler_final_1,
     dnn_sm_scaler_1_NOMOREDY_lower_NONOISE_LCB_10000,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100000,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100003,
-    dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100007,
+    #dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100000,
+    #dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100003,
+    #dnn_sm_scaler_1_NOMOREDY_lower_fixedseed_100007,
 ]
 
 folder = opt.folder

@@ -82,7 +82,7 @@ def sub_writer(sample, n, files, folder):
     f.write(inputfiles)
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-"+inituser + "/" + username+"/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/home-a/apiccine/VBS/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
-    f.write("+JobFlavour             = \"tomorrow\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
+    f.write("+JobFlavour             = \"workday\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
     #args += "\n"
     args = sample.label + " " + str(n) + " " + str(files) + " " + runtype + " " + opt.wpjet + " " + opt.wpele + " " + opt.wpmu
 
@@ -100,7 +100,7 @@ def sub_writer(sample, n, files, folder):
     f.write("executable              = " + executpy + "\n")
     f.write("arguments               = " + args + "\n")
     #f.write("input                   = input.txt\n")
-    f.write("request_cpus            = 3\n")
+    #f.write("request_cpus            = 3\n")
     f.write("output                  = condor_" + opt.folder + "/output/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu + "_part" + str(n) + ".out\n")
     f.write("error                   = condor_" + opt.folder + "/error/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".err\n")
     f.write("log                     = condor_" + opt.folder + "/log/"+ sample.label + "_" + opt.wpjet + opt.wpele + opt.wpmu +  "_part" + str(n) + ".log\n")
@@ -159,7 +159,8 @@ for sample in samples:
     else:
         print opath, "already exists"
     print sample.label, sample.name
-    f = open("../../crab/macros/files/" + sample.name + ".txt", "r")
+    samplenamee = sample.name.replace("WmWm", "WpWp")
+    f = open("../../crab/macros/files/" + samplenamee + ".txt", "r")
     files_list = f.read().splitlines()
     print str(len(files_list))
     if(isMC):

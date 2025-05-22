@@ -90,7 +90,8 @@ Debug = opt.check # True # False #
 split = 50
 
 isWithSysts = False
-if opt.ct != "HT" and ("UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[-1]) > 9):
+#if opt.ct != "HT" and ("UL" in opt.folder and "FR" not in opt.folder and int(opt.folder.split("UL")[-1]) > 9):
+if opt.ct != "HT" and ("UL" in opt.folder and "FR" not in opt.folder):
     isWithSysts = True
     scenarios = [
         "nominal", 
@@ -191,32 +192,35 @@ def CondoredList(samplename):
     return condlist
 
 def DoesSampleExist(samplename):
-    if samplename+".txt" not in os.listdir(crabpath):
+    samplenamee = samplename.replace("WmWm", "WpWp")
+    if samplenamee+".txt" not in os.listdir(crabpath):
         return False
     else:
         return True
 
 def AreAllCondored(crabname, condorname):
-    storelist = [line for line in open(crabpath+crabname+".txt")]
-    condoredlist = CondoredList(condorname)
+    condornamee = condorname.replace("WmWm", "WpWp")
+    crabnamee = crabname.replace("WmWm", "WpWp")
+    storelist = [line for line in open(crabpath+crabnamee+".txt")]
+    condoredlist = CondoredList(condornamee)
     #print(crabpath, crabname,".txt")
     #print(len(storelist), (condoredlist))
-    if condorname+"_merged.root" in condoredlist:
-        condoredlist.remove(condorname+"_merged.root")
-    if condorname+".root" in condoredlist:
-        condoredlist.remove(condorname+".root")
+    if condornamee+"_merged.root" in condoredlist:
+        condoredlist.remove(condornamee+"_merged.root")
+    if condornamee+".root" in condoredlist:
+        condoredlist.remove(condornamee+".root")
 
     lenstore = len(storelist)
     
-    if 'Data' in crabname:
+    if 'Data' in crabnamee:
         remainder = int(lenstore%split)
         lenstore = int(lenstore/split)
         if remainder > 0:
             lenstore += 1
 
-    IsThereMaximum = bool(opt.maxj) and bool(opt.maxj < lenstore) and bool("Data" not in crabname)
+    IsThereMaximum = bool(opt.maxj) and bool(opt.maxj < lenstore) and bool("Data" not in crabnamee)
     #print("IsThereMaximum", IsThereMaximum)
-    if IsThereMaximum and 'Data' not in crabname and len(condoredlist) < opt.maxj:
+    if IsThereMaximum and 'Data' not in crabnamee and len(condoredlist) < opt.maxj:
         print("condored: ", len(condoredlist), "\tlenstore: ", lenstore)
         return False
     elif not IsThereMaximum and len(condoredlist) < (lenstore):

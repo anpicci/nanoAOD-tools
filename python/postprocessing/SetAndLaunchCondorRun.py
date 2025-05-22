@@ -40,7 +40,7 @@ def CondoredList(samplename):
     return condlist
 
 def DoesSampleExist(samplename):
-    if samplename+".txt" not in os.listdir("../../crab/macros/files/"):
+    if samplename.replace("WmWm", "WpWp")+".txt" not in os.listdir("../../crab/macros/files/"):
         return False
     else:
         return True

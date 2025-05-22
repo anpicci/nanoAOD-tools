@@ -13,6 +13,7 @@ parser.add_option('--folder', dest='folder', type='string', default = 'vUL025', 
 parser.add_option('--user', dest='user', type='string', default = 'apiccine', help = 'Username')
 parser.add_option('--notImpacts', dest='impacts', default = True, action='store_false', help = 'Default does impacts')
 parser.add_option('--notUncBreak', dest='uncbreak', default = True, action='store_false', help = 'Default does unc. breaking')
+parser.add_option('--doGoF', dest='gof', default = False, action='store_true', help = 'Default does not GoF test')
 parser.add_option('--plot', dest='plotvar', type='string', default = 'fitvar', help = 'Specify variables to plot in postfit')
 parser.add_option('--year', dest='year', type='string', default = 'RunII', help = 'Specify year, default is RunII')
 parser.add_option('--cut', dest='cut', type='string', default = 'not', help = 'Specify cut, if needed')
@@ -21,6 +22,7 @@ parser.add_option('--noFit', dest='dofit', default = True, action='store_false',
 parser.add_option('--doPost', dest='postfit', default = False, action='store_true', help = 'Default does not run postfit plots')
 parser.add_option('-m', '--models', dest='models', type=str, default = 'vbs', help='Please enter a dataset name')
 parser.add_option('--Lambda8', dest='Lambda8', default = False, action='store_true', help='add dim8 quad in 2D fits')
+parser.add_option('--onlyLin', dest='onlyLin', default = False, action='store_true', help='add dim8 quad in 2D fits')
 parser.add_option('--srvar', dest='srvar', type=str, default = 'm_o1', help='var in sr')
 parser.add_option('--crvar', dest='crvar', type=str, default = 'same', help='var in cr')
 parser.add_option('--notCI', dest='doCI', default = True, action='store_false', help = 'Default does not run postfit plots')
@@ -41,6 +43,11 @@ parser.add_option('--profile', dest='profile', default = False, action='store_tr
 parser.add_option('--regions', dest='regions', type='string', default = 'SR,CRTT,CROS,CRF', help = 'Regions to fit')
 parser.add_option('--leptons', dest='leptons', type='string', default = 'muon,electron', help = 'Channels to include')
 parser.add_option('--HN', dest='HN', default = False, action='store_true', help = 'fit with HybridNew instead of AsymptoticLimits')
+parser.add_option('--rint', dest='rint', type='string', default = 'None', help = 'r interval for EFT')
+parser.add_option('--rfix', dest='rfix', type='string', default = 'None', help = 'r interval for EFT')
+parser.add_option('--merge', dest='merge', type='string', default = '0', help='Default no merging bins')
+parser.add_option('--useSM', dest='useSM', default = False, action='store_true', help = 'Use VBS EW for EFT fits')
+parser.add_option('--mcstat', dest='mcstat', type='string', default = '10', help='Default no merging bins')
 
 (opt, args) = parser.parse_args()
 
@@ -77,9 +84,9 @@ elif username == 'ttedesch':
 
 now = datetime.now().time().strftime("%H%M%S%f")
 
-subfold = "combinecondor_" + opt.pdf
-condorsub = "condorcombine_" + opt.pdf
-exe = "branchcombine_" + opt.pdf
+subfold = "combinecondorUltra_" + opt.pdf + "_rint" + opt.rint.replace(".", "p") + "_rfix" + opt.rfix.replace(".", "p") + "_"
+condorsub = "condorcombineUltra_" + opt.pdf + "_rint" + opt.rint.replace(".", "p") + "_rfix" + opt.rfix.replace(".", "p") + "_"
+exe = "branchcombineUltra_" + opt.pdf + "_rint" + opt.rint.replace(".", "p") + "_rfix" + opt.rfix.replace(".", "p") + "_"
 
 if opt.unblind:
     condorsub += "_DF"
@@ -89,7 +96,9 @@ else:
     condorsub += "_TF"
     subfold += "_TF"
     exe += "_TF"
-
+condorsub += "_mcstat" + opt.mcstat
+subfold += "_mcstat" + opt.mcstat
+exe += "_mcstat" + opt.mcstat
 #condorsub += opt.regions.replace(",", "-") + "_" + opt.leptons.replace(",", "-")
 #subfold += opt.regions.replace(",", "-") + "_" + opt.leptons.replace(",", "-")
 #exe += opt.regions.replace(",", "-") + "_" + opt.leptons.replace(",", "-")
@@ -114,6 +123,10 @@ if opt.Lambda8:
     condorsub += "_Lambda8"
     subfold += "_Lambda8"
     exe += "_Lambda8"
+if opt.onlyLin:
+    condorsub += "_onlyLin"
+    subfold += "_onlyLin"
+    exe += "_onlyLin"
 if opt.tDMcut:
     condorsub += "_tDM"
     subfold += "_tDM"
@@ -142,10 +155,10 @@ if opt.noQCDScale:
     condorsub += "_noQCDScale"
     subfold += "_noQCDScale"
     exe += "_noQCDScale"
-#if opt.flat:
-    #condorsub += "_flat"
-    #subfold += "_flat"
-    #exe += "_flat"
+if opt.merge != "0":
+    condorsub += "_merge" + opt.merge
+    subfold += "_merge"+ opt.merge
+    exe += "_merge" + opt.merge
 if opt.profile:
     condorsub += "_profile"
     subfold += "_profile"
@@ -154,6 +167,10 @@ if opt.HN:
     condorsub += "_HN"
     subfold += "_HN"
     exe += "_HN"
+if opt.useSM:
+    condorsub += "_useSM"
+    subfold += "_useSM"
+    exe += "_useSM"
 
 condorsub += "_"
 subfold += "_" + opt.folder
@@ -161,9 +178,9 @@ subfold += "_" + opt.folder
 if not os.path.exists(subfold):
     os.system("mkdir " + subfold)
 
-outcore = condorsub + opt.folder + "/output/"
-errcore = condorsub + opt.folder + "/error/"
-logcore = condorsub + opt.folder + "/log/"
+outcore = condorsub + opt.folder + "_" + opt.year + "/output/"
+errcore = condorsub + opt.folder + "_" + opt.year + "/error/"
+logcore = condorsub + opt.folder + "_" + opt.year + "/log/"
 
 if not os.path.exists(outcore):
     os.system("mkdir -p " + outcore)
@@ -173,7 +190,15 @@ if not os.path.exists(logcore):
     os.system("mkdir -p " + logcore)
 
 def submitter(model, srvar, crvar, argsins, folder, lepton, region):
-    exesh = subfold + "/" + exe + "_" + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".sh"
+    if len(model.split(":")) > 5:
+        modeltag = "all"
+        if model.startswith("c"):
+            modeltag += "_dim6"
+        else:
+            modeltag += "_dim8"
+    else:
+        modeltag = copy.deepcopy(model)
+    exesh = subfold + "/" + exe + "_" + folder + "_" +modeltag+ "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".sh"
     fsh = open(exesh, "w")
     fsh.write("#!/bin/bash\n")
     fsh.write("cd /afs/cern.ch/user/a/apiccine\n")
@@ -183,7 +208,7 @@ def submitter(model, srvar, crvar, argsins, folder, lepton, region):
         fsh.write("python " + pymacro + " " + argsin + "\n")
     fsh.close()
     
-    condorsubb = condorsub + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".sub"
+    condorsubb = condorsub + folder + "_" +modeltag+ "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".sub"
     f = open(condorsubb, "w")
     f.write("Proxy_filename          = x509up\n")
     f.write("Proxy_path              = /afs/cern.ch/user/" + inituser + "/" + username + "/private/$(Proxy_filename)\n")
@@ -201,17 +226,18 @@ def submitter(model, srvar, crvar, argsins, folder, lepton, region):
     f.write("executable              = " + exesh + "\n")
     f.write("arguments               = \'\'\n") # + argsin + "\n")
     if (model.startswith("c") and ":" in model) or model == "EWvsQCD":
-        f.write("request_cpus            = 10\n")
+        f.write("request_cpus            = 6\n")
     elif model.startswith("c") or model.startswith("F"):
         f.write("request_cpus            = 6\n")
     else:
         f.write("request_cpus            = 6\n")
-    output = outcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".out"
-    log = logcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".log"
-    error = errcore + folder + "_" + model + "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".err"
+    output = outcore + folder + "_" +modeltag+ "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".out"
+    log = logcore + folder + "_" +modeltag+ "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".log"
+    error = errcore + folder + "_" +modeltag+ "_" + srvar + "_" + crvar + "_" + lepton.replace(",", "-") + "_" + region.replace(",", "-") + ".err"
     f.write("output                  = " + output + "\n")
     f.write("error                   = " + error + "\n")
     f.write("log                     = " + log + "\n")
+    f.write('MY.WantOS = \"el7\"' + "\n") 
     f.write("queue\n")
     f.close()
     if os.path.exists(output):
@@ -239,6 +265,8 @@ if not opt.uncbreak:
     arg0 += " --notUncBreak"
 if not opt.dofit:
     arg0 += " --noFit"
+if opt.gof:
+    arg0 += " --doGoF"
 if opt.noQCDScale:
     arg0 += " --noQCDScale"
 #runningmodels = FindModels()
@@ -247,13 +275,15 @@ if opt.noQCDScale:
 
 for model in models:
     arg1 = ""
-    #if not ("cqq3_" in model or "cqq31_" in model or "cqq11_" in model):
+
+    #if not ("cHl1_" in model or "cW_" in model or "cHbox_" in model):
+    #if not ("cHW_" in model):
         #continue
     #if "cqq1_" in model:
         #continue
     #if not "cW_" in model:
         #continue
-    #if not (":FT" in model or ":FS" in model or ":FM" in model):
+    #if (":FT" in model): #or ":FS" in model or ":FM" in model):
         #continue
 
     #if model in runningmodels:
@@ -273,6 +303,8 @@ for model in models:
             arg1 += " --notCI"
         if opt.Lambda8:
             arg1 += " --Lambda8"
+        if opt.onlyLin:
+            arg1 += " --onlyLin"
         if opt.profile:
             arg1 += " --profile"
     if opt.HN:
@@ -315,12 +347,20 @@ for model in models:
             arg2 += " --frp"
 
         arg2 += " --pdf " + opt.pdf
+        arg2 += " --merge " + opt.merge
         
         for lepton in leptons:
             for region in regions:
                 argss = []
                 arg3 = arg2 + " --regions " + region + " --leptons " + lepton
-                arg3 += " > /dev/null "
+                if opt.rint != 'None':
+                    arg3 += " --rint " + opt.rint
+                if opt.rfix != 'None':
+                    arg3 += " --rfix " + opt.rfix
+                if opt.useSM:
+                    arg3 += " --useSM"
+                arg3 += " --mcstat " + opt.mcstat + " > /dev/null "
+
 
                 argss.append(arg3)
                 submitter(model, srvar, crvar, argss, folder, lepton, region)

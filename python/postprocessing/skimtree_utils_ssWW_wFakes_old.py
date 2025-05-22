@@ -12,49 +12,49 @@ try:
 except:
     pass
 else:
-    print("CutsAndValues_UL2016APV imported!")
+    pass #print("CutsAndValues_UL2016APV imported!")
 
 try:
     from CutsAndValues_UL2016 import *
 except:
     pass
 else:
-    print("CutsAndValues_UL2016 imported!")
+    pass #print("CutsAndValues_UL2016 imported!")
 
 try:
     from CutsAndValues_UL2017 import *
 except:
     pass
 else:
-    print("CutsAndValues_UL2017 imported!")
+    pass #print("CutsAndValues_UL2017 imported!")
 
 try:
     from CutsAndValues_UL2018 import *
 except:
     pass
 else:
-    print("CutsAndValues_UL2018 imported!")
+    pass #print("CutsAndValues_UL2018 imported!")
 
 try:
     from CutsAndValues_2016 import *
 except:
     pass
 else:
-    print("CutsAndValues_2016 imported!")
+    pass #print("CutsAndValues_2016 imported!")
 
 try:
     from CutsAndValues_2017 import *
 except:
     pass
 else:
-    print("CutsAndValues_2017 imported!")
+    pass #print("CutsAndValues_2017 imported!")
 
 try:
     from CutsAndValues_2018 import *
 except:
     pass
 else:
-    print("CutsAndValues_2018 imported!")
+    pass #print("CutsAndValues_2018 imported!")
 #from xgboost import XGBClassifier
 #from tensorflow.keras.models import Sequential, load_model
 #from tensorflow.keras.layers import Input, Dense, Activation, Flatten, BatchNormalization, Dropout
@@ -85,7 +85,7 @@ for yearr in years:
     
     infile.Close()
 
-print("\n")
+#print("\n")
 h_puid = {}
 infile = ROOT.TFile.Open("PUID_SFs.root")
 for yearr in years:
@@ -414,6 +414,26 @@ def VBSNLO(mjj, model):
     
 def get_Jet(jets, pt = PT_CUT_JET): #returns a collection of jets that pass the selection performed by the filter function
     return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 5. and x.pt > pt and (x.pt > 50. or (x.pt <= 50. and x.puId >= 7)), jets))
+
+def FindWPairCharge(genParts):
+    """
+    Finds the charge of a pair of same-charge W bosons (W+W+ or W-W-)
+    produced directly by partons (mother_idx == 0) in a given event.
+
+    Parameters:
+        genParts (iterable): Collection of particles for the event.
+
+    Returns:
+        int: The charge of the W boson pair (+1 for W+W+, -1 for W-W-), or None if no valid pair is found.
+    """
+    # Filter W bosons with mother_idx == 0
+    wBosons = [genPart for genPart in genParts if abs(genPart.pdgId) == 24 and genPart.genPartIdxMother == 0]
+
+    # Check if there are exactly two W bosons and their PDG IDs are identical
+    if len(wBosons) == 2 and wBosons[0].pdgId == wBosons[1].pdgId:
+        return 1 if wBosons[0].pdgId > 0 else -1
+    return None
+
 
 def SelectVBSQGenJet(genparts, genjets):
     fs_genparts = list(filter(lambda x : x.genPartIdxMother==0 and abs(x.pdgId)>0 and abs(x.pdgId)<10, genparts))
@@ -2247,6 +2267,13 @@ def IsPdfHessian(firstpdf, lastpdf):
         return True
     else:
         return False
+
+def WhichPdf(firstpdf, lastpdf):
+    pdfcsv = open("data/lhapdf.csv")
+    reader = csv.reader(pdfcsv)
+    pdfdict = {rows[0]:rows[1] for rows in reader}
+    namepdf = pdfdict[str(firstpdf)]
+    return namepdf
     
 def FindPdf(samplelab):
     filefolder = "/afs/cern.ch/work/a/apiccine/CMSSW_11_3_0_pre5/src/PhysicsTools/NanoAODTools/crab/macros/files/"
