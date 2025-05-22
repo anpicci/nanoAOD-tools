@@ -137,18 +137,18 @@ else:
     if "UL" in str(sample.year):
         scenarios = [
             "nominal",
-            "lepenUp",
-            "lepenDown", 
-            "jesUp", 
-            "jesDown", 
-            "jerUp", 
-            "jerDown",
-            "metUnclustUp",
-            "metUnclustDown",
-            "TESUp", 
-            "TESDown",
-            "FESUp",
-            "FESDown"
+            #"lepenUp",
+            #"lepenDown", 
+            #"jesUp", 
+            #"jesDown", 
+            #"jerUp", 
+            #"jerDown",
+            #"metUnclustUp",
+            #"metUnclustDown",
+            #"TESUp", 
+            #"TESDown",
+            #"FESUp",
+            #"FESDown"
         ]
     else:
         scenarios = ["all"]
@@ -338,7 +338,7 @@ def is_WZ_1hadTau_2lep(genparts):
 def classify_WZ_tau_leps_event(event):
     """
     Given a NanoAOD `event` (with GenPart collections),
-    find one W (±24) and one Z (23) with status>=2,
+    find one W and one Z (23) with status>=2,
     collect their daughters, and classify taus by
     following their decay chain until the first non-tau child.
     Returns (total_leptons, n_hadronic_taus) or (None, None)
@@ -358,7 +358,7 @@ def classify_WZ_tau_leps_event(event):
                 return 'e'
             elif dau == 13:
                 return 'mu'
-        # no non-tau daughters → hadronic
+        # no non-tau daughters hadronic
         return 'tau'
 
     w_labels = None
