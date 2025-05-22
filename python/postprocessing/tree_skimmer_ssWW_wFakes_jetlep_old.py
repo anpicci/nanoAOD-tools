@@ -335,6 +335,72 @@ def is_WZ_1hadTau_2lep(genparts):
 
     return (len(had_tau_idxs) == 1) and (len(lep_idxs) == 2)
 
+def classify_WZ_tau_leps_event(event):
+    """
+    Given a NanoAOD `event` (with GenPart collections),
+    find one W (±24) and one Z (23) with status>=2,
+    collect their daughters, and classify taus by
+    following their decay chain until the first non-tau child.
+    Returns (total_leptons, n_hadronic_taus) or (None, None)
+    if W or Z not found.
+    """
+
+    # recursive helper: follow tau index until first daughter not a tau
+    def _tau_label(idx):
+        for m in range(nGen):
+            if int(event.GenPart_genPartIdxMother[m]) != idx:
+                continue
+            dau = abs(int(event.GenPart_pdgId[m]))
+            if dau == 15:
+                # still a tau, go deeper
+                return _tau_label(m)
+            elif dau == 11:
+                return 'e'
+            elif dau == 13:
+                return 'mu'
+        # no non-tau daughters → hadronic
+        return 'tau'
+
+    w_labels = None
+    z_labels = None
+    nGen = int(event.nGenPart)
+
+    # loop to find W/Z and collect their direct-daughter labels
+    for j in range(nGen):
+        pid  = abs(int(event.GenPart_pdgId[j]))
+        stat = int(event.GenPart_status[j])
+        if stat < 2 or pid not in (23, 24):
+            continue
+
+        labels = []
+        for k in range(nGen):
+            if int(event.GenPart_genPartIdxMother[k]) != j:
+                continue
+            dau = abs(int(event.GenPart_pdgId[k]))
+            if   dau == 11:
+                labels.append('e')
+            elif dau == 13:
+                labels.append('mu')
+            elif dau == 15:
+                # tau: follow its decay chain
+                labels.append(_tau_label(k))
+
+        if pid == 24:
+            w_labels = labels
+        else:
+            z_labels = labels
+
+    # require both W and Z
+    if w_labels is None or z_labels is None:
+        return None, None
+
+    all_labels = w_labels + z_labels
+    n_taus     = sum(1 for l in all_labels if l == 'tau')
+    n_light    = sum(1 for l in all_labels if l in ('e', 'mu'))
+    total      = n_taus + n_light
+
+    return total, n_taus
+
 
 #++++++++++++++++++++++++++++++++++
 #++      taking MC weights       ++
@@ -956,11 +1022,16 @@ def reco(idxs, scenario, isMC, addPDF, MCReco):
         if isMC:
             genparts = Collection(event, "GenPart")
             genjets     = Collection(event, "GenJet")
-            if is_WZ_1hadTau_2lep(genparts):
+            #if is_WZ_1hadTau_2lep(genparts):
+            #    pass_WZlep[0]=1
+            #else:
+            #    pass_WZlep[0]=0
+            total_genlep, total_gentau = classify_WZ_tau_leps_event(event)
+            if total_genlep == 3 and total_gentau == 1:
                 pass_WZlep[0]=1
             else:
                 pass_WZlep[0]=0
-                
+        
         if isMC and ("WpWp" in sample.label or "WmWm" in sample.label or sample.label.startswith("VBS_SSWW_")):
             sgenjets = SelectVBSQGenJet(genparts, genjets)
         #met        = Object(event, "PuppiMET")
