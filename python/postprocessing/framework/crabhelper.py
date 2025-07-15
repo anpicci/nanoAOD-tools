@@ -16,7 +16,7 @@ def inputFiles():
     forceaaa = False
     print("--------- using edmFileUtil to convert PFN to LFN --------------")
     for i in range(0, len(crabFiles)):
-        if os.getenv("GLIDECLIENT_Group", "") != "overflow" and os.getenv("GLIDECLIENT_Group", "") != "overflow_conservative" and not forceaaa:
+        if False: #os.getenv("GLIDECLIENT_Group", "") != "overflow" and os.getenv("GLIDECLIENT_Group", "") != "overflow_conservative" and not forceaaa:
             print("Data is local")
             pfn = os.popen("edmFileUtil -d %s" % (crabFiles[i])).read()
             pfn = re.sub("\n", "", pfn)
@@ -41,6 +41,7 @@ def inputFiles():
         else:
             print("Data is not local, using AAA/xrootd")
             crabFiles[i] = "root://cms-xrd-global.cern.ch/" + crabFiles[i]
+    print("files to process:", crabFiles)
     return crabFiles
 
 

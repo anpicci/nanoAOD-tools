@@ -146,12 +146,18 @@ class PostProcessor:
         outFileNames = []
         t0 = time.time()
         totEntriesRead = 0
+        print("input files seen by the postprocessor")
+        print(self.inputFiles)
         for fname in self.inputFiles:
             ffnames = []
             if "," in fname:
                 fnames = fname.split(',')
                 fname, ffnames = fnames[0], fnames[1:]
-
+            if fname.startswith("/store"):
+                fname = "root://cms-xrd-global.cern.ch/" + fname
+            for idf, ffname in enumerate(ffnames):
+                ffnames[idf] = "root://cms-xrd-global.cern.ch/" + ffname
+            print(fname, ffnames)
             # open input file
             if self.prefetch:
                 ftoread, toBeDeleted = self.prefetchFile(fname)

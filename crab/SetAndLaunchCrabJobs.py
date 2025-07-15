@@ -15,7 +15,7 @@ def PrintOutput(readlines):
 
 usage = 'python3 SetAndLaunchCrabJobs.py'
 parser = optparse.OptionParser(usage)
-parser.add_option('-y', dest='year', type=str, default = 'UL2017', help='Please enter a year, default is UL2017')
+parser.add_option('-y', dest='year', type=str, default = 'UL2016,UL2016APV,UL2017,UL2018', help='Please enter a year, default is UL2017')
 parser.add_option('-d', '--dat', dest='dat', type=str, default = 'all', help='Please enter a dataset name')
 parser.add_option('--veto', dest='veto', type=str, default = 'none', help='Please enter a dataset name to veto')
 parser.add_option('--save', dest = 'save', default = False, action = 'store_true', help = 'Default do not check the save')
@@ -42,7 +42,7 @@ if opt.sampleFlag:
 #if "UL" not in opt.year:
     #raise ValueError("This macro is intended to be use ONLY with UL samples!")
 
-year = str(opt.year)
+years = str(opt.year).split(",")
 toproc = opt.dat.split(",")
 toveto = opt.veto.split(",")
 
@@ -51,10 +51,7 @@ print "toveto:", toveto
 
 crabdirs = [cdir.replace("crab_", "") for cdir in os.listdir(".") if os.path.isdir("./" + cdir) and cdir != "macros"]
 
-if not opt.forFR:
-    samlist = crab_dict[year]
-else:
-    samlist = crab_dict_Fake[year]
+
 
 #if opt.dat != "":
     #samlist = list(filter(lambda x : x.label == opt.dat, samlist))
@@ -65,77 +62,83 @@ else:
     crabc = "python submit_crab.py"
 
 complist = []
-
-for samp in samlist:    
-    if year not in samp.label:
-        print "Overriding year..."
-        year = opt.samp.split("_")[1]
-
-
-    if "UL" in opt.year:
-        hascomp = hasattr(samp, "components")
+   
+for year in years:
+    if not opt.forFR:
+        samlist = crab_dict[year]
     else:
-        hascomp = samp.components is not None
+        samlist = crab_dict_Fake[year]
+    
+    #print([sam.label for sam in samlist])
+    for samp in samlist:
+        if year not in samp.label:
+            print "Overriding year..."
+            year = opt.samp.split("_")[1]
 
-    if hascomp:#hasattr(samp, "components") and samp.components is not None:
-        for c in samp.components:
+        if "UL" in opt.year:
+            hascomp = hasattr(samp, "components")
+        else:
+            hascomp = samp.components is not None
+
+        if hascomp:#hasattr(samp, "components") and samp.components is not None:
+            for c in samp.components:
+                toProc = False
+                toVeto = False
+
+                if opt.dat != "all":
+                    #print samp.label 
+                    for dtp in toproc:
+                        if samp.label.startswith(dtp) or c.label.startswith(dtp):
+                            toProc = True
+                            break
+                        
+                    if not toProc:
+                        continue
+            
+                if opt.veto != "none":
+                    for dtv in toveto:
+                        if samp.label.startswith(dtv) or c.label.startswith(dtv):
+                            toVeto = True
+                            break
+            
+                    if toVeto:
+                        continue
+                #print c.label
+                if c.dataset == "":
+                    print "Skipping " + c.label + ", its dataset is missing up to now"
+                    continue
+                
+                complist.append(copy.deepcopy(c))
+                
+                
+        else:
             toProc = False
             toVeto = False
 
             if opt.dat != "all":
                 #print samp.label 
                 for dtp in toproc:
-                    if samp.label.startswith(dtp) or c.label.startswith(dtp):
+                    if samp.label.startswith(dtp):
                         toProc = True
                         break
-                    
+                        
                 if not toProc:
                     continue
-        
+            
             if opt.veto != "none":
                 for dtv in toveto:
-                    if samp.label.startswith(dtv) or c.label.startswith(dtv):
+                    if samp.label.startswith(dtv):
                         toVeto = True
                         break
-        
+            
                 if toVeto:
                     continue
-            #print c.label
-            if c.dataset == "":
+
+            if samp.dataset == "":
                 print "Skipping " + c.label + ", its dataset is missing up to now"
                 continue
-            
-            complist.append(copy.deepcopy(c))
-            
-            
-    else:
-        toProc = False
-        toVeto = False
-
-        if opt.dat != "all":
-            #print samp.label 
-            for dtp in toproc:
-                if samp.label.startswith(dtp):
-                    toProc = True
-                    break
-                    
-            if not toProc:
-                continue
-        
-        if opt.veto != "none":
-            for dtv in toveto:
-                if samp.label.startswith(dtv):
-                    toVeto = True
-                    break
-        
-            if toVeto:
-                continue
-
-        if samp.dataset == "":
-            print "Skipping " + c.label + ", its dataset is missing up to now"
-            continue
-            
-        complist.append(copy.deepcopy(samp))
+                
+            complist.append(copy.deepcopy(samp))
         
 for s in complist:
     print "\n\nConsidering " + s.label + " sample..."

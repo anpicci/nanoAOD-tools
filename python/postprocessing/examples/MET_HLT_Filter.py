@@ -40,8 +40,10 @@ class MET_HLT_Filter(Module):
                 except:
                     good_MET = flag.goodVertices and flag.globalSuperTightHalo2016Filter and flag.HBHENoiseFilter and flag.HBHENoiseIsoFilter and flag.EcalDeadCellTriggerPrimitiveFilter and flag.BadPFMuonFilter and flag.eeBadScFilter 
         
-            if(self.year == "UL2016APV" or self.year == "UL2016"):
+            if(self.year == "UL2016"):
                 good_HLT = (HLT.IsoMu24 or HLT.IsoTkMu24 or HLT.Mu50 or HLT.TkMu50 or HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf or HLT.Photon175)
+            elif(self.year == "UL2016APV"):
+                good_HLT = (HLT.IsoMu24 or HLT.Mu50 or HLT.Ele27_WPTight_Gsf or HLT.Ele32_WPTight_Gsf or HLT.Photon175)
             elif(self.year == "UL2017"):
                 good_HLT = (HLT.IsoMu27 or HLT.Mu50 or HLT.OldMu100 or HLT.TkMu100 or HLT.Ele35_WPTight_Gsf or HLT.Ele32_WPTight_Gsf_L1DoubleEG) 
                             # and (L1.SingleIsoEG30er2p1 or L1.SingleIsoEG32 or L1.SingleEG40)) or HLT.Photon200)# or HLT.PFHT250 or HLT.PFHT350)
